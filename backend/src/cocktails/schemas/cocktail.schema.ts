@@ -54,6 +54,9 @@ export class Cocktail {
   @Prop({ required: true, trim: true, index: true })
   name: string;
 
+  @Prop({ trim: true, index: true })
+  category?: string;
+
   @Prop({ default: '' })
   description: string;
 
@@ -74,6 +77,9 @@ export class Cocktail {
 
   @Prop({ trim: true })
   garnish?: string;
+
+  @Prop({ trim: true })
+  notes?: string;
 
   @Prop({ default: 1, min: 1 })
   servings: number;

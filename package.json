@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "build:shared": "npm run build --workspace @cocktailapp/shared",
+    "build:catalog": "node scripts/build-catalog.mjs",
     "build": "npm run build:shared && npm run build --workspace backend && npm run build --workspace frontend",
     "start:backend": "npm run start:dev --workspace backend",
     "start:frontend": "npm run start --workspace frontend",

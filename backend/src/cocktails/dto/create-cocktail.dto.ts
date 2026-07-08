@@ -25,6 +25,10 @@ export class CreateCocktailDto implements CreateCocktail {
 
   @IsOptional()
   @IsString()
+  category?: string;
+
+  @IsOptional()
+  @IsString()
   description?: string;
 
   @IsOptional()
@@ -53,6 +57,10 @@ export class CreateCocktailDto implements CreateCocktail {
   @IsOptional()
   @IsString()
   garnish?: string;
+
+  @IsOptional()
+  @IsString()
+  notes?: string;
 
   @IsOptional()
   @IsInt()

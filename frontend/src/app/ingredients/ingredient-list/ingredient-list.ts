@@ -20,6 +20,7 @@ import {
 } from '@cocktailapp/shared';
 import { IngredientService } from '../../services/ingredient.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
+import { environment } from '../../../environments/environment';
 
 interface Group {
   category: IngredientCategory;
@@ -44,38 +45,44 @@ interface Group {
       <div>
         <p class="eyebrow">De catalogus</p>
         <h1>Ingrediënten</h1>
-        <p class="lede">
-          De bouwstenen van je bar. Markeer wat de meeste mensen in huis hebben als
-          <strong>basis</strong> — die staan vooraan in de wizard.
-        </p>
+        @if (admin) {
+          <p class="lede">
+            De bouwstenen van je bar. Markeer wat de meeste mensen in huis hebben als
+            <strong>basis</strong> — die staan vooraan in de wizard.
+          </p>
+        } @else {
+          <p class="lede">De bouwstenen van je bar — alle ingrediënten in de catalogus.</p>
+        }
       </div>
     </header>
 
-    <form class="add-row" (ngSubmit)="save()">
-      <mat-form-field appearance="outline" class="name">
-        <mat-label>Naam</mat-label>
-        <input matInput [formControl]="nameCtrl" required />
-      </mat-form-field>
+    @if (admin) {
+      <form class="add-row" (ngSubmit)="save()">
+        <mat-form-field appearance="outline" class="name">
+          <mat-label>Naam</mat-label>
+          <input matInput [formControl]="nameCtrl" required />
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="cat">
-        <mat-label>Categorie</mat-label>
-        <mat-select [formControl]="categoryCtrl">
-          <mat-option [value]="null">— geen —</mat-option>
-          @for (cat of categories; track cat) {
-            <mat-option [value]="cat">{{ catLabels[cat] }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="cat">
+          <mat-label>Categorie</mat-label>
+          <mat-select [formControl]="categoryCtrl">
+            <mat-option [value]="null">— geen —</mat-option>
+            @for (cat of categories; track cat) {
+              <mat-option [value]="cat">{{ catLabels[cat] }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-      <mat-checkbox [formControl]="stapleCtrl">Basis</mat-checkbox>
+        <mat-checkbox [formControl]="stapleCtrl">Basis</mat-checkbox>
 
-      <button mat-flat-button type="submit" [disabled]="!nameCtrl.value.trim()">
-        {{ editingId() ? 'Bijwerken' : 'Toevoegen' }}
-      </button>
-      @if (editingId()) {
-        <button mat-button type="button" (click)="cancelEdit()">Annuleren</button>
-      }
-    </form>
+        <button mat-flat-button type="submit" [disabled]="!nameCtrl.value.trim()">
+          {{ editingId() ? 'Bijwerken' : 'Toevoegen' }}
+        </button>
+        @if (editingId()) {
+          <button mat-button type="button" (click)="cancelEdit()">Annuleren</button>
+        }
+      </form>
+    }
 
     @if (loading()) {
       <p class="muted">Laden…</p>
@@ -91,12 +98,14 @@ interface Group {
                   <span class="pill pill--ok">basis</span>
                 }
                 <span class="spacer"></span>
-                <button mat-icon-button type="button" (click)="edit(ing)" aria-label="bewerk">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button type="button" (click)="remove(ing)" aria-label="verwijder">
-                  <mat-icon>delete_outline</mat-icon>
-                </button>
+                @if (admin) {
+                  <button mat-icon-button type="button" (click)="edit(ing)" aria-label="bewerk">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button type="button" (click)="remove(ing)" aria-label="verwijder">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
+                }
               </div>
             }
           </div>
@@ -180,6 +189,7 @@ export class IngredientList {
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
 
+  protected readonly admin = environment.admin;
   readonly categories = INGREDIENT_CATEGORIES;
   readonly catLabels = CATEGORY_LABELS;
   readonly ingredients = signal<Ingredient[]>([]);
