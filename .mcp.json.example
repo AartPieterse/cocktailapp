@@ -1,0 +1,14 @@
+{
+  "//": "Copy this file to .mcp.json (gitignored), paste your Atlas URI, then reload Claude Code.",
+  "mcpServers": {
+    "mongodb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mongodb-mcp-server@latest",
+        "--connectionString",
+        "PASTE_YOUR_ATLAS_MONGODB_URI_HERE"
+      ]
+    }
+  }
+}
