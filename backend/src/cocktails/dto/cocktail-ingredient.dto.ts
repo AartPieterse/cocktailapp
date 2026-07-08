@@ -1,6 +1,18 @@
-import type { CreateCocktailIngredient, MeasureUnit } from '@cocktailapp/shared';
+import type {
+  CreateCocktailIngredient,
+  MeasureUnit,
+} from '@cocktailapp/shared';
 import { MEASURE_UNITS } from '@cocktailapp/shared';
-import { IsIn, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import {
+  IsBoolean,
+  IsIn,
+  IsMongoId,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
 
 export class CocktailIngredientDto implements CreateCocktailIngredient {
   @IsOptional()
@@ -15,6 +27,14 @@ export class CocktailIngredientDto implements CreateCocktailIngredient {
   @Min(0)
   amount: number;
 
-  @IsIn(MEASURE_UNITS as unknown as string[])
+  @IsIn(MEASURE_UNITS)
   unit: MeasureUnit;
+
+  @IsOptional()
+  @IsString()
+  note?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  optional?: boolean;
 }

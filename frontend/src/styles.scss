@@ -1,34 +1,297 @@
 @use '@angular/material' as mat;
 
+// Material baseline: gives us component structure, density and typography plumbing.
+// The actual colours are driven by the editorial tokens below, which override the
+// --mat-sys-* custom properties the components read from.
 html {
-  color-scheme: light;
   @include mat.theme((
     color: (
       theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
+      primary: mat.$rose-palette,
+      tertiary: mat.$orange-palette,
     ),
-    typography: Roboto,
+    typography: (
+      plain-family: 'Inter, system-ui, sans-serif',
+      brand-family: 'Fraunces, Georgia, serif',
+    ),
     density: 0,
   ));
 }
 
-/* Global layout ported from the original CocktailApp */
+/* ============================================================
+   EDITORIAL DESIGN TOKENS
+   Light is the default; [data-theme="dark"] (stamped by ThemeService)
+   flips to the dark set. A prefers-color-scheme fallback covers the
+   brief moment before JS runs.
+   ============================================================ */
+:root {
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --surface-2: #f4f1ea;
+  --ink: #1a1712;
+  --muted: #6e675c;
+  --faint: #928b7f;
+  --hairline: #e6e1d7;
+  --accent: #c0402b;
+  --accent-strong: #a4331f;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(192, 64, 43, 0.10);
+  --ok: #3e7d5a;
+  --ok-soft: rgba(62, 125, 90, 0.12);
+  --warn: #b8791f;
+  --shadow: 0 1px 2px rgba(26, 23, 18, 0.04), 0 8px 24px rgba(26, 23, 18, 0.06);
+
+  // Type scale (fluid-ish, editorial)
+  --step--1: 0.833rem;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.5rem;
+  --step-3: 2rem;
+  --step-4: 2.75rem;
+  --step-5: clamp(2.8rem, 6vw, 4.5rem);
+
+  // Spacing scale
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  --radius: 6px;
+  --radius-lg: 12px;
+  --container: 1120px;
+
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+  color-scheme: light;
+}
+
+html[data-theme='dark'] {
+  --bg: #16130f;
+  --surface: #1e1a15;
+  --surface-2: #262019;
+  --ink: #f4efe6;
+  --muted: #a79e90;
+  --faint: #8a8073;
+  --hairline: #322b22;
+  --accent: #e0745a;
+  --accent-strong: #eb8168;
+  --accent-ink: #1a1207;
+  --accent-soft: rgba(224, 116, 90, 0.14);
+  --ok: #79b892;
+  --ok-soft: rgba(121, 184, 146, 0.16);
+  --warn: #d8a44e;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.4);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    --bg: #16130f;
+    --surface: #1e1a15;
+    --surface-2: #262019;
+    --ink: #f4efe6;
+    --muted: #a79e90;
+    --faint: #8a8073;
+    --hairline: #322b22;
+    --accent: #e0745a;
+    --accent-strong: #eb8168;
+    --accent-ink: #1a1207;
+    --accent-soft: rgba(224, 116, 90, 0.14);
+    --ok: #79b892;
+    --ok-soft: rgba(121, 184, 146, 0.16);
+    --warn: #d8a44e;
+    color-scheme: dark;
+  }
+}
+
+/* Bridge editorial tokens → Material system tokens so MDC components match. */
+html {
+  --mat-sys-primary: var(--accent);
+  --mat-sys-on-primary: var(--accent-ink);
+  --mat-sys-surface: var(--surface);
+  --mat-sys-surface-container: var(--surface-2);
+  --mat-sys-surface-container-high: var(--surface-2);
+  --mat-sys-surface-container-highest: var(--surface-2);
+  --mat-sys-surface-container-low: var(--surface);
+  --mat-sys-background: var(--bg);
+  --mat-sys-on-surface: var(--ink);
+  --mat-sys-on-background: var(--ink);
+  --mat-sys-on-surface-variant: var(--muted);
+  --mat-sys-outline: var(--faint);
+  --mat-sys-outline-variant: var(--hairline);
+  --mat-sys-secondary: var(--ink);
+  --mat-sys-on-secondary: var(--surface);
+}
+
+/* ============================================================
+   GLOBAL ELEMENTS
+   ============================================================ */
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
 }
 
 body {
-  margin: auto;
-  width: 90%;
-  padding: 10px;
-  background: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--sp-3);
+  color: var(--ink);
+}
+
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); }
+
+p { margin: 0 0 var(--sp-3); }
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 hr {
   border: none;
-  border-top: 1px solid var(--mat-sys-outline-variant);
-  margin: 16px 0;
+  border-top: 1px solid var(--hairline);
+  margin: var(--sp-5) 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--sp-5);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 var(--sp-2);
+}
+
+.lede {
+  font-size: var(--step-1);
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.muted { color: var(--muted); }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--sp-5);
+}
+
+/* Chips / pills */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  font-size: var(--step--1);
+  color: var(--muted);
+  background: var(--surface);
+  white-space: nowrap;
+}
+
+.pill--accent {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  background: var(--accent-soft);
+}
+
+.pill--ok {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 35%, transparent);
+  background: var(--ok-soft);
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--ink) 6%, transparent),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Snackbar accent for errors */
+.snack-error {
+  --mdc-snackbar-container-color: var(--accent-strong);
+  --mdc-snackbar-supporting-text-color: #fff;
+  --mat-snack-bar-button-color: #fff;
+}
+
+/* Print: recipe only */
+@media print {
+  app-navbar,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
 }

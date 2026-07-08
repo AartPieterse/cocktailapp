@@ -17,11 +17,25 @@ export type IngredientDocument = HydratedDocument<Ingredient>;
   },
 })
 export class Ingredient {
-  @Prop({ required: true, unique: true, trim: true })
+  @Prop({ required: true, trim: true })
   name: string;
 
   @Prop({ type: String, enum: [...INGREDIENT_CATEGORIES], required: false })
   category?: IngredientCategory;
+
+  @Prop({ default: false })
+  isStaple: boolean;
 }
 
 export const IngredientSchema = SchemaFactory.createForClass(Ingredient);
+
+// Case-insensitive unique name: "Gin" and "gin" collapse to one catalog entry, so
+// availability matching never splits across duplicate ids. (collation strength 2 = case-insensitive)
+IngredientSchema.index(
+  { name: 1 },
+  {
+    unique: true,
+    name: 'name_ci_unique',
+    collation: { locale: 'en', strength: 2 },
+  },
+);

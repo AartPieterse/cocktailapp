@@ -1,6 +1,21 @@
-import type { CreateCocktail } from '@cocktailapp/shared';
+import type {
+  CreateCocktail,
+  Difficulty,
+  Glassware,
+  Method,
+} from '@cocktailapp/shared';
+import { DIFFICULTIES, GLASSWARE, METHODS } from '@cocktailapp/shared';
 import { Type } from 'class-transformer';
-import { IsArray, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsIn,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Min,
+  ValidateNested,
+} from 'class-validator';
 import { CocktailIngredientDto } from './cocktail-ingredient.dto';
 
 export class CreateCocktailDto implements CreateCocktail {
@@ -22,6 +37,27 @@ export class CreateCocktailDto implements CreateCocktail {
   @ValidateNested({ each: true })
   @Type(() => CocktailIngredientDto)
   ingredients?: CocktailIngredientDto[];
+
+  @IsOptional()
+  @IsIn(GLASSWARE)
+  glass?: Glassware;
+
+  @IsOptional()
+  @IsIn(METHODS)
+  method?: Method;
+
+  @IsOptional()
+  @IsIn(DIFFICULTIES)
+  difficulty?: Difficulty;
+
+  @IsOptional()
+  @IsString()
+  garnish?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  servings?: number;
 
   @IsOptional()
   @IsArray()

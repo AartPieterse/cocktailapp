@@ -1,6 +1,8 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
+import { MongoExceptionFilter } from './common/mongo-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -8,8 +10,14 @@ async function bootstrap() {
   // All routes are served under /api (e.g. http://localhost:3000/api/cocktails).
   app.setGlobalPrefix('api');
 
-  // The Angular dev server runs on a different origin.
-  app.enableCors();
+  // Sensible security headers.
+  app.use(helmet());
+
+  // Restrict CORS to configured origins in production; reflect any origin in dev.
+  const corsOrigin = process.env.CORS_ORIGIN;
+  app.enableCors({
+    origin: corsOrigin ? corsOrigin.split(',').map((o) => o.trim()) : true,
+  });
 
   // Validate + strip unknown properties, and transform payloads into DTO classes
   // (needed for nested validation of cocktail ingredient lines).
@@ -21,9 +29,15 @@ async function bootstrap() {
     }),
   );
 
+  // Map Mongoose/Mongo errors to clean HTTP status codes.
+  app.useGlobalFilters(new MongoExceptionFilter());
+
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
-  // eslint-disable-next-line no-console
-  console.log(`CocktailApp API listening on http://localhost:${port}/api`);
+
+  Logger.log(
+    `Barkast API listening on http://localhost:${port}/api`,
+    'Bootstrap',
+  );
 }
 void bootstrap();

@@ -1,6 +1,12 @@
 import type { CreateIngredient, IngredientCategory } from '@cocktailapp/shared';
 import { INGREDIENT_CATEGORIES } from '@cocktailapp/shared';
-import { IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateIngredientDto implements CreateIngredient {
   @IsString()
@@ -8,6 +14,10 @@ export class CreateIngredientDto implements CreateIngredient {
   name: string;
 
   @IsOptional()
-  @IsIn(INGREDIENT_CATEGORIES as unknown as string[])
+  @IsIn(INGREDIENT_CATEGORIES)
   category?: IngredientCategory;
+
+  @IsOptional()
+  @IsBoolean()
+  isStaple?: boolean;
 }

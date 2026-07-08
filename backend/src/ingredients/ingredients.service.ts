@@ -1,21 +1,38 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { IngredientCategory } from '@cocktailapp/shared';
 import { Model, Types } from 'mongoose';
+import {
+  Cocktail,
+  CocktailDocument,
+} from '../cocktails/schemas/cocktail.schema';
 import { CreateIngredientDto } from './dto/create-ingredient.dto';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 import { Ingredient, IngredientDocument } from './schemas/ingredient.schema';
+
+/** Case-insensitive collation so "Gin" and "gin" are treated as the same name. */
+const CI = { locale: 'en', strength: 2 } as const;
 
 @Injectable()
 export class IngredientsService {
   constructor(
     @InjectModel(Ingredient.name)
     private readonly ingredientModel: Model<IngredientDocument>,
+    @InjectModel(Cocktail.name)
+    private readonly cocktailModel: Model<CocktailDocument>,
   ) {}
 
   findAll(category?: IngredientCategory) {
     const filter = category ? { category } : {};
-    return this.ingredientModel.find(filter).sort({ name: 1 }).exec();
+    return this.ingredientModel
+      .find(filter)
+      .sort({ name: 1 })
+      .collation(CI)
+      .exec();
   }
 
   create(dto: CreateIngredientDto) {
@@ -23,6 +40,9 @@ export class IngredientsService {
   }
 
   async update(id: string, dto: UpdateIngredientDto) {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException(`Ingredient ${id} not found`);
+    }
     const patch = dto.name ? { ...dto, name: dto.name.trim() } : dto;
     const updated = await this.ingredientModel
       .findByIdAndUpdate(id, patch, { new: true })
@@ -30,10 +50,33 @@ export class IngredientsService {
     if (!updated) {
       throw new NotFoundException(`Ingredient ${id} not found`);
     }
+
+    // Keep denormalized names in cocktail ingredient lines in sync on rename.
+    if (patch.name) {
+      await this.cocktailModel
+        .updateMany(
+          { 'ingredients.ingredientId': updated._id },
+          { $set: { 'ingredients.$[line].name': updated.name } },
+          { arrayFilters: [{ 'line.ingredientId': updated._id }] },
+        )
+        .exec();
+    }
     return updated;
   }
 
   async remove(id: string) {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException(`Ingredient ${id} not found`);
+    }
+    // Guard referential integrity: refuse to orphan cocktail recipes.
+    const usedBy = await this.cocktailModel
+      .countDocuments({ 'ingredients.ingredientId': id })
+      .exec();
+    if (usedBy > 0) {
+      throw new ConflictException(
+        `Ingredient wordt gebruikt in ${usedBy} cocktail${usedBy === 1 ? '' : 's'} en kan niet worden verwijderd.`,
+      );
+    }
     const deleted = await this.ingredientModel.findByIdAndDelete(id).exec();
     if (!deleted) {
       throw new NotFoundException(`Ingredient ${id} not found`);
@@ -42,7 +85,7 @@ export class IngredientsService {
 
   /**
    * Resolve an ingredient name to a catalog document, creating it if needed.
-   * Used when saving a cocktail so every ingredient line carries a stable id.
+   * Case-insensitive so typos in casing don't spawn duplicate catalog entries.
    */
   findOrCreateByName(name: string) {
     const trimmed = name.trim();
@@ -50,12 +93,8 @@ export class IngredientsService {
       .findOneAndUpdate(
         { name: trimmed },
         { $setOnInsert: { name: trimmed } },
-        { upsert: true, new: true },
+        { upsert: true, new: true, collation: CI },
       )
       .exec();
-  }
-
-  toObjectId(id: string): Types.ObjectId | null {
-    return Types.ObjectId.isValid(id) ? new Types.ObjectId(id) : null;
   }
 }

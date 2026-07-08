@@ -7,7 +7,9 @@ import { Cocktail, CocktailSchema } from './schemas/cocktail.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Cocktail.name, schema: CocktailSchema }]),
+    MongooseModule.forFeature([
+      { name: Cocktail.name, schema: CocktailSchema },
+    ]),
     IngredientsModule,
   ],
   controllers: [CocktailsController],

@@ -1,6 +1,5 @@
 import {
   Body,
-  ConflictException,
   Controller,
   Delete,
   Get,
@@ -25,15 +24,8 @@ export class IngredientsController {
   }
 
   @Post()
-  async create(@Body() dto: CreateIngredientDto) {
-    try {
-      return await this.ingredientsService.create(dto);
-    } catch (err: any) {
-      if (err?.code === 11000) {
-        throw new ConflictException(`Ingredient "${dto.name}" already exists`);
-      }
-      throw err;
-    }
+  create(@Body() dto: CreateIngredientDto) {
+    return this.ingredientsService.create(dto);
   }
 
   @Patch(':id')

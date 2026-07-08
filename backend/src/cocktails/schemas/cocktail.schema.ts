@@ -1,6 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import type { MeasureUnit } from '@cocktailapp/shared';
-import { MEASURE_UNITS } from '@cocktailapp/shared';
+import type {
+  Difficulty,
+  Glassware,
+  MeasureUnit,
+  Method,
+} from '@cocktailapp/shared';
+import {
+  DIFFICULTIES,
+  GLASSWARE,
+  MEASURE_UNITS,
+  METHODS,
+} from '@cocktailapp/shared';
 import { HydratedDocument, Types } from 'mongoose';
 
 export type CocktailDocument = HydratedDocument<Cocktail>;
@@ -18,9 +28,16 @@ export class CocktailIngredient {
 
   @Prop({ type: String, enum: [...MEASURE_UNITS], required: true })
   unit: MeasureUnit;
+
+  @Prop({ trim: true })
+  note?: string;
+
+  @Prop({ default: false })
+  optional?: boolean;
 }
 
-const CocktailIngredientSchema = SchemaFactory.createForClass(CocktailIngredient);
+const CocktailIngredientSchema =
+  SchemaFactory.createForClass(CocktailIngredient);
 
 @Schema({
   timestamps: true,
@@ -46,6 +63,21 @@ export class Cocktail {
   @Prop({ type: [CocktailIngredientSchema], default: [] })
   ingredients: CocktailIngredient[];
 
+  @Prop({ type: String, enum: [...GLASSWARE], required: false })
+  glass?: Glassware;
+
+  @Prop({ type: String, enum: [...METHODS], required: false })
+  method?: Method;
+
+  @Prop({ type: String, enum: [...DIFFICULTIES], required: false })
+  difficulty?: Difficulty;
+
+  @Prop({ trim: true })
+  garnish?: string;
+
+  @Prop({ default: 1, min: 1 })
+  servings: number;
+
   @Prop({ type: [String], default: [] })
   tags: string[];
 
@@ -54,3 +86,7 @@ export class Cocktail {
 }
 
 export const CocktailSchema = SchemaFactory.createForClass(Cocktail);
+
+// Indexes for the filtered/searched paths.
+CocktailSchema.index({ tags: 1 });
+CocktailSchema.index({ 'ingredients.ingredientId': 1 });

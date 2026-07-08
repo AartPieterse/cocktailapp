@@ -3,18 +3,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 
 export interface ConfirmData {
+  title?: string;
   message: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
 }
 
 @Component({
   selector: 'app-confirm-dialog',
   imports: [MatDialogModule, MatButtonModule],
   template: `
-    <h2 mat-dialog-title>Bevestigen</h2>
+    <h2 mat-dialog-title>{{ data.title ?? 'Bevestigen' }}</h2>
     <mat-dialog-content>{{ data.message }}</mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button [mat-dialog-close]="false">Annuleren</button>
-      <button mat-flat-button [mat-dialog-close]="true">Verwijderen</button>
+      <button mat-button [mat-dialog-close]="false">{{ data.cancelLabel ?? 'Annuleren' }}</button>
+      <button mat-flat-button [mat-dialog-close]="true">{{ data.confirmLabel ?? 'Verwijderen' }}</button>
     </mat-dialog-actions>
   `,
 })

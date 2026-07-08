@@ -17,9 +17,11 @@
     "dev": "npm run build:shared && concurrently -n backend,frontend -c blue,green \"npm run start:dev --workspace backend\" \"npm run start --workspace frontend\"",
     "db:ping": "node scripts/db-ping.mjs",
     "db:count": "node scripts/db-count.mjs",
+    "db:seed": "node scripts/db-seed.mjs",
     "db:shell": "node scripts/db-shell.mjs"
   },
   "devDependencies": {
-    "concurrently": "^10.0.3"
+    "concurrently": "^10.0.3",
+    "mongodb-mcp-server": "1.13.0"
   }
 }

@@ -10,8 +10,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { CocktailsService } from './cocktails.service';
-import { CocktailSearchDto } from './dto/cocktail-search.dto';
 import { CreateCocktailDto } from './dto/create-cocktail.dto';
+import { MakeableSearchDto } from './dto/makeable-search.dto';
 import { UpdateCocktailDto } from './dto/update-cocktail.dto';
 
 @Controller('cocktails')
@@ -23,10 +23,15 @@ export class CocktailsController {
     return this.cocktailsService.findAll(q, tag);
   }
 
-  @Post('search')
+  @Post('makeable')
   @HttpCode(200)
-  search(@Body() dto: CocktailSearchDto) {
-    return this.cocktailsService.search(dto);
+  makeable(@Body() dto: MakeableSearchDto) {
+    return this.cocktailsService.makeable(dto);
+  }
+
+  @Get('random')
+  random() {
+    return this.cocktailsService.random();
   }
 
   @Get(':id')

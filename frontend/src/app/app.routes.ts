@@ -6,21 +6,28 @@ export const routes: Routes = [
     path: '',
     component: Layout,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      { path: '', pathMatch: 'full', redirectTo: 'bar' },
       {
-        path: 'dashboard',
-        loadComponent: () => import('./dashboard/dashboard').then((m) => m.Dashboard),
+        path: 'bar',
+        title: 'Mijn bar — Barkast',
+        loadComponent: () => import('./bar/bar').then((m) => m.Bar),
+      },
+      {
+        path: 'bar/wizard',
+        title: 'Stel je bar samen — Barkast',
+        loadComponent: () => import('./bar/wizard/wizard').then((m) => m.Wizard),
       },
       {
         path: 'cocktails',
         loadChildren: () => import('./cocktails/cocktails.routes').then((m) => m.COCKTAIL_ROUTES),
       },
       {
-        path: 'ingredients',
-        loadChildren: () =>
-          import('./ingredients/ingredients.routes').then((m) => m.INGREDIENT_ROUTES),
+        path: 'ingredienten',
+        title: 'Ingrediënten — Barkast',
+        loadComponent: () =>
+          import('./ingredients/ingredient-list/ingredient-list').then((m) => m.IngredientList),
       },
     ],
   },
-  { path: '**', redirectTo: 'dashboard' },
+  { path: '**', redirectTo: 'bar' },
 ];
