@@ -18,6 +18,8 @@ export interface CocktailIngredient {
 export interface Cocktail {
   id: string;
   name: string;
+  /** Optional grouping / family (e.g. an IBA category like "The Unforgettables"). */
+  category?: string;
   description: string;
   instructions: string[];
   ingredients: CocktailIngredient[];
@@ -25,6 +27,8 @@ export interface Cocktail {
   method?: Method;
   difficulty?: Difficulty;
   garnish?: string;
+  /** Free-form notes and named variations, kept out of the step-by-step instructions. */
+  notes?: string;
   /** Base number of servings the amounts are written for (default 1). */
   servings?: number;
   tags?: string[];
@@ -45,6 +49,7 @@ export interface CreateCocktailIngredient {
 
 export interface CreateCocktail {
   name: string;
+  category?: string;
   description?: string;
   instructions?: string[];
   ingredients?: CreateCocktailIngredient[];
@@ -52,6 +57,7 @@ export interface CreateCocktail {
   method?: Method;
   difficulty?: Difficulty;
   garnish?: string;
+  notes?: string;
   servings?: number;
   tags?: string[];
   imageUrl?: string;

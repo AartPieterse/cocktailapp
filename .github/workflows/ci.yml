@@ -1,0 +1,41 @@
+name: CI
+
+# Guard the release path: every PR into main is built exactly the way Netlify builds it,
+# so a broken build is caught before it can auto-deploy. Also runs on development pushes.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [development]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared types
+        run: npm run build:shared
+
+      - name: Regenerate catalog and verify it is committed
+        run: |
+          npm run build:catalog
+          git diff --exit-code -- frontend/public/catalog.json \
+            || { echo "::error::catalog.json is out of date — run 'npm run build:catalog' and commit it."; exit 1; }
+
+      - name: Build frontend (production)
+        run: npm run build --workspace frontend
+
+      - name: Build backend
+        run: npm run build --workspace backend
+
+      - name: Backend unit tests
+        run: npm test --workspace backend

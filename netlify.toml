@@ -1,0 +1,23 @@
+# Netlify build configuration for Barkast (static-first Angular SPA).
+#
+# This file is the source of truth for the build — it overrides the settings in the Netlify
+# UI. NOTE: a build plugin added via the Netlify UI (e.g. "@netlify/angular-runtime") keeps
+# running even with this file present; remove it under Site config → Build & deploy → Build
+# plugins. This app is a plain static SPA and needs no runtime plugin.
+
+[build]
+  # Build the shared types, generate the static catalog, then build the Angular app.
+  command = "npm run build:shared && npm run build:catalog && npm run build --workspace frontend"
+  # The Angular application builder emits the browser bundle here.
+  publish = "frontend/dist/frontend/browser"
+
+[build.environment]
+  # Angular 21 CLI requires Node >= 24.
+  NODE_VERSION = "24"
+
+# SPA fallback: serve index.html for client-side routes. Static files (e.g. /catalog.json)
+# are matched first, so this only catches unknown app routes.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

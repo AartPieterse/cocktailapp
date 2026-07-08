@@ -26,6 +26,10 @@ export class UpdateCocktailDto implements UpdateCocktail {
 
   @IsOptional()
   @IsString()
+  category?: string;
+
+  @IsOptional()
+  @IsString()
   description?: string;
 
   @IsOptional()
@@ -54,6 +58,10 @@ export class UpdateCocktailDto implements UpdateCocktail {
   @IsOptional()
   @IsString()
   garnish?: string;
+
+  @IsOptional()
+  @IsString()
+  notes?: string;
 
   @IsOptional()
   @IsInt()

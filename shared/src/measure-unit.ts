@@ -7,8 +7,11 @@ export type MeasureUnit =
   | 'cube'
   | 'drop'
   | 'dash'
+  | 'splash'
+  | 'pinch'
   | 'teaspoon'
   | 'tablespoon'
+  | 'barspoon'
   | 'slice'
   | 'wedge'
   | 'sprig'
@@ -22,8 +25,11 @@ export const MEASURE_UNITS: readonly MeasureUnit[] = [
   'cube',
   'drop',
   'dash',
+  'splash',
+  'pinch',
   'teaspoon',
   'tablespoon',
+  'barspoon',
   'slice',
   'wedge',
   'sprig',
@@ -39,8 +45,11 @@ export const MEASURE_LABELS: Record<MeasureUnit, string> = {
   cube: 'blokje',
   drop: 'druppel',
   dash: 'scheutje',
+  splash: 'scheut',
+  pinch: 'snufje',
   teaspoon: 'tl',
   tablespoon: 'el',
+  barspoon: 'barlepel',
   slice: 'schijf',
   wedge: 'partje',
   sprig: 'takje',

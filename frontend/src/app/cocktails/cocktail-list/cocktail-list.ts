@@ -14,6 +14,7 @@ import { FavoritesService } from '../../core/favorites.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { CocktailCard } from '../cocktail-card/cocktail-card';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-cocktail-list',
@@ -32,7 +33,9 @@ import { CocktailCard } from '../cocktail-card/cocktail-card';
         <p class="eyebrow">De collectie</p>
         <h1>Cocktails</h1>
       </div>
-      <a mat-flat-button routerLink="/cocktails/add"><mat-icon>add</mat-icon> Nieuwe cocktail</a>
+      @if (admin) {
+        <a mat-flat-button routerLink="/cocktails/add"><mat-icon>add</mat-icon> Nieuwe cocktail</a>
+      }
     </header>
 
     <div class="toolbar">
@@ -82,8 +85,10 @@ import { CocktailCard } from '../cocktail-card/cocktail-card';
       <div class="card-grid">
         @for (c of visible(); track c.id) {
           <app-cocktail-card [cocktail]="c">
-            <a mat-button [routerLink]="['/cocktails', c.id, 'edit']">Bewerk</a>
-            <button mat-button (click)="remove(c)">Verwijder</button>
+            @if (admin) {
+              <a mat-button [routerLink]="['/cocktails', c.id, 'edit']">Bewerk</a>
+              <button mat-button (click)="remove(c)">Verwijder</button>
+            }
           </app-cocktail-card>
         }
       </div>
@@ -94,9 +99,11 @@ import { CocktailCard } from '../cocktail-card/cocktail-card';
         <p class="muted">
           @if (onlyFavs()) {
             Je hebt nog geen favorieten. Tik op het hartje van een cocktail.
-          } @else {
+          } @else if (admin) {
             Pas je zoekopdracht aan of
             <a routerLink="/cocktails/add">voeg een nieuwe cocktail toe</a>.
+          } @else {
+            Pas je zoekopdracht aan.
           }
         </p>
       </div>
@@ -194,6 +201,8 @@ export class CocktailList {
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly route = inject(ActivatedRoute);
+
+  protected readonly admin = environment.admin;
 
   readonly searchCtrl = new FormControl('', { nonNullable: true });
   readonly activeTag = signal<string | null>(this.route.snapshot.queryParamMap.get('tag'));

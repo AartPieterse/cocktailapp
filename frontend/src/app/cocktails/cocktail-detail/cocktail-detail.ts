@@ -20,6 +20,7 @@ import { FavoritesService } from '../../core/favorites.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { CocktailThumb } from '../../shared/cocktail-thumb/cocktail-thumb';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-cocktail-detail',
@@ -66,12 +67,14 @@ import { CocktailThumb } from '../../shared/cocktail-thumb/cocktail-thumb';
                 {{ isFav(c) ? 'Favoriet' : 'Bewaar' }}
               </button>
               <button mat-stroked-button (click)="print()"><mat-icon>print</mat-icon> Print</button>
-              <a mat-stroked-button [routerLink]="['/cocktails', c.id, 'edit']">
-                <mat-icon>edit</mat-icon> Bewerk
-              </a>
-              <button mat-icon-button (click)="remove(c)" aria-label="Verwijder" matTooltip="Verwijder">
-                <mat-icon>delete_outline</mat-icon>
-              </button>
+              @if (admin) {
+                <a mat-stroked-button [routerLink]="['/cocktails', c.id, 'edit']">
+                  <mat-icon>edit</mat-icon> Bewerk
+                </a>
+                <button mat-icon-button (click)="remove(c)" aria-label="Verwijder" matTooltip="Verwijder">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+              }
             </div>
           </div>
         </div>
@@ -336,6 +339,8 @@ export class CocktailDetail {
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
+
+  protected readonly admin = environment.admin;
 
   readonly cocktail = signal<Cocktail | null>(null);
   readonly loading = signal(true);
