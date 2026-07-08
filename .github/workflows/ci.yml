@@ -84,15 +84,17 @@ jobs:
         run: npm run build --workspace frontend
 
       - name: Deploy to Netlify (production)
-        # No --build: deploy the already-built directory as-is, so Netlify never runs (and
-        # never auto-installs the Angular runtime). --filter selects the workspace package
-        # so the CLI doesn't abort on npm-workspaces "multiple projects" detection; --dir is
-        # absolute to avoid base-relative ambiguity under --filter. SPA routing is handled by
-        # the committed frontend/public/_redirects, which ships inside the deployed bundle.
-        run: >
-          npx --yes netlify-cli deploy
-          --prod
-          --filter frontend
-          --site="$NETLIFY_SITE_ID"
-          --dir="$GITHUB_WORKSPACE/frontend/dist/frontend/browser"
-          --message="CI deploy ${GITHUB_SHA::7} (${GITHUB_REF_NAME})"
+        # Deploy the already-built SPA from a directory OUTSIDE the repo checkout. Two reasons:
+        #   1. Running the Netlify CLI inside the npm-workspaces tree makes it abort with
+        #      "multiple projects detected" — running from a plain dir avoids that entirely.
+        #   2. There is no netlify.toml / package.json above this dir, so the CLI can't resolve
+        #      a build command or plugins — it does a pure static upload (no build, no plugin).
+        # (The site's server-side @netlify/angular-runtime plugin registration was also removed
+        # via the API; this keeps the deploy plugin-free regardless.) SPA routing ships via the
+        # committed frontend/public/_redirects, which is inside the copied bundle.
+        run: |
+          publish="$RUNNER_TEMP/netlify-publish"
+          rm -rf "$publish"; mkdir -p "$publish"
+          cp -a "$GITHUB_WORKSPACE/frontend/dist/frontend/browser/." "$publish/"
+          cd "$publish"
+          npx --yes netlify-cli deploy --prod --dir=. --site="$NETLIFY_SITE_ID" --message="CI deploy ${GITHUB_SHA::7} (${GITHUB_REF_NAME})"
