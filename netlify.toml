@@ -9,7 +9,7 @@
   # Build the shared types, generate the static catalog, then build the Angular app.
   command = "npm run build:shared && npm run build:catalog && npm run build --workspace frontend"
   # The Angular application builder emits the browser bundle here.
-  publish = "frontend/dist/frontend/browser"
+  publish = "dist/frontend/browser"
 
 [build.environment]
   # Angular 21 CLI requires Node >= 24.
