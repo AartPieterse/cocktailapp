@@ -1,12 +1,19 @@
 name: CI
 
-# Guard the release path: every PR into main is built exactly the way Netlify builds it,
-# so a broken build is caught before it can auto-deploy. Also runs on development pushes.
+# Guard the release path AND publish it.
+#
+# Netlify's own builds are STOPPED for this project: it auto-installs the
+# @netlify/angular-runtime plugin (framework detection), which cannot build this
+# npm-workspaces monorepo from the repo root. So GitHub Actions is the sole path to
+# production — it builds the static SPA here and pushes the finished files to Netlify.
+#
+#   PR into main / push to development -> build + verify (gate)
+#   push to main (merged PR)           -> build + verify, then deploy to Netlify
 on:
   pull_request:
     branches: [main]
   push:
-    branches: [development]
+    branches: [development, main]
 
 jobs:
   build:
@@ -39,3 +46,48 @@ jobs:
 
       - name: Backend unit tests
         run: npm test --workspace backend
+
+  deploy:
+    # Publish the static SPA to Netlify. Only after a green build on main (a merged PR).
+    #
+    # Requires one repository secret:
+    #   NETLIFY_AUTH_TOKEN — Netlify → User settings → Applications → New access token
+    # NETLIFY_SITE_ID below is the site's API ID, not a secret (it appears in every deploy
+    # URL); move it to a secret if you prefer. The Netlify CLI reads both from the env.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: netlify-production
+      cancel-in-progress: false
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: abff2bf1-356b-4be6-ab90-d314080ee2e3
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared types
+        run: npm run build:shared
+
+      - name: Generate static catalog
+        run: npm run build:catalog
+
+      - name: Build frontend (production)
+        run: npm run build --workspace frontend
+
+      - name: Deploy to Netlify (production)
+        # No --build: we deploy the already-built directory as-is, so Netlify never runs
+        # (and never auto-installs the Angular runtime).
+        run: >
+          npx --yes netlify-cli deploy
+          --prod
+          --dir=frontend/dist/frontend/browser
+          --message="CI deploy ${GITHUB_SHA::7} (${GITHUB_REF_NAME})"
