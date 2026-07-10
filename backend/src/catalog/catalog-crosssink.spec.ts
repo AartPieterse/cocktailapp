@@ -16,7 +16,9 @@ import { CatalogService } from './catalog.service';
  */
 const ROOT = join(__dirname, '..', '..', '..');
 const seed = JSON.parse(readFileSync(join(ROOT, 'iba-cocktails-seed.json'), 'utf8'));
-const bundle = JSON.parse(readFileSync(join(ROOT, 'app', 'assets', 'catalog.json'), 'utf8'));
+const bundle = JSON.parse(
+  readFileSync(join(ROOT, 'frontend', 'public', 'catalog.json'), 'utf8'),
+);
 
 /** Reshape the resolved catalog into the doc shape Mongo stores + findAll returns (with `id`). */
 function toMongoDocs() {

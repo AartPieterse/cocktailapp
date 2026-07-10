@@ -1,11 +1,11 @@
 /**
  * build-catalog.mjs — generate the static catalog every client ships.
  *
- * Reads the curated source of truth (iba-cocktails-seed.json) and emits the catalog to two
- * sinks: frontend/public/catalog.json (the Angular static-first app) and app/assets/catalog.json
- * (the Expo app's offline bundle). The catalog is SHAPED by the shared `buildCatalog` — the exact
- * same function the backend's GET /api/catalog uses — so every sink agrees byte-for-byte and shares
- * one stable slug-id space (a user's cabinet stays valid across offline bundle ⇄ API).
+ * Reads the curated source of truth (iba-cocktails-seed.json) and emits the catalog to
+ * frontend/public/catalog.json (the Angular static-first PWA's offline bundle). The catalog is
+ * SHAPED by the shared `buildCatalog` — the exact same function the backend's GET /api/catalog
+ * uses — so the bundle agrees byte-for-byte with the API and shares one stable slug-id space
+ * (a user's cabinet stays valid across offline bundle ⇄ API).
  *
  * The catalog is stamped with a `version` — a SHA-256/12 over the resolved ingredients + cocktails.
  * The backend computes it with the IDENTICAL recipe (see backend CatalogService.buildPayload), so
@@ -28,17 +28,10 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
 const SRC = join(root, 'iba-cocktails-seed.json');
 const NL_SRC = join(here, 'translations-nl.json');
-// All sinks receive byte-identical catalog content (same version hash).
-const OUTPUTS = [
-  join(root, 'frontend', 'public', 'catalog.json'),
-  join(root, 'app', 'assets', 'catalog.json'),
-];
-// The Dutch overlay ships alongside each catalog, carrying the SAME version so a stale overlay is
+const OUTPUTS = [join(root, 'frontend', 'public', 'catalog.json')];
+// The Dutch overlay ships alongside the catalog, carrying the SAME version so a stale overlay is
 // ignored by applyCatalogTranslations (which falls back to canonical English).
-const NL_OUTPUTS = [
-  join(root, 'frontend', 'public', 'catalog.nl.json'),
-  join(root, 'app', 'assets', 'catalog.nl.json'),
-];
+const NL_OUTPUTS = [join(root, 'frontend', 'public', 'catalog.nl.json')];
 
 const raw = JSON.parse(readFileSync(SRC, 'utf8'));
 const { counts, ingredients, cocktails } = buildCatalog(
