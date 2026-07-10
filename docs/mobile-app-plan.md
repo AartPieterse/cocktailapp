@@ -1,6 +1,28 @@
 # Barkast — one Expo app for Android + web/PWA, local-first, self-hosted
 
-> Design/implementation plan. Status: **approved for build, not yet started.**
+> ## Implementation status (2026-07-10)
+> The code portions of this plan are **built**. Phases 1–12 are implemented and verified locally
+> (shared build + tests, backend build + tests, and a full Expo **static web export** rendering all
+> routes with the PWA wired). What remains is **operational**, not code: standing up the laptop,
+> buying the Cloudflare domain, submitting to Google Play, and the ISP/licensing/legal checks in
+> §Security — plus the deliberate final cutover in Phase 9 (repoint Netlify at the Expo web export
+> and delete `frontend/`), which should happen only after a human parity sign-off.
+>
+> **Implementation notes / deviations (pragmatic, documented):**
+> - **Styling:** React Native `StyleSheet` (a shared themed UI kit in `app/src/components/ui.tsx`)
+>   instead of NativeWind, and `@expo/vector-icons` MaterialIcons — no extra Babel/Tailwind build
+>   step, identical editorial palette ported from the web `styles.scss`.
+> - **Persistence:** `@react-native-async-storage/async-storage` (works on web + native, Expo Go
+>   compatible) instead of MMKV; the auth **refresh token** uses `expo-secure-store` (Keychain/
+>   Keystore on native, `localStorage` on web). Storage is SSR-safe so the static export renders.
+> - **Data fetching:** a small hand-rolled `fetch` client + a Zustand-backed catalog store with
+>   ETag/304 refresh and an offline cache, instead of TanStack Query.
+> - **Analytics active-device count** is intentionally **omitted** — counting devices needs a token
+>   we deliberately don't mint (honouring "no device fingerprint"); everything else in Part E ships.
+>
+> ---
+>
+> Design/implementation plan. Status: **built (code); operational bring-up pending.**
 > Supersedes the earlier Flutter / static-only draft. This version reflects: a single Expo (React
 > Native + react-native-web) codebase that **retires the Angular website**, **no Apple account**
 > (iOS reached via web/PWA), local-first with **optional** accounts, and **self-hosting from home**.

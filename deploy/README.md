@@ -18,8 +18,10 @@ iba-cocktails-seed.json ──db:seed──▶ MongoDB ◀──▶ API (:3000, 
 | `../backend/Dockerfile` | Multi-stage API image (build context = repo root). |
 | `docker-compose.yml` | `api` + `mongo` (locked down) + `cloudflared`. |
 | `docker-compose.seed.yml` | One-time override: bind Mongo to `127.0.0.1` for seeding. |
+| `docker-compose.admin.yml` | Overlay: publish the API on the LAN (`:8080`) for the admin dashboard. |
 | `.env.example` | Copy to `.env` and fill in secrets (gitignored). |
 | `backup.sh` / `restore.sh` | Encrypted (`age`) `mongodump` + tested restore. |
+| `deploy.sh` | Pull a GHCR image tag, back up, migrate, roll out; `--rollback`. |
 
 ## 1. Host setup (dedicated ASUS VivoBook Pro laptop)
 Ubuntu Server / Debian + Docker Engine. Laptop-as-server tweaks:
@@ -91,18 +93,48 @@ AGE_KEY_FILE=/secure/age-key.txt ./restore.sh backups/barkast-<stamp>.archive.gz
 ```
 
 ## 7. Updating
-- **Code:** `docker compose up -d --build` rebuilds the API image and restarts only what changed.
-  Because the app is local-first, a brief API restart only pauses sync — clients keep working from
-  cache. (Phase 11 adds GHCR image tags + a `deploy.sh` pull/rollback flow.)
+- **Code (recommended):** CI builds + tests every push to `main` and pushes a version-tagged image
+  to GHCR (`ghcr.io/<owner>/barkast-api:<git-sha>` + `:latest`). The box **pulls** by tag — no
+  inbound access needed:
+  ```bash
+  cd deploy
+  ./deploy.sh <git-sha>            # pull, encrypted pre-deploy backup, migrate, roll out full stack
+  ./deploy.sh <git-sha> --api-only # roll out only the api service
+  ./deploy.sh --rollback           # redeploy the previous tag (kept in .deployed-previous)
+  ```
+  Set `IMAGE_REPO` in `.env` to your GHCR package. Because the app is local-first, the brief API
+  restart only pauses sync — clients keep working from cache.
+- **Local build alternative:** `docker compose up -d --build` builds the image on the box instead of
+  pulling.
 - **Catalog:** edit `iba-cocktails-seed.json`, rebuild the offline bundle
-  (`npm run build:catalog`), and reseed (step 5).
+  (`npm run build:catalog`), and reseed (step 5). `db:seed` never touches `users` / user-data /
+  `analytics`.
+- **User-data schema:** versioned migrations via `migrate-mongo` run automatically by `deploy.sh`
+  (after the pre-deploy encrypted backup) when a `migrate-mongo-config.js` is present.
 
-## 8. Hardening checklist (before storing anyone's PII)
+## 8. LAN admin dashboard (analytics + operational metrics)
+The API serves a small owner-only dashboard at **`/api/admin/dashboard`** (JSON at
+`/api/admin/metrics`) showing anonymous aggregate product stats and in-process operational metrics
+(requests / errors / latency / uptime). It is protected two ways: **basic-auth**
+(`ADMIN_USER`/`ADMIN_PASSWORD`) **and** a guard that rejects any request arriving through the tunnel
+(so it is invisible on the public hostname even if the ingress were misconfigured).
+
+The base stack publishes no host ports, so reach it over the LAN with the overlay:
+```bash
+cd deploy
+docker compose -f docker-compose.yml -f docker-compose.admin.yml up -d
+# then, on the home network (optionally publish barkast.local via avahi/mDNS):
+#   http://<box-lan-ip>:8080/api/admin/dashboard
+```
+Never add `/api/admin` to the Cloudflare Tunnel ingress.
+
+## 9. Hardening checklist (before storing anyone's PII)
 - [ ] Put the host on a **separate VLAN**; keep OS + images patched (`docker compose pull`).
 - [ ] Mongo is **never** published to the host (only the seed override binds `127.0.0.1`, briefly).
 - [ ] Two **distinct** high-entropy JWT secrets; strong `MONGO_PASSWORD`.
 - [ ] `CORS_ORIGIN` is the real web origin (no reflect-any in prod — enforced at boot).
 - [ ] Nightly **encrypted** backups, stored **off-box**, with a **tested** restore.
-- [ ] Publish a **privacy policy**; `DELETE /api/me` erases account + data (GDPR).
+- [ ] Publish a **privacy policy** (`docs/privacy-policy.md`); `DELETE /api/me` erases account + data (GDPR).
 - [ ] Confirm the residential ISP allows hosting, and content licensing for bundled data/images.
-- [ ] (Later, Phase 10) LAN admin dashboard bound to the LAN only and excluded from the tunnel.
+- [ ] Set a strong `ADMIN_PASSWORD`; the LAN admin dashboard is bound to the LAN only and excluded
+      from the tunnel (basic-auth + CF-header rejection).
