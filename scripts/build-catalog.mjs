@@ -1,121 +1,61 @@
 /**
- * build-catalog.mjs — generate the static catalog the frontend ships.
+ * build-catalog.mjs — generate the static catalog every client ships.
  *
- * Reads the curated source of truth (iba-cocktails-seed.json) and emits
- * frontend/public/catalog.json, the single file the production (static-first) app
- * fetches at runtime. Every ingredient gets a deterministic slug id derived from its
- * name; cocktail ingredient lines are rewired to reference those ids. No database is
- * involved, so this runs anywhere (local, CI, Netlify) with zero credentials.
+ * Reads the curated source of truth (iba-cocktails-seed.json) and emits the catalog to two
+ * sinks: frontend/public/catalog.json (the Angular static-first app) and app/assets/catalog.json
+ * (the Expo app's offline bundle). The catalog is SHAPED by the shared `buildCatalog` — the exact
+ * same function the backend's GET /api/catalog uses — so every sink agrees byte-for-byte and shares
+ * one stable slug-id space (a user's cabinet stays valid across offline bundle ⇄ API).
  *
- * Output is deterministic (sorted, no timestamps) so a regenerated catalog only shows a
- * git diff when the underlying data actually changed.
+ * The catalog is stamped with a `version` — a SHA-256/12 over the resolved ingredients + cocktails.
+ * The backend computes it with the IDENTICAL recipe (see backend CatalogService.buildPayload), so
+ * bundle.version === /api/catalog.version whenever both are seeded from the same source. The hash
+ * is content-only (no timestamps), so a regenerated catalog only diffs when the data changed.
  *
+ * Requires the shared package to be built first (npm run build:shared).
  * Usage: node scripts/build-catalog.mjs   (or: npm run build:catalog)
  */
+import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+// Default-import the CommonJS shared build, then destructure (robust across the CJS/ESM boundary).
+import shared from '@cocktailapp/shared';
+
+const { buildCatalog } = shared;
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
 const SRC = join(root, 'iba-cocktails-seed.json');
-const OUT = join(root, 'frontend', 'public', 'catalog.json');
-
-/** Turn a display name into a stable, url-safe slug (accent-folded). */
-function slugify(name) {
-  return name
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '') // strip diacritics (Bénédictine -> Benedictine)
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-') // non-alphanumerics -> hyphen
-    .replace(/^-+|-+$/g, '') // trim leading/trailing hyphens
-    .replace(/-{2,}/g, '-'); // collapse runs
-}
-
-/** Assign a unique slug id, disambiguating rare collisions with a numeric suffix. */
-function makeUniqueId(name, used) {
-  const base = slugify(name) || 'item';
-  let id = base;
-  let n = 2;
-  while (used.has(id)) id = `${base}-${n++}`;
-  used.add(id);
-  return id;
-}
+// All sinks receive byte-identical catalog content (same version hash).
+const OUTPUTS = [
+  join(root, 'frontend', 'public', 'catalog.json'),
+  join(root, 'app', 'assets', 'catalog.json'),
+];
 
 const raw = JSON.parse(readFileSync(SRC, 'utf8'));
-const srcIngredients = raw.ingredients ?? [];
-const srcCocktails = raw.cocktails ?? [];
+const { counts, ingredients, cocktails } = buildCatalog(
+  raw.ingredients ?? [],
+  raw.cocktails ?? [],
+);
 
-// --- Ingredients: assign ids, build a name -> {id,name} lookup (case-insensitive). ---
-const usedIds = new Set();
-const byName = new Map();
-const ingredients = srcIngredients
-  .map((ing) => {
-    const name = ing.name.trim();
-    const id = makeUniqueId(name, usedIds);
-    const entry = {
-      id,
-      name,
-      ...(ing.category ? { category: ing.category } : {}),
-      isStaple: ing.isStaple ?? false,
-    };
-    byName.set(name.toLowerCase(), entry);
-    return entry;
-  })
-  .sort((a, b) => a.name.localeCompare(b.name));
+// Content hash over the resolved catalog only (ids + lines) — deterministic and independent of the
+// wrapping metadata below. IMPORTANT: keep this recipe identical to the backend CatalogService.
+const version = createHash('sha256')
+  .update(JSON.stringify({ ingredients, cocktails }))
+  .digest('hex')
+  .slice(0, 12);
 
-// --- Cocktails: assign ids, resolve ingredient lines to ingredient ids. ---
-const usedCocktailIds = new Set();
-const cocktails = srcCocktails
-  .map((c) => {
-    const lines = (c.ingredients ?? []).map((line) => {
-      const found = byName.get(line.name.trim().toLowerCase());
-      if (!found) {
-        throw new Error(
-          `Cocktail "${c.name}" references unknown ingredient "${line.name}". ` +
-            `Add it to the ingredients list in iba-cocktails-seed.json.`,
-        );
-      }
-      return {
-        ingredientId: found.id,
-        name: found.name,
-        amount: line.amount,
-        unit: line.unit,
-        ...(line.note ? { note: line.note } : {}),
-        ...(line.optional ? { optional: true } : {}),
-      };
-    });
+const catalog = { version, generatedFrom: 'iba-cocktails-seed.json', counts, ingredients, cocktails };
 
-    return {
-      id: makeUniqueId(c.name, usedCocktailIds),
-      name: c.name,
-      ...(c.category ? { category: c.category } : {}),
-      description: c.description ?? '',
-      instructions: c.instructions ?? [],
-      ingredients: lines,
-      ...(c.glass ? { glass: c.glass } : {}),
-      ...(c.method ? { method: c.method } : {}),
-      ...(c.difficulty ? { difficulty: c.difficulty } : {}),
-      ...(c.garnish ? { garnish: c.garnish } : {}),
-      ...(c.notes ? { notes: c.notes } : {}),
-      servings: c.servings ?? 1,
-      ...(c.tags?.length ? { tags: c.tags } : {}),
-      ...(c.imageUrl ? { imageUrl: c.imageUrl } : {}),
-    };
-  })
-  .sort((a, b) => a.name.localeCompare(b.name));
-
-const catalog = {
-  generatedFrom: 'iba-cocktails-seed.json',
-  counts: { ingredients: ingredients.length, cocktails: cocktails.length },
-  ingredients,
-  cocktails,
-};
-
-mkdirSync(dirname(OUT), { recursive: true });
-writeFileSync(OUT, JSON.stringify(catalog, null, 2) + '\n', 'utf8');
+const json = JSON.stringify(catalog, null, 2) + '\n';
+for (const out of OUTPUTS) {
+  mkdirSync(dirname(out), { recursive: true });
+  writeFileSync(out, json, 'utf8');
+}
 
 const staples = ingredients.filter((i) => i.isStaple).length;
-console.log('Catalog written to frontend/public/catalog.json');
+console.log(`Catalog v${version} written to ${OUTPUTS.length} sinks:`);
+for (const out of OUTPUTS) console.log(`  - ${out.slice(root.length + 1).replace(/\\/g, '/')}`);
 console.log(`  ingredients: ${ingredients.length} (${staples} staples)`);
 console.log(`  cocktails:   ${cocktails.length}`);

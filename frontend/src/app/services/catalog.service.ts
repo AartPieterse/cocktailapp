@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import type { Cocktail, Ingredient, IngredientCategory, MakeableResult } from '@cocktailapp/shared';
+import { computeMakeable } from '@cocktailapp/shared';
 import { Observable, map, shareReplay, switchMap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -73,24 +74,12 @@ export class CatalogService {
   /**
    * "What can I make with what I have." Returns cocktails ordered by how many *required*
    * ingredients you are missing, up to `maxMissing` (0 = makeable right now). Optional lines
-   * never count as missing, and cocktails with no ingredients are excluded. Mirrors the
-   * backend aggregation in CocktailsService.makeable.
+   * never count as missing, and cocktails with no ingredients are excluded. Delegates to the
+   * shared `computeMakeable` so web (Angular), the coming Expo app, and the backend all agree.
    */
   makeable(availableIngredientIds: string[], maxMissing = 0): Observable<MakeableResult[]> {
-    const available = new Set(availableIngredientIds);
     return this.catalog$.pipe(
-      map((c) =>
-        c.cocktails
-          .filter((ck) => ck.ingredients.length > 0)
-          .map((ck) => {
-            const missing = ck.ingredients
-              .filter((line) => !line.optional && !available.has(line.ingredientId))
-              .map((line) => ({ ingredientId: line.ingredientId, name: line.name }));
-            return { cocktail: ck, missing, missingCount: missing.length };
-          })
-          .filter((r) => r.missingCount <= maxMissing)
-          .sort((a, b) => a.missingCount - b.missingCount || a.cocktail.name.localeCompare(b.cocktail.name)),
-      ),
+      map((c) => computeMakeable(c.cocktails, availableIngredientIds, maxMissing)),
     );
   }
 }

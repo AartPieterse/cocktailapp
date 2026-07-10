@@ -5,3 +5,6 @@ export * from './method';
 export * from './difficulty';
 export * from './ingredient';
 export * from './cocktail';
+export * from './makeable';
+export * from './catalog';
+export * from './auth';
