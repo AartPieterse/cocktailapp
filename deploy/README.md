@@ -91,26 +91,50 @@ hashes), keeps the newest `BACKUP_KEEP`, and reminds you to copy the file **off-
 ```bash
 AGE_KEY_FILE=/secure/age-key.txt ./restore.sh backups/barkast-<stamp>.archive.gz.age
 ```
+`restore.sh` runs `mongorestore --drop`, so it replaces the **whole** database from the archive
+(catalog **and** `users`/`analytics`) — unlike `db:seed`, which only reseeds the catalog collections.
 
 ## 7. Updating
-- **Code (recommended):** CI builds + tests every push to `main` and pushes a version-tagged image
-  to GHCR (`ghcr.io/<owner>/barkast-api:<git-sha>` + `:latest`). The box **pulls** by tag — no
-  inbound access needed:
+
+CI builds + tests every push to `main` and pushes a version-tagged image to GHCR
+(`ghcr.io/<owner>/barkast-api:<git-sha>` + `:latest`, with the git SHA stamped as the
+`org.opencontainers.image.revision` label). The box **pulls** by tag — no inbound access needed.
+
+- **Automatic (recommended):** a systemd timer polls GHCR and rolls out new images with **no manual
+  step**. It hands off to `deploy.sh`, so an automatic roll-out still does the pre-deploy encrypted
+  backup, migrations, and rollback history — unlike plain Watchtower, which would pull-and-restart
+  with none of that.
   ```bash
   cd deploy
+  sudo cp systemd/barkast-autodeploy.{service,timer} /etc/systemd/system/
+  # edit the User + WorkingDirectory/ExecStart paths in the .service to match your checkout
+  sudo systemctl daemon-reload
+  sudo systemctl enable --now barkast-autodeploy.timer
+  systemctl list-timers barkast-autodeploy.timer     # confirm it's scheduled
+  journalctl -u barkast-autodeploy.service -f         # watch a roll-out
+  ```
+  `auto-deploy.sh` follows `:latest` by default (override with `WATCH_TAG`), maps it back to the
+  exact `:<git-sha>` via the revision label so rollbacks stay precise, and only records success
+  after a clean deploy (a failed cycle retries next tick). Because the app is local-first, the brief
+  API restart only pauses sync — clients keep working from cache.
+- **Manual / override:** pin or roll back a specific tag by hand — `auto-deploy.sh` won't fight you,
+  it redeploys only when the watched tag's digest actually changes.
+  ```bash
   ./deploy.sh <git-sha>            # pull, encrypted pre-deploy backup, migrate, roll out full stack
   ./deploy.sh <git-sha> --api-only # roll out only the api service
   ./deploy.sh --rollback           # redeploy the previous tag (kept in .deployed-previous)
   ```
-  Set `IMAGE_REPO` in `.env` to your GHCR package. Because the app is local-first, the brief API
-  restart only pauses sync — clients keep working from cache.
+  Set `IMAGE_REPO` in `.env` to your GHCR package. If the package is private, `docker login ghcr.io`
+  once with a `read:packages` PAT (outbound-only, fine behind the tunnel).
 - **Local build alternative:** `docker compose up -d --build` builds the image on the box instead of
   pulling.
 - **Catalog:** edit `iba-cocktails-seed.json`, rebuild the offline bundle
   (`npm run build:catalog`), and reseed (step 5). `db:seed` never touches `users` / user-data /
   `analytics`.
 - **User-data schema:** versioned migrations via `migrate-mongo` run automatically by `deploy.sh`
-  (after the pre-deploy encrypted backup) when a `migrate-mongo-config.js` is present.
+  (after the pre-deploy encrypted backup) when a `migrate-mongo-config.js` is present. None is
+  committed yet, so this step is currently inert — `deploy.sh` skips it until you add the config
+  (and `migrate-mongo` is fetched on demand via `npx`, it is not a pinned dependency).
 
 ## 8. LAN admin dashboard (analytics + operational metrics)
 The API serves a small owner-only dashboard at **`/api/admin/dashboard`** (JSON at

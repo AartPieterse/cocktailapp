@@ -1,0 +1,25 @@
+# Barkast automatic pull-deploy — one-shot, fired by barkast-autodeploy.timer.
+#
+# Install (adjust User + paths to your checkout):
+#   sudo cp deploy/systemd/barkast-autodeploy.{service,timer} /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now barkast-autodeploy.timer
+# Inspect:
+#   systemctl list-timers barkast-autodeploy.timer
+#   journalctl -u barkast-autodeploy.service -f
+[Unit]
+Description=Barkast auto-deploy (pull new API image from GHCR and roll out via deploy.sh)
+Wants=network-online.target
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+# The user must be in the `docker` group (or use rootless docker). Point these at your checkout.
+User=barkast
+WorkingDirectory=/opt/barkast/deploy
+# Invoked via bash so it runs regardless of the file's exec bit (the script is authored on a
+# platform that doesn't track the +x mode). auto-deploy.sh reads the shebang either way.
+ExecStart=/bin/bash /opt/barkast/deploy/auto-deploy.sh
+# Don't let one long roll-out (backup + migrate) get killed prematurely.
+TimeoutStartSec=1800

@@ -1,0 +1,13 @@
+# Poll GHCR for a new Barkast API image shortly after boot and every 5 minutes thereafter.
+# Change OnUnitActiveSec to tune how quickly a merged PR reaches the box.
+[Unit]
+Description=Poll GHCR for new Barkast API images and auto-deploy
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+# If the box was asleep/offline when a run was due, fire once on wake instead of skipping.
+Persistent=true
+
+[Install]
+WantedBy=timers.target
