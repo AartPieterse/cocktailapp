@@ -1,19 +1,23 @@
 # Barkast — data model & dataset refinement
 
-> Design plan. Status: **the two-level model is BUILT (Steps 1–5).** Steps 6–8 (Dutch overlay,
-> substitution toggle wiring, post-launch tombstones/images) remain. Companion to
-> `docs/mobile-app-plan.md` (Part A). Synthesis of a 4-dimension analysis (substitution model, shared
-> schema, pipeline, classification), reconciled against an adversarial review **and verified against
-> the working tree**.
+> Design plan. Status: **the two-level model is BUILT (Steps 1–7).** Only Step 8 (post-launch id
+> tombstones, bundled images, abv/dietary flags — all needing real user data first) remains.
+> Companion to `docs/mobile-app-plan.md` (Part A). Synthesis of a 4-dimension analysis (substitution
+> model, shared schema, pipeline, classification), reconciled against an adversarial review **and
+> verified against the working tree**.
 >
 > **What shipped (this change):** the seed is FROZEN and folded from 152 verbatim specifics to **93
 > canonical bases** with authored, immutable slug ids; every cocktail line carries `base` + `call`
 > (+ `role`/`optional`/`alternatives` where needed). One id space and **one `computeMakeable` engine**
 > now span web/Expo/backend — the backend's Mongo `$aggregate` makeable is gone. `wine`/`dairy`/
 > `seasoning` categories added; alcohols reclassified; blank glasses/Mojito method fixed; staples
-> reduced to the non-perishable core. `scripts/validate-seed.mjs` + a real cross-sink version check
-> guard the seed in CI. One-shot fold inputs: `scripts/canonical-map.json` + `scripts/fold-seed.mjs`
-> (over the archived `scripts/iba-cocktails-raw.json`); `build-iba-seed.mjs` is archived.
+> reduced to the non-perishable core. A **Dutch display overlay** (`catalog.nl.json`, same version,
+> applied via shared `applyCatalogTranslations`) renames ingredients + 25 popular cocktails over the
+> one English id space, replacing the old `SEED_SRC=nl` fork; and the **substitution toggle**
+> (`expandCabinet`, default-on) is wired into the bar. `scripts/validate-seed.mjs` + a real cross-sink
+> version check guard the seed in CI. One-shot fold inputs: `scripts/canonical-map.json` +
+> `scripts/fold-seed.mjs` (over the archived `scripts/iba-cocktails-raw.json`); the Dutch overlay is
+> harvested by `scripts/build-translations-nl.mjs`; `build-iba-seed.mjs` is archived.
 
 ## 1. The core problem — two of them
 

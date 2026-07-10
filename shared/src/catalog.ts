@@ -125,6 +125,50 @@ export interface CatalogTranslations {
   >;
 }
 
+/**
+ * Apply an id-keyed translation overlay on top of the canonical (English) catalog, returning a new,
+ * translated catalog. Names/description/instructions/notes/garnish are overlaid where a translation
+ * exists; anything untranslated falls back to canonical. The ids, matching, and `version` are
+ * unchanged — only display strings move — so translating the WHOLE catalog once (then sorting/
+ * matching on it) keeps sort order and `missing[]` names in the display language without touching
+ * `computeMakeable`.
+ *
+ * Safety: if the overlay's `version` doesn't match the catalog it is applied to, the overlay is
+ * ignored and the canonical catalog is returned unchanged (a stale overlay never corrupts display).
+ */
+export function applyCatalogTranslations(
+  catalog: Catalog,
+  translations: CatalogTranslations | null | undefined,
+): Catalog {
+  if (!translations || translations.version !== catalog.version) return catalog;
+  const ingredients = catalog.ingredients.map((ing) => {
+    const t = translations.ingredients[ing.id];
+    return t?.name ? { ...ing, name: t.name } : ing;
+  });
+  // The base display name per id, so a cocktail line's denormalized `name` (and thus `missing[]`)
+  // reads in the display language too. The recipe-specific `call` wording is left untouched.
+  const nameById = new Map(ingredients.map((i) => [i.id, i.name]));
+  const cocktails = catalog.cocktails.map((ck) => {
+    const t = translations.cocktails[ck.id];
+    const lines = ck.ingredients.map((line) => {
+      const translated = nameById.get(line.ingredientId);
+      return translated && translated !== line.name
+        ? { ...line, name: translated }
+        : line;
+    });
+    return {
+      ...ck,
+      ingredients: lines,
+      ...(t?.name ? { name: t.name } : {}),
+      ...(t?.description !== undefined ? { description: t.description } : {}),
+      ...(t?.instructions ? { instructions: t.instructions } : {}),
+      ...(t?.notes !== undefined ? { notes: t.notes } : {}),
+      ...(t?.garnish !== undefined ? { garnish: t.garnish } : {}),
+    };
+  });
+  return { ...catalog, locale: 'nl', ingredients, cocktails };
+}
+
 /** Turn a display name into a stable, url-safe slug (accent-folded). */
 export function slugify(name: string): string {
   return name

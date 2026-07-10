@@ -43,8 +43,8 @@ const BASES = [
   // ── Spirits ──────────────────────────────────────────────────────────────
   { id: 'gin', name: 'Gin', category: 'spirit' },
   { id: 'vodka', name: 'Vodka', category: 'spirit' },
-  { id: 'white-rum', name: 'White Rum', category: 'spirit' },
-  { id: 'dark-rum', name: 'Dark Rum', category: 'spirit' },
+  { id: 'white-rum', name: 'White Rum', category: 'spirit', substitutes: ['dark-rum'] },
+  { id: 'dark-rum', name: 'Dark Rum', category: 'spirit', substitutes: ['white-rum'] },
   { id: 'tequila', name: 'Tequila', category: 'spirit' },
   { id: 'mezcal', name: 'Mezcal', category: 'spirit' },
   { id: 'bourbon', name: 'Bourbon', category: 'spirit' },

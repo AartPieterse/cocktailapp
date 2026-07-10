@@ -26,6 +26,9 @@
       "id": "white-rum",
       "name": "White Rum",
       "category": "spirit",
+      "substitutes": [
+        "dark-rum"
+      ],
       "aliases": [
         "Cuban Aguardiente",
         "Jamaica Overproof White Rum",
@@ -39,6 +42,9 @@
       "id": "dark-rum",
       "name": "Dark Rum",
       "category": "spirit",
+      "substitutes": [
+        "white-rum"
+      ],
       "aliases": [
         "Aged Rum",
         "Amber Jamaican Rum",

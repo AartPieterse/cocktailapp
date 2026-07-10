@@ -1,5 +1,5 @@
 {
-  "version": "5e6a7901dd10",
+  "version": "c75f54614bde",
   "schemaVersion": 1,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
@@ -227,6 +227,9 @@
       "name": "Dark Rum",
       "category": "spirit",
       "isStaple": false,
+      "substitutes": [
+        "white-rum"
+      ],
       "aliases": [
         "Aged Rum",
         "Amber Jamaican Rum",
@@ -724,6 +727,9 @@
       "name": "White Rum",
       "category": "spirit",
       "isStaple": false,
+      "substitutes": [
+        "dark-rum"
+      ],
       "aliases": [
         "Cuban Aguardiente",
         "Jamaica Overproof White Rum",

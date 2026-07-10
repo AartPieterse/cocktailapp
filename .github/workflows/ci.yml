@@ -43,9 +43,10 @@ jobs:
           npm run build:catalog
           # Stage first so the check also catches an UNTRACKED bundle (a forgotten `git add`),
           # not just modifications to already-tracked files (`git diff` alone ignores untracked).
-          git add -A -- frontend/public/catalog.json app/assets/catalog.json
-          git diff --cached --exit-code -- frontend/public/catalog.json app/assets/catalog.json \
-            || { echo "::error::catalog bundles are out of date or uncommitted — run 'npm run build:catalog' and commit both frontend/public/catalog.json and app/assets/catalog.json."; exit 1; }
+          bundles="frontend/public/catalog.json app/assets/catalog.json frontend/public/catalog.nl.json app/assets/catalog.nl.json"
+          git add -A -- $bundles
+          git diff --cached --exit-code -- $bundles \
+            || { echo "::error::catalog bundles are out of date or uncommitted — run 'npm run build:catalog' and commit the catalog.json + catalog.nl.json in frontend/public and app/assets."; exit 1; }
 
       - name: Build frontend (production)
         run: npm run build --workspace frontend
