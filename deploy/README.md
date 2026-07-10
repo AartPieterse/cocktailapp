@@ -162,3 +162,52 @@ Never add `/api/admin` to the Cloudflare Tunnel ingress.
 - [ ] Confirm the residential ISP allows hosting, and content licensing for bundled data/images.
 - [ ] Set a strong `ADMIN_PASSWORD`; the LAN admin dashboard is bound to the LAN only and excluded
       from the tunnel (basic-auth + CF-header rejection).
+
+## 10. Running the box on Windows via WSL2 (now) → native Linux (later)
+
+Everything above is Linux-native (systemd, `deploy.sh`, `auto-deploy.sh`). To host on a **Windows**
+machine, run it inside a **WSL2 Ubuntu** distro with systemd — then the units and scripts work
+**unchanged**, and migrating to a real Linux box later is a copy-paste of the same files. Install
+Docker Engine *inside* the distro (not Docker Desktop integration) so the box is self-contained and
+byte-identical to native Linux.
+
+```powershell
+# 1. In Windows PowerShell — install the distro, then create your Linux user on first launch:
+wsl --install -d Ubuntu-24.04
+```
+```bash
+# 2. Inside Ubuntu — enable systemd so docker.service and the timer run:
+printf '[boot]\nsystemd=true\n' | sudo tee /etc/wsl.conf
+```
+```powershell
+# 3. Back in PowerShell — restart the distro so systemd takes effect:
+wsl --shutdown
+```
+```bash
+# 4. Inside Ubuntu — Docker Engine (CE), managed by systemd (NO Docker Desktop needed):
+curl -fsSL https://get.docker.com | sudo sh
+sudo usermod -aG docker "$USER"           # then `exit` + `wsl --shutdown` + reopen for the group to apply
+sudo systemctl enable --now docker
+systemctl is-system-running               # expect "running" (or "degraded" — fine)
+
+# 5. Clone under the LINUX filesystem (~/, NOT /mnt/c — far faster + correct file perms):
+git clone https://github.com/AartPieterse/cocktailapp.git ~/cocktailapp
+cd ~/cocktailapp/deploy
+cp .env.example .env                       # fill secrets per §3, then bring up per §4–5
+
+# 6. Install the auto-deploy timer exactly as §7, but point the .service at the WSL checkout, e.g.:
+#     User=<you>
+#     WorkingDirectory=/home/<you>/cocktailapp/deploy
+#     ExecStart=/bin/bash /home/<you>/cocktailapp/deploy/auto-deploy.sh
+```
+
+**Survive Windows reboots.** WSL does not auto-start a distro at boot, so systemd (and the whole
+stack + the 5-min timer) won't run until the distro is first touched. Create a **Task Scheduler**
+task: trigger **At startup**, action `wsl.exe -d Ubuntu-24.04 -u root -e true`, and check *"Run
+whether user is logged on or not."* That boots the distro at machine startup — systemd then brings up
+docker, the `api`/`mongo`/`cloudflared` containers, and the auto-deploy timer, with no interactive
+login. (`Persistent=true` on the timer also catches up any run missed while the machine slept.)
+
+**Migrating to native Linux later:** provision the box per §1, `git clone` + copy your `.env`, and
+install the same units per §7. No WSL-specific state leaks into the deploy tooling — it's the same
+`deploy.sh` / `auto-deploy.sh` / systemd files.
