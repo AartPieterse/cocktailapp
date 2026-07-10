@@ -8,3 +8,4 @@ export * from './cocktail';
 export * from './makeable';
 export * from './catalog';
 export * from './auth';
+export * from './analytics';

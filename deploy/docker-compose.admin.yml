@@ -1,0 +1,19 @@
+# LAN-only admin access overlay.
+#
+# The base stack publishes NO host ports (the API is reachable only inside the compose network and
+# via the Cloudflare Tunnel). This overlay additionally publishes the API on the LAN so the owner
+# can open the admin dashboard from a home-network browser. It binds to all interfaces on :8080 —
+# put the box on a trusted VLAN, or change the mapping to a specific LAN IP.
+#
+# The admin routes themselves are defense-in-depth: basic-auth (ADMIN_USER/ADMIN_PASSWORD) AND a
+# guard that rejects any request carrying Cloudflare's CF-Connecting-IP header, so even if the
+# tunnel ingress were misconfigured to forward /api/admin, those requests are refused.
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.admin.yml up -d
+# Then browse (optionally publish `barkast.local` via avahi/mDNS):
+#   http://<box-lan-ip>:8080/api/admin/dashboard
+services:
+  api:
+    ports:
+      - "8080:3000"   # LAN-only admin access; NOT added to the Cloudflare Tunnel ingress
