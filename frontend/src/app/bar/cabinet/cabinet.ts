@@ -10,6 +10,7 @@ import {
 } from '@cocktailapp/shared';
 import { catchError, combineLatest, of, switchMap } from 'rxjs';
 import { CabinetService } from '../../core/cabinet.service';
+import { LanguageService } from '../../core/language.service';
 import { SubstitutesService } from '../../core/substitutes.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { IngredientService } from '../../services/ingredient.service';
@@ -28,14 +29,12 @@ interface Group {
     <div class="page">
       <header class="head">
         <div>
-          <h1>Mijn kast</h1>
-          <p class="sub">Vink aan wat je in huis hebt — de rest rekent Barkast uit.</p>
+          <h1>{{ lang.t().bar.title }}</h1>
+          <p class="sub">{{ lang.t().bar.sub }}</p>
         </div>
         <div class="tally">
-          <div class="makeable">
-            Je kunt {{ makeableCount() }} {{ makeableCount() === 1 ? 'cocktail' : 'cocktails' }} maken
-          </div>
-          <div class="selected">{{ cabinet.count() }} ingrediënten geselecteerd</div>
+          <div class="makeable">{{ lang.t().bar.youCanMake(makeableCount()) }}</div>
+          <div class="selected">{{ lang.t().bar.selected(cabinet.count()) }}</div>
         </div>
       </header>
 
@@ -161,6 +160,7 @@ interface Group {
 })
 export class Cabinet {
   protected readonly cabinet = inject(CabinetService);
+  protected readonly lang = inject(LanguageService);
   private readonly subs = inject(SubstitutesService);
   private readonly ingredientService = inject(IngredientService);
   private readonly cocktailService = inject(CocktailService);
@@ -170,6 +170,7 @@ export class Cabinet {
 
   readonly groups = computed<Group[]>(() => {
     const list = this.ingredients();
+    const labels = CATEGORY_LABELS_PLURAL[this.lang.locale()];
     const byCat = new Map<IngredientCategory, Ingredient[]>();
     for (const ing of list) {
       const key = (ing.category ?? 'other') as IngredientCategory;
@@ -179,7 +180,7 @@ export class Cabinet {
     }
     return CATEGORY_ORDER.filter((c) => byCat.has(c)).map((c) => ({
       key: c,
-      label: CATEGORY_LABELS_PLURAL[c],
+      label: labels[c],
       items: (byCat.get(c) ?? []).sort((a, b) => a.name.localeCompare(b.name)),
     }));
   });

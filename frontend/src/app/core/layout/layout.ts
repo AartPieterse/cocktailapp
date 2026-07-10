@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { LanguageService } from '../language.service';
 import { Navbar } from '../navbar/navbar';
 import { InstallPrompt } from '../install-prompt/install-prompt';
 
@@ -15,10 +16,10 @@ import { InstallPrompt } from '../install-prompt/install-prompt';
     </main>
     <footer class="no-print">
       <div class="container foot">
-        <span>Barkast — <span class="muted">wat kan jij maken?</span></span>
+        <span>{{ lang.t().common.appName }} — <span class="muted">{{ lang.t().common.tagline }}</span></span>
         <span class="muted">
-          <a routerLink="/cocktails">Cocktails</a> ·
-          <a routerLink="/kast">Mijn kast</a>
+          <a routerLink="/cocktails">{{ lang.t().nav.cocktails }}</a> ·
+          <a routerLink="/bar">{{ lang.t().nav.myBar }}</a>
         </span>
       </div>
     </footer>
@@ -50,4 +51,6 @@ import { InstallPrompt } from '../install-prompt/install-prompt';
     }
   `,
 })
-export class Layout {}
+export class Layout {
+  protected readonly lang = inject(LanguageService);
+}

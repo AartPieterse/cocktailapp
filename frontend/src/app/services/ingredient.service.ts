@@ -8,6 +8,7 @@ import type {
 } from '@cocktailapp/shared';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { LanguageService } from '../core/language.service';
 import { CatalogService } from './catalog.service';
 
 /**
@@ -19,8 +20,13 @@ import { CatalogService } from './catalog.service';
 export class IngredientService {
   private readonly http = inject(HttpClient);
   private readonly catalog = inject(CatalogService);
+  private readonly lang = inject(LanguageService);
   private readonly baseUrl = `${environment.apiUrl}ingredients`;
   private readonly static = environment.dataSource === 'static';
+
+  private readOnly<T>(): Observable<T> {
+    return throwError(() => new Error(this.lang.t().errors.readOnly));
+  }
 
   getAll(category?: IngredientCategory): Observable<Ingredient[]> {
     if (this.static) return this.catalog.listIngredients(category);
@@ -30,22 +36,17 @@ export class IngredientService {
   }
 
   create(dto: CreateIngredient): Observable<Ingredient> {
-    if (this.static) return readOnly();
+    if (this.static) return this.readOnly();
     return this.http.post<Ingredient>(this.baseUrl, dto);
   }
 
   update(id: string, dto: UpdateIngredient): Observable<Ingredient> {
-    if (this.static) return readOnly();
+    if (this.static) return this.readOnly();
     return this.http.patch<Ingredient>(`${this.baseUrl}/${id}`, dto);
   }
 
   remove(id: string): Observable<void> {
-    if (this.static) return readOnly();
+    if (this.static) return this.readOnly();
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
-}
-
-/** The static build is read-only; writes need the backend (dev only). */
-function readOnly<T>(): Observable<T> {
-  return throwError(() => new Error('De catalogus is alleen-lezen in deze omgeving.'));
 }

@@ -17,6 +17,7 @@ import {
   tap,
 } from 'rxjs';
 import { CabinetService } from '../../core/cabinet.service';
+import { LanguageService } from '../../core/language.service';
 import { FavoritesService } from '../../core/favorites.service';
 import { SubstitutesService } from '../../core/substitutes.service';
 import { CocktailService } from '../../services/cocktail.service';
@@ -36,12 +37,12 @@ interface Status {
   template: `
     <div class="page">
       <header class="head">
-        <h1>Alle cocktails</h1>
+        <h1>{{ lang.t().list.title }}</h1>
         <div class="tools">
           <input
             class="search"
             [formControl]="searchCtrl"
-            placeholder="Zoek op naam…"
+            [placeholder]="lang.t().list.searchPlaceholder"
             autocomplete="off"
           />
           <button
@@ -49,12 +50,12 @@ interface Status {
             type="button"
             [class.on]="onlyFavs()"
             (click)="onlyFavs.update((v) => !v)"
-            aria-label="Alleen favorieten"
+            [attr.aria-label]="lang.t().list.onlyFavorites"
           >
             <mat-icon>{{ onlyFavs() ? 'favorite' : 'favorite_border' }}</mat-icon>
           </button>
           @if (admin) {
-            <a mat-flat-button routerLink="/cocktails/add"><mat-icon>add</mat-icon> Nieuw</a>
+            <a mat-flat-button routerLink="/cocktails/add"><mat-icon>add</mat-icon> {{ lang.t().list.new }}</a>
           }
         </div>
       </header>
@@ -75,8 +76,8 @@ interface Status {
               [missingNames]="statusFor(c).names"
             >
               @if (admin) {
-                <a mat-button [routerLink]="['/cocktails', c.id, 'edit']">Bewerk</a>
-                <button mat-button (click)="remove(c)">Verwijder</button>
+                <a mat-button [routerLink]="['/cocktails', c.id, 'edit']">{{ lang.t().list.edit }}</a>
+                <button mat-button (click)="remove(c)">{{ lang.t().list.delete }}</button>
               }
             </app-cocktail-card>
           }
@@ -84,12 +85,12 @@ interface Status {
       } @else {
         <div class="empty">
           <mat-icon>search_off</mat-icon>
-          <h3>Niets gevonden</h3>
+          <h3>{{ lang.t().list.emptyTitle }}</h3>
           <p class="muted">
             @if (onlyFavs()) {
-              Je hebt nog geen favorieten. Tik op het hartje van een cocktail.
+              {{ lang.t().list.emptyFavorites }}
             } @else {
-              Pas je zoekopdracht aan.
+              {{ lang.t().list.emptySearch }}
             }
           </p>
         </div>
@@ -193,6 +194,7 @@ export class CocktailList {
   private readonly ingredientService = inject(IngredientService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
+  protected readonly lang = inject(LanguageService);
 
   protected readonly admin = environment.admin;
 
@@ -258,12 +260,12 @@ export class CocktailList {
 
   remove(cocktail: Cocktail): void {
     const ref = this.dialog.open(ConfirmDialog, {
-      data: { message: `Cocktail "${cocktail.name}" verwijderen?` },
+      data: { message: this.lang.t().list.confirmDelete(cocktail.name) },
     });
     ref.afterClosed().subscribe((confirmed) => {
       if (!confirmed) return;
       this.cocktailService.remove(cocktail.id).subscribe(() => {
-        this.snackBar.open('Cocktail verwijderd', 'OK', { duration: 2500 });
+        this.snackBar.open(this.lang.t().list.deleted, this.lang.t().common.ok, { duration: 2500 });
         this.reload.update((v) => v + 1);
       });
     });

@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { type Cocktail, GLASSWARE_LABELS, METHOD_LABELS } from '@cocktailapp/shared';
 import { FavoritesService } from '../../core/favorites.service';
+import { LanguageService } from '../../core/language.service';
 import { GlassArt } from '../../shared/glass-art/glass-art';
 import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
 
@@ -21,7 +22,7 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
           (click)="toggleFav($event)"
           [class.on]="isFav()"
           [attr.aria-pressed]="isFav()"
-          [attr.aria-label]="isFav() ? 'Verwijder uit favorieten' : 'Voeg toe aan favorieten'"
+          [attr.aria-label]="isFav() ? lang.t().card.removeFavorite : lang.t().card.addFavorite"
         >
           <mat-icon>{{ isFav() ? 'favorite' : 'favorite_border' }}</mat-icon>
         </button>
@@ -152,6 +153,7 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
 })
 export class CocktailCard {
   private readonly favorites = inject(FavoritesService);
+  protected readonly lang = inject(LanguageService);
 
   readonly cocktail = input.required<Cocktail>();
   /** null = no availability context; 0 = makeable now; >0 = missing that many. */
@@ -166,9 +168,10 @@ export class CocktailCard {
 
   readonly meta = computed(() => {
     const c = this.cocktail();
+    const locale = this.lang.locale();
     const parts: string[] = [];
-    if (c.glass) parts.push(GLASSWARE_LABELS[c.glass]);
-    if (c.method) parts.push(METHOD_LABELS[c.method]);
+    if (c.glass) parts.push(GLASSWARE_LABELS[locale][c.glass]);
+    if (c.method) parts.push(METHOD_LABELS[locale][c.method]);
     return parts.join(' · ');
   });
 
@@ -181,10 +184,11 @@ export class CocktailCard {
   readonly statusLabel = computed(() => {
     const m = this.missingCount();
     if (m === null) return this.meta();
-    if (m === 0) return 'Nu te maken';
+    const t = this.lang.t().card;
+    if (m === 0) return t.makeNow;
     const names = this.missingNames();
-    if (m === 1) return names.length ? `Mist ${names[0]}` : 'Mist 1 ingrediënt';
-    return `${m} ingrediënten nodig`;
+    if (m === 1) return names.length ? t.missName(names[0]) : t.missMany(1);
+    return t.missMany(m);
   });
 
   toggleFav(event: Event): void {

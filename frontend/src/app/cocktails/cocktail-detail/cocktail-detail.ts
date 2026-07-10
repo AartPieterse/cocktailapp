@@ -16,6 +16,7 @@ import {
 } from '@cocktailapp/shared';
 import { catchError, of, switchMap, tap } from 'rxjs';
 import { CabinetService } from '../../core/cabinet.service';
+import { LanguageService } from '../../core/language.service';
 import { FavoritesService } from '../../core/favorites.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
@@ -38,7 +39,7 @@ import { environment } from '../../../environments/environment';
       </div>
     } @else if (cocktail(); as c) {
       <div class="page">
-        <button class="back no-print" (click)="back()">‹ Terug</button>
+        <button class="back no-print" (click)="back()">{{ lang.t().detail.back }}</button>
         <div class="wrap">
           <div class="visual">
             <div class="panel" [style.background]="tint()">
@@ -50,16 +51,16 @@ import { environment } from '../../../environments/environment';
               @if (c.difficulty) { <span class="pill">{{ diffLabel(c) }}</span> }
             </div>
             @if (c.garnish) {
-              <div class="garnish">Garnering · {{ c.garnish }}</div>
+              <div class="garnish">{{ lang.t().detail.garnishPrefix }} · {{ c.garnish }}</div>
             }
             <div class="mini-actions no-print">
               <button class="mini" [class.on]="isFav(c)" (click)="toggleFav(c)">
                 <mat-icon>{{ isFav(c) ? 'favorite' : 'favorite_border' }}</mat-icon>
-                {{ isFav(c) ? 'Favoriet' : 'Bewaar' }}
+                {{ isFav(c) ? lang.t().detail.favorite : lang.t().detail.saveFavorite }}
               </button>
-              <button class="mini" (click)="print()"><mat-icon>print</mat-icon> Print</button>
+              <button class="mini" (click)="print()"><mat-icon>print</mat-icon> {{ lang.t().detail.print }}</button>
               @if (admin) {
-                <a class="mini" [routerLink]="['/cocktails', c.id, 'edit']"><mat-icon>edit</mat-icon> Bewerk</a>
+                <a class="mini" [routerLink]="['/cocktails', c.id, 'edit']"><mat-icon>edit</mat-icon> {{ lang.t().detail.edit }}</a>
                 <button class="mini" (click)="remove(c)"><mat-icon>delete_outline</mat-icon></button>
               }
             </div>
@@ -70,20 +71,20 @@ import { environment } from '../../../environments/environment';
             @if (c.description) { <p class="lede">{{ c.description }}</p> }
 
             @if (makeable()) {
-              <div class="banner ok">✓ Je hebt alles in huis — shaken maar!</div>
+              <div class="banner ok">{{ lang.t().detail.haveAll }}</div>
             } @else {
               <div class="banner miss">
-                <span>Je mist nog {{ missingNames() }}</span>
-                <button class="add-btn" (click)="addAllMissing()">+ Toevoegen aan kast</button>
+                <span>{{ lang.t().detail.youStillMiss(missingNames()) }}</span>
+                <button class="add-btn" (click)="addAllMissing()">{{ lang.t().detail.addToBar }}</button>
               </div>
             }
 
-            <div class="sec-label">Ingrediënten</div>
+            <div class="sec-label">{{ lang.t().detail.ingredients }}</div>
             <div class="lines">
               <div class="servings no-print">
-                <button (click)="stepServings(-1)" [disabled]="servings() <= 1" aria-label="Minder">–</button>
-                <span>{{ servings() }} {{ servings() === 1 ? 'glas' : 'glazen' }}</span>
-                <button (click)="stepServings(1)" aria-label="Meer">+</button>
+                <button (click)="stepServings(-1)" [disabled]="servings() <= 1" [attr.aria-label]="lang.t().detail.less">–</button>
+                <span>{{ lang.t().detail.glasses(servings()) }}</span>
+                <button (click)="stepServings(1)" [attr.aria-label]="lang.t().detail.more">+</button>
               </div>
               @for (i of c.ingredients; track i.ingredientId + i.name) {
                 <div class="line">
@@ -91,19 +92,19 @@ import { environment } from '../../../environments/environment';
                   <div class="meas">{{ scaled(i) }} {{ unitLabel(i) }}</div>
                   <div class="iname">
                     {{ i.call ?? i.name }}
-                    @if (i.optional) { <em class="opt">optioneel</em> }
+                    @if (i.optional) { <em class="opt">{{ lang.t().detail.optional }}</em> }
                     @if (i.note) { <span class="note">· {{ i.note }}</span> }
                   </div>
                   @if (inBar(i)) {
-                    <span class="in-kast">✓ in kast</span>
+                    <span class="in-kast">{{ lang.t().detail.inBar }}</span>
                   } @else if (!i.optional) {
-                    <button class="add-line no-print" (click)="add(i)">+ toevoegen</button>
+                    <button class="add-line no-print" (click)="add(i)">{{ lang.t().detail.add }}</button>
                   }
                 </div>
               }
             </div>
 
-            <div class="sec-label">Bereiding</div>
+            <div class="sec-label">{{ lang.t().detail.preparation }}</div>
             <div class="steps">
               @for (step of c.instructions; track $index) {
                 <div class="step">
@@ -111,7 +112,7 @@ import { environment } from '../../../environments/environment';
                   <div class="t">{{ step }}</div>
                 </div>
               } @empty {
-                <p class="muted">Geen instructies opgegeven.</p>
+                <p class="muted">{{ lang.t().detail.noInstructions }}</p>
               }
             </div>
           </div>
@@ -120,8 +121,8 @@ import { environment } from '../../../environments/environment';
     } @else {
       <div class="notfound">
         <p class="eyebrow">404</p>
-        <h1>Deze cocktail bestaat niet (meer)</h1>
-        <a class="add-btn" routerLink="/cocktails">Terug naar de collectie</a>
+        <h1>{{ lang.t().detail.notFoundTitle }}</h1>
+        <a class="add-btn" routerLink="/cocktails">{{ lang.t().detail.backToCollection }}</a>
       </div>
     }
   `,
@@ -409,6 +410,7 @@ export class CocktailDetail {
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
+  protected readonly lang = inject(LanguageService);
 
   protected readonly admin = environment.admin;
 
@@ -455,16 +457,16 @@ export class CocktailDetail {
   }
 
   methodLabel(c: Cocktail): string {
-    return c.method ? METHOD_LABELS[c.method] : '';
+    return c.method ? METHOD_LABELS[this.lang.locale()][c.method] : '';
   }
   glassLabel(c: Cocktail): string {
-    return c.glass ? GLASSWARE_LABELS[c.glass] : '';
+    return c.glass ? GLASSWARE_LABELS[this.lang.locale()][c.glass] : '';
   }
   diffLabel(c: Cocktail): string {
-    return c.difficulty ? DIFFICULTY_LABELS[c.difficulty] : '';
+    return c.difficulty ? DIFFICULTY_LABELS[this.lang.locale()][c.difficulty] : '';
   }
   unitLabel(i: CocktailIngredient): string {
-    return MEASURE_LABELS[i.unit];
+    return MEASURE_LABELS[this.lang.locale()][i.unit];
   }
   ingCat(i: CocktailIngredient): string | undefined {
     return i.role === 'garnish' ? 'garnish' : undefined;
@@ -509,12 +511,12 @@ export class CocktailDetail {
 
   remove(c: Cocktail): void {
     const ref = this.dialog.open(ConfirmDialog, {
-      data: { message: `Cocktail "${c.name}" verwijderen?` },
+      data: { message: this.lang.t().detail.confirmDelete(c.name) },
     });
     ref.afterClosed().subscribe((confirmed) => {
       if (!confirmed) return;
       this.cocktailService.remove(c.id).subscribe(() => {
-        this.snackBar.open('Cocktail verwijderd', 'OK', { duration: 2500 });
+        this.snackBar.open(this.lang.t().detail.deleted, this.lang.t().common.ok, { duration: 2500 });
         void this.router.navigate(['/cocktails']);
       });
     });

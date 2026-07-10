@@ -30,6 +30,7 @@ import {
   type Method,
 } from '@cocktailapp/shared';
 import { filter, startWith, switchMap, tap } from 'rxjs';
+import { LanguageService } from '../../core/language.service';
 import { IngredientService } from '../../services/ingredient.service';
 import { CocktailService } from '../../services/cocktail.service';
 
@@ -50,115 +51,115 @@ type IngredientChoice = string | Ingredient;
     MatIconModule,
   ],
   template: `
-    <a class="back" routerLink="/cocktails"><mat-icon>arrow_back</mat-icon> Cocktails</a>
-    <h1>{{ editingId() ? 'Cocktail bewerken' : 'Nieuwe cocktail' }}</h1>
+    <a class="back" routerLink="/cocktails"><mat-icon>arrow_back</mat-icon> {{ lang.t().form.backToCocktails }}</a>
+    <h1>{{ editingId() ? lang.t().form.editTitle : lang.t().form.newTitle }}</h1>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
       <div class="section">
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Naam</mat-label>
+          <mat-label>{{ lang.t().form.name }}</mat-label>
           <input matInput formControlName="name" required />
           @if (form.controls.name.hasError('required') && form.controls.name.touched) {
-            <mat-error>Naam is verplicht</mat-error>
+            <mat-error>{{ lang.t().form.nameRequired }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Omschrijving</mat-label>
+          <mat-label>{{ lang.t().form.description }}</mat-label>
           <textarea matInput rows="2" formControlName="description"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Afbeelding-URL (optioneel)</mat-label>
-          <input matInput type="url" formControlName="imageUrl" placeholder="https://…" />
-          <mat-hint>Leeg laten? Dan tonen we een stijlvol standaardbeeld.</mat-hint>
+          <mat-label>{{ lang.t().form.imageUrl }}</mat-label>
+          <input matInput type="url" formControlName="imageUrl" [placeholder]="lang.t().form.imageUrlPlaceholder" />
+          <mat-hint>{{ lang.t().form.imageUrlHint }}</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="section grid3">
         <mat-form-field appearance="outline">
-          <mat-label>Glas</mat-label>
+          <mat-label>{{ lang.t().form.glass }}</mat-label>
           <mat-select formControlName="glass">
-            <mat-option [value]="null">— geen —</mat-option>
+            <mat-option [value]="null">{{ lang.t().form.none }}</mat-option>
             @for (g of glassware; track g) {
-              <mat-option [value]="g">{{ glassLabels[g] }}</mat-option>
+              <mat-option [value]="g">{{ glassLabels()[g] }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Methode</mat-label>
+          <mat-label>{{ lang.t().form.method }}</mat-label>
           <mat-select formControlName="method">
-            <mat-option [value]="null">— geen —</mat-option>
+            <mat-option [value]="null">{{ lang.t().form.none }}</mat-option>
             @for (m of methods; track m) {
-              <mat-option [value]="m">{{ methodLabels[m] }}</mat-option>
+              <mat-option [value]="m">{{ methodLabels()[m] }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Niveau</mat-label>
+          <mat-label>{{ lang.t().form.difficulty }}</mat-label>
           <mat-select formControlName="difficulty">
-            <mat-option [value]="null">— geen —</mat-option>
+            <mat-option [value]="null">{{ lang.t().form.none }}</mat-option>
             @for (d of difficulties; track d) {
-              <mat-option [value]="d">{{ difficultyLabels[d] }}</mat-option>
+              <mat-option [value]="d">{{ difficultyLabels()[d] }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Garnering</mat-label>
-          <input matInput formControlName="garnish" placeholder="bv. schijfje limoen" />
+          <mat-label>{{ lang.t().form.garnish }}</mat-label>
+          <input matInput formControlName="garnish" [placeholder]="lang.t().form.garnishPlaceholder" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Aantal glazen</mat-label>
+          <mat-label>{{ lang.t().form.servings }}</mat-label>
           <input matInput type="number" min="1" formControlName="servings" />
         </mat-form-field>
       </div>
 
       <div class="section">
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Tags</mat-label>
-          <mat-chip-grid #chipGrid aria-label="Tags">
+          <mat-label>{{ lang.t().form.tags }}</mat-label>
+          <mat-chip-grid #chipGrid [attr.aria-label]="lang.t().form.tags">
             @for (tag of tags(); track tag) {
               <mat-chip-row (removed)="removeTag(tag)">
                 {{ tag }}
-                <button matChipRemove type="button" [attr.aria-label]="'verwijder ' + tag">
+                <button matChipRemove type="button" [attr.aria-label]="lang.t().form.removeTag(tag)">
                   <mat-icon>cancel</mat-icon>
                 </button>
               </mat-chip-row>
             }
-            <input placeholder="Nieuwe tag…" [matChipInputFor]="chipGrid" (matChipInputTokenEnd)="addTag($event)" />
+            <input [placeholder]="lang.t().form.newTagPlaceholder" [matChipInputFor]="chipGrid" (matChipInputTokenEnd)="addTag($event)" />
           </mat-chip-grid>
         </mat-form-field>
       </div>
 
       <div class="section">
-        <h3>Ingrediënten</h3>
+        <h3>{{ lang.t().form.ingredients }}</h3>
         @if (addedIngredients().length) {
           <ul class="added">
             @for (line of addedIngredients(); track $index) {
               <li>
-                <span class="amt">{{ line.amount }} {{ measureLabels[line.unit] }}</span>
+                <span class="amt">{{ line.amount }} {{ measureLabels()[line.unit] }}</span>
                 <span class="nm">
                   {{ line.name }}
-                  @if (line.optional) { <em>optioneel</em> }
+                  @if (line.optional) { <em>{{ lang.t().common.optional }}</em> }
                   @if (line.note) { <span class="muted">— {{ line.note }}</span> }
                 </span>
-                <button mat-icon-button type="button" (click)="removeIngredient($index)" aria-label="verwijder">
+                <button mat-icon-button type="button" (click)="removeIngredient($index)" [attr.aria-label]="lang.t().form.removeLine">
                   <mat-icon>delete_outline</mat-icon>
                 </button>
               </li>
             }
           </ul>
         } @else {
-          <p class="muted">Nog geen ingrediënten toegevoegd.</p>
+          <p class="muted">{{ lang.t().form.noIngredients }}</p>
         }
 
         <div class="ingredient-row">
           <mat-form-field appearance="outline" class="ing-name">
-            <mat-label>Ingrediënt</mat-label>
+            <mat-label>{{ lang.t().form.ingredient }}</mat-label>
             <input matInput [formControl]="ingredientCtrl" [matAutocomplete]="auto" />
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayIngredient">
               @for (option of filteredIngredients(); track option.id) {
@@ -168,39 +169,39 @@ type IngredientChoice = string | Ingredient;
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="amount">
-            <mat-label>Hoev.</mat-label>
+            <mat-label>{{ lang.t().form.amount }}</mat-label>
             <input matInput type="number" min="0" [formControl]="amountCtrl" />
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="unit">
-            <mat-label>Eenheid</mat-label>
+            <mat-label>{{ lang.t().form.unit }}</mat-label>
             <mat-select [formControl]="unitCtrl">
               @for (unit of units; track unit) {
-                <mat-option [value]="unit">{{ measureLabels[unit] }}</mat-option>
+                <mat-option [value]="unit">{{ measureLabels()[unit] }}</mat-option>
               }
             </mat-select>
           </mat-form-field>
 
-          <mat-checkbox [formControl]="optionalCtrl">Optioneel</mat-checkbox>
+          <mat-checkbox [formControl]="optionalCtrl">{{ lang.t().form.optional }}</mat-checkbox>
           <button mat-flat-button type="button" (click)="addIngredient()">
-            <mat-icon>add</mat-icon> Toevoegen
+            <mat-icon>add</mat-icon> {{ lang.t().form.addLine }}
           </button>
         </div>
       </div>
 
       <div class="section">
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Bereiding</mat-label>
-          <textarea matInput rows="6" formControlName="instructionsText" placeholder="Eén stap per regel"></textarea>
-          <mat-hint>Eén stap per regel.</mat-hint>
+          <mat-label>{{ lang.t().form.preparation }}</mat-label>
+          <textarea matInput rows="6" formControlName="instructionsText" [placeholder]="lang.t().form.preparationPlaceholder"></textarea>
+          <mat-hint>{{ lang.t().form.preparationHint }}</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="submit">
         <button mat-flat-button type="submit" [disabled]="form.invalid || saving()">
-          {{ saving() ? 'Bezig…' : 'Opslaan' }}
+          {{ saving() ? lang.t().form.saving : lang.t().form.save }}
         </button>
-        <button mat-button type="button" (click)="cancel()">Annuleren</button>
+        <button mat-button type="button" (click)="cancel()">{{ lang.t().form.cancel }}</button>
       </div>
     </form>
   `,
@@ -289,15 +290,16 @@ export class CocktailForm {
   private readonly ingredientService = inject(IngredientService);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
+  protected readonly lang = inject(LanguageService);
 
   readonly units = MEASURE_UNITS;
-  readonly measureLabels = MEASURE_LABELS;
+  readonly measureLabels = computed(() => MEASURE_LABELS[this.lang.locale()]);
   readonly glassware = GLASSWARE;
-  readonly glassLabels = GLASSWARE_LABELS;
+  readonly glassLabels = computed(() => GLASSWARE_LABELS[this.lang.locale()]);
   readonly methods = METHODS;
-  readonly methodLabels = METHOD_LABELS;
+  readonly methodLabels = computed(() => METHOD_LABELS[this.lang.locale()]);
   readonly difficulties = DIFFICULTIES;
-  readonly difficultyLabels = DIFFICULTY_LABELS;
+  readonly difficultyLabels = computed(() => DIFFICULTY_LABELS[this.lang.locale()]);
 
   readonly editingId = signal<string | null>(null);
   readonly saving = signal(false);
@@ -420,9 +422,11 @@ export class CocktailForm {
 
     request.subscribe({
       next: (saved) => {
-        this.snackBar.open(id ? 'Cocktail bijgewerkt' : 'Cocktail opgeslagen', 'OK', {
-          duration: 2500,
-        });
+        this.snackBar.open(
+          id ? this.lang.t().form.updated : this.lang.t().form.saved,
+          this.lang.t().common.ok,
+          { duration: 2500 },
+        );
         void this.router.navigate(['/cocktails', saved.id]);
       },
       error: () => this.saving.set(false),

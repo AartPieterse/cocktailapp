@@ -1,28 +1,33 @@
 # Barkast 🍸
 
-**Wat staat er in jouw kast — en wat kan je daarmee maken?**
+**Wat staat er in jouw bar — en wat kun je daarmee maken?**
 
 Barkast is a full-stack cocktail app built around one flagship idea: you tick off the ingredients
-you have on hand ("je bar"), and it instantly shows which cocktails you can make **right now** —
-plus the ones you're only one or two ingredients away from.
+you have on hand (**"Mijn bar"** / *"My bar"*), and it instantly shows which cocktails you can make
+**right now** — plus the ones you're only one or two ingredients away from.
 
 - **First-run wizard** walks you through your bar in sections, starting with the staples you
   probably already own (ice, sugar, citrus, soda…) pre-checked, then spirits, liqueurs, mixers, and so on.
-- **Mijn bar** (home) is the discovery surface: *"Je kunt 19 cocktails maken"*, a **Nu te maken** grid,
-  and **Bijna — je mist er één** with the exact missing ingredient per drink.
+- **Ontdek** / *Discover* (home) is the discovery surface: *"Je kunt 19 cocktails maken"*, a
+  **Nu te maken** grid, and **Bijna — je mist er één** with the exact missing ingredient per drink.
+- **Mijn bar** is where you tick what you own; the wizard fills it for you on first run.
 - Your bar is persisted locally, so the app remembers what you have.
+- **Bilingual UI (🇳🇱 / 🇬🇧).** Every screen ships in Dutch and English with an in-app language
+  toggle. English is the canonical data language; Dutch names are a display overlay. Your choice is
+  remembered locally.
 
 ## Background
 
 This project began as a reconstruction of a lost app (only the compiled Netlify frontend survived).
 It has since been **rebuilt around the availability-search flow** as the product's core, with a clean,
-redesigned data model and an editorial visual identity. Copy is in Dutch.
+redesigned data model and an editorial visual identity. The UI is fully bilingual (Dutch + English),
+switchable at runtime.
 
 ## Tech stack
 
 - **Monorepo:** npm workspaces
-- **`shared/`** — `@cocktailapp/shared`: TypeScript domain types + enums + Dutch labels, the single
-  source of truth shared by both apps
+- **`shared/`** — `@cocktailapp/shared`: TypeScript domain types + enums + localized labels (nl/en)
+  + the single UI string table (`i18n.ts`) — the frontend's single source of truth for copy
 - **`backend/`** — NestJS 11 + Mongoose 9, MongoDB Atlas. Helmet, rate limiting, a global exception
   filter, and referential integrity between cocktails and the ingredient catalog
 - **`frontend/`** — Angular 21 (standalone, zoneless, signals) + Angular Material, themed with a custom
@@ -112,9 +117,9 @@ npm run db:shell    # interactive mongosh shell
 
 ```
 barkast/
-├─ shared/     @cocktailapp/shared — domain types, enums, Dutch labels
+├─ shared/     @cocktailapp/shared — domain types, enums, localized labels + UI strings (nl/en)
 ├─ backend/    NestJS + Mongoose REST API (ingredients, cocktails, makeable search)
-├─ frontend/   Angular app — Mijn bar (hero), wizard, cocktails, ingredients
+├─ frontend/   Angular app — Ontdek (home), Mijn bar (your stock), wizard, cocktails, ingredients
 └─ scripts/    db-ping / db-count / db-seed / db-shell + seed-data.mjs
 ```
 
