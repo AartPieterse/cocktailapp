@@ -5,12 +5,10 @@ import {
   type Ingredient,
   type IngredientCategory,
 } from '@cocktailapp/shared';
-import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Body, Button, Eyebrow, H1, Muted } from '../../components/ui';
 import { track } from '../../lib/analytics';
 import { useCatalog } from '../../lib/catalog';
 import { useTheme } from '../../lib/theme';
@@ -26,8 +24,8 @@ interface WizardStep {
 
 /**
  * First-run bar builder. Staples first (pre-checked on the very first run), then one step per
- * category in CATEGORY_ORDER. Ported from the web `wizard.ts`: chips, Alles/Niets, a progress row,
- * and a running tally. Finishing writes the whole cabinet at once and marks the wizard done.
+ * category. A progress bar, pill chips and a Terug/Volgende footer; finishing writes the whole
+ * cabinet at once and marks the wizard done.
  */
 export default function WizardScreen() {
   const { theme } = useTheme();
@@ -71,7 +69,6 @@ export default function WizardScreen() {
     return out;
   }, [catalog.ingredients]);
 
-  // Seed the selection once: existing cabinet + (first run only) pre-checked staples.
   useEffect(() => {
     if (seeded || !catalog.ingredients.length) return;
     const init = new Set(cabinetIds);
@@ -86,6 +83,7 @@ export default function WizardScreen() {
 
   const step = steps[current];
   const isLast = current >= steps.length - 1;
+  const pct = steps.length ? Math.round(((current + 1) / steps.length) * 100) : 0;
 
   const toggle = (id: string) =>
     setSelection((prev) => {
@@ -95,65 +93,35 @@ export default function WizardScreen() {
       return next;
     });
 
-  const setStepAll = (items: Ingredient[], on: boolean) =>
-    setSelection((prev) => {
-      const next = new Set(prev);
-      for (const i of items) {
-        if (on) next.add(i.id);
-        else next.delete(i.id);
-      }
-      return next;
-    });
-
   const finish = () => {
     setAll(selection);
     completeWizard();
     track({ type: 'wizard_complete' });
     router.replace('/');
   };
+  const next = () => (isLast ? finish() : setCurrent((v) => v + 1));
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.bg }}>
-      <View style={[styles.top, { borderBottomColor: theme.hairline }]}>
-        <Pressable onPress={() => router.back()} style={styles.quit} hitSlop={8}>
-          <MaterialIcons name="close" size={20} color={theme.muted} />
-          <Muted>Sluiten</Muted>
-        </Pressable>
-        <View style={styles.progress}>
-          {steps.map((s, i) => (
-            <Pressable
-              key={s.key}
-              onPress={() => setCurrent(i)}
-              style={[
-                styles.dot,
-                {
-                  backgroundColor:
-                    i === current ? theme.accent : i < current ? theme.accentSoft : theme.hairline,
-                },
-              ]}
-              accessibilityLabel={s.title}
-            />
-          ))}
+      <View style={{ paddingHorizontal: 24, paddingTop: 16, paddingBottom: 4 }}>
+        <View style={styles.topRow}>
+          <Text style={{ color: theme.muted, fontWeight: '600', fontSize: 12 }}>
+            Stap {current + 1} van {steps.length}
+          </Text>
+          <Pressable onPress={() => router.replace('/')} hitSlop={8}>
+            <Text style={{ color: theme.dim, fontWeight: '600', fontSize: 12 }}>Overslaan</Text>
+          </Pressable>
         </View>
-        <Muted>
-          <Body style={{ color: theme.accent, fontWeight: '700' }}>{selection.size}</Body> gekozen
-        </Muted>
+        <View style={[styles.track, { backgroundColor: theme.surface3 }]}>
+          <View style={[styles.fill, { backgroundColor: theme.accent, width: `${pct}%` }]} />
+        </View>
       </View>
 
-      <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 24 }}>
+      <ScrollView contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 20, paddingBottom: 16 }}>
         {step ? (
           <>
-            <Eyebrow>
-              Stap {current + 1} van {steps.length}
-            </Eyebrow>
-            <H1 style={{ marginTop: 6 }}>{step.title}</H1>
-            <Muted style={{ marginTop: 6 }}>{step.hint}</Muted>
-
-            <View style={styles.quick}>
-              <Button label="Alles" icon="done-all" variant="text" onPress={() => setStepAll(step.items, true)} />
-              <Button label="Niets" icon="remove-done" variant="text" onPress={() => setStepAll(step.items, false)} />
-            </View>
-
+            <Text style={[styles.h1, { color: theme.ink, fontFamily: theme.fontDisplay }]}>{step.title}</Text>
+            <Text style={{ color: theme.muted, fontSize: 14, lineHeight: 21, marginTop: 8 }}>{step.hint}</Text>
             <View style={styles.chips}>
               {step.items.map((ing) => {
                 const on = selection.has(ing.id);
@@ -171,65 +139,43 @@ export default function WizardScreen() {
                     accessibilityRole="button"
                     accessibilityState={{ selected: on }}
                   >
-                    <MaterialIcons
-                      name={on ? 'check-circle' : 'add-circle-outline'}
-                      size={18}
-                      color={on ? theme.accent : theme.faint}
-                    />
-                    <Body style={{ color: on ? theme.accentStrong : theme.ink, fontWeight: on ? '600' : '400' }}>
+                    <Text style={{ color: on ? theme.accent : theme.muted, fontWeight: '600', fontSize: 13.5 }}>
                       {ing.name}
-                    </Body>
+                    </Text>
                   </Pressable>
                 );
               })}
             </View>
           </>
         ) : (
-          <Muted>Catalogus laden…</Muted>
+          <Text style={{ color: theme.muted }}>Catalogus laden…</Text>
         )}
       </ScrollView>
 
-      <View style={[styles.nav, { borderTopColor: theme.hairline, backgroundColor: theme.bg }]}>
-        <Button
-          label="Vorige"
-          icon="arrow-back"
-          variant="stroked"
-          disabled={current === 0}
-          onPress={() => setCurrent((v) => Math.max(0, v - 1))}
-        />
-        {isLast ? (
-          <Button label="Klaar — bekijk cocktails" icon="check" onPress={finish} />
-        ) : (
-          <Button label="Volgende" icon="arrow-forward" onPress={() => setCurrent((v) => v + 1)} />
-        )}
+      <View style={[styles.foot, { borderTopColor: theme.hairline, backgroundColor: theme.bg }]}>
+        {current > 0 ? (
+          <Pressable onPress={() => setCurrent((v) => Math.max(0, v - 1))} style={[styles.btnBack, { borderColor: theme.hairline }]}>
+            <Text style={{ color: theme.muted, fontWeight: '600', fontSize: 14 }}>Terug</Text>
+          </Pressable>
+        ) : null}
+        <Pressable onPress={next} style={[styles.btnNext, { backgroundColor: theme.accent }]}>
+          <Text style={{ color: '#fff', fontWeight: '600', fontSize: 14 }}>
+            {isLast ? 'Klaar — toon mijn bar' : 'Volgende'}
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  top: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-  },
-  quit: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  progress: { flex: 1, flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: 6 },
-  dot: { width: 26, height: 5, borderRadius: 999 },
-  quick: { flexDirection: 'row', gap: 8, marginTop: 16, marginBottom: 4 },
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
-  chip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingVertical: 9,
-    paddingLeft: 10,
-    paddingRight: 14,
-    borderRadius: 999,
-    borderWidth: 1,
-  },
-  nav: { flexDirection: 'row', justifyContent: 'space-between', gap: 12, padding: 16, borderTopWidth: 1 },
+  topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  track: { marginTop: 10, height: 4, borderRadius: 4, overflow: 'hidden' },
+  fill: { height: '100%', borderRadius: 4 },
+  h1: { fontSize: 28, fontWeight: '600', letterSpacing: -0.5, lineHeight: 30 },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 9, marginTop: 22 },
+  chip: { paddingVertical: 10, paddingHorizontal: 15, borderRadius: 40, borderWidth: 1.6 },
+  foot: { flexDirection: 'row', gap: 12, padding: 16, paddingHorizontal: 24, borderTopWidth: 1 },
+  btnBack: { paddingVertical: 15, paddingHorizontal: 20, borderRadius: 14, borderWidth: 1.5 },
+  btnNext: { flex: 1, paddingVertical: 15, borderRadius: 14, alignItems: 'center' },
 });
