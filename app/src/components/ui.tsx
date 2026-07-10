@@ -41,17 +41,17 @@ export function Screen({
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme();
-  return <Text style={[base.eyebrow, { color: theme.accent }]}>{children}</Text>;
+  return <Text style={[base.eyebrow, { color: theme.dim }]}>{children}</Text>;
 }
 
 export function H1({ children, style }: { children: React.ReactNode; style?: StyleProp<TextStyle> }) {
   const { theme } = useTheme();
-  return <Text style={[base.h1, { color: theme.ink }, style]}>{children}</Text>;
+  return <Text style={[base.h1, { color: theme.ink, fontFamily: theme.fontDisplay }, style]}>{children}</Text>;
 }
 
 export function H2({ children, style }: { children: React.ReactNode; style?: StyleProp<TextStyle> }) {
   const { theme } = useTheme();
-  return <Text style={[base.h2, { color: theme.ink }, style]}>{children}</Text>;
+  return <Text style={[base.h2, { color: theme.ink, fontFamily: theme.fontDisplay }, style]}>{children}</Text>;
 }
 
 export function Muted({ children, style }: { children: React.ReactNode; style?: StyleProp<TextStyle> }) {
@@ -144,13 +144,13 @@ export function themedStyles<T extends Record<string, ViewStyle | TextStyle>>(
 
 const base = StyleSheet.create({
   eyebrow: {
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 1.2,
+    fontSize: 11,
+    fontWeight: '600',
+    letterSpacing: 1.4,
     textTransform: 'uppercase',
   },
-  h1: { fontSize: 30, fontWeight: '800', lineHeight: 36 },
-  h2: { fontSize: 19, fontWeight: '700' },
+  h1: { fontSize: 30, fontWeight: '600', lineHeight: 34, letterSpacing: -0.5 },
+  h2: { fontSize: 22, fontWeight: '600', letterSpacing: -0.3 },
   muted: { fontSize: 14, lineHeight: 20 },
   body: { fontSize: 15, lineHeight: 22 },
   btn: {

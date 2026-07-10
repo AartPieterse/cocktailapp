@@ -1,6 +1,7 @@
 import { DarkTheme as NavDark, DefaultTheme as NavLight, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { Toast } from '../components/Toast';
 import { loadCachedCatalog, refreshCatalog } from '../lib/catalog';
 import { useTheme } from '../lib/theme';
 import { initAuth } from '../store/auth';
@@ -45,6 +46,7 @@ export default function RootLayout() {
         <Stack.Screen name="cocktails/[id]" />
         <Stack.Screen name="account" />
       </Stack>
+      <Toast />
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
     </ThemeProvider>
   );
