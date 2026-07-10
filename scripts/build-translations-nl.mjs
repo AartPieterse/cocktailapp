@@ -25,7 +25,7 @@ const root = join(here, '..');
 
 // Read the freshly built catalog so we only emit overlay entries for ids that actually exist.
 const catalog = JSON.parse(
-  readFileSync(join(root, 'app', 'assets', 'catalog.json'), 'utf8'),
+  readFileSync(join(root, 'frontend', 'public', 'catalog.json'), 'utf8'),
 );
 const ingredientIds = new Set(catalog.ingredients.map((i) => i.id));
 const cocktailIds = new Set(catalog.cocktails.map((c) => c.id));
@@ -44,10 +44,11 @@ const NL_INGREDIENTS = {
   'coffee-liqueur': 'Koffielikeur', 'creme-de-cacao': 'Crème de cacao',
   'creme-de-cassis': 'Crème de cassis', 'creme-de-menthe': 'Crème de menthe',
   'creme-de-mure': 'Crème de mûre', 'creme-de-violette': 'Crème de violette', drambuie: 'Drambuie',
-  'fernet-branca': 'Fernet-Branca', galliano: 'Galliano', 'green-chartreuse': 'Groene Chartreuse',
+  'fernet-branca': 'Fernet-Branca', 'green-chartreuse': 'Groene Chartreuse',
   'yellow-chartreuse': 'Gele Chartreuse', maraschino: 'Maraschinolikeur',
   'peach-schnapps': 'Perziklikeur', 'raspberry-liqueur': 'Frambozenlikeur', campari: 'Campari',
-  'grand-marnier': 'Grand Marnier',
+  'grand-marnier': 'Grand Marnier', cynar: 'Cynar', frangelico: 'Frangelico',
+  'allspice-liqueur': 'Pimentlikeur', 'passion-fruit-liqueur': 'Passievruchtlikeur',
   // wine & vermouth
   'sweet-vermouth': 'Rode vermout', 'dry-vermouth': 'Droge vermout', 'lillet-blanc': 'Lillet Blanc',
   'sparkling-wine': 'Mousserende wijn', 'white-wine': 'Droge witte wijn', 'red-wine': 'Rode wijn',
@@ -59,6 +60,9 @@ const NL_INGREDIENTS = {
   'lime-juice': 'Vers limoensap', 'lemon-juice': 'Vers citroensap', 'orange-juice': 'Vers sinaasappelsap',
   'pineapple-juice': 'Ananassap', 'cranberry-juice': 'Cranberrysap', 'grapefruit-juice': 'Grapefruitsap',
   'tomato-juice': 'Tomatensap', 'sugar-cane-juice': 'Suikerrietsap', 'peach-puree': 'Perzikpuree',
+  'passion-fruit-puree': 'Passievruchtpuree',
+  // syrups (passion fruit)
+  'passion-fruit-syrup': 'Passievruchtsiroop',
   // syrups
   'simple-syrup': 'Suikersiroop', grenadine: 'Grenadine', orgeat: 'Orgeat (amandelsiroop)',
   'honey-syrup': 'Honingsiroop', 'agave-syrup': 'Agavesiroop', 'elderflower-cordial': 'Vlierbloesemsiroop',
@@ -74,7 +78,9 @@ const NL_INGREDIENTS = {
   'worcestershire-sauce': 'Worcestershiresaus', 'orange-flower-water': 'Oranjebloesemwater',
   'vanilla-extract': 'Vanille-extract',
   // produce
-  mint: 'Munt', ginger: 'Gember', 'chili-pepper': 'Rode peper',
+  mint: 'Munt', ginger: 'Gember', 'chili-pepper': 'Rode peper', basil: 'Basilicum',
+  pineapple: 'Ananas', orange: 'Sinaasappel', lemon: 'Citroen', cloves: 'Kruidnagel',
+  sherry: 'Sherry',
   // pantry & other
   sugar: 'Suiker', water: 'Water', coffee: 'Koffie', espresso: 'Espresso',
 };

@@ -99,9 +99,6 @@
     "fernet-branca": {
       "name": "Fernet-Branca"
     },
-    "galliano": {
-      "name": "Galliano"
-    },
     "green-chartreuse": {
       "name": "Groene Chartreuse"
     },
@@ -122,6 +119,18 @@
     },
     "grand-marnier": {
       "name": "Grand Marnier"
+    },
+    "cynar": {
+      "name": "Cynar"
+    },
+    "frangelico": {
+      "name": "Frangelico"
+    },
+    "allspice-liqueur": {
+      "name": "Pimentlikeur"
+    },
+    "passion-fruit-liqueur": {
+      "name": "Passievruchtlikeur"
     },
     "sweet-vermouth": {
       "name": "Rode vermout"
@@ -185,6 +194,12 @@
     },
     "peach-puree": {
       "name": "Perzikpuree"
+    },
+    "passion-fruit-puree": {
+      "name": "Passievruchtpuree"
+    },
+    "passion-fruit-syrup": {
+      "name": "Passievruchtsiroop"
     },
     "simple-syrup": {
       "name": "Suikersiroop"
@@ -266,6 +281,24 @@
     },
     "chili-pepper": {
       "name": "Rode peper"
+    },
+    "basil": {
+      "name": "Basilicum"
+    },
+    "pineapple": {
+      "name": "Ananas"
+    },
+    "orange": {
+      "name": "Sinaasappel"
+    },
+    "lemon": {
+      "name": "Citroen"
+    },
+    "cloves": {
+      "name": "Kruidnagel"
+    },
+    "sherry": {
+      "name": "Sherry"
     },
     "sugar": {
       "name": "Suiker"
