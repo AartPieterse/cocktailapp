@@ -18,6 +18,11 @@ export const routes: Routes = [
         loadComponent: () => import('./bar/wizard/wizard').then((m) => m.Wizard),
       },
       {
+        path: 'kast',
+        title: 'Mijn kast — Barkast',
+        loadComponent: () => import('./bar/cabinet/cabinet').then((m) => m.Cabinet),
+      },
+      {
         path: 'cocktails',
         loadChildren: () => import('./cocktails/cocktails.routes').then((m) => m.COCKTAIL_ROUTES),
       },

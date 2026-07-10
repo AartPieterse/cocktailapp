@@ -1,7 +1,5 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import {
   CATEGORY_HINTS,
   CATEGORY_LABELS_PLURAL,
@@ -11,6 +9,7 @@ import {
 } from '@cocktailapp/shared';
 import { CabinetService } from '../../core/cabinet.service';
 import { IngredientService } from '../../services/ingredient.service';
+import { IngredientGlyph } from '../../shared/ingredient-glyph/ingredient-glyph';
 
 interface WizardStep {
   key: string;
@@ -21,185 +20,175 @@ interface WizardStep {
 
 @Component({
   selector: 'app-wizard',
-  imports: [MatButtonModule, MatIconModule],
+  imports: [IngredientGlyph],
   template: `
-    <div class="wizard">
-      <div class="top">
-        <button class="quit" mat-button (click)="quit()">
-          <mat-icon>close</mat-icon> Sluiten
-        </button>
-        <div class="progress" role="tablist" aria-label="Voortgang">
-          @for (s of steps(); track s.key; let i = $index) {
-            <button
-              class="dot"
-              [class.done]="i < current()"
-              [class.active]="i === current()"
-              (click)="goTo(i)"
-              [attr.aria-label]="s.title"
-            ></button>
-          }
+    <div class="stage">
+      <div class="card">
+        <div class="card-top">
+          <div class="top-row">
+            <span class="step-of">Stap {{ current() + 1 }} van {{ steps().length }}</span>
+            <button class="skip" type="button" (click)="quit()">Overslaan</button>
+          </div>
+          <div class="track"><div class="fill" [style.width]="pct()"></div></div>
         </div>
-        <span class="tally"><strong>{{ selection().size }}</strong> gekozen</span>
-      </div>
 
-      @if (step(); as s) {
-        <section class="stage">
-          <p class="eyebrow">Stap {{ current() + 1 }} van {{ steps().length }}</p>
-          <h1>{{ s.title }}</h1>
-          <p class="lede">{{ s.hint }}</p>
-
-          <div class="quick">
-            <button mat-button (click)="setStep(s, true)">
-              <mat-icon>done_all</mat-icon> Alles
-            </button>
-            <button mat-button (click)="setStep(s, false)">
-              <mat-icon>remove_done</mat-icon> Niets
-            </button>
+        @if (step(); as s) {
+          <div class="card-body">
+            <h1>{{ s.title }}</h1>
+            <p class="hint">{{ s.hint }}</p>
+            <div class="chips">
+              @for (ing of s.items; track ing.id) {
+                <button
+                  type="button"
+                  class="chip"
+                  [class.on]="selection().has(ing.id)"
+                  (click)="toggle(ing.id)"
+                  [attr.aria-pressed]="selection().has(ing.id)"
+                >
+                  <span class="glyph"><app-ingredient-glyph [ingId]="ing.id" [cat]="ing.category" /></span>
+                  {{ ing.name }}
+                </button>
+              } @empty {
+                <p class="muted">Geen ingrediënten in deze categorie.</p>
+              }
+            </div>
           </div>
-
-          <div class="chips">
-            @for (ing of s.items; track ing.id) {
-              <button
-                type="button"
-                class="chip"
-                [class.on]="selection().has(ing.id)"
-                (click)="toggle(ing.id)"
-                [attr.aria-pressed]="selection().has(ing.id)"
-              >
-                <mat-icon>{{ selection().has(ing.id) ? 'check_circle' : 'add_circle_outline' }}</mat-icon>
-                {{ ing.name }}
-              </button>
-            } @empty {
-              <p class="muted">Geen ingrediënten in deze categorie.</p>
-            }
-          </div>
-        </section>
-      }
-
-      <footer class="nav">
-        <button mat-stroked-button [disabled]="current() === 0" (click)="prev()">
-          <mat-icon>arrow_back</mat-icon> Vorige
-        </button>
-        @if (isLast()) {
-          <button mat-flat-button (click)="finish()">
-            <mat-icon>check</mat-icon> Klaar — bekijk cocktails
-          </button>
-        } @else {
-          <button mat-flat-button (click)="next()">
-            Volgende <mat-icon>arrow_forward</mat-icon>
-          </button>
         }
-      </footer>
+
+        <div class="card-foot">
+          @if (current() > 0) {
+            <button class="btn btn-back" type="button" (click)="prev()">Terug</button>
+          }
+          <button class="btn btn-next" type="button" (click)="next()">
+            {{ isLast() ? 'Klaar — toon mijn bar' : 'Volgende' }}
+          </button>
+        </div>
+      </div>
     </div>
   `,
   styles: `
-    .wizard {
-      max-width: 760px;
-      margin: 0 auto;
-      min-height: 60vh;
+    .stage {
       display: flex;
-      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: calc(100vh - 74px);
+      padding: 56px 0;
+      animation: rise 0.4s ease both;
     }
-    .top {
+    .card {
+      width: 640px;
+      max-width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--hairline-soft);
+      border-radius: 26px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .card-top {
+      padding: 26px 32px 4px;
+    }
+    .top-row {
       display: flex;
       align-items: center;
-      gap: var(--sp-3);
-      margin-bottom: var(--sp-5);
+      justify-content: space-between;
     }
-    .quit {
+    .step-of {
+      font: 600 0.813rem var(--font-body);
       color: var(--muted);
     }
-    .progress {
-      display: flex;
-      gap: 6px;
-      flex: 1;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .dot {
-      width: 26px;
-      height: 5px;
+    .skip {
+      background: none;
       border: none;
-      padding: 0;
-      border-radius: 999px;
-      background: var(--hairline);
+      font: 600 0.813rem var(--font-body);
+      color: var(--dim);
       cursor: pointer;
-      transition: background 0.15s ease;
     }
-    .dot.done {
-      background: color-mix(in srgb, var(--accent) 45%, var(--hairline));
+    .track {
+      margin-top: 12px;
+      height: 5px;
+      background: var(--surface-3);
+      border-radius: 5px;
+      overflow: hidden;
     }
-    .dot.active {
+    .fill {
+      height: 100%;
       background: var(--accent);
+      border-radius: 5px;
+      transition: width 0.35s ease;
     }
-    .tally {
-      font-size: var(--step--1);
+    .card-body {
+      padding: 24px 32px 8px;
+    }
+    .card-body h1 {
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .hint {
       color: var(--muted);
-      white-space: nowrap;
-    }
-    .tally strong {
-      color: var(--accent);
-    }
-    .stage {
-      flex: 1;
-    }
-    .stage h1 {
-      font-size: var(--step-4);
-      margin: 0 0 var(--sp-2);
-    }
-    .quick {
-      display: flex;
-      gap: var(--sp-2);
-      margin: var(--sp-4) 0 var(--sp-2);
+      margin: 8px 0 0;
+      font-size: 0.938rem;
     }
     .chips {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--sp-2);
-      margin-top: var(--sp-3);
+      gap: 10px;
+      margin-top: 24px;
     }
     .chip {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 9px 14px 9px 10px;
-      border: 1px solid var(--hairline);
-      border-radius: 999px;
+      gap: 8px;
+      padding: 6px 16px 6px 7px;
+      border-radius: var(--radius-pill);
+      border: 1.6px solid var(--hairline);
       background: var(--surface);
-      color: var(--ink);
-      font-family: var(--font-body);
-      font-size: var(--step-0);
+      color: var(--muted);
+      font: 600 0.844rem var(--font-body);
+      line-height: 1;
       cursor: pointer;
-      transition: all 0.14s ease;
-    }
-    .chip mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-      color: var(--faint);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
     .chip:hover {
-      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px -12px rgba(36, 30, 23, 0.5);
     }
     .chip.on {
       background: var(--accent-soft);
-      border-color: color-mix(in srgb, var(--accent) 55%, transparent);
-      color: var(--accent-strong);
-      font-weight: 600;
-    }
-    .chip.on mat-icon {
+      border-color: var(--accent);
       color: var(--accent);
     }
-    .nav {
+    .glyph {
+      width: 23px;
+      height: 23px;
+      flex: none;
+      display: block;
+    }
+    .card-foot {
+      padding: 20px 32px 26px;
+      margin-top: 12px;
+      border-top: 1px solid var(--hairline-soft);
       display: flex;
-      justify-content: space-between;
-      gap: var(--sp-3);
-      margin-top: var(--sp-6);
-      padding-top: var(--sp-5);
-      border-top: 1px solid var(--hairline);
-      position: sticky;
-      bottom: 0;
-      background: var(--bg);
+      gap: 12px;
+    }
+    .btn {
+      padding: 14px;
+      border-radius: 14px;
+      font: 600 0.875rem var(--font-body);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-back {
+      flex: none;
+      padding: 14px 24px;
+      background: none;
+      border: 1.5px solid var(--hairline);
+      color: var(--muted);
+    }
+    .btn-next {
+      flex: 1;
+      background: var(--accent);
+      color: #fff;
     }
   `,
 })
@@ -241,6 +230,10 @@ export class Wizard {
 
   readonly step = computed(() => this.steps()[this.current()]);
   readonly isLast = computed(() => this.current() >= this.steps().length - 1);
+  readonly pct = computed(() => {
+    const n = this.steps().length || 1;
+    return Math.round(((this.current() + 1) / n) * 100) + '%';
+  });
 
   constructor() {
     this.ingredientService.getAll().subscribe((list) => {
@@ -267,20 +260,9 @@ export class Wizard {
     this.selection.set(next);
   }
 
-  setStep(step: WizardStep, on: boolean): void {
-    const next = new Set(this.selection());
-    for (const ing of step.items) {
-      if (on) next.add(ing.id);
-      else next.delete(ing.id);
-    }
-    this.selection.set(next);
-  }
-
-  goTo(i: number): void {
-    this.current.set(i);
-  }
   next(): void {
-    if (!this.isLast()) this.current.update((v) => v + 1);
+    if (this.isLast()) this.finish();
+    else this.current.update((v) => v + 1);
   }
   prev(): void {
     if (this.current() > 0) this.current.update((v) => v - 1);

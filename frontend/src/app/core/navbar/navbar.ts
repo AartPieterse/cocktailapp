@@ -1,39 +1,40 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CabinetService } from '../cabinet.service';
+import { CocktailService } from '../../services/cocktail.service';
 import { ThemeService } from '../theme.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive, MatButtonModule, MatIconModule, MatTooltipModule],
+  imports: [RouterLink, RouterLinkActive, MatIconModule, MatTooltipModule],
   template: `
     <header class="bar">
       <div class="container inner">
         <a class="brand" routerLink="/bar" aria-label="Barkast home">
-          <span class="mark">Bar<span class="mark-accent">kast</span></span>
+          <span class="glyph" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 4 h14 l-7 8 z" />
+              <line x1="12" y1="12" x2="12" y2="20" />
+              <line x1="8" y1="20" x2="16" y2="20" />
+            </svg>
+          </span>
+          <span class="mark">Barkast</span>
         </a>
 
         <nav class="links" [class.open]="menuOpen()" (click)="menuOpen.set(false)">
           <a routerLink="/bar" routerLinkActive="active">Mijn bar</a>
           <a routerLink="/cocktails" routerLinkActive="active">Cocktails</a>
-          <a routerLink="/ingredienten" routerLinkActive="active">Ingrediënten</a>
+          <a routerLink="/kast" routerLinkActive="active">Mijn kast</a>
         </nav>
 
         <div class="actions">
-          <a
-            class="cabinet-chip"
-            routerLink="/bar"
-            matTooltip="Ingrediënten in je bar"
-            aria-label="Ingrediënten in je bar"
-          >
-            <mat-icon>local_bar</mat-icon>
-            <span>{{ cabinet.count() }}</span>
-          </a>
+          <button class="surprise" type="button" (click)="surprise()">
+            <mat-icon>casino</mat-icon> Verras me
+          </button>
           <button
-            mat-icon-button
+            class="icon-btn"
             type="button"
             (click)="theme.toggle()"
             [matTooltip]="theme.theme() === 'dark' ? 'Lichte modus' : 'Donkere modus'"
@@ -42,8 +43,7 @@ import { ThemeService } from '../theme.service';
             <mat-icon>{{ theme.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
           </button>
           <button
-            class="burger"
-            mat-icon-button
+            class="icon-btn burger"
             type="button"
             (click)="menuOpen.update((v) => !v)"
             aria-label="Menu"
@@ -58,39 +58,42 @@ import { ThemeService } from '../theme.service';
     .bar {
       position: sticky;
       top: 0;
-      z-index: 20;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      backdrop-filter: saturate(1.2) blur(10px);
+      z-index: 40;
+      background: color-mix(in srgb, var(--bg) 86%, transparent);
+      backdrop-filter: saturate(1.2) blur(12px);
       border-bottom: 1px solid var(--hairline);
     }
     .inner {
       display: flex;
       align-items: center;
       gap: var(--sp-5);
-      height: 64px;
+      height: 74px;
     }
     .brand {
       display: inline-flex;
-      align-items: baseline;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand .glyph {
+      display: inline-flex;
+      color: var(--accent);
     }
     .mark {
       font-family: var(--font-display);
       font-weight: 600;
-      font-size: 1.5rem;
-      letter-spacing: -0.02em;
-    }
-    .mark-accent {
-      color: var(--accent);
+      font-size: 1.44rem;
+      letter-spacing: -0.01em;
     }
     .links {
       display: flex;
-      gap: var(--sp-5);
+      gap: 30px;
       margin-left: var(--sp-4);
     }
     .links a {
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 0.875rem;
       color: var(--muted);
-      padding: 4px 0;
+      padding: 6px 0;
       border-bottom: 2px solid transparent;
       transition: color 0.15s ease;
     }
@@ -98,42 +101,75 @@ import { ThemeService } from '../theme.service';
       color: var(--ink);
     }
     .links a.active {
-      color: var(--ink);
+      color: var(--accent);
       border-bottom-color: var(--accent);
     }
     .actions {
       margin-left: auto;
       display: flex;
       align-items: center;
-      gap: var(--sp-1);
+      gap: var(--sp-2);
     }
-    .cabinet-chip {
+    .surprise {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 5px 10px;
-      border: 1px solid var(--hairline);
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: var(--step--1);
-      color: var(--ink);
+      gap: 7px;
+      background: var(--ink);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 10px 18px;
+      font: 600 0.844rem var(--font-body);
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
-    .cabinet-chip mat-icon {
+    .surprise:hover {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+    .surprise mat-icon {
       font-size: 18px;
       width: 18px;
       height: 18px;
-      color: var(--accent);
     }
-    .cabinet-chip:hover {
-      border-color: var(--accent);
+    .icon-btn {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 999px;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .icon-btn:hover {
+      background: var(--surface-2);
+      color: var(--ink);
     }
     .burger {
       display: none;
     }
-    @media (max-width: 720px) {
+    @media (max-width: 780px) {
+      .inner {
+        gap: var(--sp-3);
+      }
+      .surprise span,
+      .surprise {
+        font-size: 0;
+      }
+      .surprise {
+        padding: 10px 12px;
+        gap: 0;
+      }
+      .surprise mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
       .links {
         position: absolute;
-        top: 64px;
+        top: 74px;
         left: 0;
         right: 0;
         flex-direction: column;
@@ -155,13 +191,21 @@ import { ThemeService } from '../theme.service';
         border-bottom-color: var(--hairline);
       }
       .burger {
-        display: inline-flex;
+        display: grid;
       }
     }
   `,
 })
 export class Navbar {
   protected readonly theme = inject(ThemeService);
-  protected readonly cabinet = inject(CabinetService);
+  private readonly cocktails = inject(CocktailService);
+  private readonly router = inject(Router);
   protected readonly menuOpen = signal(false);
+
+  surprise(): void {
+    this.cocktails.getRandom().subscribe({
+      next: (c) => void this.router.navigate(['/cocktails', c.id]),
+      error: () => undefined,
+    });
+  }
 }

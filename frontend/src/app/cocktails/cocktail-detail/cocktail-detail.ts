@@ -19,319 +19,368 @@ import { CabinetService } from '../../core/cabinet.service';
 import { FavoritesService } from '../../core/favorites.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
-import { CocktailThumb } from '../../shared/cocktail-thumb/cocktail-thumb';
+import { GlassArt } from '../../shared/glass-art/glass-art';
+import { IngredientGlyph } from '../../shared/ingredient-glyph/ingredient-glyph';
+import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-cocktail-detail',
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatTooltipModule, CocktailThumb],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatTooltipModule, GlassArt, IngredientGlyph],
   template: `
     @if (loading()) {
-      <div class="detail">
-        <div class="skeleton" style="aspect-ratio:16/10;border-radius:var(--radius-lg)"></div>
-        <div class="skeleton sk" style="width:60%;height:34px;margin-top:24px"></div>
-        <div class="skeleton sk" style="width:90%;height:16px"></div>
+      <div class="wrap">
+        <div class="skeleton" style="aspect-ratio:1/1.1;border-radius:28px"></div>
+        <div>
+          <div class="skeleton" style="width:60%;height:44px;margin-bottom:16px"></div>
+          <div class="skeleton" style="width:90%;height:16px"></div>
+        </div>
       </div>
     } @else if (cocktail(); as c) {
-      <a class="back no-print" routerLink="/cocktails"><mat-icon>arrow_back</mat-icon> Alle cocktails</a>
-
-      <article class="detail">
-        <div class="hero">
-          <div class="hero-media">
-            <app-cocktail-thumb [name]="c.name" [imageUrl]="c.imageUrl" />
-          </div>
-          <div class="hero-copy">
-            <p class="eyebrow">{{ tags(c)[0] || 'Cocktail' }}</p>
-            <h1>{{ c.name }}</h1>
-            <p class="lede">{{ c.description }}</p>
-
-            <div class="meta">
-              @if (c.method) {
-                <div class="meta-item"><span class="k">Methode</span><span>{{ methodLabel(c) }}</span></div>
-              }
-              @if (c.glass) {
-                <div class="meta-item"><span class="k">Glas</span><span>{{ glassLabel(c) }}</span></div>
-              }
-              @if (c.difficulty) {
-                <div class="meta-item"><span class="k">Niveau</span><span>{{ diffLabel(c) }}</span></div>
-              }
+      <div class="page">
+        <button class="back no-print" (click)="back()">‹ Terug</button>
+        <div class="wrap">
+          <div class="visual">
+            <div class="panel" [style.background]="tint()">
+              <div class="glass"><app-glass-art [spec]="spec()" /></div>
             </div>
-
-            <div class="hero-actions no-print">
-              <button
-                mat-flat-button
-                (click)="toggleFav(c)"
-                [class.faved]="isFav(c)"
-              >
+            <div class="pills">
+              @if (c.glass) { <span class="pill">{{ glassLabel(c) }}</span> }
+              @if (c.method) { <span class="pill">{{ methodLabel(c) }}</span> }
+              @if (c.difficulty) { <span class="pill">{{ diffLabel(c) }}</span> }
+            </div>
+            @if (c.garnish) {
+              <div class="garnish">Garnering · {{ c.garnish }}</div>
+            }
+            <div class="mini-actions no-print">
+              <button class="mini" [class.on]="isFav(c)" (click)="toggleFav(c)">
                 <mat-icon>{{ isFav(c) ? 'favorite' : 'favorite_border' }}</mat-icon>
                 {{ isFav(c) ? 'Favoriet' : 'Bewaar' }}
               </button>
-              <button mat-stroked-button (click)="print()"><mat-icon>print</mat-icon> Print</button>
+              <button class="mini" (click)="print()"><mat-icon>print</mat-icon> Print</button>
               @if (admin) {
-                <a mat-stroked-button [routerLink]="['/cocktails', c.id, 'edit']">
-                  <mat-icon>edit</mat-icon> Bewerk
-                </a>
-                <button mat-icon-button (click)="remove(c)" aria-label="Verwijder" matTooltip="Verwijder">
-                  <mat-icon>delete_outline</mat-icon>
-                </button>
+                <a class="mini" [routerLink]="['/cocktails', c.id, 'edit']"><mat-icon>edit</mat-icon> Bewerk</a>
+                <button class="mini" (click)="remove(c)"><mat-icon>delete_outline</mat-icon></button>
+              }
+            </div>
+          </div>
+
+          <div class="detail">
+            <h1>{{ c.name }}</h1>
+            @if (c.description) { <p class="lede">{{ c.description }}</p> }
+
+            @if (makeable()) {
+              <div class="banner ok">✓ Je hebt alles in huis — shaken maar!</div>
+            } @else {
+              <div class="banner miss">
+                <span>Je mist nog {{ missingNames() }}</span>
+                <button class="add-btn" (click)="addAllMissing()">+ Toevoegen aan kast</button>
+              </div>
+            }
+
+            <div class="sec-label">Ingrediënten</div>
+            <div class="lines">
+              <div class="servings no-print">
+                <button (click)="stepServings(-1)" [disabled]="servings() <= 1" aria-label="Minder">–</button>
+                <span>{{ servings() }} {{ servings() === 1 ? 'glas' : 'glazen' }}</span>
+                <button (click)="stepServings(1)" aria-label="Meer">+</button>
+              </div>
+              @for (i of c.ingredients; track i.ingredientId + i.name) {
+                <div class="line">
+                  <span class="glyph"><app-ingredient-glyph [ingId]="i.ingredientId" [cat]="ingCat(i)" /></span>
+                  <div class="meas">{{ scaled(i) }} {{ unitLabel(i) }}</div>
+                  <div class="iname">
+                    {{ i.call ?? i.name }}
+                    @if (i.optional) { <em class="opt">optioneel</em> }
+                    @if (i.note) { <span class="note">· {{ i.note }}</span> }
+                  </div>
+                  @if (inBar(i)) {
+                    <span class="in-kast">✓ in kast</span>
+                  } @else if (!i.optional) {
+                    <button class="add-line no-print" (click)="add(i)">+ toevoegen</button>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="sec-label">Bereiding</div>
+            <div class="steps">
+              @for (step of c.instructions; track $index) {
+                <div class="step">
+                  <div class="n">{{ $index + 1 }}</div>
+                  <div class="t">{{ step }}</div>
+                </div>
+              } @empty {
+                <p class="muted">Geen instructies opgegeven.</p>
               }
             </div>
           </div>
         </div>
-
-        <div class="cols">
-          <section class="ingredients">
-            <div class="col-head">
-              <h2>Ingrediënten</h2>
-              <div class="servings no-print">
-                <button mat-icon-button (click)="stepServings(-1)" [disabled]="servings() <= 1" aria-label="Minder">
-                  <mat-icon>remove</mat-icon>
-                </button>
-                <span>{{ servings() }} {{ servings() === 1 ? 'glas' : 'glazen' }}</span>
-                <button mat-icon-button (click)="stepServings(1)" aria-label="Meer">
-                  <mat-icon>add</mat-icon>
-                </button>
-              </div>
-            </div>
-
-            <ul class="lines">
-              @for (i of c.ingredients; track i.ingredientId + i.name) {
-                <li [class.have]="inBar(i)">
-                  <span class="tick" [attr.aria-label]="inBar(i) ? 'In je bar' : 'Niet in je bar'">
-                    <mat-icon>{{ inBar(i) ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
-                  </span>
-                  <span class="amount">{{ scaled(i) }} {{ unitLabel(i) }}</span>
-                  <span class="ing">
-                    {{ i.call ?? i.name }}
-                    @if (i.call && i.call !== i.name) { <span class="base">({{ i.name }})</span> }
-                    @if (i.optional) { <em class="opt">optioneel</em> }
-                    @if (i.note) { <span class="note">— {{ i.note }}</span> }
-                  </span>
-                </li>
-              } @empty {
-                <li class="muted">Geen ingrediënten opgegeven.</li>
-              }
-            </ul>
-
-            @if (c.garnish) {
-              <p class="garnish"><mat-icon>eco</mat-icon> Garnering: {{ c.garnish }}</p>
-            }
-          </section>
-
-          <section class="method">
-            <h2>Bereiding</h2>
-            @if (c.instructions.length) {
-              <ol class="steps">
-                @for (step of c.instructions; track $index) {
-                  <li><span class="n">{{ $index + 1 }}</span><span>{{ step }}</span></li>
-                }
-              </ol>
-            } @else {
-              <p class="muted">Geen instructies opgegeven.</p>
-            }
-
-            @if (tags(c).length) {
-              <div class="tag-row no-print">
-                @for (t of tags(c); track t) {
-                  <a class="pill" routerLink="/cocktails" [queryParams]="{ tag: t }">#{{ t }}</a>
-                }
-              </div>
-            }
-          </section>
-        </div>
-      </article>
+      </div>
     } @else {
       <div class="notfound">
         <p class="eyebrow">404</p>
         <h1>Deze cocktail bestaat niet (meer)</h1>
-        <a mat-flat-button routerLink="/cocktails">Terug naar de collectie</a>
+        <a class="add-btn" routerLink="/cocktails">Terug naar de collectie</a>
       </div>
     }
   `,
   styles: `
+    .page {
+      padding-top: 28px;
+      animation: rise 0.45s ease both;
+    }
     .back {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      background: none;
+      border: none;
+      font: 600 0.875rem var(--font-body);
       color: var(--muted);
-      margin-bottom: var(--sp-4);
-      font-size: var(--step--1);
+      cursor: pointer;
+      padding: 6px 0;
     }
     .back:hover {
       color: var(--accent);
     }
-    .hero {
+    .wrap {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-6);
-      align-items: center;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 56px;
+      align-items: start;
+      margin-top: 12px;
     }
-    .hero-media {
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      --thumb-ratio: 4 / 3;
-      border: 1px solid var(--hairline);
+    .visual {
+      position: sticky;
+      top: 98px;
     }
-    .hero-copy h1 {
-      font-size: var(--step-5);
-      margin: 0 0 var(--sp-3);
-    }
-    .meta {
+    .panel {
+      border-radius: 28px;
+      padding: 40px;
       display: flex;
-      gap: var(--sp-5);
+      align-items: center;
+      justify-content: center;
+    }
+    .glass {
+      height: 340px;
+      width: 270px;
+      animation: floaty 5.5s ease-in-out infinite;
+    }
+    .pills {
+      display: flex;
       flex-wrap: wrap;
-      margin: var(--sp-4) 0;
-      padding: var(--sp-3) 0;
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
+      gap: 8px;
+      margin-top: 18px;
     }
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-    }
-    .meta-item .k {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--faint);
-    }
-    .meta-item span:last-child {
-      font-weight: 600;
-    }
-    .hero-actions {
-      display: flex;
-      gap: var(--sp-2);
-      flex-wrap: wrap;
-      margin-top: var(--sp-4);
-    }
-    .hero-actions .faved {
-      --mat-sys-primary: var(--accent);
-    }
-    .cols {
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: var(--sp-7);
-      margin-top: var(--sp-7);
-    }
-    .col-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--sp-3);
-      margin-bottom: var(--sp-3);
-    }
-    .col-head h2 {
-      margin: 0;
-    }
-    .servings {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    .pill {
+      background: var(--surface);
       border: 1px solid var(--hairline);
-      border-radius: 999px;
-      padding: 2px 6px;
-      font-size: var(--step--1);
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .lines {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .lines li {
-      display: grid;
-      grid-template-columns: 24px auto 1fr;
-      gap: var(--sp-2);
-      align-items: baseline;
-      padding: var(--sp-2) 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .tick mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-      color: var(--faint);
-      transform: translateY(3px);
-    }
-    .lines li.have .tick mat-icon {
-      color: var(--ok);
-    }
-    .amount {
-      font-variant-numeric: tabular-nums;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .ing .opt {
-      color: var(--faint);
-      font-size: var(--step--1);
-      margin-left: 4px;
-    }
-    .ing .base {
-      color: var(--muted);
-      font-size: var(--step--1);
-      margin-left: 4px;
-    }
-    .ing .note {
+      border-radius: var(--radius-pill);
+      padding: 8px 14px;
+      font: 600 0.781rem var(--font-body);
       color: var(--muted);
     }
     .garnish {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: var(--sp-4);
+      margin-top: 14px;
+      background: var(--surface-2);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font: 500 0.813rem var(--font-body);
       color: var(--muted);
-      font-size: var(--step--1);
     }
-    .garnish mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-      color: var(--ok);
-    }
-    .steps {
-      list-style: none;
-      counter-reset: step;
-      padding: 0;
-      margin: 0;
-    }
-    .steps li {
-      display: flex;
-      gap: var(--sp-3);
-      margin-bottom: var(--sp-4);
-      line-height: 1.5;
-    }
-    .steps .n {
-      flex: none;
-      display: grid;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-family: var(--font-display);
-      font-weight: 600;
-    }
-    .tag-row {
+    .mini-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--sp-2);
-      margin-top: var(--sp-5);
+      gap: 8px;
+      margin-top: 16px;
     }
-    .tag-row .pill:hover {
+    .mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-pill);
+      padding: 8px 14px;
+      font: 600 0.781rem var(--font-body);
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .mini:hover {
       border-color: var(--accent);
       color: var(--accent);
+    }
+    .mini.on {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .mini mat-icon {
+      font-size: 17px;
+      width: 17px;
+      height: 17px;
+    }
+    .detail h1 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(2.6rem, 5vw, 3.25rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    .detail .lede {
+      color: var(--muted);
+      margin-top: 16px;
+      max-width: 520px;
+      font-size: 1rem;
+    }
+    .banner {
+      margin-top: 22px;
+      border-radius: 14px;
+      font: 600 0.875rem var(--font-body);
+    }
+    .banner.ok {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ok-soft);
+      color: var(--ok-ink);
+      padding: 14px 20px;
+    }
+    .banner.miss {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--warn-soft);
+      padding: 12px 12px 12px 20px;
+      color: var(--warn);
+    }
+    .add-btn {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      border-radius: 11px;
+      padding: 11px 16px;
+      font: 600 0.813rem var(--font-body);
+      cursor: pointer;
+      white-space: nowrap;
+      flex: none;
+    }
+    .sec-label {
+      margin-top: 36px;
+      font: 600 0.688rem var(--font-body);
+      letter-spacing: 0.16em;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+    .lines {
+      margin-top: 8px;
+      max-width: 520px;
+    }
+    .servings {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0 8px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-pill);
+      padding: 4px 10px;
+      font: 600 0.813rem var(--font-body);
+    }
+    .servings button {
+      border: none;
+      background: none;
+      color: var(--accent);
+      font-size: 1.1rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .servings button:disabled {
+      color: var(--faint);
+      cursor: default;
+    }
+    .line {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+    .line .glyph {
+      width: 34px;
+      height: 34px;
+      flex: none;
+      display: block;
+    }
+    .meas {
+      width: 74px;
+      flex: none;
+      font: 600 0.844rem var(--font-body);
+      color: var(--faint);
+    }
+    .iname {
+      flex: 1;
+      font: 500 1rem var(--font-body);
+    }
+    .iname .opt {
+      color: var(--faint);
+      font-size: var(--step--1);
+      margin-left: 4px;
+    }
+    .iname .note {
+      color: var(--muted);
+    }
+    .in-kast {
+      font: 700 0.875rem var(--font-body);
+      color: var(--ok);
+      white-space: nowrap;
+    }
+    .add-line {
+      background: var(--warn-soft);
+      border: none;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font: 600 0.781rem var(--font-body);
+      color: var(--warn);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .steps {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 520px;
+    }
+    .step {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .step .n {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.62rem;
+      color: var(--accent);
+      line-height: 1;
+      width: 30px;
+      flex: none;
+    }
+    .step .t {
+      font: 500 1rem/1.55 var(--font-body);
+      color: var(--ink);
     }
     .notfound {
       text-align: center;
       padding: var(--sp-8) 0;
     }
-    @media (max-width: 760px) {
-      .hero,
-      .cols {
+    @media (max-width: 860px) {
+      .wrap {
         grid-template-columns: 1fr;
-        gap: var(--sp-5);
+        gap: 28px;
+      }
+      .visual {
+        position: static;
+      }
+      .glass {
+        height: 260px;
       }
     }
   `,
@@ -352,13 +401,35 @@ export class CocktailDetail {
   readonly loading = signal(true);
   readonly servings = signal(1);
 
+  readonly spec = computed(() => {
+    const c = this.cocktail();
+    return c ? glassSpecFor(c) : { glass: 'coupe' as const };
+  });
+  readonly tint = computed(() => {
+    const c = this.cocktail();
+    return c ? tintFor(c) : 'var(--surface-2)';
+  });
+
+  /** Required, non-optional, non-garnish lines the user still misses. */
+  private readonly missingLines = computed(() => {
+    const c = this.cocktail();
+    if (!c) return [];
+    return c.ingredients.filter(
+      (i) => !i.optional && i.role !== 'garnish' && i.role !== 'seasoning' && !this.cabinet.has(i.ingredientId),
+    );
+  });
+  readonly makeable = computed(() => this.missingLines().length === 0);
+  readonly missingNames = computed(() =>
+    this.missingLines()
+      .map((i) => i.call ?? i.name)
+      .join(', '),
+  );
+
   constructor() {
     toObservable(this.id)
       .pipe(
         tap(() => this.loading.set(true)),
-        switchMap((id) =>
-          this.cocktailService.getOne(id).pipe(catchError(() => of(null))),
-        ),
+        switchMap((id) => this.cocktailService.getOne(id).pipe(catchError(() => of(null)))),
         takeUntilDestroyed(),
       )
       .subscribe((c) => {
@@ -368,9 +439,6 @@ export class CocktailDetail {
       });
   }
 
-  tags(c: Cocktail): string[] {
-    return c.tags ?? [];
-  }
   methodLabel(c: Cocktail): string {
     return c.method ? METHOD_LABELS[c.method] : '';
   }
@@ -383,9 +451,18 @@ export class CocktailDetail {
   unitLabel(i: CocktailIngredient): string {
     return MEASURE_LABELS[i.unit];
   }
+  ingCat(i: CocktailIngredient): string | undefined {
+    return i.role === 'garnish' ? 'garnish' : undefined;
+  }
 
   inBar(i: CocktailIngredient): boolean {
     return this.cabinet.has(i.ingredientId);
+  }
+  add(i: CocktailIngredient): void {
+    this.cabinet.toggle(i.ingredientId, true);
+  }
+  addAllMissing(): void {
+    for (const i of this.missingLines()) this.cabinet.toggle(i.ingredientId, true);
   }
 
   isFav(c: Cocktail): boolean {
@@ -395,17 +472,12 @@ export class CocktailDetail {
     this.favorites.toggle(c.id);
   }
 
-  /** Amount rescaled to the chosen number of servings, trimmed of trailing zeros. */
   scaled(i: CocktailIngredient): string {
-    if (i.amount === undefined) return ''; // top-up / decorative lines carry no number
+    if (i.amount === undefined) return '';
     const base = this.cocktail()?.servings ?? 1;
     const factor = this.servings() / base;
-    const fmt = (n: number) =>
-      Number((n * factor).toFixed(2)).toString().replace('.', ',');
-    // Authored ranges ("6–8 blaadjes") keep both bounds.
-    return i.amountMax !== undefined
-      ? `${fmt(i.amount)}–${fmt(i.amountMax)}`
-      : fmt(i.amount);
+    const fmt = (n: number): string => Number((n * factor).toFixed(2)).toString().replace('.', ',');
+    return i.amountMax !== undefined ? `${fmt(i.amount)}–${fmt(i.amountMax)}` : fmt(i.amount);
   }
 
   stepServings(delta: number): void {
@@ -414,6 +486,10 @@ export class CocktailDetail {
 
   print(): void {
     window.print();
+  }
+
+  back(): void {
+    void this.router.navigate(['/cocktails']);
   }
 
   remove(c: Cocktail): void {

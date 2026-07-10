@@ -1,30 +1,21 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { Router, RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {
-  expandCabinet,
-  type Ingredient,
-  type MakeableResult,
-} from '@cocktailapp/shared';
+import { expandCabinet, type Ingredient, type MakeableResult } from '@cocktailapp/shared';
 import { catchError, combineLatest, of, switchMap, tap } from 'rxjs';
 import { CabinetService } from '../core/cabinet.service';
 import { SubstitutesService } from '../core/substitutes.service';
 import { CocktailService } from '../services/cocktail.service';
 import { IngredientService } from '../services/ingredient.service';
 import { CocktailCard } from '../cocktails/cocktail-card/cocktail-card';
+import { GlassArt } from '../shared/glass-art/glass-art';
+import { glassSpecFor } from '../shared/cocktail-visual';
 
 @Component({
   selector: 'app-bar',
-  imports: [
-    RouterLink,
-    MatButtonModule,
-    MatIconModule,
-    MatSlideToggleModule,
-    CocktailCard,
-  ],
+  imports: [RouterLink, MatIconModule, MatSlideToggleModule, CocktailCard, GlassArt],
   template: `
     @if (showOnboarding()) {
       <section class="onboard">
@@ -35,280 +26,356 @@ import { CocktailCard } from '../cocktails/cocktail-card/cocktail-card';
           en Barkast laat meteen zien welke cocktails je <em>nu</em> kunt maken.
         </p>
         <div class="cta">
-          <a mat-flat-button routerLink="/bar/wizard">
-            <mat-icon>local_bar</mat-icon> Stel je bar samen
-          </a>
-          <a mat-stroked-button routerLink="/cocktails">Blader eerst rond</a>
-        </div>
-        <div class="steps">
-          <div><span class="num">1</span> Loop door de secties</div>
-          <div><span class="num">2</span> Vink je ingrediënten aan</div>
-          <div><span class="num">3</span> Zie wat je kunt maken</div>
+          <a class="btn btn-primary" routerLink="/bar/wizard">Stel je bar samen</a>
+          <a class="btn btn-ghost" routerLink="/cocktails">Blader eerst rond</a>
         </div>
       </section>
     } @else {
-      <header class="head">
-        <div>
-          <p class="eyebrow">Mijn bar</p>
-          @if (loading()) {
-            <h1 class="count">Aan het kijken…</h1>
-          } @else {
+      <div class="fade">
+        <!-- hero -->
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Mijn bar</p>
             <h1 class="count">
-              Je kunt <span class="big">{{ makeableNow().length }}</span>
-              {{ makeableNow().length === 1 ? 'cocktail' : 'cocktails' }} maken
+              Je kunt <span class="big">{{ displayCount() }}</span><br />
+              {{ displayCount() === 1 ? 'cocktail' : 'cocktails' }} maken
             </h1>
-          }
-          <p class="lede">
-            Met de {{ cabinet.count() }} ingrediënten in je bar.
-          </p>
-        </div>
-        <div class="head-actions">
-          <a mat-flat-button routerLink="/bar/wizard"><mat-icon>tune</mat-icon> Bewerk je bar</a>
-          @if (makeableNow().length) {
-            <button mat-stroked-button (click)="surpriseMe()">
-              <mat-icon>casino</mat-icon> Verras me
-            </button>
-          }
-        </div>
-      </header>
-
-      <div class="subs">
-        <mat-slide-toggle
-          [checked]="subs.enabled()"
-          (change)="subs.toggle($event.checked)"
-        >
-          Vervangers meetellen
-        </mat-slide-toggle>
-        <span class="subs-hint">
-          Laat ook cocktails zien waarvoor je een gelijkwaardig alternatief in huis hebt
-          (bijv. donkere rum voor witte).
-        </span>
-      </div>
-
-      @if (selected().length) {
-        <div class="cabinet">
-          <span class="cabinet-label">In je bar:</span>
-          @for (ing of selected(); track ing.id) {
-            <span class="pill">{{ ing.name }}</span>
-          }
-          <a class="pill pill--accent edit" routerLink="/bar/wizard">
-            <mat-icon>edit</mat-icon> wijzig
-          </a>
-        </div>
-      }
-
-      @if (loading()) {
-        <div class="card-grid">
-          @for (i of [1, 2, 3, 4]; track i) {
-            <div class="skeleton-card">
-              <div class="skeleton sk-media"></div>
-              <div class="skeleton sk-line"></div>
-              <div class="skeleton sk-line short"></div>
+            <p class="lede">
+              Op basis van wat er nu in jouw kast staat. {{ makeableNow().length }} klaar om te
+              shaken, {{ almost1().length }} liggen binnen handbereik.
+            </p>
+            <div class="cta">
+              <a class="btn btn-primary" routerLink="/kast">Bewerk mijn kast</a>
+              <a class="btn btn-ghost" routerLink="/bar/wizard">Wizard opnieuw</a>
             </div>
-          }
+          </div>
+          <div class="hero-glasses">
+            @for (r of heroGlasses(); track r.cocktail.id; let i = $index) {
+              <a
+                class="floaty"
+                [style.animation-delay]="i * 0.7 + 's'"
+                [routerLink]="['/cocktails', r.cocktail.id]"
+                [attr.aria-label]="r.cocktail.name"
+              >
+                <app-glass-art [spec]="spec(r)" />
+              </a>
+            }
+          </div>
         </div>
-      } @else {
-        @if (makeableNow().length) {
-          <section class="block">
-            <div class="block-head">
+
+        <!-- content row -->
+        <div class="row">
+          <div class="main">
+            <div class="section-head">
               <h2>Nu te maken</h2>
-              <span class="pill pill--ok">{{ makeableNow().length }}</span>
+              <span class="count-pill">{{ makeableNow().length }} cocktails</span>
             </div>
-            <div class="card-grid">
-              @for (r of makeableNow(); track r.cocktail.id) {
-                <app-cocktail-card [cocktail]="r.cocktail" [missingCount]="0" />
-              }
-            </div>
-          </section>
-        } @else {
-          <section class="nudge">
-            <mat-icon>info</mat-icon>
-            <div>
-              <strong>Nog niks helemaal compleet.</strong>
-              <p class="muted">
-                Voeg een sterke drank of mixer toe en je bent er zo. Kijk hieronder wat je
-                bijna kunt maken.
-              </p>
-              <a mat-stroked-button routerLink="/bar/wizard">Bar aanvullen</a>
-            </div>
-          </section>
-        }
+            @if (loading()) {
+              <div class="grid">
+                @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+                  <div class="skeleton sk-card"></div>
+                }
+              </div>
+            } @else if (makeableNow().length) {
+              <div class="grid">
+                @for (r of makeableNow(); track r.cocktail.id) {
+                  <app-cocktail-card [cocktail]="r.cocktail" [missingCount]="0" />
+                }
+              </div>
+            } @else {
+              <div class="nudge">
+                <strong>Nog niks helemaal compleet.</strong>
+                <p class="muted">
+                  Voeg een sterke drank of mixer toe en je bent er zo. Kijk hiernaast wat je bijna
+                  kunt maken.
+                </p>
+                <a class="btn btn-ghost" routerLink="/kast">Kast aanvullen</a>
+              </div>
+            }
+          </div>
 
-        @if (almost1().length) {
-          <section class="block">
-            <div class="block-head">
-              <h2>Bijna — je mist er één</h2>
-              <span class="pill">{{ almost1().length }}</span>
+          <aside class="side">
+            @if (almost1().length) {
+              <div class="card side-card">
+                <div class="side-eyebrow">Bijna — je mist er één</div>
+                <div class="almost">
+                  @for (r of almost1(); track r.cocktail.id) {
+                    <div class="almost-row">
+                      <a class="almost-name" [routerLink]="['/cocktails', r.cocktail.id]">
+                        {{ r.cocktail.name }}
+                      </a>
+                      <button class="add-chip" (click)="addMissing(r)">
+                        + {{ missName(r) }}
+                      </button>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+            <div class="card night">
+              <div class="side-eyebrow dim">Jouw kast</div>
+              <div class="cab-count">
+                {{ cabinet.count() }} <span>ingrediënten</span>
+              </div>
+              <label class="subs">
+                <mat-slide-toggle
+                  [checked]="subs.enabled()"
+                  (change)="subs.toggle($event.checked)"
+                >
+                  Vervangers meetellen
+                </mat-slide-toggle>
+              </label>
+              <a class="btn night-btn" routerLink="/kast">Bewerk kast</a>
             </div>
-            <div class="card-grid">
-              @for (r of almost1(); track r.cocktail.id) {
-                <app-cocktail-card
-                  [cocktail]="r.cocktail"
-                  [missingCount]="r.missingCount"
-                  [missingNames]="missNames(r)"
-                />
-              }
-            </div>
-          </section>
-        }
-
-        @if (almost2().length) {
-          <section class="block">
-            <div class="block-head">
-              <h2>Twee stapjes weg</h2>
-              <span class="pill">{{ almost2().length }}</span>
-            </div>
-            <div class="card-grid">
-              @for (r of almost2(); track r.cocktail.id) {
-                <app-cocktail-card
-                  [cocktail]="r.cocktail"
-                  [missingCount]="r.missingCount"
-                  [missingNames]="missNames(r)"
-                />
-              }
-            </div>
-          </section>
-        }
-      }
+          </aside>
+        </div>
+      </div>
     }
   `,
   styles: `
+    .fade {
+      animation: rise 0.5s ease both;
+    }
+    /* onboarding */
     .onboard {
       max-width: 640px;
       margin: var(--sp-6) 0 var(--sp-8);
+      animation: rise 0.5s ease both;
     }
     .hero-title {
       font-size: var(--step-5);
       margin: 0 0 var(--sp-4);
     }
-    .cta {
-      display: flex;
-      gap: var(--sp-3);
-      flex-wrap: wrap;
-      margin: var(--sp-5) 0;
+    .eyebrow {
+      font: 600 0.75rem var(--font-body);
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin: 0;
     }
-    .steps {
-      display: flex;
-      gap: var(--sp-5);
-      flex-wrap: wrap;
-      margin-top: var(--sp-6);
-      padding-top: var(--sp-5);
-      border-top: 1px solid var(--hairline);
-      color: var(--muted);
-      font-size: var(--step--1);
-    }
-    .steps .num {
-      display: inline-grid;
-      place-items: center;
-      width: 22px;
-      height: 22px;
-      margin-right: 8px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 700;
-    }
-    .head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: var(--sp-5);
-      flex-wrap: wrap;
-      margin-bottom: var(--sp-4);
+    /* hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      align-items: center;
+      padding: 56px 0 40px;
     }
     .count {
-      font-size: var(--step-4);
-      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(3rem, 7vw, 4.75rem);
+      line-height: 0.98;
+      letter-spacing: -0.035em;
+      margin: 14px 0 0;
     }
     .count .big {
       color: var(--accent);
     }
-    .head .lede {
-      margin: var(--sp-2) 0 0;
+    .hero-copy .lede {
+      margin-top: 22px;
+      max-width: 440px;
+      color: var(--muted);
     }
-    .head-actions {
+    .cta {
       display: flex;
-      gap: var(--sp-2);
+      gap: 12px;
+      margin-top: 28px;
       flex-wrap: wrap;
     }
-    .subs {
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-pill);
+      padding: 13px 24px;
+      font: 600 0.875rem var(--font-body);
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-ghost {
+      background: none;
+      border-color: color-mix(in srgb, var(--ink) 20%, transparent);
+      color: var(--muted);
+    }
+    .hero-glasses {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 8px;
+      height: 300px;
+    }
+    .floaty {
+      display: block;
+      height: 220px;
+      width: 150px;
+      animation: floaty 5s ease-in-out infinite;
+    }
+    /* content row */
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 40px;
+      align-items: start;
+      margin-top: 16px;
+    }
+    .section-head {
       display: flex;
       align-items: baseline;
-      gap: var(--sp-3);
-      flex-wrap: wrap;
-      margin: var(--sp-2) 0 var(--sp-4);
+      justify-content: space-between;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 12px;
     }
-    .subs-hint {
-      color: var(--muted);
-      font-size: var(--step--1);
-      flex: 1 1 260px;
-    }
-    .cabinet {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--sp-2);
-      padding: var(--sp-4) 0;
-      margin-bottom: var(--sp-4);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .cabinet-label {
-      font-weight: 600;
-      font-size: var(--step--1);
-      color: var(--muted);
-      margin-right: var(--sp-1);
-    }
-    .edit {
-      cursor: pointer;
-    }
-    .edit mat-icon {
-      font-size: 14px;
-      width: 14px;
-      height: 14px;
-    }
-    .block {
-      margin: var(--sp-6) 0;
-    }
-    .block-head {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-3);
-      margin-bottom: var(--sp-4);
-    }
-    .block-head h2 {
+    .section-head h2 {
+      font-size: 1.62rem;
       margin: 0;
     }
-    .nudge {
-      display: flex;
-      gap: var(--sp-3);
-      padding: var(--sp-5);
-      background: var(--surface-2);
-      border-radius: var(--radius-lg);
-      margin: var(--sp-5) 0;
+    .count-pill {
+      font: 600 0.813rem var(--font-body);
+      color: var(--muted);
     }
-    .nudge mat-icon {
-      color: var(--accent);
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 24px;
+    }
+    .sk-card {
+      height: 240px;
+      border-radius: var(--radius-lg);
+    }
+    .nudge {
+      margin-top: 24px;
+      padding: var(--sp-5);
+      background: var(--surface);
+      border: 1px solid var(--hairline-soft);
+      border-radius: var(--radius-lg);
     }
     .nudge p {
-      margin: 4px 0 var(--sp-3);
+      margin: 6px 0 var(--sp-4);
     }
-    .skeleton-card,
-    .skeleton .sk-media {
-      /* placeholder */
+    /* sidebar */
+    .side {
+      position: sticky;
+      top: 98px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
-    .sk-media {
-      aspect-ratio: 4 / 3;
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--hairline-soft);
       border-radius: var(--radius-lg);
-      margin-bottom: var(--sp-3);
+      padding: 20px;
     }
-    .sk-line {
-      height: 14px;
-      border-radius: 4px;
-      margin-bottom: 8px;
+    .side-eyebrow {
+      font: 600 0.688rem var(--font-body);
+      letter-spacing: 0.14em;
+      color: var(--dim);
+      text-transform: uppercase;
     }
-    .sk-line.short {
-      width: 55%;
+    .almost {
+      margin-top: 8px;
+    }
+    .almost-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+    .almost-row:last-child {
+      border-bottom: none;
+    }
+    .almost-name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1rem;
+      min-width: 0;
+      cursor: pointer;
+    }
+    .almost-name:hover {
+      color: var(--accent);
+    }
+    .add-chip {
+      background: var(--accent-soft);
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      border-radius: var(--radius-pill);
+      padding: 7px 12px;
+      font: 600 0.75rem var(--font-body);
+      cursor: pointer;
+      white-space: nowrap;
+      flex: none;
+    }
+    .night {
+      background: var(--night);
+      color: var(--night-ink);
+      border: none;
+    }
+    .night .dim {
+      color: var(--night-faint);
+    }
+    .cab-count {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 2.1rem;
+      margin-top: 8px;
+    }
+    .cab-count span {
+      font-size: 1rem;
+      font-family: var(--font-body);
+      font-weight: 500;
+      color: var(--night-faint);
+    }
+    .subs {
+      display: block;
+      margin: 14px 0 4px;
+      --mdc-switch-selected-track-color: var(--accent);
+      --mdc-switch-selected-handle-color: #fff;
+      font-size: var(--step--1);
+    }
+    .night-btn {
+      margin-top: 14px;
+      width: 100%;
+      background: rgba(244, 235, 216, 0.1);
+      color: var(--night-ink);
+      border: 1px solid rgba(244, 235, 216, 0.2);
+      border-radius: 12px;
+      padding: 11px;
+      font: 600 0.813rem var(--font-body);
+    }
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 32px 0 24px;
+      }
+      .hero-glasses {
+        height: 220px;
+      }
+      .row {
+        grid-template-columns: 1fr;
+      }
+      .side {
+        position: static;
+      }
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 520px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
   `,
 })
@@ -317,7 +384,6 @@ export class Bar {
   protected readonly subs = inject(SubstitutesService);
   private readonly cocktailService = inject(CocktailService);
   private readonly ingredientService = inject(IngredientService);
-  private readonly router = inject(Router);
 
   readonly loading = signal(false);
   readonly results = signal<MakeableResult[]>([]);
@@ -327,28 +393,12 @@ export class Bar {
 
   readonly makeableNow = computed(() => this.results().filter((r) => r.missingCount === 0));
   readonly almost1 = computed(() => this.results().filter((r) => r.missingCount === 1));
-  readonly almost2 = computed(() => this.results().filter((r) => r.missingCount === 2));
-
-  private readonly byId = computed(() => {
-    const map = new Map<string, Ingredient>();
-    for (const ing of this.ingredients()) map.set(ing.id, ing);
-    return map;
-  });
-  readonly selected = computed(() => {
-    const map = this.byId();
-    return this.cabinet
-      .ids()
-      .map((id) => map.get(id))
-      .filter((x): x is Ingredient => !!x)
-      .sort((a, b) => a.name.localeCompare(b.name));
-  });
+  readonly displayCount = computed(() => this.makeableNow().length);
+  readonly heroGlasses = computed(() => this.makeableNow().slice(0, 3));
 
   constructor() {
     this.ingredientService.getAll().subscribe((list) => this.ingredients.set(list));
 
-    // Re-run the makeable search whenever the cabinet, the substitutes setting, or the loaded
-    // ingredient metadata changes. With substitutes on, the cabinet is expanded first (a specific
-    // bottle satisfies a generic call and vice-versa) via the shared `expandCabinet`.
     combineLatest([
       toObservable(this.cabinet.ids),
       toObservable(this.subs.enabled),
@@ -359,9 +409,7 @@ export class Bar {
         switchMap(([ids, substitutes, ingredients]) => {
           if (!ids.length) return of<MakeableResult[]>([]);
           const query = expandCabinet(ids, ingredients, { substitutes });
-          return this.cocktailService
-            .makeable(query, 2)
-            .pipe(catchError(() => of<MakeableResult[]>([])));
+          return this.cocktailService.makeable(query, 2).pipe(catchError(() => of<MakeableResult[]>([])));
         }),
         takeUntilDestroyed(),
       )
@@ -371,14 +419,15 @@ export class Bar {
       });
   }
 
-  missNames(r: MakeableResult): string[] {
-    return r.missing.map((m) => m.name);
+  spec(r: MakeableResult) {
+    return glassSpecFor(r.cocktail);
   }
 
-  surpriseMe(): void {
-    const pool = this.makeableNow();
-    if (!pool.length) return;
-    const pick = pool[Math.floor(Math.random() * pool.length)];
-    void this.router.navigate(['/cocktails', pick.cocktail.id]);
+  missName(r: MakeableResult): string {
+    return r.missing[0]?.name ?? '';
+  }
+
+  addMissing(r: MakeableResult): void {
+    for (const m of r.missing) this.cabinet.toggle(m.ingredientId, true);
   }
 }
