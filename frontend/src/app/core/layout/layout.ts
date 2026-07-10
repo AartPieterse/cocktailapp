@@ -17,7 +17,7 @@ import { Navbar } from '../navbar/navbar';
         <span>Barkast — <span class="muted">wat kan jij maken?</span></span>
         <span class="muted">
           <a routerLink="/cocktails">Cocktails</a> ·
-          <a routerLink="/ingredienten">Ingrediënten</a>
+          <a routerLink="/kast">Mijn kast</a>
         </span>
       </div>
     </footer>
@@ -28,7 +28,6 @@ import { Navbar } from '../navbar/navbar';
       min-height: 70vh;
     }
     .page {
-      padding-top: var(--sp-6);
       padding-bottom: var(--sp-8);
     }
     footer {

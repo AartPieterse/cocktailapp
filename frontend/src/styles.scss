@@ -25,21 +25,32 @@ html {
    brief moment before JS runs.
    ============================================================ */
 :root {
-  --bg: #fbfaf7;
+  --bg: #f4ebd8;
+  --bg-grad: radial-gradient(120% 90% at 80% -10%, #fbefd6 0%, #f4ebd8 45%, #eee2cb 100%);
   --surface: #ffffff;
-  --surface-2: #f4f1ea;
-  --ink: #1a1712;
-  --muted: #6e675c;
-  --faint: #928b7f;
-  --hairline: #e6e1d7;
-  --accent: #c0402b;
-  --accent-strong: #a4331f;
+  --surface-2: #efe6d5;
+  --surface-3: #eae0ce;
+  --ink: #241e17;
+  --muted: #7b7060;
+  --faint: #9a8e7c;
+  --dim: #b0a390;
+  --hairline: rgba(36, 30, 23, 0.12);
+  --hairline-soft: rgba(36, 30, 23, 0.08);
+  --accent: #c24218;
+  --accent-strong: #9c3311;
   --accent-ink: #ffffff;
-  --accent-soft: rgba(192, 64, 43, 0.10);
-  --ok: #3e7d5a;
-  --ok-soft: rgba(62, 125, 90, 0.12);
-  --warn: #b8791f;
-  --shadow: 0 1px 2px rgba(26, 23, 18, 0.04), 0 8px 24px rgba(26, 23, 18, 0.06);
+  --accent-soft: rgba(194, 66, 24, 0.10);
+  --ok: #3b6b4e;
+  --ok-ink: #2f6d4e;
+  --ok-soft: #e4efe4;
+  --warn: #96601a;
+  --warn-soft: #f6e9d6;
+  // Inverted "night" surface — the dark "Jouw kast" card, kept dark in both themes.
+  --night: #241e17;
+  --night-ink: #f4ebd8;
+  --night-faint: #c7bba6;
+  --shadow: 0 1px 2px rgba(36, 30, 23, 0.04), 0 20px 34px -22px rgba(36, 30, 23, 0.42);
+  --shadow-lg: 0 30px 60px -30px rgba(36, 30, 23, 0.4);
 
   // Type scale (fluid-ish, editorial)
   --step--1: 0.833rem;
@@ -48,7 +59,7 @@ html {
   --step-2: 1.5rem;
   --step-3: 2rem;
   --step-4: 2.75rem;
-  --step-5: clamp(2.8rem, 6vw, 4.5rem);
+  --step-5: clamp(2.8rem, 6vw, 4.75rem);
 
   // Spacing scale
   --sp-1: 4px;
@@ -60,9 +71,10 @@ html {
   --sp-7: 48px;
   --sp-8: 64px;
 
-  --radius: 6px;
-  --radius-lg: 12px;
-  --container: 1120px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 40px;
+  --container: 1180px;
 
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
@@ -71,40 +83,56 @@ html {
 }
 
 html[data-theme='dark'] {
-  --bg: #16130f;
-  --surface: #1e1a15;
-  --surface-2: #262019;
-  --ink: #f4efe6;
-  --muted: #a79e90;
-  --faint: #8a8073;
-  --hairline: #322b22;
-  --accent: #e0745a;
-  --accent-strong: #eb8168;
-  --accent-ink: #1a1207;
-  --accent-soft: rgba(224, 116, 90, 0.14);
-  --ok: #79b892;
-  --ok-soft: rgba(121, 184, 146, 0.16);
+  --bg: #17120c;
+  --bg-grad: radial-gradient(120% 90% at 80% -10%, #23190f 0%, #17120c 45%, #120d08 100%);
+  --surface: #221b13;
+  --surface-2: #2b2318;
+  --surface-3: #332a1d;
+  --ink: #f4ecda;
+  --muted: #b3a892;
+  --faint: #9a8e79;
+  --dim: #8a7f6c;
+  --hairline: rgba(244, 236, 218, 0.14);
+  --hairline-soft: rgba(244, 236, 218, 0.08);
+  --accent: #e8763f;
+  --accent-strong: #f2895a;
+  --accent-ink: #1c1206;
+  --accent-soft: rgba(232, 118, 63, 0.16);
+  --ok: #7cbd94;
+  --ok-ink: #8ec9a6;
+  --ok-soft: rgba(124, 189, 148, 0.16);
   --warn: #d8a44e;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.4);
+  --warn-soft: rgba(216, 164, 78, 0.16);
+  --night: #100b06;
+  --night-ink: #f4ecda;
+  --night-faint: #b3a892;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 20px 34px -22px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 30px 60px -30px rgba(0, 0, 0, 0.65);
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]) {
-    --bg: #16130f;
-    --surface: #1e1a15;
-    --surface-2: #262019;
-    --ink: #f4efe6;
-    --muted: #a79e90;
-    --faint: #8a8073;
-    --hairline: #322b22;
-    --accent: #e0745a;
-    --accent-strong: #eb8168;
-    --accent-ink: #1a1207;
-    --accent-soft: rgba(224, 116, 90, 0.14);
-    --ok: #79b892;
-    --ok-soft: rgba(121, 184, 146, 0.16);
+    --bg: #17120c;
+    --bg-grad: radial-gradient(120% 90% at 80% -10%, #23190f 0%, #17120c 45%, #120d08 100%);
+    --surface: #221b13;
+    --surface-2: #2b2318;
+    --surface-3: #332a1d;
+    --ink: #f4ecda;
+    --muted: #b3a892;
+    --faint: #9a8e79;
+    --dim: #8a7f6c;
+    --hairline: rgba(244, 236, 218, 0.14);
+    --hairline-soft: rgba(244, 236, 218, 0.08);
+    --accent: #e8763f;
+    --accent-strong: #f2895a;
+    --accent-ink: #1c1206;
+    --accent-soft: rgba(232, 118, 63, 0.16);
+    --ok: #7cbd94;
+    --ok-ink: #8ec9a6;
+    --ok-soft: rgba(124, 189, 148, 0.16);
     --warn: #d8a44e;
+    --warn-soft: rgba(216, 164, 78, 0.16);
     color-scheme: dark;
   }
 }
@@ -143,12 +171,34 @@ body {
 body {
   margin: 0;
   background: var(--bg);
+  background-image: var(--bg-grad);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--step-0);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h1,
@@ -193,7 +243,12 @@ hr {
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 var(--sp-5);
+  padding: 0 var(--sp-6);
+}
+@media (max-width: 560px) {
+  .container {
+    padding: 0 var(--sp-4);
+  }
 }
 
 .eyebrow {

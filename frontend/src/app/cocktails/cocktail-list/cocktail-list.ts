@@ -1,183 +1,161 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import type { Cocktail } from '@cocktailapp/shared';
-import { catchError, combineLatest, debounceTime, of, startWith, switchMap, tap } from 'rxjs';
+import { expandCabinet, type Cocktail, type Ingredient, type MakeableResult } from '@cocktailapp/shared';
+import {
+  catchError,
+  combineLatest,
+  debounceTime,
+  of,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { CabinetService } from '../../core/cabinet.service';
 import { FavoritesService } from '../../core/favorites.service';
+import { SubstitutesService } from '../../core/substitutes.service';
 import { CocktailService } from '../../services/cocktail.service';
+import { IngredientService } from '../../services/ingredient.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { CocktailCard } from '../cocktail-card/cocktail-card';
 import { environment } from '../../../environments/environment';
 
+interface Status {
+  count: number;
+  names: string[];
+}
+
 @Component({
   selector: 'app-cocktail-list',
-  imports: [
-    RouterLink,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    CocktailCard,
-  ],
+  imports: [RouterLink, ReactiveFormsModule, MatButtonModule, MatIconModule, CocktailCard],
   template: `
-    <header class="head">
-      <div>
-        <p class="eyebrow">De collectie</p>
-        <h1>Cocktails</h1>
-      </div>
-      @if (admin) {
-        <a mat-flat-button routerLink="/cocktails/add"><mat-icon>add</mat-icon> Nieuwe cocktail</a>
-      }
-    </header>
-
-    <div class="toolbar">
-      <mat-form-field appearance="outline" class="search" subscriptSizing="dynamic">
-        <mat-icon matPrefix>search</mat-icon>
-        <mat-label>Zoek op naam</mat-label>
-        <input matInput [formControl]="searchCtrl" autocomplete="off" />
-        @if (searchCtrl.value) {
-          <button matSuffix mat-icon-button (click)="searchCtrl.setValue('')" aria-label="Wis">
-            <mat-icon>close</mat-icon>
+    <div class="page">
+      <header class="head">
+        <h1>Alle cocktails</h1>
+        <div class="tools">
+          <input
+            class="search"
+            [formControl]="searchCtrl"
+            placeholder="Zoek op naam…"
+            autocomplete="off"
+          />
+          <button
+            class="fav-toggle"
+            type="button"
+            [class.on]="onlyFavs()"
+            (click)="onlyFavs.update((v) => !v)"
+            aria-label="Alleen favorieten"
+          >
+            <mat-icon>{{ onlyFavs() ? 'favorite' : 'favorite_border' }}</mat-icon>
           </button>
-        }
-      </mat-form-field>
-
-      <button
-        class="fav-toggle"
-        mat-stroked-button
-        [class.on]="onlyFavs()"
-        (click)="onlyFavs.update((v) => !v)"
-      >
-        <mat-icon>{{ onlyFavs() ? 'favorite' : 'favorite_border' }}</mat-icon>
-        Favorieten
-      </button>
-    </div>
-
-    @if (tags().length) {
-      <div class="tags">
-        <button class="tag" [class.on]="!activeTag()" (click)="setTag(null)">Alles</button>
-        @for (t of tags(); track t) {
-          <button class="tag" [class.on]="activeTag() === t" (click)="setTag(t)">#{{ t }}</button>
-        }
-      </div>
-    }
-
-    @if (loading()) {
-      <div class="card-grid">
-        @for (i of [1, 2, 3, 4, 5, 6]; track i) {
-          <div>
-            <div class="skeleton sk-media"></div>
-            <div class="skeleton sk-line"></div>
-            <div class="skeleton sk-line short"></div>
-          </div>
-        }
-      </div>
-    } @else if (visible().length) {
-      <p class="result-count muted">{{ visible().length }} resultaten</p>
-      <div class="card-grid">
-        @for (c of visible(); track c.id) {
-          <app-cocktail-card [cocktail]="c">
-            @if (admin) {
-              <a mat-button [routerLink]="['/cocktails', c.id, 'edit']">Bewerk</a>
-              <button mat-button (click)="remove(c)">Verwijder</button>
-            }
-          </app-cocktail-card>
-        }
-      </div>
-    } @else {
-      <div class="empty">
-        <mat-icon>search_off</mat-icon>
-        <h3>Niets gevonden</h3>
-        <p class="muted">
-          @if (onlyFavs()) {
-            Je hebt nog geen favorieten. Tik op het hartje van een cocktail.
-          } @else if (admin) {
-            Pas je zoekopdracht aan of
-            <a routerLink="/cocktails/add">voeg een nieuwe cocktail toe</a>.
-          } @else {
-            Pas je zoekopdracht aan.
+          @if (admin) {
+            <a mat-flat-button routerLink="/cocktails/add"><mat-icon>add</mat-icon> Nieuw</a>
           }
-        </p>
-      </div>
-    }
+        </div>
+      </header>
+
+      @if (loading()) {
+        <div class="grid">
+          @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
+            <div class="skeleton sk-card"></div>
+          }
+        </div>
+      } @else if (visible().length) {
+        <div class="grid">
+          @for (c of visible(); track c.id) {
+            <app-cocktail-card
+              [cocktail]="c"
+              [showStatus]="true"
+              [missingCount]="statusFor(c).count"
+              [missingNames]="statusFor(c).names"
+            >
+              @if (admin) {
+                <a mat-button [routerLink]="['/cocktails', c.id, 'edit']">Bewerk</a>
+                <button mat-button (click)="remove(c)">Verwijder</button>
+              }
+            </app-cocktail-card>
+          }
+        </div>
+      } @else {
+        <div class="empty">
+          <mat-icon>search_off</mat-icon>
+          <h3>Niets gevonden</h3>
+          <p class="muted">
+            @if (onlyFavs()) {
+              Je hebt nog geen favorieten. Tik op het hartje van een cocktail.
+            } @else {
+              Pas je zoekopdracht aan.
+            }
+          </p>
+        </div>
+      }
+    </div>
   `,
   styles: `
+    .page {
+      padding-top: 44px;
+      animation: rise 0.45s ease both;
+    }
     .head {
       display: flex;
-      justify-content: space-between;
       align-items: flex-end;
-      gap: var(--sp-4);
+      justify-content: space-between;
       flex-wrap: wrap;
-      margin-bottom: var(--sp-5);
+      gap: 16px;
+      margin-bottom: 30px;
     }
     .head h1 {
+      font-size: var(--step-4);
+      letter-spacing: -0.025em;
       margin: 0;
     }
-    .toolbar {
+    .tools {
       display: flex;
-      gap: var(--sp-3);
       align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: var(--sp-4);
+      gap: var(--sp-2);
     }
     .search {
-      flex: 1;
-      min-width: 240px;
+      width: 280px;
+      max-width: 60vw;
+      padding: 13px 16px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      font: 500 0.875rem var(--font-body);
+      background: var(--surface);
+      color: var(--ink);
+      outline: none;
+    }
+    .search:focus {
+      border-color: var(--accent);
+    }
+    .fav-toggle {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
     }
     .fav-toggle.on {
       color: var(--accent);
       border-color: var(--accent);
     }
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--sp-2);
-      margin-bottom: var(--sp-5);
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
     }
-    .tag {
-      border: 1px solid var(--hairline);
-      background: var(--surface);
-      color: var(--muted);
-      padding: 5px 12px;
-      border-radius: 999px;
-      font-size: var(--step--1);
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.14s ease;
-    }
-    .tag:hover {
-      border-color: var(--accent);
-      color: var(--ink);
-    }
-    .tag.on {
-      background: var(--ink);
-      color: var(--bg);
-      border-color: var(--ink);
-    }
-    .result-count {
-      font-size: var(--step--1);
-      margin-bottom: var(--sp-3);
-    }
-    .sk-media {
-      aspect-ratio: 4 / 3;
+    .sk-card {
+      height: 230px;
       border-radius: var(--radius-lg);
-      margin-bottom: var(--sp-3);
-    }
-    .sk-line {
-      height: 14px;
-      border-radius: 4px;
-      margin-bottom: 8px;
-    }
-    .sk-line.short {
-      width: 55%;
     }
     .empty {
       text-align: center;
@@ -190,26 +168,40 @@ import { environment } from '../../../environments/environment';
       height: 40px;
       color: var(--faint);
     }
-    .empty a {
-      color: var(--accent);
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
   `,
 })
 export class CocktailList {
   private readonly cocktailService = inject(CocktailService);
   private readonly favorites = inject(FavoritesService);
+  private readonly cabinet = inject(CabinetService);
+  private readonly subs = inject(SubstitutesService);
+  private readonly ingredientService = inject(IngredientService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
-  private readonly route = inject(ActivatedRoute);
 
   protected readonly admin = environment.admin;
 
   readonly searchCtrl = new FormControl('', { nonNullable: true });
-  readonly activeTag = signal<string | null>(this.route.snapshot.queryParamMap.get('tag'));
   readonly onlyFavs = signal(false);
   readonly loading = signal(true);
   readonly cocktails = signal<Cocktail[]>([]);
-  readonly tags = signal<string[]>([]);
+  private readonly ingredients = signal<Ingredient[]>([]);
+  private readonly status = signal<Map<string, Status>>(new Map());
   private readonly reload = signal(0);
 
   readonly visible = computed(() => {
@@ -223,37 +215,45 @@ export class CocktailList {
   );
 
   constructor() {
-    combineLatest([
-      toObservable(this.query),
-      toObservable(this.activeTag),
-      toObservable(this.reload),
-    ])
+    this.ingredientService.getAll().subscribe((list) => this.ingredients.set(list));
+
+    // Cocktail list (with name search).
+    combineLatest([toObservable(this.query), toObservable(this.reload)])
       .pipe(
         tap(() => this.loading.set(true)),
-        switchMap(([q, tag]) =>
-          this.cocktailService
-            .getAll(q || undefined, tag || undefined)
-            .pipe(catchError(() => of<Cocktail[]>([]))),
+        switchMap(([q]) =>
+          this.cocktailService.getAll(q || undefined).pipe(catchError(() => of<Cocktail[]>([]))),
         ),
         takeUntilDestroyed(),
       )
-      .subscribe({
-        next: (list) => {
-          this.cocktails.set(list);
-          // Capture the universe of tags from the first unfiltered load.
-          if (!this.tags().length && !this.activeTag() && !this.query()) {
-            const set = new Set<string>();
-            for (const c of list) for (const t of c.tags ?? []) set.add(t);
-            this.tags.set([...set].sort());
-          }
-          this.loading.set(false);
-        },
-        error: () => this.loading.set(false),
+      .subscribe((list) => {
+        this.cocktails.set(list);
+        this.loading.set(false);
+      });
+
+    // Availability status per cocktail, recomputed whenever the cabinet changes.
+    combineLatest([
+      toObservable(this.cabinet.ids),
+      toObservable(this.subs.enabled),
+      toObservable(this.ingredients),
+    ])
+      .pipe(
+        switchMap(([ids, substitutes, ingredients]) => {
+          if (!ids.length) return of<MakeableResult[]>([]);
+          const query = expandCabinet(ids, ingredients, { substitutes });
+          return this.cocktailService.makeable(query, 99).pipe(catchError(() => of<MakeableResult[]>([])));
+        }),
+        takeUntilDestroyed(),
+      )
+      .subscribe((res) => {
+        const map = new Map<string, Status>();
+        for (const r of res) map.set(r.cocktail.id, { count: r.missingCount, names: r.missing.map((m) => m.name) });
+        this.status.set(map);
       });
   }
 
-  setTag(tag: string | null): void {
-    this.activeTag.set(tag);
+  statusFor(c: Cocktail): Status {
+    return this.status().get(c.id) ?? { count: c.ingredients.length ? 99 : 0, names: [] };
   }
 
   remove(cocktail: Cocktail): void {
