@@ -4,12 +4,23 @@
   <meta charset="utf-8">
   <title>Barkast — wat kan jij maken?</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Barkast: vink aan wat je in huis hebt en ontdek welke cocktails je nu kunt maken.">
-  <meta name="theme-color" content="#c24218">
+  <!-- theme-color is kept in sync with the active (light/dark) theme by ThemeService. -->
+  <meta id="theme-color-meta" name="theme-color" content="#f4ebd8">
+
+  <!-- Progressive Web App: installable + offline-capable -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Barkast">
+  <meta name="application-name" content="Barkast">
+
+  <!-- Crisp SVG favicon with an .ico fallback; PNG apple-touch-icon for iOS home screens. -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link

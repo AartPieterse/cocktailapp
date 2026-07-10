@@ -89,6 +89,12 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
     .fav.on {
       opacity: 1;
     }
+    /* Touch devices have no hover — always show the favourite control. */
+    @media (hover: none) {
+      .fav {
+        opacity: 1;
+      }
+    }
     .fav mat-icon {
       font-size: 19px;
       width: 19px;

@@ -26,7 +26,10 @@ redesigned data model and an editorial visual identity. Copy is in Dutch.
 - **`backend/`** — NestJS 11 + Mongoose 9, MongoDB Atlas. Helmet, rate limiting, a global exception
   filter, and referential integrity between cocktails and the ingredient catalog
 - **`frontend/`** — Angular 21 (standalone, zoneless, signals) + Angular Material, themed with a custom
-  editorial design system (Fraunces + Inter), light **and** dark mode
+  editorial design system (Fraunces + Inter), light **and** dark mode. Ships as an **installable PWA**
+  (web app manifest + service worker): mobile visitors get an "install to home screen" prompt
+  (native on Android/Chromium, guided Add-to-Home-Screen steps on iOS Safari), and the app shell
+  works offline. Tuned for touch — safe-area insets, 16px inputs (no iOS zoom), and larger tap targets
 
 ## Data model
 

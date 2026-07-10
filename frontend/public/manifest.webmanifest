@@ -1,0 +1,43 @@
+{
+  "name": "Barkast — wat kan jij maken?",
+  "short_name": "Barkast",
+  "description": "Vink aan wat je in huis hebt en ontdek meteen welke cocktails je nu kunt maken.",
+  "id": "/",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#17120c",
+  "theme_color": "#17120c",
+  "lang": "nl",
+  "dir": "ltr",
+  "categories": ["food", "lifestyle", "entertainment"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mijn bar",
+      "short_name": "Mijn bar",
+      "description": "Zie welke cocktails je nu kunt maken",
+      "url": "/bar?source=pwa",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mijn kast",
+      "short_name": "Kast",
+      "description": "Beheer je ingrediënten",
+      "url": "/kast?source=pwa",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Alle cocktails",
+      "short_name": "Cocktails",
+      "description": "Blader door alle recepten",
+      "url": "/cocktails?source=pwa",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CocktailService } from '../../services/cocktail.service';
 import { ThemeService } from '../theme.service';
+import { PwaService } from '../pwa.service';
 
 @Component({
   selector: 'app-navbar',
@@ -30,6 +31,17 @@ import { ThemeService } from '../theme.service';
         </nav>
 
         <div class="actions">
+          @if (pwa.canInstall()) {
+            <button
+              class="icon-btn install"
+              type="button"
+              (click)="pwa.install()"
+              matTooltip="Installeer Barkast"
+              aria-label="Installeer Barkast"
+            >
+              <mat-icon>get_app</mat-icon>
+            </button>
+          }
           <button class="surprise" type="button" (click)="surprise()">
             <mat-icon>casino</mat-icon> Verras me
           </button>
@@ -62,6 +74,8 @@ import { ThemeService } from '../theme.service';
       background: color-mix(in srgb, var(--bg) 86%, transparent);
       backdrop-filter: saturate(1.2) blur(12px);
       border-bottom: 1px solid var(--hairline);
+      /* Extend the bar under the status bar when installed on a notched phone. */
+      padding-top: env(safe-area-inset-top);
     }
     .inner {
       display: flex;
@@ -147,6 +161,13 @@ import { ThemeService } from '../theme.service';
       background: var(--surface-2);
       color: var(--ink);
     }
+    .icon-btn.install {
+      color: var(--accent);
+    }
+    .icon-btn.install:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
     .burger {
       display: none;
     }
@@ -169,7 +190,7 @@ import { ThemeService } from '../theme.service';
       }
       .links {
         position: absolute;
-        top: 74px;
+        top: calc(74px + env(safe-area-inset-top));
         left: 0;
         right: 0;
         flex-direction: column;
@@ -198,6 +219,7 @@ import { ThemeService } from '../theme.service';
 })
 export class Navbar {
   protected readonly theme = inject(ThemeService);
+  protected readonly pwa = inject(PwaService);
   private readonly cocktails = inject(CocktailService);
   private readonly router = inject(Router);
   protected readonly menuOpen = signal(false);

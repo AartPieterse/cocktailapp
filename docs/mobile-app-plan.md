@@ -1,5 +1,12 @@
 # Barkast — one Expo app for Android + web/PWA, local-first, self-hosted
 
+> ## ⚠️ Retired (2026-07-10)
+> **This plan is historical.** The project consolidated on a **single frontend**: the Angular
+> `frontend/`, which is now itself an installable PWA (web app manifest + service worker + a mobile
+> install prompt). The separate Expo app (`app/`) and its Netlify deploy were removed to avoid
+> maintaining two UI codebases. `shared/` + `backend/` are unchanged. The sections below are kept
+> for reference only and no longer describe the shipped setup.
+
 > ## Implementation status (2026-07-10)
 > The code portions of this plan are **built**. Phases 1–12 are implemented and verified locally
 > (shared build + tests, backend build + tests, and a full Expo **static web export** rendering all
