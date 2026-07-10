@@ -210,13 +210,14 @@ import { glassSpecFor } from '../shared/cocktail-visual';
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 8px;
-      height: 300px;
+      gap: clamp(4px, 2vw, 12px);
+      width: 100%;
     }
     .floaty {
       display: block;
-      height: 220px;
-      width: 150px;
+      flex: 0 1 150px;
+      min-width: 0;
+      aspect-ratio: 3 / 4;
       animation: floaty 5s ease-in-out infinite;
     }
     /* content row */
@@ -360,7 +361,8 @@ import { glassSpecFor } from '../shared/cocktail-visual';
         padding: 32px 0 24px;
       }
       .hero-glasses {
-        height: 220px;
+        max-width: 420px;
+        margin: 0 auto;
       }
       .row {
         grid-template-columns: 1fr;
