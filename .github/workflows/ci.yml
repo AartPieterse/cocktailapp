@@ -143,3 +143,47 @@ jobs:
           cp -a "$GITHUB_WORKSPACE/frontend/dist/frontend/browser/." "$publish/"
           cd "$publish"
           npx --yes netlify-cli deploy --prod --dir=. --site="$NETLIFY_SITE_ID" --message="CI deploy ${GITHUB_SHA::7} (${GITHUB_REF_NAME})"
+
+  deploy-app:
+    # Publish the Expo app's web/PWA export (app/dist) to a SEPARATE Netlify site — the installable
+    # PWA that also serves iPhone/iPad. This runs ALONGSIDE the Angular site above; it does not
+    # replace it. It stays a safe no-op until you opt in by creating the site and setting a repo
+    # variable:
+    #   1. Create a new site in Netlify (no build command needed — CI uploads the finished files).
+    #   2. Repo → Settings → Secrets and variables → Actions → Variables → add
+    #      NETLIFY_APP_SITE_ID = that site's API ID (a site ID is not secret; it's in every deploy URL).
+    # Reuses the existing NETLIFY_AUTH_TOKEN secret. Skips cleanly when the variable is unset.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.NETLIFY_APP_SITE_ID != ''
+    needs: build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: netlify-app
+      cancel-in-progress: false
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_APP_SITE_ID: ${{ vars.NETLIFY_APP_SITE_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Builds the shared types, regenerates the static catalog, then runs `expo export -p web`,
+      # which emits the static SPA + PWA manifest/service worker/_redirects into app/dist.
+      - name: Build the Expo web/PWA export
+        run: npm run build:app-web
+
+      - name: Deploy to Netlify (app web/PWA, production)
+        # Same plugin-free static upload as the Angular deploy: publish from a directory OUTSIDE the
+        # workspace so the Netlify CLI can't detect the monorepo and try to build/plugin it.
+        run: |
+          publish="$RUNNER_TEMP/netlify-app-publish"
+          rm -rf "$publish"; mkdir -p "$publish"
+          cp -a "$GITHUB_WORKSPACE/app/dist/." "$publish/"
+          cd "$publish"
+          npx --yes netlify-cli deploy --prod --dir=. --site="$NETLIFY_APP_SITE_ID" --message="CI app deploy ${GITHUB_SHA::7} (${GITHUB_REF_NAME})"
