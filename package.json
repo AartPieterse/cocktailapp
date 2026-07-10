@@ -7,14 +7,18 @@
   "workspaces": [
     "shared",
     "backend",
-    "frontend"
+    "frontend",
+    "app"
   ],
   "scripts": {
     "build:shared": "npm run build --workspace @cocktailapp/shared",
     "build:catalog": "node scripts/build-catalog.mjs",
     "build": "npm run build:shared && npm run build --workspace backend && npm run build --workspace frontend",
+    "build:app-web": "npm run build:shared && npm run build:catalog && npm run export:web --workspace @cocktailapp/app",
     "start:backend": "npm run start:dev --workspace backend",
     "start:frontend": "npm run start --workspace frontend",
+    "start:app": "npm run start --workspace @cocktailapp/app",
+    "web:app": "npm run web --workspace @cocktailapp/app",
     "dev": "npm run build:shared && concurrently -n backend,frontend -c blue,green \"npm run start:dev --workspace backend\" \"npm run start --workspace frontend\"",
     "db:ping": "node scripts/db-ping.mjs",
     "db:count": "node scripts/db-count.mjs",

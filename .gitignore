@@ -21,6 +21,12 @@ backend/.env
 # Local MCP config (may contain the Atlas URI with credentials)
 .mcp.json
 
+# Self-host backups & encryption keys (NEVER commit — dumps hold emails + password hashes)
+deploy/backups/
+*.age
+age-key.txt
+*.agekey
+
 # Logs
 *.log
 npm-debug.log*

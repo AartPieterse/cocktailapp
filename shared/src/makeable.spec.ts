@@ -102,4 +102,45 @@ describe('computeMakeable', () => {
     computeMakeable(cocktails, ['gin'], 1);
     expect(JSON.stringify(cocktails)).toBe(snapshot);
   });
+
+  // --- superset rules (roles + alternativeIds); absent on the cases above, so those stay green ---
+
+  it('never counts garnish or seasoning lines as missing', () => {
+    const cocktails = [
+      cocktail('bm', 'Bloody Mary', [
+        line('vodka', 'Vodka'),
+        line('tomato', 'Tomato Juice'),
+        line('tabasco', 'Tabasco', { role: 'seasoning' }),
+        line('celery', 'Celery', { role: 'garnish' }),
+      ]),
+    ];
+    // Tabasco + celery are not stocked, but their roles never block → makeable at maxMissing 0.
+    const result = computeMakeable(cocktails, ['vodka', 'tomato'], 0);
+    expect(result).toHaveLength(1);
+    expect(result[0].missingCount).toBe(0);
+  });
+
+  it('treats a line as available when an alternativeId is stocked (recipe "X or Y")', () => {
+    const cocktails = [
+      cocktail('of', 'Old Fashioned', [
+        line('bourbon', 'Bourbon', { alternativeIds: ['rye-whiskey'] }),
+        line('sugar', 'Sugar'),
+      ]),
+    ];
+    // Have rye + sugar, not bourbon → the whiskey line is satisfied via its alternative.
+    const result = computeMakeable(cocktails, ['rye-whiskey', 'sugar'], 0);
+    expect(result).toHaveLength(1);
+    expect(result[0].missingCount).toBe(0);
+  });
+
+  it('still reports the primary base name when an "X or Y" line is missing', () => {
+    const cocktails = [
+      cocktail('of', 'Old Fashioned', [
+        line('bourbon', 'Bourbon', { alternativeIds: ['rye-whiskey'] }),
+        line('sugar', 'Sugar'),
+      ]),
+    ];
+    const result = computeMakeable(cocktails, ['sugar'], 1);
+    expect(result[0].missing).toEqual([{ ingredientId: 'bourbon', name: 'Bourbon' }]);
+  });
 });

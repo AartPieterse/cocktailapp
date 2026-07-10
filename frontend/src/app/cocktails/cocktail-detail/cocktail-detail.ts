@@ -391,6 +391,7 @@ export class CocktailDetail {
 
   /** Amount rescaled to the chosen number of servings, trimmed of trailing zeros. */
   scaled(i: CocktailIngredient): string {
+    if (i.amount === undefined) return ''; // top-up / decorative lines carry no number
     const base = this.cocktail()?.servings ?? 1;
     const value = (i.amount * this.servings()) / base;
     return Number(value.toFixed(2)).toString().replace('.', ',');

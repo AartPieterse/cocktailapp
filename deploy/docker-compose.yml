@@ -1,0 +1,74 @@
+# Barkast self-host stack: API + locked-down MongoDB + Cloudflare Tunnel.
+#
+#   cd deploy && cp .env.example .env   # fill in real secrets
+#   docker compose up -d --build
+#
+# TLS terminates at Cloudflare's edge; the tunnel dials OUTBOUND, so NO inbound ports are opened
+# and the home IP stays hidden. Nothing here publishes a host port — Mongo is unreachable from the
+# host/LAN, and the API is reachable only inside this network and via the tunnel.
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    image: barkast-api:latest
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    # JWT_SECRET, JWT_REFRESH_SECRET, JWT_ACCESS_EXPIRES, JWT_REFRESH_EXPIRES, CORS_ORIGIN come
+    # from .env; MONGODB_URI is assembled from the Mongo credentials below.
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      TRUST_PROXY: "1"
+      MONGODB_URI: "mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DB}?authSource=admin"
+    expose:
+      - "3000"        # internal-only; the tunnel reaches this, the host does not
+    networks:
+      - internal
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    # Root credentials enable auth automatically; --auth is explicit belt-and-suspenders.
+    command: ["--auth"]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_USER}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASSWORD}"
+    volumes:
+      - mongo-data:/data/db
+    expose:
+      - "27017"       # NEVER published to the host (see docker-compose.seed.yml for one-time seeding)
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: ["tunnel", "--no-autoupdate", "run"]
+    depends_on:
+      - api
+    environment:
+      TUNNEL_TOKEN: "${TUNNEL_TOKEN}"
+    networks:
+      - internal
+    # Outbound-only; no ports published. Configure ingress in the Cloudflare Zero Trust dashboard:
+    #   <your-hostname>  ->  http://api:3000
+    # Map ONLY the public API hostname here. The (future) LAN admin dashboard is deliberately NOT
+    # added to any tunnel ingress, so it stays invisible to the internet.
+
+volumes:
+  mongo-data:
+
+networks:
+  internal:
+    driver: bridge

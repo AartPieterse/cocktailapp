@@ -1,4 +1,4 @@
-import { Cocktail } from './cocktail';
+import { Cocktail, CocktailIngredientRole } from './cocktail';
 import { Difficulty } from './difficulty';
 import { Glassware } from './glassware';
 import { Ingredient } from './ingredient';
@@ -11,10 +11,11 @@ import { Method } from './method';
  *   - scripts/build-catalog.mjs → the committed offline bundle (frontend + app),
  *   - the backend's GET /api/catalog → the live, seeded-from-the-same-source catalog.
  *
- * Ingredient ids are deterministic, accent-folded slugs derived from the *name* (not a DB
- * ObjectId), so a user's cabinet — stored as ingredient ids — stays valid whether the client
- * reads the bundled catalog offline or refreshes it from the API. Because ids come from names,
- * two clients seeded from the same data compute the same ids and the same content hash.
+ * Ingredient ids are stable, url-safe slugs (never a DB ObjectId), so a user's cabinet — stored as
+ * ingredient ids — stays valid whether the client reads the bundled catalog offline or refreshes it
+ * from the API. Each id is taken from an authored, immutable `id` when the seed provides one, else
+ * derived deterministically via `slugify(name)`. Two clients seeded from the same data therefore
+ * compute the same ids and the same content hash.
  *
  * This module is pure and dependency-free (no `crypto`, no DB) so it is safe to import from the
  * browser/React Native bundle. The SHA-256/12 `version` is stamped by the Node-side callers over
@@ -24,18 +25,32 @@ import { Method } from './method';
 
 /** Raw ingredient as it appears in the seed file or a Mongo document (name-keyed). */
 export interface RawCatalogIngredient {
+  /** Authored, immutable id. When present, used verbatim; otherwise derived via `slugify(name)`. */
+  id?: string;
   name: string;
   category?: IngredientCategory;
   isStaple?: boolean;
+  parentId?: string;
+  substitutes?: string[];
+  aliases?: string[];
 }
 
-/** Raw cocktail ingredient line (its id, if any, is ignored — lines are resolved by name). */
+/**
+ * Raw cocktail ingredient line. The line's *base* ingredient is referenced by `name` (resolved to
+ * an id at build time); `call` preserves the recipe's verbatim wording. `alternatives` lists the
+ * *names* of other bases that also satisfy an "X or Y" line — resolved and validated to ids here.
+ */
 export interface RawCatalogLine {
   name: string;
-  amount: number;
+  call?: string;
+  amount?: number;
+  amountMax?: number;
   unit: MeasureUnit;
   note?: string;
   optional?: boolean;
+  role?: CocktailIngredientRole;
+  /** Names (not ids) of alternative bases for a recipe "X or Y" line. */
+  alternatives?: string[];
 }
 
 /** Raw cocktail as it appears in the seed file or a Mongo document. */
@@ -60,6 +75,51 @@ export interface CatalogContent {
   counts: { ingredients: number; cocktails: number };
   ingredients: Ingredient[];
   cocktails: Cocktail[];
+}
+
+/** Base language of the catalog's names/instructions. English is the canonical id space. */
+export type Locale = 'en' | 'nl';
+
+/** Metadata stamped on top of {@link CatalogContent} to form the shipped/served {@link Catalog}. */
+export interface CatalogMeta {
+  /** SHA-256/12 content hash over `{ ingredients, cocktails }` — doubles as the `/api/catalog` ETag. */
+  version: string;
+  /** Hand-bumped only on a breaking shape change; clients may gate on it. */
+  schemaVersion: number;
+  /** Provenance, e.g. `'iba-cocktails-seed.json'`. */
+  generatedFrom: string;
+  /** Base language of `name`/`instructions` (a Dutch overlay carries the same `version`). */
+  locale: Locale;
+  counts: { ingredients: number; cocktails: number };
+}
+
+/** The full catalog document every sink ships / serves: metadata + resolved content. */
+export interface Catalog extends CatalogMeta {
+  ingredients: Ingredient[];
+  cocktails: Cocktail[];
+}
+
+/** Current catalog schema version — bump on a breaking shape change (see docs/data-model-refinement.md). */
+export const CATALOG_SCHEMA_VERSION = 1;
+
+/**
+ * An id-keyed translation overlay (e.g. `catalog.nl.json`) applied on top of the canonical
+ * (English) catalog at display time. Carries the same `version` as the catalog it overlays; on a
+ * mismatch the UI falls back to canonical names.
+ */
+export interface CatalogTranslations {
+  version: string;
+  ingredients: Record<string, { name: string }>;
+  cocktails: Record<
+    string,
+    {
+      name?: string;
+      description?: string;
+      instructions?: string[];
+      notes?: string;
+      garnish?: string;
+    }
+  >;
 }
 
 /** Turn a display name into a stable, url-safe slug (accent-folded). */
@@ -100,12 +160,25 @@ export function buildCatalog(
     .map((ing) => ({ ...ing, name: ing.name.trim() }))
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((ing) => {
-      const id = makeUniqueId(ing.name, usedIds);
+      // Prefer an authored, immutable id; fall back to a slug of the name (legacy/unfrozen seeds).
+      let id: string;
+      if (ing.id) {
+        if (usedIds.has(ing.id)) {
+          throw new Error(`Duplicate authored ingredient id "${ing.id}" (on "${ing.name}").`);
+        }
+        usedIds.add(ing.id);
+        id = ing.id;
+      } else {
+        id = makeUniqueId(ing.name, usedIds);
+      }
       const entry: Ingredient = {
         id,
         name: ing.name,
         ...(ing.category ? { category: ing.category } : {}),
         isStaple: ing.isStaple ?? false,
+        ...(ing.parentId ? { parentId: ing.parentId } : {}),
+        ...(ing.substitutes?.length ? { substitutes: ing.substitutes } : {}),
+        ...(ing.aliases?.length ? { aliases: ing.aliases } : {}),
       };
       byName.set(ing.name.toLowerCase(), { id, name: ing.name });
       return entry;
@@ -125,13 +198,28 @@ export function buildCatalog(
               `Add it to the ingredients list.`,
           );
         }
+        // Resolve "X or Y" alternatives (authored as names) to base ids; fail loud on a typo.
+        const alternativeIds = (line.alternatives ?? []).map((altName) => {
+          const alt = byName.get(altName.trim().toLowerCase());
+          if (!alt) {
+            throw new Error(
+              `Cocktail "${c.name}" line "${line.name}" references unknown alternative "${altName}". ` +
+                `Add it to the ingredients list.`,
+            );
+          }
+          return alt.id;
+        });
         return {
           ingredientId: found.id,
           name: found.name,
-          amount: line.amount,
+          ...(line.call ? { call: line.call } : {}),
+          ...(line.amount !== undefined ? { amount: line.amount } : {}),
+          ...(line.amountMax !== undefined ? { amountMax: line.amountMax } : {}),
           unit: line.unit,
           ...(line.note ? { note: line.note } : {}),
           ...(line.optional ? { optional: true } : {}),
+          ...(line.role ? { role: line.role } : {}),
+          ...(alternativeIds.length ? { alternativeIds } : {}),
         };
       });
 

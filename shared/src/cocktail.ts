@@ -3,16 +3,94 @@ import { Glassware } from './glassware';
 import { MeasureUnit } from './measure-unit';
 import { Method } from './method';
 
+/**
+ * Role of a line within a recipe. `garnish` and `seasoning` are never counted as "missing" by
+ * `computeMakeable` (like `optional`), so a decorative twist or a dash of salt never blocks a drink.
+ * Defaults to `'ingredient'` when absent.
+ */
+export type CocktailIngredientRole = 'ingredient' | 'garnish' | 'seasoning';
+
 /** One ingredient line embedded in a cocktail. `ingredientId` references the catalog; `name` is denormalized. */
 export interface CocktailIngredient {
+  /** The canonical *base* id — the only thing the cabinet and `computeMakeable` compare against. */
   ingredientId: string;
+  /** The canonical *base* name — what `missing[]` surfaces ("nog te halen: Gin"). */
   name: string;
-  amount: number;
+  /**
+   * The recipe's verbatim wording for this line ("London Dry Gin", "Sugar Syrup"). The detail screen
+   * shows `call ?? name`; matching still happens on the base `ingredientId`.
+   */
+  call?: string;
+  /** Amount the recipe calls for. Optional — top-up / decorative lines carry no number. */
+  amount?: number;
+  /** Upper bound for an authored range ("6–8 ml"); `amount` holds the lower bound. */
+  amountMax?: number;
   unit: MeasureUnit;
   /** Optional note, e.g. "vers geperst" or "goed gekoeld". */
   note?: string;
   /** If true, the line is optional / to taste and doesn't count against "makeable". */
   optional?: boolean;
+  /** Line role; `garnish`/`seasoning` never block "makeable". Defaults to `'ingredient'`. */
+  role?: CocktailIngredientRole;
+  /**
+   * For a recipe "X or Y" line: any of these *base* ids also satisfies the line. `computeMakeable`
+   * treats the line as available if the cabinet contains `ingredientId` OR any `alternativeIds`.
+   */
+  alternativeIds?: string[];
+}
+
+/** Dominant spirit, used as the primary browse axis on the cocktail list. Derived from the lines. */
+export type BaseSpirit =
+  | 'gin'
+  | 'vodka'
+  | 'rum'
+  | 'tequila'
+  | 'whisky'
+  | 'brandy'
+  | 'other'
+  | 'none';
+
+export const BASE_SPIRITS: readonly BaseSpirit[] = [
+  'gin',
+  'vodka',
+  'rum',
+  'tequila',
+  'whisky',
+  'brandy',
+  'other',
+  'none',
+];
+
+/** Typed vocabulary for the cocktail filter UI. Populated in a later content pass (see plan Step 5). */
+export type CocktailTag =
+  | 'iba-official'
+  | 'classic'
+  | 'refreshing'
+  | 'sour'
+  | 'bitter'
+  | 'citrus'
+  | 'creamy'
+  | 'sparkling'
+  | 'strong'
+  | 'hot';
+
+export const COCKTAIL_TAGS: readonly CocktailTag[] = [
+  'iba-official',
+  'classic',
+  'refreshing',
+  'sour',
+  'bitter',
+  'citrus',
+  'creamy',
+  'sparkling',
+  'strong',
+  'hot',
+];
+
+/** A bundled cocktail image (offline-safe). Replaces the remote `imageUrl` over time. */
+export interface CocktailImage {
+  assetId: string;
+  blurhash?: string;
 }
 
 export interface Cocktail {
@@ -20,6 +98,8 @@ export interface Cocktail {
   name: string;
   /** Optional grouping / family (e.g. an IBA category like "The Unforgettables"). */
   category?: string;
+  /** Primary browse axis; derived from the dominant spirit line (see plan Step 5). */
+  baseSpirit?: BaseSpirit;
   description: string;
   instructions: string[];
   ingredients: CocktailIngredient[];
@@ -31,7 +111,10 @@ export interface Cocktail {
   notes?: string;
   /** Base number of servings the amounts are written for (default 1). */
   servings?: number;
+  // NOTE: typed as `string[]` for now; migrates to `CocktailTag[]` when tags are populated (plan Step 5).
   tags?: string[];
+  /** Bundled, offline-safe image. Preferred over the legacy remote `imageUrl`. */
+  image?: CocktailImage;
   imageUrl?: string;
   createdAt?: string;
   updatedAt?: string;
@@ -41,10 +124,14 @@ export interface Cocktail {
 export interface CreateCocktailIngredient {
   ingredientId?: string;
   name: string;
-  amount: number;
+  call?: string;
+  amount?: number;
+  amountMax?: number;
   unit: MeasureUnit;
   note?: string;
   optional?: boolean;
+  role?: CocktailIngredientRole;
+  alternativeIds?: string[];
 }
 
 export interface CreateCocktail {

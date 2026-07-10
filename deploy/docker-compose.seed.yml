@@ -1,0 +1,13 @@
+# One-time seeding override: temporarily bind Mongo to LOCALHOST ONLY (127.0.0.1) so the host can
+# run `npm run db:seed` against the container. Never use this in normal operation.
+#
+#   cd deploy
+#   docker compose -f docker-compose.yml -f docker-compose.seed.yml up -d mongo
+#   # from the repo root, seed (uses the same MONGODB_URI shape as the api service):
+#   MONGODB_URI="mongodb://<MONGO_USER>:<MONGO_PASSWORD>@127.0.0.1:27017/<MONGO_DB>?authSource=admin" npm run db:seed
+#   # then drop the localhost binding again:
+#   docker compose -f docker-compose.yml up -d mongo
+services:
+  mongo:
+    ports:
+      - "127.0.0.1:27017:27017"

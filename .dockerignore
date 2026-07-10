@@ -1,0 +1,33 @@
+# Build context = repo root. Keep it small: ship only manifests + shared/backend source.
+# node_modules and dist are (re)built inside the image, never copied from the host.
+**/node_modules
+**/dist
+.git
+.github
+.angular
+**/.angular
+coverage
+*.log
+npm-debug.log*
+
+# Secrets must never enter the image.
+**/.env
+!**/.env.example
+.mcp.json
+
+# Not needed to build the API image.
+frontend/src
+frontend/public
+frontend/*.json
+!frontend/package.json
+app
+docs
+deploy
+memory
+**/*.spec.ts
+
+# Editor / OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db

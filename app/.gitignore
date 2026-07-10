@@ -1,0 +1,15 @@
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Metro
+.metro-health-check*
+
+# TypeScript
+*.tsbuildinfo
+
+# Generated native folders
+/ios
+/android
