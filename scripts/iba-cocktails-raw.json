@@ -1,686 +1,652 @@
 {
   "ingredients": [
     {
-      "id": "gin",
-      "name": "Gin",
-      "category": "spirit",
-      "aliases": [
-        "Dry Gin",
-        "London Dry Gin",
-        "Old Tom Gin"
-      ]
-    },
-    {
-      "id": "vodka",
-      "name": "Vodka",
-      "category": "spirit",
-      "aliases": [
-        "Citroenwodka",
-        "Smirnoff Vodka",
-        "Vanillewodka",
-        "Vodka Citron",
-        "Vodka Vanilla"
-      ]
-    },
-    {
-      "id": "white-rum",
-      "name": "White Rum",
-      "category": "spirit",
-      "substitutes": [
-        "dark-rum"
-      ],
-      "aliases": [
-        "Cuban Aguardiente",
-        "Jamaica Overproof White Rum",
-        "Jamaican Overproof White Rum",
-        "Rum",
-        "White Cuban Ron",
-        "White Cuban Rum"
-      ]
-    },
-    {
-      "id": "dark-rum",
-      "name": "Dark Rum",
-      "category": "spirit",
-      "substitutes": [
-        "white-rum"
-      ],
-      "aliases": [
-        "Aged Rum",
-        "Amber Jamaican Rum",
-        "Demerara Rum",
-        "Gold Puerto Rican Rum",
-        "Gold Rum",
-        "Goslings Black Seal Rum",
-        "Goslings Rum",
-        "Jamaican Dark Rum",
-        "Jamaican Rum",
-        "Martinique Molasses Rhum"
-      ]
-    },
-    {
-      "id": "tequila",
-      "name": "Tequila",
-      "category": "spirit",
-      "aliases": [
-        "100% Agave Tequila",
-        "Reposado Tequila (100% Agave)",
-        "Tequila 100% Agave",
-        "Tequila Agave 100% Reposado"
-      ]
-    },
-    {
-      "id": "mezcal",
-      "name": "Mezcal",
-      "category": "spirit",
-      "aliases": [
-        "Espadin Mezcal",
-        "Espadín Mezcal"
-      ]
-    },
-    {
-      "id": "bourbon",
-      "name": "Bourbon",
-      "category": "spirit",
-      "aliases": [
-        "Bourbon or Rye Whiskey",
-        "Bourbon Whiskey"
-      ]
-    },
-    {
-      "id": "rye-whiskey",
-      "name": "Rye Whiskey",
-      "category": "spirit",
-      "aliases": [
-        "Rye Whiskey or Bourbon"
-      ]
-    },
-    {
-      "id": "irish-whiskey",
-      "name": "Irish Whiskey",
+      "name": "100% Agave Tequila",
       "category": "spirit"
     },
     {
-      "id": "scotch",
-      "name": "Scotch Whisky",
-      "category": "spirit",
-      "aliases": [
-        "Blended Scotch Whisky",
-        "Islay Single Malt (Lagavulin 16)",
-        "Lagavulin 16 y Whisky"
-      ]
-    },
-    {
-      "id": "brandy",
-      "name": "Brandy",
-      "category": "spirit"
-    },
-    {
-      "id": "cognac",
-      "name": "Cognac",
-      "category": "spirit",
-      "parentId": "brandy",
-      "aliases": [
-        "Cognac or Brandy"
-      ]
-    },
-    {
-      "id": "calvados",
-      "name": "Calvados",
-      "category": "spirit"
-    },
-    {
-      "id": "pisco",
-      "name": "Pisco",
-      "category": "spirit"
-    },
-    {
-      "id": "cachaca",
-      "name": "Cachaça",
-      "category": "spirit"
-    },
-    {
-      "id": "grappa",
-      "name": "Grappa",
-      "category": "spirit",
-      "aliases": [
-        "White Grappa",
-        "White Smooth Grappa"
-      ]
-    },
-    {
-      "id": "absinthe",
       "name": "Absinthe",
       "category": "spirit"
     },
     {
-      "id": "pernod",
-      "name": "Pernod",
+      "name": "Agave Syrup",
+      "category": "syrup"
+    },
+    {
+      "name": "Aged Rum",
       "category": "spirit"
     },
     {
-      "id": "triple-sec",
-      "name": "Triple Sec",
-      "category": "liqueur",
-      "aliases": [
-        "Cointreau",
-        "Curacao",
-        "Curaçao",
-        "Orange Curacao",
-        "Orange Curaçao"
-      ]
-    },
-    {
-      "id": "amaretto",
       "name": "Amaretto",
       "category": "liqueur"
     },
     {
-      "id": "amaro",
-      "name": "Amaro",
-      "category": "liqueur",
-      "aliases": [
-        "Amaro Nonino"
-      ]
+      "name": "Amaro Nonino",
+      "category": "liqueur"
     },
     {
-      "id": "aperol",
+      "name": "Amber Jamaican Rum",
+      "category": "spirit"
+    },
+    {
+      "name": "Angostura Bitters",
+      "category": "bitters"
+    },
+    {
       "name": "Aperol",
       "category": "liqueur"
     },
     {
-      "id": "apricot-brandy",
       "name": "Apricot Brandy",
       "category": "liqueur"
     },
     {
-      "id": "benedictine",
-      "name": "Bénédictine",
-      "category": "liqueur",
-      "aliases": [
-        "DOM Bénédictine"
-      ]
+      "name": "Aromatic Bitters",
+      "category": "bitters"
     },
     {
-      "id": "cherry-liqueur",
-      "name": "Cherry Liqueur",
+      "name": "Bénédictine",
       "category": "liqueur"
     },
     {
-      "id": "coffee-liqueur",
-      "name": "Coffee Liqueur",
-      "category": "liqueur",
-      "aliases": [
-        "Kahlúa"
-      ]
+      "name": "Bitter Campari",
+      "category": "bitters"
     },
     {
-      "id": "creme-de-cacao",
+      "name": "Blended Scotch Whisky",
+      "category": "spirit"
+    },
+    {
+      "name": "Bourbon or Rye Whiskey",
+      "category": "spirit"
+    },
+    {
+      "name": "Bourbon Whiskey",
+      "category": "spirit"
+    },
+    {
+      "name": "Brandy",
+      "category": "spirit"
+    },
+    {
+      "name": "Brut Champagne or Prosecco",
+      "category": "mixer"
+    },
+    {
+      "name": "Cachaça",
+      "category": "spirit"
+    },
+    {
+      "name": "Calvados",
+      "category": "spirit"
+    },
+    {
+      "name": "Celery Salt",
+      "category": "garnish"
+    },
+    {
+      "name": "Chamomile cordial",
+      "category": "syrup"
+    },
+    {
+      "name": "Champagne",
+      "category": "mixer"
+    },
+    {
+      "name": "Cherry liqueur",
+      "category": "liqueur"
+    },
+    {
+      "name": "Chilled Champagne",
+      "category": "mixer"
+    },
+    {
+      "name": "Coca Cola",
+      "category": "mixer",
+      "isStaple": true
+    },
+    {
+      "name": "Coconut Cream",
+      "category": "other"
+    },
+    {
+      "name": "Coffee Liqueur",
+      "category": "liqueur"
+    },
+    {
+      "name": "Cognac",
+      "category": "spirit"
+    },
+    {
+      "name": "Cognac or Brandy",
+      "category": "spirit"
+    },
+    {
+      "name": "Cointreau",
+      "category": "liqueur"
+    },
+    {
+      "name": "Cola",
+      "category": "mixer",
+      "isStaple": true
+    },
+    {
+      "name": "Cranberry Juice",
+      "category": "juice"
+    },
+    {
+      "name": "Cream",
+      "category": "other"
+    },
+    {
       "name": "Crème de Cacao",
       "category": "liqueur"
     },
     {
-      "id": "creme-de-cassis",
       "name": "Crème de Cassis",
       "category": "liqueur"
     },
     {
-      "id": "creme-de-menthe",
       "name": "Crème de Menthe",
-      "category": "liqueur",
-      "aliases": [
-        "White Crème de Menthe"
-      ]
+      "category": "liqueur"
     },
     {
-      "id": "creme-de-mure",
       "name": "Crème de Mûre",
       "category": "liqueur"
     },
     {
-      "id": "creme-de-violette",
       "name": "Crème de Violette",
       "category": "liqueur"
     },
     {
-      "id": "drambuie",
+      "name": "Cuban Aguardiente",
+      "category": "spirit"
+    },
+    {
+      "name": "Curacao",
+      "category": "liqueur"
+    },
+    {
+      "name": "Demerara Rum",
+      "category": "spirit"
+    },
+    {
+      "name": "DOM Bénédictine",
+      "category": "liqueur"
+    },
+    {
+      "name": "Donn's Mix",
+      "category": "syrup"
+    },
+    {
       "name": "Drambuie",
       "category": "liqueur"
     },
     {
-      "id": "fernet-branca",
+      "name": "Dry Gin",
+      "category": "spirit"
+    },
+    {
+      "name": "Dry Vermouth",
+      "category": "liqueur"
+    },
+    {
+      "name": "Dry White Wine",
+      "category": "mixer"
+    },
+    {
+      "name": "Egg White",
+      "category": "other",
+      "isStaple": true
+    },
+    {
+      "name": "Egg Yolk",
+      "category": "other",
+      "isStaple": true
+    },
+    {
+      "name": "Elderflower Cordial",
+      "category": "syrup"
+    },
+    {
+      "name": "Espadin Mezcal",
+      "category": "spirit"
+    },
+    {
+      "name": "Falernum",
+      "category": "syrup"
+    },
+    {
       "name": "Fernet Branca",
       "category": "liqueur"
     },
     {
-      "id": "galliano",
+      "name": "Fresh Cream",
+      "category": "other"
+    },
+    {
+      "name": "Fresh Lemon Juice",
+      "category": "juice",
+      "isStaple": true
+    },
+    {
+      "name": "Fresh Lime",
+      "category": "garnish"
+    },
+    {
+      "name": "Fresh Lime Juice",
+      "category": "juice",
+      "isStaple": true
+    },
+    {
+      "name": "fresh Mint sprigs",
+      "category": "garnish"
+    },
+    {
+      "name": "Fresh Orange Juice",
+      "category": "juice"
+    },
+    {
+      "name": "Fresh Pineapple Juice",
+      "category": "juice"
+    },
+    {
+      "name": "Freshly Squeezed Lime Juice",
+      "category": "juice"
+    },
+    {
       "name": "Galliano",
       "category": "liqueur"
     },
     {
-      "id": "green-chartreuse",
+      "name": "Gin",
+      "category": "spirit"
+    },
+    {
+      "name": "Ginger Ale",
+      "category": "mixer"
+    },
+    {
+      "name": "Ginger Beer",
+      "category": "mixer"
+    },
+    {
+      "name": "Gold Puerto Rican rum",
+      "category": "spirit"
+    },
+    {
+      "name": "Gold Rum",
+      "category": "spirit"
+    },
+    {
+      "name": "Goslings Rum",
+      "category": "spirit"
+    },
+    {
+      "name": "Grand Marnier",
+      "category": "other"
+    },
+    {
+      "name": "Grapefruit Juice",
+      "category": "juice"
+    },
+    {
       "name": "Green Chartreuse",
       "category": "liqueur"
     },
     {
-      "id": "yellow-chartreuse",
-      "name": "Yellow Chartreuse",
+      "name": "Grenadine Syrup",
+      "category": "syrup"
+    },
+    {
+      "name": "Honey mix",
+      "category": "syrup"
+    },
+    {
+      "name": "Honey Syrup",
+      "category": "syrup"
+    },
+    {
+      "name": "Hot coffee",
+      "category": "other"
+    },
+    {
+      "name": "Irish Whiskey",
+      "category": "spirit"
+    },
+    {
+      "name": "Jamaica Overproof White Rum",
+      "category": "spirit"
+    },
+    {
+      "name": "Jamaican dark rum",
+      "category": "spirit"
+    },
+    {
+      "name": "Jamaican Rum",
+      "category": "spirit"
+    },
+    {
+      "name": "Kahlúa",
       "category": "liqueur"
     },
     {
-      "id": "maraschino",
-      "name": "Maraschino Liqueur",
-      "category": "liqueur",
-      "aliases": [
-        "Luxardo Maraschino",
-        "Maraschino Luxardo"
-      ]
+      "name": "Lagavulin 16 y Whisky",
+      "category": "spirit"
     },
     {
-      "id": "peach-schnapps",
+      "name": "Lemon juice",
+      "category": "juice"
+    },
+    {
+      "name": "Lillet Blanc",
+      "category": "liqueur"
+    },
+    {
+      "name": "Lime cut into small wedges",
+      "category": "garnish"
+    },
+    {
+      "name": "Lime Juice",
+      "category": "juice"
+    },
+    {
+      "name": "London Dry Gin",
+      "category": "spirit"
+    },
+    {
+      "name": "Maraschino Liqueur",
+      "category": "liqueur"
+    },
+    {
+      "name": "Maraschino Luxardo",
+      "category": "liqueur"
+    },
+    {
+      "name": "Martinique Molasses Rhum",
+      "category": "other"
+    },
+    {
+      "name": "Mezcal",
+      "category": "spirit"
+    },
+    {
+      "name": "Mint Leaves",
+      "category": "garnish"
+    },
+    {
+      "name": "Mint Sprigs",
+      "category": "garnish"
+    },
+    {
+      "name": "Monin Honey Syrup",
+      "category": "syrup"
+    },
+    {
+      "name": "Old Tom Gin",
+      "category": "spirit"
+    },
+    {
+      "name": "Orange Bitters",
+      "category": "bitters"
+    },
+    {
+      "name": "Orange Curacao",
+      "category": "liqueur"
+    },
+    {
+      "name": "Orange Flower Water",
+      "category": "garnish"
+    },
+    {
+      "name": "Orgeat Syrup",
+      "category": "syrup"
+    },
+    {
       "name": "Peach Schnapps",
       "category": "liqueur"
     },
     {
-      "id": "raspberry-liqueur",
+      "name": "Pepper",
+      "category": "garnish"
+    },
+    {
+      "name": "Pernod",
+      "category": "other"
+    },
+    {
+      "name": "Peychaud's Bitters",
+      "category": "bitters"
+    },
+    {
+      "name": "Pink Grapefruit Soda",
+      "category": "mixer"
+    },
+    {
+      "name": "Pisco",
+      "category": "spirit"
+    },
+    {
+      "name": "Plain Water",
+      "category": "other",
+      "isStaple": true
+    },
+    {
+      "name": "Powdered Sugar",
+      "category": "other",
+      "isStaple": true
+    },
+    {
+      "name": "Prosecco",
+      "category": "mixer"
+    },
+    {
+      "name": "quarter size Sliced Fresh Ginger",
+      "category": "garnish"
+    },
+    {
       "name": "Raspberry Liqueur",
-      "category": "liqueur",
-      "aliases": [
-        "Raspberry Liqueur (Chambord)"
-      ]
-    },
-    {
-      "id": "campari",
-      "name": "Campari",
-      "category": "liqueur",
-      "aliases": [
-        "Bitter Campari"
-      ]
-    },
-    {
-      "id": "grand-marnier",
-      "name": "Grand Marnier",
       "category": "liqueur"
     },
     {
-      "id": "sweet-vermouth",
-      "name": "Sweet Vermouth",
-      "category": "wine",
-      "aliases": [
-        "Sweet Red Vermouth"
-      ]
+      "name": "Raspberry Syrup",
+      "category": "syrup"
     },
     {
-      "id": "dry-vermouth",
-      "name": "Dry Vermouth",
-      "category": "wine"
+      "name": "Raw Egg White",
+      "category": "other",
+      "isStaple": true
     },
     {
-      "id": "lillet-blanc",
-      "name": "Lillet Blanc",
-      "category": "wine"
+      "name": "Raw Honey",
+      "category": "syrup"
     },
     {
-      "id": "sparkling-wine",
-      "name": "Sparkling Wine",
-      "category": "wine",
-      "aliases": [
-        "Brut Champagne or Prosecco",
-        "Champagne",
-        "Chilled Champagne",
-        "Prosecco"
-      ]
+      "name": "Red Tawny Port Wine",
+      "category": "mixer"
     },
     {
-      "id": "white-wine",
-      "name": "Dry White Wine",
-      "category": "wine"
+      "name": "Red wine",
+      "category": "mixer"
     },
     {
-      "id": "red-wine",
-      "name": "Red Wine",
-      "category": "wine"
+      "name": "Rum",
+      "category": "spirit"
     },
     {
-      "id": "port",
-      "name": "Tawny Port",
-      "category": "wine",
-      "aliases": [
-        "Red Tawny Port Wine"
-      ]
+      "name": "Rye Whiskey",
+      "category": "spirit"
     },
     {
-      "id": "cola",
-      "name": "Cola",
-      "category": "mixer",
-      "isStaple": true,
-      "aliases": [
-        "Coca Cola",
-        "Coca-Cola"
-      ]
+      "name": "Rye Whiskey or Bourbon",
+      "category": "spirit"
     },
     {
-      "id": "soda-water",
+      "name": "Salt",
+      "category": "garnish"
+    },
+    {
+      "name": "Scotch Whisky",
+      "category": "spirit"
+    },
+    {
+      "name": "Simple Syrup",
+      "category": "syrup",
+      "isStaple": true
+    },
+    {
+      "name": "Smirnoff Vodka",
+      "category": "spirit"
+    },
+    {
       "name": "Soda Water",
       "category": "mixer",
       "isStaple": true
     },
     {
-      "id": "ginger-ale",
-      "name": "Ginger Ale",
+      "name": "Sparkling wine",
       "category": "mixer"
     },
     {
-      "id": "ginger-beer",
-      "name": "Ginger Beer",
-      "category": "mixer"
+      "name": "strong Espresso",
+      "category": "other"
     },
     {
-      "id": "grapefruit-soda",
-      "name": "Grapefruit Soda",
-      "category": "mixer",
-      "aliases": [
-        "Pink Grapefruit Soda"
-      ]
+      "name": "Sugar",
+      "category": "other",
+      "isStaple": true
     },
     {
-      "id": "lime-juice",
-      "name": "Fresh Lime Juice",
+      "name": "Sugar Cane Juice",
       "category": "juice",
-      "aliases": [
-        "Fresh Lime",
-        "Freshly Squeezed Lime Juice",
-        "Lime cut into small wedges",
-        "Lime Juice",
-        "Lime, cut into wedges"
-      ]
+      "isStaple": true
     },
     {
-      "id": "lemon-juice",
-      "name": "Fresh Lemon Juice",
-      "category": "juice",
-      "aliases": [
-        "Lemon juice"
-      ]
+      "name": "Sugar Cube",
+      "category": "other",
+      "isStaple": true
     },
     {
-      "id": "orange-juice",
-      "name": "Fresh Orange Juice",
-      "category": "juice"
+      "name": "Sugar Syrup",
+      "category": "syrup",
+      "isStaple": true
     },
     {
-      "id": "pineapple-juice",
-      "name": "Pineapple Juice",
-      "category": "juice",
-      "aliases": [
-        "Fresh Pineapple Juice"
-      ]
+      "name": "Superfine Sugar",
+      "category": "other",
+      "isStaple": true
     },
     {
-      "id": "cranberry-juice",
-      "name": "Cranberry Juice",
-      "category": "juice"
+      "name": "Sweet Red Vermouth",
+      "category": "liqueur"
     },
     {
-      "id": "grapefruit-juice",
-      "name": "Grapefruit Juice",
-      "category": "juice"
+      "name": "Sweet Vermouth",
+      "category": "liqueur"
     },
     {
-      "id": "tomato-juice",
+      "name": "Tabasco",
+      "category": "other"
+    },
+    {
+      "name": "Tequila",
+      "category": "spirit"
+    },
+    {
+      "name": "Tequila 100% Agave",
+      "category": "spirit"
+    },
+    {
+      "name": "Tequila Agave 100% Reposado",
+      "category": "spirit"
+    },
+    {
+      "name": "thin Slices Red Chili Pepper",
+      "category": "garnish"
+    },
+    {
       "name": "Tomato Juice",
       "category": "juice"
     },
     {
-      "id": "sugar-cane-juice",
-      "name": "Sugar Cane Juice",
+      "name": "Triple Sec",
+      "category": "liqueur"
+    },
+    {
+      "name": "Vanilla Extract",
+      "category": "other"
+    },
+    {
+      "name": "Vodka",
+      "category": "spirit"
+    },
+    {
+      "name": "Vodka Citron",
+      "category": "spirit"
+    },
+    {
+      "name": "Vodka Vanilla",
+      "category": "spirit"
+    },
+    {
+      "name": "Water",
+      "category": "other",
+      "isStaple": true
+    },
+    {
+      "name": "White Cane Sugar",
+      "category": "other",
+      "isStaple": true
+    },
+    {
+      "name": "White Crème de Menthe",
+      "category": "liqueur"
+    },
+    {
+      "name": "White Cuban Ron",
+      "category": "spirit"
+    },
+    {
+      "name": "White Peach Puree",
       "category": "juice"
     },
     {
-      "id": "peach-puree",
-      "name": "Peach Purée",
-      "category": "juice",
-      "aliases": [
-        "White Peach Puree",
-        "White Peach Purée"
-      ]
+      "name": "White Rum",
+      "category": "spirit"
     },
     {
-      "id": "simple-syrup",
-      "name": "Simple Syrup",
-      "category": "syrup",
-      "isStaple": true,
-      "aliases": [
-        "Sugar Syrup"
-      ]
+      "name": "White Smooth Grappa",
+      "category": "spirit"
     },
     {
-      "id": "grenadine",
-      "name": "Grenadine",
-      "category": "syrup",
-      "aliases": [
-        "Grenadine Syrup"
-      ]
-    },
-    {
-      "id": "orgeat",
-      "name": "Orgeat",
-      "category": "syrup",
-      "aliases": [
-        "Orgeat (Almond Syrup)",
-        "Orgeat Syrup"
-      ]
-    },
-    {
-      "id": "honey-syrup",
-      "name": "Honey Syrup",
-      "category": "syrup",
-      "aliases": [
-        "Honey Mix",
-        "Monin Honey Syrup",
-        "Raw Honey"
-      ]
-    },
-    {
-      "id": "agave-syrup",
-      "name": "Agave Syrup",
-      "category": "syrup"
-    },
-    {
-      "id": "elderflower-cordial",
-      "name": "Elderflower Cordial",
-      "category": "syrup"
-    },
-    {
-      "id": "falernum",
-      "name": "Falernum",
-      "category": "syrup"
-    },
-    {
-      "id": "raspberry-syrup",
-      "name": "Raspberry Syrup",
-      "category": "syrup"
-    },
-    {
-      "id": "donns-mix",
-      "name": "Donn's Mix",
-      "category": "syrup"
-    },
-    {
-      "id": "chamomile-cordial",
-      "name": "Chamomile Cordial",
-      "category": "syrup"
-    },
-    {
-      "id": "angostura-bitters",
-      "name": "Angostura Bitters",
-      "category": "bitters",
-      "aliases": [
-        "Aromatic Bitters"
-      ]
-    },
-    {
-      "id": "orange-bitters",
-      "name": "Orange Bitters",
-      "category": "bitters"
-    },
-    {
-      "id": "peychauds-bitters",
-      "name": "Peychaud's Bitters",
-      "category": "bitters"
-    },
-    {
-      "id": "cream",
-      "name": "Cream",
-      "category": "dairy",
-      "aliases": [
-        "Fresh Cream"
-      ]
-    },
-    {
-      "id": "coconut-cream",
-      "name": "Coconut Cream",
-      "category": "dairy"
-    },
-    {
-      "id": "egg-white",
-      "name": "Egg White",
-      "category": "dairy",
-      "aliases": [
-        "Raw Egg White"
-      ]
-    },
-    {
-      "id": "egg-yolk",
-      "name": "Egg Yolk",
-      "category": "dairy"
-    },
-    {
-      "id": "salt",
-      "name": "Salt",
-      "category": "seasoning"
-    },
-    {
-      "id": "pepper",
-      "name": "Pepper",
-      "category": "seasoning"
-    },
-    {
-      "id": "celery-salt",
-      "name": "Celery Salt",
-      "category": "seasoning"
-    },
-    {
-      "id": "tabasco",
-      "name": "Tabasco",
-      "category": "seasoning"
-    },
-    {
-      "id": "worcestershire-sauce",
       "name": "Worcestershire Sauce",
-      "category": "seasoning"
+      "category": "other"
     },
     {
-      "id": "orange-flower-water",
-      "name": "Orange Flower Water",
-      "category": "seasoning"
-    },
-    {
-      "id": "vanilla-extract",
-      "name": "Vanilla Extract",
-      "category": "seasoning"
-    },
-    {
-      "id": "mint",
-      "name": "Mint",
-      "category": "garnish",
-      "aliases": [
-        "Fresh Mint Sprigs",
-        "Mint Leaves",
-        "Mint Sprigs"
-      ]
-    },
-    {
-      "id": "ginger",
-      "name": "Ginger",
-      "category": "garnish",
-      "aliases": [
-        "Fresh Ginger",
-        "quarter size Sliced Fresh Ginger"
-      ]
-    },
-    {
-      "id": "chili-pepper",
-      "name": "Chili Pepper",
-      "category": "garnish",
-      "aliases": [
-        "Red Chili Pepper",
-        "thin Slices Red Chili Pepper"
-      ]
-    },
-    {
-      "id": "sugar",
-      "name": "Sugar",
-      "category": "other",
-      "isStaple": true,
-      "aliases": [
-        "Powdered Sugar",
-        "Sugar Cube",
-        "Superfine Sugar",
-        "White Cane Sugar"
-      ]
-    },
-    {
-      "id": "water",
-      "name": "Water",
-      "category": "other",
-      "isStaple": true,
-      "aliases": [
-        "Plain Water"
-      ]
-    },
-    {
-      "id": "coffee",
-      "name": "Coffee",
-      "category": "other",
-      "aliases": [
-        "Hot Coffee"
-      ]
-    },
-    {
-      "id": "espresso",
-      "name": "Espresso",
-      "category": "other",
-      "aliases": [
-        "Strong Espresso"
-      ]
+      "name": "Yellow Chartreuse",
+      "category": "liqueur"
     }
   ],
   "cocktails": [
     {
       "name": "Bellini",
       "category": "Contemporary Classics",
-      "instructions": [
-        "Pour peach puree into the mixing glass with ice, add the Prosecco wine.",
-        "Stir gently and pour in a chilled flute glass."
-      ],
       "glass": "flute",
       "method": "stirred",
       "difficulty": "easy",
       "notes": "PUCCINI - Fresh Mandarin Orange Juice; ROSSINI - Fresh Strawberry Puree; TINTORETTO - Fresh Pomegranate Juice.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour peach puree into the mixing glass with ice, add the Prosecco wine.",
+        "Stir gently and pour in a chilled flute glass."
       ],
       "ingredients": [
         {
-          "name": "Sparkling Wine",
-          "call": "Prosecco",
+          "name": "Prosecco",
           "amount": 100,
           "unit": "ml"
         },
         {
-          "name": "Peach Purée",
-          "call": "White Peach Purée",
+          "name": "White Peach Puree",
           "amount": 50,
           "unit": "ml"
         }
@@ -689,17 +655,13 @@
     {
       "name": "Black Russian",
       "category": "Contemporary Classics",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Pour the ingredients into the old fashioned glass filled with ice cubes.",
-        "Stir gently."
-      ],
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "easy",
       "notes": "WHITE RUSSIAN - Float fresh cream on the top and stir in slowly.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour the ingredients into the old fashioned glass filled with ice cubes.",
+        "Stir gently."
       ],
       "ingredients": [
         {
@@ -717,17 +679,13 @@
     {
       "name": "Bloody Mary",
       "category": "Contemporary Classics",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Stir gently all the ingredients in a mixing glass with ice, pour into rocks glass."
-      ],
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "advanced",
       "garnish": "Celery, Lemon Wedge (Optional)",
       "notes": "If requested served with ice, pour into highball glass.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Stir gently all the ingredients in a mixing glass with ice, pour into rocks glass."
       ],
       "ingredients": [
         {
@@ -748,45 +706,38 @@
         {
           "name": "Worcestershire Sauce",
           "amount": 2,
-          "unit": "dash",
-          "role": "seasoning"
+          "unit": "dash"
         },
         {
           "name": "Tabasco",
           "amount": 1,
-          "unit": "dash",
-          "role": "seasoning"
+          "unit": "dash"
         },
         {
           "name": "Celery Salt",
           "amount": 1,
-          "unit": "dash",
-          "role": "seasoning"
+          "unit": "dash"
         },
         {
           "name": "Pepper",
           "amount": 1,
           "unit": "dash",
-          "optional": true,
-          "role": "seasoning"
+          "note": "Up to taste",
+          "optional": true
         }
       ]
     },
     {
       "name": "Caipirinha",
       "category": "Contemporary Classics",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Place lime and sugar into a double old fashioned glass and muddle gently.",
-        "Fill the glass with cracked ice and add Cachaça.",
-        "Stir gently to involve ingredients."
-      ],
       "glass": "rocks",
       "method": "muddled",
       "difficulty": "easy",
       "notes": "CAIPIROSKA - Instead of Cachaça use Vodka;",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Place lime and sugar into a double old fashioned glass and muddle gently.",
+        "Fill the glass with cracked ice and add Cachaça.",
+        "Stir gently to involve ingredients."
       ],
       "ingredients": [
         {
@@ -795,15 +746,12 @@
           "unit": "ml"
         },
         {
-          "name": "Fresh Lime Juice",
-          "call": "Lime, cut into wedges",
+          "name": "Lime cut into small wedges",
           "amount": 1,
-          "unit": "piece",
-          "note": "in partjes gesneden, gemuddeld"
+          "unit": "piece"
         },
         {
-          "name": "Sugar",
-          "call": "White Cane Sugar",
+          "name": "White Cane Sugar",
           "amount": 4,
           "unit": "teaspoon"
         }
@@ -812,22 +760,17 @@
     {
       "name": "Champagne Cocktail",
       "category": "Contemporary Classics",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Place the sugar cube with 2 dashes of bitters in a large Champagne glass, add the cognac.",
-        "Pour gently chilled Champagne."
-      ],
       "glass": "flute",
       "method": "build",
       "difficulty": "medium",
       "garnish": "Garnish with orange zest and maraschino cherry.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Place the sugar cube with 2 dashes of bitters in a large Champagne glass, add the cognac.",
+        "Pour gently chilled Champagne."
       ],
       "ingredients": [
         {
-          "name": "Sparkling Wine",
-          "call": "Chilled Champagne",
+          "name": "Chilled Champagne",
           "amount": 90,
           "unit": "ml"
         },
@@ -845,11 +788,11 @@
           "name": "Grand Marnier",
           "amount": 3,
           "unit": "drop",
+          "note": "optional; few (to taste)",
           "optional": true
         },
         {
-          "name": "Sugar",
-          "call": "Sugar Cube",
+          "name": "Sugar Cube",
           "amount": 1,
           "unit": "piece"
         }
@@ -858,17 +801,13 @@
     {
       "name": "Corpse Reviver #2",
       "category": "Contemporary Classics",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into shaker with ice.",
-        "Shake well and strain in chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Garnish with orange zest",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into shaker with ice.",
+        "Shake well and strain in chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -877,8 +816,7 @@
           "unit": "ml"
         },
         {
-          "name": "Triple Sec",
-          "call": "Cointreau",
+          "name": "Cointreau",
           "amount": 30,
           "unit": "ml"
         },
@@ -902,28 +840,22 @@
     {
       "name": "Cosmopolitan",
       "category": "Contemporary Classics",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Add all ingredients into a cocktail shaker filled with ice.",
-        "Shake well and strain into a large cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Garnish with a lemon twist.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Add all ingredients into a cocktail shaker filled with ice.",
+        "Shake well and strain into a large cocktail glass."
       ],
       "ingredients": [
         {
-          "name": "Vodka",
-          "call": "Citroenwodka",
+          "name": "Vodka Citron",
           "amount": 40,
           "unit": "ml"
         },
         {
-          "name": "Triple Sec",
-          "call": "Cointreau",
+          "name": "Cointreau",
           "amount": 15,
           "unit": "ml"
         },
@@ -942,16 +874,12 @@
     {
       "name": "Cuba Libre",
       "category": "Contemporary Classics",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Build all ingredients in a highball glass filled with ice."
-      ],
       "glass": "highball",
       "method": "build",
       "difficulty": "easy",
       "garnish": "Garnish with lime wedge.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Build all ingredients in a highball glass filled with ice."
       ],
       "ingredients": [
         {
@@ -960,8 +888,7 @@
           "unit": "ml"
         },
         {
-          "name": "Cola",
-          "call": "Coca-Cola",
+          "name": "Coca Cola",
           "amount": 120,
           "unit": "ml"
         },
@@ -975,18 +902,14 @@
     {
       "name": "French 75",
       "category": "Contemporary Classics",
-      "baseSpirit": "gin",
+      "glass": "flute",
+      "method": "shaken",
+      "difficulty": "medium",
       "instructions": [
         "Pour all the ingredients, except Champagne, into a shaker.",
         "Shake well and strain into a Champagne flute.",
         "Top up with Champagne.",
         "Stir gently."
-      ],
-      "glass": "flute",
-      "method": "shaken",
-      "difficulty": "medium",
-      "tags": [
-        "iba-official"
       ],
       "ingredients": [
         {
@@ -1000,14 +923,12 @@
           "unit": "ml"
         },
         {
-          "name": "Simple Syrup",
-          "call": "Sugar Syrup",
+          "name": "Sugar Syrup",
           "amount": 15,
           "unit": "ml"
         },
         {
-          "name": "Sparkling Wine",
-          "call": "Champagne",
+          "name": "Champagne",
           "amount": 60,
           "unit": "ml"
         }
@@ -1016,16 +937,12 @@
     {
       "name": "French Connection",
       "category": "Contemporary Classics",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Pour all ingredients directly into an old fashioned glass filled with ice cubes.",
-        "Stir gently."
-      ],
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "easy",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients directly into an old fashioned glass filled with ice cubes.",
+        "Stir gently."
       ],
       "ingredients": [
         {
@@ -1043,16 +960,13 @@
     {
       "name": "Golden Dream",
       "category": "Contemporary Classics",
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "medium",
       "instructions": [
         "Pour all ingredients into shaker filled with ice.",
         "Shake briskly for few seconds.",
         "Strain into chilled cocktail glass."
-      ],
-      "glass": "coupe",
-      "method": "shaken",
-      "difficulty": "medium",
-      "tags": [
-        "iba-official"
       ],
       "ingredients": [
         {
@@ -1071,8 +985,7 @@
           "unit": "ml"
         },
         {
-          "name": "Cream",
-          "call": "Fresh Cream",
+          "name": "Fresh Cream",
           "amount": 10,
           "unit": "ml"
         }
@@ -1081,17 +994,14 @@
     {
       "name": "Grasshopper",
       "category": "Contemporary Classics",
-      "instructions": [
-        "Pour all ingredients into shaker filled with ice.",
-        "Shake briskly for few seconds.",
-        "Strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
       "garnish": "N/A, optional mint leaf",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into shaker filled with ice.",
+        "Shake briskly for few seconds.",
+        "Strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -1107,8 +1017,7 @@
           "note": "Green"
         },
         {
-          "name": "Cream",
-          "call": "Fresh Cream",
+          "name": "Fresh Cream",
           "amount": 20,
           "unit": "ml"
         }
@@ -1117,21 +1026,16 @@
     {
       "name": "Hemingway Special",
       "category": "Contemporary Classics",
-      "baseSpirit": "rum",
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "medium",
       "instructions": [
         "Pour all ingredients into a shaker with ice.",
         "Shake well and strain into a large cocktail glass."
       ],
-      "glass": "coupe",
-      "method": "shaken",
-      "difficulty": "medium",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "White Rum",
-          "call": "Rum",
+          "name": "Rum",
           "amount": 60,
           "unit": "ml"
         },
@@ -1141,14 +1045,12 @@
           "unit": "ml"
         },
         {
-          "name": "Maraschino Liqueur",
-          "call": "Luxardo Maraschino",
+          "name": "Maraschino Luxardo",
           "amount": 15,
           "unit": "ml"
         },
         {
-          "name": "Fresh Lime Juice",
-          "call": "Fresh Lime Juice",
+          "name": "Fresh Lime",
           "amount": 15,
           "unit": "ml"
         }
@@ -1157,18 +1059,14 @@
     {
       "name": "Horse's Neck",
       "category": "Contemporary Classics",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Pour Cognac and ginger ale directly into a highball glass with ice cubes.",
-        "Stir gently.",
-        "If preferred, add dashes of Angostura Bitter."
-      ],
       "glass": "highball",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with a rind of one lemon spiral.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour Cognac and ginger ale directly into a highball glass with ice cubes.",
+        "Stir gently.",
+        "If preferred, add dashes of Angostura Bitter."
       ],
       "ingredients": [
         {
@@ -1185,6 +1083,7 @@
           "name": "Angostura Bitters",
           "amount": 1,
           "unit": "dash",
+          "note": "optional",
           "optional": true
         }
       ]
@@ -1192,19 +1091,15 @@
     {
       "name": "Irish Coffee",
       "category": "Contemporary Classics",
-      "baseSpirit": "whisky",
+      "glass": "mug",
+      "method": "layered",
+      "difficulty": "medium",
       "instructions": [
         "Warm black coffee is poured into a pre-heated Irish coffee glass.",
         "Whiskey and at least one teaspoon of sugar is added and stirred until dissolved.",
         "Fresh thick chilled cream is carefully poured over the back of a spoon held just above the surface of the coffee.",
         "The layer of cream will float on the coffee without mixing.",
         "Plain sugar can be replaced with sugar syrup"
-      ],
-      "glass": "mug",
-      "method": "layered",
-      "difficulty": "medium",
-      "tags": [
-        "iba-official"
       ],
       "ingredients": [
         {
@@ -1213,14 +1108,12 @@
           "unit": "ml"
         },
         {
-          "name": "Coffee",
-          "call": "Hot Coffee",
+          "name": "Hot coffee",
           "amount": 120,
           "unit": "ml"
         },
         {
-          "name": "Cream",
-          "call": "Fresh Cream",
+          "name": "Fresh Cream",
           "amount": 50,
           "unit": "ml",
           "note": "Chilled"
@@ -1235,15 +1128,11 @@
     {
       "name": "KIR",
       "category": "Contemporary Classics",
-      "instructions": [
-        "Pour Crème de Cassis into glass, top up with white wine."
-      ],
-      "glass": "wine",
       "method": "build",
       "difficulty": "easy",
       "notes": "KIR ROYAL - Use Champagne instead of white wine",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour Crème de Cassis into glass, top up with white wine."
       ],
       "ingredients": [
         {
@@ -1261,17 +1150,13 @@
     {
       "name": "Long Island Ice Tea",
       "category": "Contemporary Classics",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Add all ingredients into a highball glass filled with ice.",
-        "Stir gently."
-      ],
       "glass": "highball",
       "method": "stirred",
       "difficulty": "advanced",
       "garnish": "Lemon Slice (Optional)",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Add all ingredients into a highball glass filled with ice.",
+        "Stir gently."
       ],
       "ingredients": [
         {
@@ -1295,13 +1180,12 @@
           "unit": "ml"
         },
         {
-          "name": "Triple Sec",
-          "call": "Cointreau",
+          "name": "Cointreau",
           "amount": 15,
           "unit": "ml"
         },
         {
-          "name": "Fresh Lemon Juice",
+          "name": "Lemon juice",
           "amount": 30,
           "unit": "ml"
         },
@@ -1320,41 +1204,33 @@
     {
       "name": "Mai-Tai",
       "category": "Contemporary Classics",
-      "baseSpirit": "rum",
+      "glass": "martini",
+      "method": "shaken",
+      "difficulty": "advanced",
+      "garnish": "Garnish with pineapple spear, mint leaves, and lime peel.",
       "instructions": [
         "Add all ingredients into a shaker with ice.",
         "Shake and pour into a double rocks glass or a highball glass.",
         "The Martinique molasses rum used by Trader Vic was not an Agricole rum but a type of “rummy” from molasses."
       ],
-      "glass": "martini",
-      "method": "shaken",
-      "difficulty": "advanced",
-      "garnish": "Garnish with pineapple spear, mint leaves, and lime peel.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Dark Rum",
-          "call": "Amber Jamaican Rum",
+          "name": "Amber Jamaican Rum",
           "amount": 30,
           "unit": "ml"
         },
         {
-          "name": "Dark Rum",
-          "call": "Martinique Molasses Rhum",
+          "name": "Martinique Molasses Rhum",
           "amount": 30,
           "unit": "ml"
         },
         {
-          "name": "Triple Sec",
-          "call": "Orange Curaçao",
+          "name": "Orange Curacao",
           "amount": 15,
           "unit": "ml"
         },
         {
-          "name": "Orgeat",
-          "call": "Orgeat (Almond Syrup)",
+          "name": "Orgeat Syrup",
           "amount": 15,
           "unit": "ml",
           "note": "Almond"
@@ -1374,22 +1250,17 @@
     {
       "name": "Margarita",
       "category": "Contemporary Classics",
-      "baseSpirit": "tequila",
-      "instructions": [
-        "Add all ingredients into a shaker with ice.",
-        "Shake and strain into a chilled cocktail glass"
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
       "garnish": "Half salt rim (Optional)",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Add all ingredients into a shaker with ice.",
+        "Shake and strain into a chilled cocktail glass"
       ],
       "ingredients": [
         {
-          "name": "Tequila",
-          "call": "100% Agave Tequila",
+          "name": "Tequila 100% Agave",
           "amount": 50,
           "unit": "ml"
         },
@@ -1399,8 +1270,7 @@
           "unit": "ml"
         },
         {
-          "name": "Fresh Lime Juice",
-          "call": "Freshly Squeezed Lime Juice",
+          "name": "Freshly Squeezed Lime Juice",
           "amount": 15,
           "unit": "ml"
         }
@@ -1409,17 +1279,14 @@
     {
       "name": "Mimosa",
       "category": "Contemporary Classics",
-      "instructions": [
-        "Pour orange juice into a flute glass and gently pour the sparkling wine.",
-        "Stir gently."
-      ],
       "glass": "flute",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with an orange twist (optional).",
       "notes": "Also known as Buck's Fizz.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour orange juice into a flute glass and gently pour the sparkling wine.",
+        "Stir gently."
       ],
       "ingredients": [
         {
@@ -1428,8 +1295,7 @@
           "unit": "ml"
         },
         {
-          "name": "Sparkling Wine",
-          "call": "Prosecco",
+          "name": "Prosecco",
           "amount": 75,
           "unit": "ml"
         }
@@ -1438,33 +1304,27 @@
     {
       "name": "Mint Julep",
       "category": "Contemporary Classics",
-      "baseSpirit": "whisky",
-      "instructions": [
-        "In Julep Stainless Steel Cup gently muddle the mint with sugar and water.",
-        "Fill the glass with cracked ice, add the Bourbon and stir well until the cup frosts."
-      ],
       "glass": "mug",
       "method": "muddled",
       "difficulty": "medium",
       "garnish": "Garnish with a mint sprig.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "In Julep Stainless Steel Cup gently muddle the mint with sugar and water.",
+        "Fill the glass with cracked ice, add the Bourbon and stir well until the cup frosts."
       ],
       "ingredients": [
         {
-          "name": "Bourbon",
+          "name": "Bourbon Whiskey",
           "amount": 60,
           "unit": "ml"
         },
         {
-          "name": "Mint",
-          "call": "Fresh Mint Sprigs",
+          "name": "fresh Mint sprigs",
           "amount": 4,
           "unit": "piece"
         },
         {
-          "name": "Sugar",
-          "call": "Powdered Sugar",
+          "name": "Powdered Sugar",
           "amount": 1,
           "unit": "teaspoon"
         },
@@ -1478,24 +1338,18 @@
     {
       "name": "Mojito",
       "category": "Contemporary Classics",
-      "baseSpirit": "rum",
+      "method": "stirred",
+      "difficulty": "medium",
+      "garnish": "Garnish with sprigs of mint and slice of lime.",
       "instructions": [
         "Mix mint springs with sugar and lime juice.",
         "Add splash of soda water and fill the glass with ice.",
         "Pour the rum and top with soda water.",
         "Light stir to involve all ingredients."
       ],
-      "glass": "highball",
-      "method": "muddled",
-      "difficulty": "medium",
-      "garnish": "Garnish with sprigs of mint and slice of lime.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "White Rum",
-          "call": "White Cuban Rum",
+          "name": "White Cuban Ron",
           "amount": 45,
           "unit": "ml"
         },
@@ -1505,14 +1359,12 @@
           "unit": "ml"
         },
         {
-          "name": "Mint",
-          "call": "Mint Sprigs",
+          "name": "Mint Sprigs",
           "amount": 6,
           "unit": "piece"
         },
         {
-          "name": "Sugar",
-          "call": "White Cane Sugar",
+          "name": "White Cane Sugar",
           "amount": 2,
           "unit": "teaspoon"
         },
@@ -1526,22 +1378,17 @@
     {
       "name": "Moscow Mule",
       "category": "Contemporary Classics",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "In a Mule Cup or rocks glass, combine the vodka and ginger beer.",
-        "Add lime juice and gently stir to involve all ingredients."
-      ],
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with a lime slice",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "In a Mule Cup or rocks glass, combine the vodka and ginger beer.",
+        "Add lime juice and gently stir to involve all ingredients."
       ],
       "ingredients": [
         {
-          "name": "Vodka",
-          "call": "Smirnoff Vodka",
+          "name": "Smirnoff Vodka",
           "amount": 45,
           "unit": "ml"
         },
@@ -1560,17 +1407,12 @@
     {
       "name": "Pina Colada",
       "category": "Contemporary Classics",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Blend all the ingredients with ice in an electric blender, pour into a large glass, and serve with straws."
-      ],
-      "glass": "hurricane",
       "method": "blended",
       "difficulty": "easy",
       "garnish": "Garnish with a slice of pineapple with a cocktail cherry.",
       "notes": "Historically a few drops of fresh lime juice were added to taste. 4 slices of fresh pineapple can be used instead of juice",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Blend all the ingredients with ice in an electric blender, pour into a large glass, and serve with straws."
       ],
       "ingredients": [
         {
@@ -1584,7 +1426,7 @@
           "unit": "ml"
         },
         {
-          "name": "Pineapple Juice",
+          "name": "Fresh Pineapple Juice",
           "amount": 50,
           "unit": "ml"
         }
@@ -1593,17 +1435,13 @@
     {
       "name": "Pisco Sour",
       "category": "Contemporary Classics",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Add all ingredients into a shaker with ice.",
-        "Shake and strain into a chilled goblet glass."
-      ],
       "glass": "wine",
       "method": "shaken",
       "difficulty": "advanced",
       "garnish": "Few dashes of Amargo bitters on top as an aromatic garnish.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Add all ingredients into a shaker with ice.",
+        "Shake and strain into a chilled goblet glass."
       ],
       "ingredients": [
         {
@@ -1622,8 +1460,7 @@
           "unit": "ml"
         },
         {
-          "name": "Egg White",
-          "call": "Raw Egg White",
+          "name": "Raw Egg White",
           "amount": 1,
           "unit": "piece"
         }
@@ -1632,16 +1469,12 @@
     {
       "name": "Sea Breeze",
       "category": "Contemporary Classics",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Build all ingredients in a highball glass filled with ice."
-      ],
       "glass": "highball",
       "method": "build",
       "difficulty": "easy",
       "garnish": "Garnish with orange zest and cherry",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Build all ingredients in a highball glass filled with ice."
       ],
       "ingredients": [
         {
@@ -1664,16 +1497,12 @@
     {
       "name": "Sex on the Beach",
       "category": "Contemporary Classics",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Build all ingredients in a highball glass filled with ice."
-      ],
       "glass": "highball",
       "method": "build",
       "difficulty": "medium",
       "garnish": "Garnish with a half orange slice.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Build all ingredients in a highball glass filled with ice."
       ],
       "ingredients": [
         {
@@ -1701,18 +1530,14 @@
     {
       "name": "Singapore Sling",
       "category": "Contemporary Classics",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker filled with ice cubes.",
-        "Shake well.",
-        "Strain into Hurricane glass."
-      ],
       "glass": "hurricane",
       "method": "shaken",
       "difficulty": "advanced",
       "garnish": "Garnish with pineapple and maraschino cherry",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker filled with ice cubes.",
+        "Shake well.",
+        "Strain into Hurricane glass."
       ],
       "ingredients": [
         {
@@ -1721,24 +1546,22 @@
           "unit": "ml"
         },
         {
-          "name": "Cherry Liqueur",
+          "name": "Cherry liqueur",
           "amount": 15,
           "unit": "ml"
         },
         {
-          "name": "Triple Sec",
-          "call": "Cointreau",
+          "name": "Cointreau",
           "amount": 7.5,
           "unit": "ml"
         },
         {
-          "name": "Bénédictine",
-          "call": "DOM Bénédictine",
+          "name": "DOM Bénédictine",
           "amount": 7.5,
           "unit": "ml"
         },
         {
-          "name": "Pineapple Juice",
+          "name": "Fresh Pineapple Juice",
           "amount": 120,
           "unit": "ml"
         },
@@ -1748,7 +1571,7 @@
           "unit": "ml"
         },
         {
-          "name": "Grenadine",
+          "name": "Grenadine Syrup",
           "amount": 10,
           "unit": "ml"
         },
@@ -1762,17 +1585,13 @@
     {
       "name": "Tequila Sunrise",
       "category": "Contemporary Classics",
-      "baseSpirit": "tequila",
-      "instructions": [
-        "Pour tequila and orange juice directly into highball glass filled with ice cubes.",
-        "Add the grenadine syrup to create chromatic effect (sunrise), do not stir."
-      ],
       "glass": "highball",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with half orange slice or an orange zest",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour tequila and orange juice directly into highball glass filled with ice cubes.",
+        "Add the grenadine syrup to create chromatic effect (sunrise), do not stir."
       ],
       "ingredients": [
         {
@@ -1786,7 +1605,7 @@
           "unit": "ml"
         },
         {
-          "name": "Grenadine",
+          "name": "Grenadine Syrup",
           "amount": 15,
           "unit": "ml"
         }
@@ -1795,17 +1614,13 @@
     {
       "name": "Vesper",
       "category": "Contemporary Classics",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker filled with ice cubes.",
-        "Shake and strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
       "garnish": "Lemon zest",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker filled with ice cubes.",
+        "Shake and strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -1828,36 +1643,29 @@
     {
       "name": "Zombie",
       "category": "Contemporary Classics",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Add all ingredients into an electric blender with 170 grams of cracked ice.",
-        "With pulse bottom blend for a few seconds.",
-        "Serve in a tall tumbler glass."
-      ],
       "glass": "highball",
       "method": "blended",
       "difficulty": "advanced",
       "garnish": "Garnish with mint leaves.",
       "notes": "Donn's Mix: 2 parts of fresh yellow grapefruit and 1 part of cinnamon syrup",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Add all ingredients into an electric blender with 170 grams of cracked ice.",
+        "With pulse bottom blend for a few seconds.",
+        "Serve in a tall tumbler glass."
       ],
       "ingredients": [
         {
-          "name": "Dark Rum",
-          "call": "Jamaican Dark Rum",
+          "name": "Jamaican dark rum",
           "amount": 45,
           "unit": "ml"
         },
         {
-          "name": "Dark Rum",
-          "call": "Gold Puerto Rican Rum",
+          "name": "Gold Puerto Rican rum",
           "amount": 45,
           "unit": "ml"
         },
         {
-          "name": "Dark Rum",
-          "call": "Demerara Rum",
+          "name": "Demerara Rum",
           "amount": 30,
           "unit": "ml"
         },
@@ -1877,7 +1685,7 @@
           "unit": "ml"
         },
         {
-          "name": "Grenadine",
+          "name": "Grenadine Syrup",
           "amount": 1,
           "unit": "teaspoon"
         },
@@ -1896,21 +1704,16 @@
     {
       "name": "Barracuda",
       "category": "New Era Drinks",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker except the Prosecco, shake well with ice, strain into chilled highball glass filled with ice and top up with Prosecco."
-      ],
       "glass": "highball",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Pineapple and Cherry, optional mint sprig for additional aroma.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker except the Prosecco, shake well with ice, strain into chilled highball glass filled with ice and top up with Prosecco."
       ],
       "ingredients": [
         {
-          "name": "Dark Rum",
-          "call": "Gold Rum",
+          "name": "Gold Rum",
           "amount": 45,
           "unit": "ml"
         },
@@ -1920,7 +1723,7 @@
           "unit": "ml"
         },
         {
-          "name": "Pineapple Juice",
+          "name": "Fresh Pineapple Juice",
           "amount": 60,
           "unit": "ml"
         },
@@ -1930,8 +1733,7 @@
           "unit": "dash"
         },
         {
-          "name": "Sparkling Wine",
-          "call": "Prosecco",
+          "name": "Prosecco",
           "amount": 1,
           "unit": "topup"
         }
@@ -1940,22 +1742,17 @@
     {
       "name": "Bee's Knees",
       "category": "New Era Drinks",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Stir honey with lemon and orange juices until it dissolves, add gin and shake with ice.",
-        "Strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Optionally garnish with a lemon or orange zest.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Stir honey with lemon and orange juices until it dissolves, add gin and shake with ice.",
+        "Strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
-          "name": "Gin",
-          "call": "Dry Gin",
+          "name": "Dry Gin",
           "amount": 52.5,
           "unit": "ml"
         },
@@ -1979,16 +1776,12 @@
     {
       "name": "Bramble",
       "category": "New Era Drinks",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker except the Crème de Mûre, shake well with ice, strain into chilled old fashioned glass filled with crushed ice, then pour the blackberry liqueur (Crème de Mûre) over the top of the drink, in a circular motion."
-      ],
       "glass": "rocks",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Garnish optionally with a lemon slice and blackberries.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker except the Crème de Mûre, shake well with ice, strain into chilled old fashioned glass filled with crushed ice, then pour the blackberry liqueur (Crème de Mûre) over the top of the drink, in a circular motion."
       ],
       "ingredients": [
         {
@@ -2002,8 +1795,7 @@
           "unit": "ml"
         },
         {
-          "name": "Simple Syrup",
-          "call": "Sugar Syrup",
+          "name": "Sugar Syrup",
           "amount": 12.5,
           "unit": "ml"
         },
@@ -2017,23 +1809,17 @@
     {
       "name": "Canchanchara",
       "category": "New Era Drinks",
-      "baseSpirit": "rum",
+      "method": "build",
+      "difficulty": "medium",
+      "garnish": "Lime wedge.",
       "instructions": [
         "Mix honey with water and lime juice and spread the mixture on the bottom and sides of the glass.",
         "Add cracked ice, and then the rum.",
         "End by energetically stirring from bottom to top."
       ],
-      "glass": "highball",
-      "method": "build",
-      "difficulty": "medium",
-      "garnish": "Lime wedge.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "White Rum",
-          "call": "Cuban Aguardiente",
+          "name": "Cuban Aguardiente",
           "amount": 60,
           "unit": "ml"
         },
@@ -2043,8 +1829,7 @@
           "unit": "ml"
         },
         {
-          "name": "Honey Syrup",
-          "call": "Raw Honey",
+          "name": "Raw Honey",
           "amount": 15,
           "unit": "ml"
         },
@@ -2058,21 +1843,16 @@
     {
       "name": "Dark ‘n' stormy",
       "category": "New Era Drinks",
-      "baseSpirit": "rum",
-      "instructions": [
-        "In a highball glass filled with ice pour the ginger beer and top floating with the Rum."
-      ],
       "glass": "highball",
       "method": "layered",
       "difficulty": "easy",
       "garnish": "Garnish with a lime wedge or slice.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "In a highball glass filled with ice pour the ginger beer and top floating with the Rum."
       ],
       "ingredients": [
         {
-          "name": "Dark Rum",
-          "call": "Goslings Black Seal Rum",
+          "name": "Goslings Rum",
           "amount": 60,
           "unit": "ml"
         },
@@ -2086,15 +1866,11 @@
     {
       "name": "Espresso Martini",
       "category": "New Era Drinks",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -2103,20 +1879,17 @@
           "unit": "ml"
         },
         {
-          "name": "Coffee Liqueur",
-          "call": "Kahlúa",
+          "name": "Kahlúa",
           "amount": 30,
           "unit": "ml"
         },
         {
-          "name": "Simple Syrup",
-          "call": "Sugar Syrup",
+          "name": "Sugar Syrup",
           "amount": 10,
           "unit": "ml"
         },
         {
-          "name": "Espresso",
-          "call": "Strong Espresso",
+          "name": "strong Espresso",
           "amount": 1,
           "unit": "piece"
         }
@@ -2125,15 +1898,12 @@
     {
       "name": "Fernandito",
       "category": "New Era Drinks",
-      "instructions": [
-        "Pour the Fernet Branca into a double old fashioned glass with ice, fill the glass up with Cola.",
-        "Gently stir."
-      ],
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "easy",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour the Fernet Branca into a double old fashioned glass with ice, fill the glass up with Cola.",
+        "Gently stir."
       ],
       "ingredients": [
         {
@@ -2151,16 +1921,12 @@
     {
       "name": "French Martini",
       "category": "New Era Drinks",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
       "garnish": "Squeeze oil from lemon peel onto the drink.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -2170,12 +1936,11 @@
         },
         {
           "name": "Raspberry Liqueur",
-          "call": "Raspberry Liqueur (Chambord)",
           "amount": 15,
           "unit": "ml"
         },
         {
-          "name": "Pineapple Juice",
+          "name": "Fresh Pineapple Juice",
           "amount": 15,
           "unit": "ml"
         }
@@ -2184,28 +1949,22 @@
     {
       "name": "Illegal",
       "category": "New Era Drinks",
-      "baseSpirit": "tequila",
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "advanced",
       "instructions": [
         "Pour all ingredients into the shaker.",
         "Shake vigorously with ice.",
         "Strain into a chilled cocktail glass, or “on the rocks” in a traditional clay or terracotta mug."
       ],
-      "glass": "rocks",
-      "method": "shaken",
-      "difficulty": "advanced",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Mezcal",
-          "call": "Espadín Mezcal",
+          "name": "Espadin Mezcal",
           "amount": 30,
           "unit": "ml"
         },
         {
-          "name": "White Rum",
-          "call": "Jamaican Overproof White Rum",
+          "name": "Jamaica Overproof White Rum",
           "amount": 15,
           "unit": "ml"
         },
@@ -2215,8 +1974,7 @@
           "unit": "ml"
         },
         {
-          "name": "Maraschino Liqueur",
-          "call": "Luxardo Maraschino",
+          "name": "Maraschino Luxardo",
           "amount": 1,
           "unit": "barspoon"
         },
@@ -2234,6 +1992,7 @@
           "name": "Egg White",
           "amount": 3,
           "unit": "drop",
+          "note": "Optional; few (to taste)",
           "optional": true
         }
       ]
@@ -2241,21 +2000,16 @@
     {
       "name": "Lemon drop Martini",
       "category": "New Era Drinks",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
       "garnish": "Garnish with sugar rim around the glass.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
-          "name": "Vodka",
-          "call": "Citroenwodka",
+          "name": "Vodka Citron",
           "amount": 30,
           "unit": "ml"
         },
@@ -2274,15 +2028,11 @@
     {
       "name": "Naked and Famous",
       "category": "New Era Drinks",
-      "baseSpirit": "tequila",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -2310,29 +2060,21 @@
     {
       "name": "New York Sour",
       "category": "New Era Drinks",
-      "baseSpirit": "whisky",
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "advanced",
+      "garnish": "Garnish with lemon or orange zest with cherry.",
       "instructions": [
         "Pour all ingredients into the shaker.",
         "Shake vigorously with ice.",
         "Strain into a chilled rocks glass filled with ice.",
         "Float the wine on top."
       ],
-      "glass": "rocks",
-      "method": "shaken",
-      "difficulty": "advanced",
-      "garnish": "Garnish with lemon or orange zest with cherry.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Rye Whiskey",
-          "call": "Rye Whiskey or Bourbon",
+          "name": "Rye Whiskey or Bourbon",
           "amount": 60,
-          "unit": "ml",
-          "alternatives": [
-            "Bourbon"
-          ]
+          "unit": "ml"
         },
         {
           "name": "Simple Syrup",
@@ -2348,10 +2090,10 @@
           "name": "Egg White",
           "amount": 3,
           "unit": "drop",
-          "optional": true
+          "note": "few (to taste)"
         },
         {
-          "name": "Red Wine",
+          "name": "Red wine",
           "amount": 15,
           "unit": "ml",
           "note": "Shiraz or Malbech"
@@ -2361,29 +2103,23 @@
     {
       "name": "Old Cuban",
       "category": "New Era Drinks",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker except the wine, shake well with ice, strain into chilled elegant cocktail glass.",
-        "Top up with the sparkling wine."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "advanced",
       "garnish": "Garnish with mint springs.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker except the wine, shake well with ice, strain into chilled elegant cocktail glass.",
+        "Top up with the sparkling wine."
       ],
       "ingredients": [
         {
-          "name": "Mint",
-          "call": "Mint Leaves",
+          "name": "Mint Leaves",
           "amount": 6,
-          "amountMax": 8,
-          "unit": "piece"
+          "unit": "piece",
+          "note": "6–8"
         },
         {
-          "name": "Dark Rum",
-          "call": "Aged Rum",
+          "name": "Aged Rum",
           "amount": 45,
           "unit": "ml"
         },
@@ -2403,8 +2139,7 @@
           "unit": "dash"
         },
         {
-          "name": "Sparkling Wine",
-          "call": "Brut Champagne or Prosecco",
+          "name": "Brut Champagne or Prosecco",
           "amount": 60,
           "unit": "ml"
         }
@@ -2413,41 +2148,33 @@
     {
       "name": "Paloma",
       "category": "New Era Drinks",
-      "baseSpirit": "tequila",
+      "glass": "highball",
+      "method": "stirred",
+      "difficulty": "medium",
+      "garnish": "Garnish with a slice of lime.",
       "instructions": [
         "Poor the tequila into a highball glass, squeeze the lime juice.",
         "Add ice and salt, fill up pink grapefruit soda.",
         "Stir gently."
       ],
-      "glass": "highball",
-      "method": "stirred",
-      "difficulty": "medium",
-      "garnish": "Garnish with a slice of lime.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Tequila",
-          "call": "100% Agave Tequila",
+          "name": "100% Agave Tequila",
           "amount": 50,
           "unit": "ml"
         },
         {
-          "name": "Fresh Lime Juice",
-          "call": "Fresh Lime Juice",
+          "name": "Fresh Lime",
           "amount": 5,
           "unit": "ml"
         },
         {
           "name": "Salt",
           "amount": 1,
-          "unit": "pinch",
-          "role": "seasoning"
+          "unit": "pinch"
         },
         {
-          "name": "Grapefruit Soda",
-          "call": "Pink Grapefruit Soda",
+          "name": "Pink Grapefruit Soda",
           "amount": 100,
           "unit": "ml"
         }
@@ -2456,25 +2183,20 @@
     {
       "name": "Paper Plane",
       "category": "New Era Drinks",
-      "baseSpirit": "whisky",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
-          "name": "Bourbon",
+          "name": "Bourbon Whiskey",
           "amount": 30,
           "unit": "ml"
         },
         {
-          "name": "Amaro",
-          "call": "Amaro Nonino",
+          "name": "Amaro Nonino",
           "amount": 30,
           "unit": "ml"
         },
@@ -2493,30 +2215,24 @@
     {
       "name": "Penicillin",
       "category": "New Era Drinks",
-      "baseSpirit": "whisky",
+      "glass": "rocks",
+      "method": "muddled",
+      "difficulty": "advanced",
+      "garnish": "Garnish with candied ginger.",
       "instructions": [
         "Muddle fresh ginger in a shaker and add the remaining ingredients, except for the Islay single malt whiskey.",
         "Fill the shaker with ice and shake.",
         "Double-strain into a chilled old fashioned glass with ice.",
         "Float the single malt whisky on top."
       ],
-      "glass": "rocks",
-      "method": "muddled",
-      "difficulty": "advanced",
-      "garnish": "Garnish with candied ginger.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Scotch Whisky",
-          "call": "Blended Scotch Whisky",
+          "name": "Blended Scotch Whisky",
           "amount": 60,
           "unit": "ml"
         },
         {
-          "name": "Scotch Whisky",
-          "call": "Islay Single Malt (Lagavulin 16)",
+          "name": "Lagavulin 16 y Whisky",
           "amount": 7.5,
           "unit": "ml"
         },
@@ -2531,27 +2247,22 @@
           "unit": "ml"
         },
         {
-          "name": "Ginger",
-          "call": "Fresh Ginger",
+          "name": "quarter size Sliced Fresh Ginger",
           "amount": 2,
           "unit": "piece",
-          "note": "in dunne plakjes, gemuddeld"
+          "note": "2–3"
         }
       ]
     },
     {
       "name": "Russian Spring Punch",
       "category": "New Era Drinks",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker except the sparkling wine, shake well with ice, strain into a chilled tall tumbler glass filled with ice, and top up with sparkling wine."
-      ],
       "glass": "highball",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Garnish with blackberries and optionally a lemon slice as well.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker except the sparkling wine, shake well with ice, strain into a chilled tall tumbler glass filled with ice, and top up with sparkling wine."
       ],
       "ingredients": [
         {
@@ -2570,13 +2281,12 @@
           "unit": "ml"
         },
         {
-          "name": "Simple Syrup",
-          "call": "Sugar Syrup",
+          "name": "Sugar Syrup",
           "amount": 10,
           "unit": "ml"
         },
         {
-          "name": "Sparkling Wine",
+          "name": "Sparkling wine",
           "amount": 1,
           "unit": "topup"
         }
@@ -2585,22 +2295,17 @@
     {
       "name": "Southside",
       "category": "New Era Drinks",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, double-strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "advanced",
       "garnish": "Garnish with mint springs.",
       "notes": "If egg white is used shake vigorously.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, double-strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
-          "name": "Gin",
-          "call": "London Dry Gin",
+          "name": "London Dry Gin",
           "amount": 60,
           "unit": "ml"
         },
@@ -2615,16 +2320,16 @@
           "unit": "ml"
         },
         {
-          "name": "Mint",
-          "call": "Mint Leaves",
+          "name": "Mint Leaves",
           "amount": 5,
-          "amountMax": 6,
-          "unit": "piece"
+          "unit": "piece",
+          "note": "5–6"
         },
         {
           "name": "Egg White",
           "amount": 3,
           "unit": "drop",
+          "note": "Optional; few (to taste)",
           "optional": true
         }
       ]
@@ -2632,21 +2337,16 @@
     {
       "name": "Spicy Fifty",
       "category": "New Era Drinks",
-      "baseSpirit": "vodka",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, double-strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "advanced",
       "garnish": "Garnish with a red chili pepper",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, double-strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
-          "name": "Vodka",
-          "call": "Vanillewodka",
+          "name": "Vodka Vanilla",
           "amount": 50,
           "unit": "ml"
         },
@@ -2661,39 +2361,32 @@
           "unit": "ml"
         },
         {
-          "name": "Honey Syrup",
-          "call": "Monin Honey Syrup",
+          "name": "Monin Honey Syrup",
           "amount": 10,
           "unit": "ml"
         },
         {
-          "name": "Chili Pepper",
-          "call": "Red Chili Pepper",
+          "name": "thin Slices Red Chili Pepper",
           "amount": 2,
-          "unit": "piece",
-          "note": "in dunne plakjes"
+          "unit": "piece"
         }
       ]
     },
     {
       "name": "Spritz",
       "category": "New Era Drinks",
-      "instructions": [
-        "Build all ingredients into a wine glass filled with ice.",
-        "Stir gently."
-      ],
       "glass": "wine",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with a slice of orange.",
       "notes": "There are other versions of the Spritz that use Campari, Cynar or Select instead of Aperol.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Build all ingredients into a wine glass filled with ice.",
+        "Stir gently."
       ],
       "ingredients": [
         {
-          "name": "Sparkling Wine",
-          "call": "Prosecco",
+          "name": "Prosecco",
           "amount": 90,
           "unit": "ml"
         },
@@ -2712,27 +2405,19 @@
     {
       "name": "Suffering Bastard",
       "category": "New Era Drinks",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker except the ginger beer, shake well with ice, Pour unstrained into a Collins glass or in the original S.",
-        "Bastard mug and top up with ginger beer."
-      ],
       "glass": "collins",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Garnish with mint springs and optionally an orange slice as well.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker except the ginger beer, shake well with ice, Pour unstrained into a Collins glass or in the original S.",
+        "Bastard mug and top up with ginger beer."
       ],
       "ingredients": [
         {
-          "name": "Cognac",
-          "call": "Cognac or Brandy",
+          "name": "Cognac or Brandy",
           "amount": 30,
-          "unit": "ml",
-          "alternatives": [
-            "Brandy"
-          ]
+          "unit": "ml"
         },
         {
           "name": "Gin",
@@ -2759,18 +2444,14 @@
     {
       "name": "Tipperary",
       "category": "New Era Drinks",
-      "baseSpirit": "whisky",
-      "instructions": [
-        "Pour all ingredients into mixing glass with ice cubes.",
-        "Stir well.",
-        "Strain into chilled martini cocktail glass."
-      ],
       "glass": "martini",
       "method": "stirred",
       "difficulty": "medium",
       "garnish": "Garnish with a slice of orange.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into mixing glass with ice cubes.",
+        "Stir well.",
+        "Strain into chilled martini cocktail glass."
       ],
       "ingredients": [
         {
@@ -2779,8 +2460,7 @@
           "unit": "ml"
         },
         {
-          "name": "Sweet Vermouth",
-          "call": "Sweet Red Vermouth",
+          "name": "Sweet Red Vermouth",
           "amount": 25,
           "unit": "ml"
         },
@@ -2799,21 +2479,16 @@
     {
       "name": "Tommy's Margarita",
       "category": "New Era Drinks",
-      "baseSpirit": "tequila",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled rocks glass filled with ice."
-      ],
       "glass": "rocks",
       "method": "shaken",
       "difficulty": "easy",
       "garnish": "Garnish with a lime slice.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled rocks glass filled with ice."
       ],
       "ingredients": [
         {
-          "name": "Tequila",
-          "call": "Reposado Tequila (100% Agave)",
+          "name": "Tequila Agave 100% Reposado",
           "amount": 60,
           "unit": "ml"
         },
@@ -2834,15 +2509,11 @@
     {
       "name": "Trinidad Sour",
       "category": "New Era Drinks",
-      "baseSpirit": "whisky",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -2851,8 +2522,7 @@
           "unit": "ml"
         },
         {
-          "name": "Orgeat",
-          "call": "Orgeat (Almond Syrup)",
+          "name": "Orgeat Syrup",
           "amount": 30,
           "unit": "ml"
         },
@@ -2871,24 +2541,19 @@
     {
       "name": "VE.N.TO",
       "category": "New Era Drinks",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Pour all ingredients into the shaker.",
-        "Shake vigorously with ice.",
-        "Strain into a chilled small tumbler glass filled with ice."
-      ],
       "glass": "rocks",
       "method": "shaken",
       "difficulty": "advanced",
       "garnish": "Garnish with lemon zest and white grapes.",
       "notes": "If desired water can be replaced by chamomile infusion in the honey mix.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into the shaker.",
+        "Shake vigorously with ice.",
+        "Strain into a chilled small tumbler glass filled with ice."
       ],
       "ingredients": [
         {
-          "name": "Grappa",
-          "call": "White Grappa",
+          "name": "White Smooth Grappa",
           "amount": 45,
           "unit": "ml"
         },
@@ -2898,14 +2563,13 @@
           "unit": "ml"
         },
         {
-          "name": "Honey Syrup",
-          "call": "Honey Mix",
+          "name": "Honey mix",
           "amount": 15,
           "unit": "ml",
           "note": "replace water with chamomile"
         },
         {
-          "name": "Chamomile Cordial",
+          "name": "Chamomile cordial",
           "amount": 15,
           "unit": "ml"
         },
@@ -2913,6 +2577,7 @@
           "name": "Egg White",
           "amount": 10,
           "unit": "ml",
+          "note": "Optional",
           "optional": true
         }
       ]
@@ -2920,15 +2585,11 @@
     {
       "name": "Yellow Bird",
       "category": "New Era Drinks",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -2956,17 +2617,13 @@
     {
       "name": "Alexander",
       "category": "The Unforgettables",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker filled with ice cubes.",
-        "Shake and strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
       "garnish": "Sprinkle fresh ground nutmeg on top.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker filled with ice cubes.",
+        "Shake and strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -2981,8 +2638,7 @@
           "note": "Brown"
         },
         {
-          "name": "Cream",
-          "call": "Fresh Cream",
+          "name": "Fresh Cream",
           "amount": 30,
           "unit": "ml"
         }
@@ -2991,28 +2647,23 @@
     {
       "name": "Americano",
       "category": "The Unforgettables",
+      "glass": "rocks",
+      "method": "stirred",
+      "difficulty": "easy",
+      "garnish": "Garnish with half orange slice and a lemon zest.",
       "instructions": [
         "Mix the ingredients directly in an old fashioned glass filled with ice cubes.",
         "Add a splash of Soda Water.",
         "Stir gently."
       ],
-      "glass": "rocks",
-      "method": "stirred",
-      "difficulty": "easy",
-      "garnish": "Garnish with half orange slice and a lemon zest.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Campari",
-          "call": "Campari",
+          "name": "Bitter Campari",
           "amount": 30,
           "unit": "ml"
         },
         {
-          "name": "Sweet Vermouth",
-          "call": "Sweet Red Vermouth",
+          "name": "Sweet Red Vermouth",
           "amount": 30,
           "unit": "ml"
         },
@@ -3026,16 +2677,12 @@
     {
       "name": "Angel Face",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker filled with ice cubes.",
-        "Shake and strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker filled with ice cubes.",
+        "Shake and strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -3058,17 +2705,13 @@
     {
       "name": "Aviation",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Add all ingredients into a cocktail shaker.",
-        "Shake with cracked ice and strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Optional Maraschino Cherry.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Add all ingredients into a cocktail shaker.",
+        "Shake with cracked ice and strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -3077,8 +2720,7 @@
           "unit": "ml"
         },
         {
-          "name": "Maraschino Liqueur",
-          "call": "Luxardo Maraschino",
+          "name": "Maraschino Luxardo",
           "amount": 15,
           "unit": "ml"
         },
@@ -3097,16 +2739,12 @@
     {
       "name": "Between the Sheets",
       "category": "The Unforgettables",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Add all ingredients into a cocktail shaker.",
-        "Shake with ice and strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Add all ingredients into a cocktail shaker.",
+        "Shake with ice and strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -3134,38 +2772,28 @@
     {
       "name": "Boulevardier",
       "category": "The Unforgettables",
-      "baseSpirit": "whisky",
+      "glass": "coupe",
+      "method": "stirred",
+      "difficulty": "easy",
+      "garnish": "Garnish with orange zest, optionally a lemon zest.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
         "Strain into a chilled cocktail glass."
       ],
-      "glass": "coupe",
-      "method": "stirred",
-      "difficulty": "easy",
-      "garnish": "Garnish with orange zest, optionally a lemon zest.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Bourbon",
-          "call": "Bourbon or Rye Whiskey",
+          "name": "Bourbon or Rye Whiskey",
           "amount": 45,
-          "unit": "ml",
-          "alternatives": [
-            "Rye Whiskey"
-          ]
+          "unit": "ml"
         },
         {
-          "name": "Campari",
-          "call": "Campari",
+          "name": "Bitter Campari",
           "amount": 30,
           "unit": "ml"
         },
         {
-          "name": "Sweet Vermouth",
-          "call": "Sweet Red Vermouth",
+          "name": "Sweet Red Vermouth",
           "amount": 30,
           "unit": "ml"
         }
@@ -3174,16 +2802,12 @@
     {
       "name": "Brandy Crusta",
       "category": "The Unforgettables",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Mix together all ingredients with ice cubes in a mixing glass and strain into prepared slim cocktail glass."
-      ],
       "glass": "coupe",
       "method": "stirred",
       "difficulty": "advanced",
       "garnish": "Rub a slice of orange (or lemon) around the rim of the glass and dip it in pulverized white sugar, so that the sugar will adhere to the edge of the glass. Carefully curling place the orange/lemon peel around the inside of the glass.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Mix together all ingredients with ice cubes in a mixing glass and strain into prepared slim cocktail glass."
       ],
       "ingredients": [
         {
@@ -3192,14 +2816,12 @@
           "unit": "ml"
         },
         {
-          "name": "Maraschino Liqueur",
-          "call": "Luxardo Maraschino",
+          "name": "Maraschino Luxardo",
           "amount": 7.5,
           "unit": "ml"
         },
         {
-          "name": "Triple Sec",
-          "call": "Curaçao",
+          "name": "Curacao",
           "amount": 1,
           "unit": "barspoon"
         },
@@ -3214,8 +2836,7 @@
           "unit": "barspoon"
         },
         {
-          "name": "Angostura Bitters",
-          "call": "Aromatic Bitters",
+          "name": "Aromatic Bitters",
           "amount": 2,
           "unit": "dash"
         }
@@ -3224,27 +2845,21 @@
     {
       "name": "Casino",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into cocktails shaker, shake well with ice, strain into chilled rocks glass with ice."
-      ],
       "glass": "rocks",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Garnish with lemon zest and a maraschino cherry.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktails shaker, shake well with ice, strain into chilled rocks glass with ice."
       ],
       "ingredients": [
         {
-          "name": "Gin",
-          "call": "Old Tom Gin",
+          "name": "Old Tom Gin",
           "amount": 40,
           "unit": "ml"
         },
         {
-          "name": "Maraschino Liqueur",
-          "call": "Luxardo Maraschino",
+          "name": "Maraschino Luxardo",
           "amount": 10,
           "unit": "ml"
         },
@@ -3263,16 +2878,12 @@
     {
       "name": "Clover Club",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into cocktails shaker, shake well with ice, strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "advanced",
       "garnish": "Fresh raspberries.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktails shaker, shake well with ice, strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -3294,30 +2905,25 @@
           "name": "Egg White",
           "amount": 3,
           "unit": "drop",
-          "optional": true
+          "note": "few (to taste)"
         }
       ]
     },
     {
       "name": "Daiquiri",
       "category": "The Unforgettables",
-      "baseSpirit": "rum",
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "easy",
       "instructions": [
         "In a cocktail shaker add all ingredients.",
         "Stir well to dissolve the sugar.",
         "Add ice and shake.",
         "Strain into chilled cocktail glass."
       ],
-      "glass": "coupe",
-      "method": "shaken",
-      "difficulty": "easy",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "White Rum",
-          "call": "White Cuban Rum",
+          "name": "White Cuban Ron",
           "amount": 60,
           "unit": "ml"
         },
@@ -3327,8 +2933,7 @@
           "unit": "ml"
         },
         {
-          "name": "Sugar",
-          "call": "Superfine Sugar",
+          "name": "Superfine Sugar",
           "amount": 2,
           "unit": "barspoon"
         }
@@ -3337,18 +2942,14 @@
     {
       "name": "Dry Martini",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into mixing glass with ice cubes.",
-        "Stir well.",
-        "Strain into chilled martini cocktail glass."
-      ],
       "glass": "martini",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Squeeze oil from lemon peel onto the drink, or garnish with green olives if requested.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into mixing glass with ice cubes.",
+        "Stir well.",
+        "Strain into chilled martini cocktail glass."
       ],
       "ingredients": [
         {
@@ -3366,18 +2967,14 @@
     {
       "name": "Gin Fizz",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Shake all ingredients with ice except soda water.",
-        "Pour into thin tall Tumbler glass , top with a splash soda water."
-      ],
       "glass": "highball",
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Garnish with a lemon slice, optional lemon zest.",
       "notes": "Serve without ice.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Shake all ingredients with ice except soda water.",
+        "Pour into thin tall Tumbler glass , top with a splash soda water."
       ],
       "ingredients": [
         {
@@ -3405,29 +3002,23 @@
     {
       "name": "Hanky Panky",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
+      "glass": "coupe",
+      "method": "stirred",
+      "difficulty": "easy",
+      "garnish": "Orange zest.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
         "Strain into chilled cocktail glass."
       ],
-      "glass": "coupe",
-      "method": "stirred",
-      "difficulty": "easy",
-      "garnish": "Orange zest.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Gin",
-          "call": "London Dry Gin",
+          "name": "London Dry Gin",
           "amount": 45,
           "unit": "ml"
         },
         {
-          "name": "Sweet Vermouth",
-          "call": "Sweet Red Vermouth",
+          "name": "Sweet Red Vermouth",
           "amount": 45,
           "unit": "ml"
         },
@@ -3441,18 +3032,14 @@
     {
       "name": "John Collins",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients directly into a highball filled with ice.",
-        "Stir gently."
-      ],
       "glass": "collins",
       "method": "stirred",
       "difficulty": "medium",
       "garnish": "Garnish with a lemon slice and maraschino cherry.",
       "notes": "Use ‘Old Tom' Gin for Tom Collins.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients directly into a highball filled with ice.",
+        "Stir gently."
       ],
       "ingredients": [
         {
@@ -3480,16 +3067,12 @@
     {
       "name": "Last word",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Add all ingredients into a cocktail shaker.",
-        "Shake with ice and strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Add all ingredients into a cocktail shaker.",
+        "Shake with ice and strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -3503,8 +3086,7 @@
           "unit": "ml"
         },
         {
-          "name": "Maraschino Liqueur",
-          "call": "Luxardo Maraschino",
+          "name": "Maraschino Luxardo",
           "amount": 22.5,
           "unit": "ml"
         },
@@ -3518,18 +3100,14 @@
     {
       "name": "Manhattan",
       "category": "The Unforgettables",
-      "baseSpirit": "whisky",
-      "instructions": [
-        "Pour all ingredients into mixing glass with ice cubes.",
-        "Stir well.",
-        "Strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with a cocktail cherry.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into mixing glass with ice cubes.",
+        "Stir well.",
+        "Strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -3538,8 +3116,7 @@
           "unit": "ml"
         },
         {
-          "name": "Sweet Vermouth",
-          "call": "Sweet Red Vermouth",
+          "name": "Sweet Red Vermouth",
           "amount": 20,
           "unit": "ml"
         },
@@ -3553,29 +3130,23 @@
     {
       "name": "Martinez",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
+      "glass": "coupe",
+      "method": "stirred",
+      "difficulty": "medium",
+      "garnish": "Lemon zest.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
         "Strain into a chilled cocktail glass."
       ],
-      "glass": "coupe",
-      "method": "stirred",
-      "difficulty": "medium",
-      "garnish": "Lemon zest.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Gin",
-          "call": "London Dry Gin",
+          "name": "London Dry Gin",
           "amount": 45,
           "unit": "ml"
         },
         {
-          "name": "Sweet Vermouth",
-          "call": "Sweet Red Vermouth",
+          "name": "Sweet Red Vermouth",
           "amount": 45,
           "unit": "ml"
         },
@@ -3594,15 +3165,11 @@
     {
       "name": "Mary Pickford",
       "category": "The Unforgettables",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -3611,18 +3178,17 @@
           "unit": "ml"
         },
         {
-          "name": "Pineapple Juice",
+          "name": "Fresh Pineapple Juice",
           "amount": 45,
           "unit": "ml"
         },
         {
-          "name": "Maraschino Liqueur",
-          "call": "Luxardo Maraschino",
+          "name": "Maraschino Luxardo",
           "amount": 7.5,
           "unit": "ml"
         },
         {
-          "name": "Grenadine",
+          "name": "Grenadine Syrup",
           "amount": 5,
           "unit": "ml"
         }
@@ -3631,20 +3197,15 @@
     {
       "name": "Monkey Gland",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "medium",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
-          "name": "Gin",
-          "call": "Dry Gin",
+          "name": "Dry Gin",
           "amount": 45,
           "unit": "ml"
         },
@@ -3659,7 +3220,7 @@
           "unit": "tablespoon"
         },
         {
-          "name": "Grenadine",
+          "name": "Grenadine Syrup",
           "amount": 1,
           "unit": "tablespoon"
         }
@@ -3668,16 +3229,12 @@
     {
       "name": "Negroni",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients directly into a chilled old fashioned glass filled with ice, Stir gently."
-      ],
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with a half orange slice.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients directly into a chilled old fashioned glass filled with ice, Stir gently."
       ],
       "ingredients": [
         {
@@ -3686,14 +3243,12 @@
           "unit": "ml"
         },
         {
-          "name": "Campari",
-          "call": "Campari",
+          "name": "Bitter Campari",
           "amount": 30,
           "unit": "ml"
         },
         {
-          "name": "Sweet Vermouth",
-          "call": "Sweet Red Vermouth",
+          "name": "Sweet Red Vermouth",
           "amount": 30,
           "unit": "ml"
         }
@@ -3702,33 +3257,24 @@
     {
       "name": "Old Fashioned",
       "category": "The Unforgettables",
-      "baseSpirit": "whisky",
+      "glass": "rocks",
+      "method": "muddled",
+      "difficulty": "medium",
+      "garnish": "Garnish with an orange slice or zest, and a cocktail cherry.",
       "instructions": [
         "Place sugar cube in old fashioned glass and saturate with bitter, add few dashes of plain water.",
         "Muddle until dissolved.",
         "Fill the glass with ice cubes and add whiskey.",
         "Stir gently."
       ],
-      "glass": "rocks",
-      "method": "muddled",
-      "difficulty": "medium",
-      "garnish": "Garnish with an orange slice or zest, and a cocktail cherry.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Bourbon",
-          "call": "Bourbon or Rye Whiskey",
+          "name": "Bourbon or Rye Whiskey",
           "amount": 45,
-          "unit": "ml",
-          "alternatives": [
-            "Rye Whiskey"
-          ]
+          "unit": "ml"
         },
         {
-          "name": "Sugar",
-          "call": "Sugar Cube",
+          "name": "Sugar Cube",
           "amount": 1,
           "unit": "piece"
         },
@@ -3736,29 +3282,24 @@
           "name": "Angostura Bitters",
           "amount": 2,
           "unit": "dash",
-          "optional": true
+          "note": "few (to taste)"
         },
         {
-          "name": "Water",
-          "call": "Plain Water",
+          "name": "Plain Water",
           "amount": 2,
           "unit": "dash",
-          "optional": true
+          "note": "few (to taste)"
         }
       ]
     },
     {
       "name": "Paradise",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -3781,27 +3322,22 @@
     {
       "name": "Planter's Punch",
       "category": "The Unforgettables",
-      "baseSpirit": "rum",
-      "instructions": [
-        "Pour all ingredients directly in a small tumbler or a typical terracotta glass."
-      ],
       "glass": "mug",
       "method": "build",
       "difficulty": "easy",
       "garnish": "Garnish with orange zest.",
       "notes": "Add dilution up to taste, it can be given by water, ice or fresh juices.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients directly in a small tumbler or a typical terracotta glass."
       ],
       "ingredients": [
         {
-          "name": "Dark Rum",
-          "call": "Jamaican Rum",
+          "name": "Jamaican Rum",
           "amount": 45,
           "unit": "ml"
         },
         {
-          "name": "Fresh Lime Juice",
+          "name": "Lime Juice",
           "amount": 15,
           "unit": "ml"
         },
@@ -3815,16 +3351,12 @@
     {
       "name": "Porto Flip",
       "category": "The Unforgettables",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "advanced",
       "garnish": "Sprinkle with fresh ground nutmeg.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -3833,8 +3365,7 @@
           "unit": "ml"
         },
         {
-          "name": "Tawny Port",
-          "call": "Tawny Port",
+          "name": "Red Tawny Port Wine",
           "amount": 45,
           "unit": "ml"
         },
@@ -3848,17 +3379,13 @@
     {
       "name": "Ramos Fizz",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients except soda water in a cocktail shaker with ice, Shake for two minutes, double strain in a glass, pour the drink back in the shaker, and hard shake without ice for one minute.",
-        "Strain into a highball glass, top up with soda."
-      ],
       "glass": "highball",
       "method": "shaken",
       "difficulty": "advanced",
       "notes": "The drink was invented by Henry Ramos in 1888, at his bar Meyer's Table d'Hôtel Internationale in New Orleans. The Ramos Fizz was originally shaken for 12 minutes by a crew of 30 bartenders who passed the shaker from one to another.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients except soda water in a cocktail shaker with ice, Shake for two minutes, double strain in a glass, pour the drink back in the shaker, and hard shake without ice for one minute.",
+        "Strain into a highball glass, top up with soda."
       ],
       "ingredients": [
         {
@@ -3877,8 +3404,7 @@
           "unit": "ml"
         },
         {
-          "name": "Simple Syrup",
-          "call": "Sugar Syrup",
+          "name": "Sugar Syrup",
           "amount": 30,
           "unit": "ml"
         },
@@ -3895,14 +3421,12 @@
         {
           "name": "Orange Flower Water",
           "amount": 3,
-          "unit": "dash",
-          "role": "seasoning"
+          "unit": "dash"
         },
         {
           "name": "Vanilla Extract",
           "amount": 2,
-          "unit": "drop",
-          "role": "seasoning"
+          "unit": "drop"
         },
         {
           "name": "Soda Water",
@@ -3914,17 +3438,13 @@
     {
       "name": "Rusty Nail",
       "category": "The Unforgettables",
-      "baseSpirit": "whisky",
-      "instructions": [
-        "Pour all ingredients directly into an old fashioned glass filled with ice.",
-        "Stir gently."
-      ],
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with lemon zest.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients directly into an old fashioned glass filled with ice.",
+        "Stir gently."
       ],
       "ingredients": [
         {
@@ -3942,19 +3462,15 @@
     {
       "name": "Sazerac",
       "category": "The Unforgettables",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Rinse a chilled old-fashioned glass with the absinthe, add crushed ice and set it aside.",
-        "Stir the remaining ingredients over ice in a mixing glass.",
-        "Discard the ice and any excess absinthe from the prepared glass, strain the mixed drink into the glass."
-      ],
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "advanced",
       "garnish": "Garnish with lemon zest.",
       "notes": "The original recipe changed after the American Civil War, Rye Whiskey substituted Cognac as it became hard to obtain.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Rinse a chilled old-fashioned glass with the absinthe, add crushed ice and set it aside.",
+        "Stir the remaining ingredients over ice in a mixing glass.",
+        "Discard the ice and any excess absinthe from the prepared glass, strain the mixed drink into the glass."
       ],
       "ingredients": [
         {
@@ -3968,8 +3484,7 @@
           "unit": "ml"
         },
         {
-          "name": "Sugar",
-          "call": "Sugar Cube",
+          "name": "Sugar Cube",
           "amount": 1,
           "unit": "piece"
         },
@@ -3983,15 +3498,11 @@
     {
       "name": "Sidecar",
       "category": "The Unforgettables",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -4014,18 +3525,14 @@
     {
       "name": "Stinger",
       "category": "The Unforgettables",
-      "baseSpirit": "brandy",
-      "instructions": [
-        "Pour all ingredients into mixing glass with ice cubes.",
-        "Stir well.",
-        "Strain into chilled martini cocktail glass."
-      ],
       "glass": "martini",
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Optional mint leave.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into mixing glass with ice cubes.",
+        "Stir well.",
+        "Strain into chilled martini cocktail glass."
       ],
       "ingredients": [
         {
@@ -4034,8 +3541,7 @@
           "unit": "ml"
         },
         {
-          "name": "Crème de Menthe",
-          "call": "White Crème de Menthe",
+          "name": "White Crème de Menthe",
           "amount": 20,
           "unit": "ml"
         }
@@ -4044,23 +3550,18 @@
     {
       "name": "Tuxedo",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
+      "glass": "martini",
+      "method": "stirred",
+      "difficulty": "medium",
+      "garnish": "Garnish with cherry and lemon zest",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
         "Strain into chilled martini cocktail glass."
       ],
-      "glass": "martini",
-      "method": "stirred",
-      "difficulty": "medium",
-      "garnish": "Garnish with cherry and lemon zest",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Gin",
-          "call": "Old Tom Gin",
+          "name": "Old Tom Gin",
           "amount": 30,
           "unit": "ml"
         },
@@ -4070,8 +3571,7 @@
           "unit": "ml"
         },
         {
-          "name": "Maraschino Liqueur",
-          "call": "Luxardo Maraschino",
+          "name": "Maraschino Luxardo",
           "amount": 0.5,
           "unit": "barspoon"
         },
@@ -4090,18 +3590,14 @@
     {
       "name": "Vieux Carrè",
       "category": "The Unforgettables",
-      "baseSpirit": "whisky",
-      "instructions": [
-        "Pour all ingredients into mixing glass with ice cubes.",
-        "Stir well.",
-        "Strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "stirred",
       "difficulty": "medium",
       "garnish": "Garnish with orange zest and maraschino cherry.",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into mixing glass with ice cubes.",
+        "Stir well.",
+        "Strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {
@@ -4134,24 +3630,20 @@
     {
       "name": "Whiskey Sour",
       "category": "The Unforgettables",
-      "baseSpirit": "whisky",
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "advanced",
+      "garnish": "Garnish with a half orange slice and maraschino cherry, optionally use orange zest.",
+      "notes": "If egg white is used shake little harder to release and incorporate the foam from the egg white.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker filled with ice.",
         "Shake well.",
         "Strain into cobbler glass.",
         "If served “On the rocks”, strain ingredients into an old fashioned glass filled with ice."
       ],
-      "glass": "rocks",
-      "method": "shaken",
-      "difficulty": "advanced",
-      "garnish": "Garnish with a half orange slice and maraschino cherry, optionally use orange zest.",
-      "notes": "If egg white is used shake little harder to release and incorporate the foam from the egg white.",
-      "tags": [
-        "iba-official"
-      ],
       "ingredients": [
         {
-          "name": "Bourbon",
+          "name": "Bourbon Whiskey",
           "amount": 45,
           "unit": "ml"
         },
@@ -4161,8 +3653,7 @@
           "unit": "ml"
         },
         {
-          "name": "Simple Syrup",
-          "call": "Sugar Syrup",
+          "name": "Sugar Syrup",
           "amount": 20,
           "unit": "ml"
         },
@@ -4170,6 +3661,7 @@
           "name": "Egg White",
           "amount": 20,
           "unit": "ml",
+          "note": "Optional",
           "optional": true
         }
       ]
@@ -4177,15 +3669,11 @@
     {
       "name": "White Lady",
       "category": "The Unforgettables",
-      "baseSpirit": "gin",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
-      ],
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
-      "tags": [
-        "iba-official"
+      "instructions": [
+        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
       "ingredients": [
         {

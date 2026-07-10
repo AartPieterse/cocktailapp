@@ -2,20 +2,26 @@
 export type IngredientCategory =
   | 'spirit'
   | 'liqueur'
+  | 'wine'
   | 'mixer'
   | 'juice'
   | 'syrup'
   | 'bitters'
+  | 'dairy'
+  | 'seasoning'
   | 'garnish'
   | 'other';
 
 export const INGREDIENT_CATEGORIES: readonly IngredientCategory[] = [
   'spirit',
   'liqueur',
+  'wine',
   'mixer',
   'juice',
   'syrup',
   'bitters',
+  'dairy',
+  'seasoning',
   'garnish',
   'other',
 ];
@@ -24,10 +30,13 @@ export const INGREDIENT_CATEGORIES: readonly IngredientCategory[] = [
 export const CATEGORY_LABELS: Record<IngredientCategory, string> = {
   spirit: 'sterkedrank',
   liqueur: 'likeur',
+  wine: 'wijn',
   mixer: 'mixer',
   juice: 'sap',
   syrup: 'siroop',
   bitters: 'bitters',
+  dairy: 'zuivel',
+  seasoning: 'kruiderij',
   garnish: 'garnering',
   other: 'overig',
 };
@@ -36,10 +45,13 @@ export const CATEGORY_LABELS: Record<IngredientCategory, string> = {
 export const CATEGORY_LABELS_PLURAL: Record<IngredientCategory, string> = {
   spirit: 'Sterke drank',
   liqueur: 'Likeuren',
+  wine: 'Wijn & vermout',
   mixer: 'Mixers & frisdrank',
   juice: 'Sappen',
   syrup: 'Siropen',
   bitters: 'Bitters',
+  dairy: 'Zuivel & ei',
+  seasoning: 'Kruiderij',
   garnish: 'Garnering',
   other: 'Overig',
 };
@@ -48,10 +60,13 @@ export const CATEGORY_LABELS_PLURAL: Record<IngredientCategory, string> = {
 export const CATEGORY_HINTS: Record<IngredientCategory, string> = {
   spirit: 'De basis van elke cocktail — gin, wodka, rum, whisky…',
   liqueur: 'Zoete of kruidige likeuren die smaak en kleur geven.',
+  wine: 'Wijn, vermout en bruiswijn — droog tot zoet.',
   mixer: 'Frisdrank en bruis om mee aan te vullen.',
   juice: 'Vers of uit pak — citroen, limoen, sinaasappel…',
   syrup: 'Suikersiroop en smaaksiropen voor balans.',
   bitters: 'Een paar druppels voor diepte en complexiteit.',
+  dairy: 'Room, kokosroom en ei voor volle, romige drankjes.',
+  seasoning: 'Zout, peper en sausjes die op smaak brengen.',
   garnish: 'De finishing touch: schijfjes, takjes, olijven…',
   other: 'Alles wat verder niet in een hokje past.',
 };
@@ -60,10 +75,13 @@ export const CATEGORY_HINTS: Record<IngredientCategory, string> = {
 export const CATEGORY_ORDER: readonly IngredientCategory[] = [
   'spirit',
   'liqueur',
+  'wine',
   'mixer',
   'juice',
   'syrup',
   'bitters',
+  'dairy',
+  'seasoning',
   'garnish',
   'other',
 ];

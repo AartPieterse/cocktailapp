@@ -1,5 +1,12 @@
 /**
- * Generator: iba-cocktails-web.json  ->  iba-cocktails-seed.json
+ * ⚠ ARCHIVED ONE-SHOT — DO NOT RUN. Kept only as documentation of how the original draft was
+ * bootstrapped from the raw IBA export. The seed is now FROZEN and hand-curated: edit
+ * `iba-cocktails-seed.json` directly (see docs/data-model-refinement.md §3.1). Its draft output was
+ * archived to `scripts/iba-cocktails-raw.json` and folded once, via `scripts/fold-seed.mjs`, into the
+ * two-level (base + call) frozen seed. Re-running this would overwrite the frozen seed with the old
+ * fragmented, un-folded data.
+ *
+ * Generator: iba-cocktails-web.json  ->  iba-cocktails-seed.json (draft, pre-fold)
  *
  * Transforms the raw IBA export into a seed document shaped like the app schema
  * (@cocktailapp/shared). Decisions baked in (agreed with the user):
