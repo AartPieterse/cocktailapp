@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Navbar } from '../navbar/navbar';
+import { InstallPrompt } from '../install-prompt/install-prompt';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink, Navbar],
+  imports: [RouterOutlet, RouterLink, Navbar, InstallPrompt],
   template: `
     <app-navbar />
     <main>
@@ -21,6 +22,7 @@ import { Navbar } from '../navbar/navbar';
         </span>
       </div>
     </footer>
+    <app-install-prompt />
   `,
   styles: `
     main {
@@ -33,6 +35,7 @@ import { Navbar } from '../navbar/navbar';
     footer {
       border-top: 1px solid var(--hairline);
       padding: var(--sp-5) 0;
+      padding-bottom: calc(var(--sp-5) + env(safe-area-inset-bottom));
       margin-top: var(--sp-7);
     }
     .foot {

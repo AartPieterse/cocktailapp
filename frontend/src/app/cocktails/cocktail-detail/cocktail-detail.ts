@@ -383,6 +383,21 @@ import { environment } from '../../../environments/environment';
         height: 260px;
       }
     }
+    @media (max-width: 520px) {
+      /* Let the "je mist nog…" banner + its button stack instead of overflowing. */
+      .banner.miss {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      .banner.miss .add-btn {
+        width: 100%;
+      }
+      .meas {
+        width: 62px;
+      }
+    }
   `,
 })
 export class CocktailDetail {

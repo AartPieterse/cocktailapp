@@ -168,6 +168,12 @@ body {
   height: 100%;
 }
 
+html {
+  // Stop iOS/Android from silently bumping up font sizes in landscape.
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -179,6 +185,29 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  // No grey flash on tap; the components supply their own :active feedback.
+  -webkit-tap-highlight-color: transparent;
+  // Guard against accidental horizontal scroll on small screens.
+  overflow-x: hidden;
+}
+
+// iOS zooms the page in when a focused form control has a font-size below 16px.
+// Keep inputs at 16px on touch layouts to prevent that jump.
+@media (max-width: 560px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+// Comfortable minimum hit area for interactive controls on touch devices.
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a[role='button'],
+  .btn {
+    touch-action: manipulation;
+  }
 }
 
 @keyframes floaty {
@@ -247,7 +276,9 @@ hr {
 }
 @media (max-width: 560px) {
   .container {
-    padding: 0 var(--sp-4);
+    // Respect notch / rounded-corner safe areas in landscape while keeping the base gutter.
+    padding-left: max(var(--sp-4), env(safe-area-inset-left));
+    padding-right: max(var(--sp-4), env(safe-area-inset-right));
   }
 }
 
