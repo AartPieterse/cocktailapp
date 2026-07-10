@@ -22,15 +22,22 @@ import { fileURLToPath } from 'node:url';
 // Default-import the CommonJS shared build, then destructure (robust across the CJS/ESM boundary).
 import shared from '@cocktailapp/shared';
 
-const { buildCatalog } = shared;
+const { buildCatalog, CATALOG_SCHEMA_VERSION } = shared;
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
 const SRC = join(root, 'iba-cocktails-seed.json');
+const NL_SRC = join(here, 'translations-nl.json');
 // All sinks receive byte-identical catalog content (same version hash).
 const OUTPUTS = [
   join(root, 'frontend', 'public', 'catalog.json'),
   join(root, 'app', 'assets', 'catalog.json'),
+];
+// The Dutch overlay ships alongside each catalog, carrying the SAME version so a stale overlay is
+// ignored by applyCatalogTranslations (which falls back to canonical English).
+const NL_OUTPUTS = [
+  join(root, 'frontend', 'public', 'catalog.nl.json'),
+  join(root, 'app', 'assets', 'catalog.nl.json'),
 ];
 
 const raw = JSON.parse(readFileSync(SRC, 'utf8'));
@@ -46,7 +53,15 @@ const version = createHash('sha256')
   .digest('hex')
   .slice(0, 12);
 
-const catalog = { version, generatedFrom: 'iba-cocktails-seed.json', counts, ingredients, cocktails };
+const catalog = {
+  version,
+  schemaVersion: CATALOG_SCHEMA_VERSION,
+  generatedFrom: 'iba-cocktails-seed.json',
+  locale: 'en',
+  counts,
+  ingredients,
+  cocktails,
+};
 
 const json = JSON.stringify(catalog, null, 2) + '\n';
 for (const out of OUTPUTS) {
@@ -54,8 +69,20 @@ for (const out of OUTPUTS) {
   writeFileSync(out, json, 'utf8');
 }
 
+// Emit the Dutch overlay stamped with THIS catalog's version (id-keyed CatalogTranslations).
+const nlSource = JSON.parse(readFileSync(NL_SRC, 'utf8'));
+const nlOverlay = { version, ...nlSource };
+const nlJson = JSON.stringify(nlOverlay, null, 2) + '\n';
+for (const out of NL_OUTPUTS) {
+  mkdirSync(dirname(out), { recursive: true });
+  writeFileSync(out, nlJson, 'utf8');
+}
+
 const staples = ingredients.filter((i) => i.isStaple).length;
-console.log(`Catalog v${version} written to ${OUTPUTS.length} sinks:`);
+console.log(`Catalog v${version} written to ${OUTPUTS.length} sinks (+ nl overlay):`);
 for (const out of OUTPUTS) console.log(`  - ${out.slice(root.length + 1).replace(/\\/g, '/')}`);
 console.log(`  ingredients: ${ingredients.length} (${staples} staples)`);
 console.log(`  cocktails:   ${cocktails.length}`);
+console.log(
+  `  nl overlay:  ${Object.keys(nlSource.cocktails ?? {}).length} cocktails, ${Object.keys(nlSource.ingredients ?? {}).length} ingredients`,
+);

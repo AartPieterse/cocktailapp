@@ -11,9 +11,9 @@ export type CatalogPayload = { version: string } & CatalogContent;
 /**
  * Serves the read-only catalog (ingredients + cocktails) as ONE payload with a content `version`.
  * The payload is re-derived from Mongo through the shared `buildCatalog`, so it is byte-identical
- * to the committed offline bundle (same slug ids, same version) whenever both are seeded from the
- * same source — which is what lets a client switch between the bundled catalog and this endpoint
- * without invalidating a user's cabinet (stored as ingredient ids).
+ * to the committed offline bundle (same authored slug ids, same version) whenever both are seeded
+ * from the same source — which is what lets a client switch between the bundled catalog and this
+ * endpoint without invalidating a user's cabinet (stored as ingredient ids).
  */
 @Injectable()
 export class CatalogService {
@@ -28,22 +28,39 @@ export class CatalogService {
       this.cocktailsService.findAll(),
     ]);
 
+    // Feed buildCatalog the AUTHORED slug ids so it reproduces the bundle's ids (and therefore
+    // hash) exactly, instead of re-slugging names. Alternatives are stored as ids but buildCatalog
+    // resolves them by name, so map ids → names first.
+    const nameById = new Map(ingDocs.map((d) => [d.id, d.name]));
+
     const rawIngredients = ingDocs.map((d) => ({
+      id: d.id,
       name: d.name,
       category: d.category,
       isStaple: d.isStaple,
+      parentId: d.parentId,
+      substitutes: d.substitutes,
+      aliases: d.aliases,
     }));
     const rawCocktails = cktDocs.map((d) => ({
+      id: d.id,
       name: d.name,
       category: d.category,
+      baseSpirit: d.baseSpirit,
       description: d.description,
       instructions: d.instructions,
       ingredients: (d.ingredients ?? []).map((l) => ({
         name: l.name,
+        call: l.call,
         amount: l.amount,
+        amountMax: l.amountMax,
         unit: l.unit,
         note: l.note,
         optional: l.optional,
+        role: l.role,
+        alternatives: l.alternativeIds
+          ?.map((id) => nameById.get(id))
+          .filter((n): n is string => Boolean(n)),
       })),
       glass: d.glass,
       method: d.method,
@@ -55,7 +72,10 @@ export class CatalogService {
       imageUrl: d.imageUrl,
     }));
 
-    const { counts, ingredients, cocktails } = buildCatalog(rawIngredients, rawCocktails);
+    const { counts, ingredients, cocktails } = buildCatalog(
+      rawIngredients,
+      rawCocktails,
+    );
 
     // IMPORTANT: keep this hash recipe identical to scripts/build-catalog.mjs so
     // bundle.version === /api/catalog.version for the same seed.

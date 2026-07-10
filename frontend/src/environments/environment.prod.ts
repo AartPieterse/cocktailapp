@@ -15,4 +15,6 @@ export const environment = {
   admin: false,
   apiUrl: '/api/',
   catalogUrl: 'catalog.json',
+  /** Dutch display overlay applied on top of the canonical catalog (same version). */
+  translationsUrl: 'catalog.nl.json',
 };

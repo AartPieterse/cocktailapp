@@ -1,0 +1,560 @@
+{
+  "version": "c75f54614bde",
+  "ingredients": {
+    "gin": {
+      "name": "Gin"
+    },
+    "vodka": {
+      "name": "Wodka"
+    },
+    "white-rum": {
+      "name": "Witte rum"
+    },
+    "dark-rum": {
+      "name": "Donkere rum"
+    },
+    "tequila": {
+      "name": "Tequila"
+    },
+    "mezcal": {
+      "name": "Mezcal"
+    },
+    "bourbon": {
+      "name": "Bourbon whiskey"
+    },
+    "rye-whiskey": {
+      "name": "Rye whiskey"
+    },
+    "irish-whiskey": {
+      "name": "Ierse whiskey"
+    },
+    "scotch": {
+      "name": "Scotch whisky"
+    },
+    "brandy": {
+      "name": "Brandy"
+    },
+    "cognac": {
+      "name": "Cognac"
+    },
+    "calvados": {
+      "name": "Calvados"
+    },
+    "pisco": {
+      "name": "Pisco"
+    },
+    "cachaca": {
+      "name": "Cachaça"
+    },
+    "grappa": {
+      "name": "Grappa"
+    },
+    "absinthe": {
+      "name": "Absint"
+    },
+    "pernod": {
+      "name": "Pernod"
+    },
+    "triple-sec": {
+      "name": "Triple sec"
+    },
+    "amaretto": {
+      "name": "Amaretto"
+    },
+    "amaro": {
+      "name": "Amaro"
+    },
+    "aperol": {
+      "name": "Aperol"
+    },
+    "apricot-brandy": {
+      "name": "Abrikozenlikeur"
+    },
+    "benedictine": {
+      "name": "Bénédictine"
+    },
+    "cherry-liqueur": {
+      "name": "Kersenlikeur"
+    },
+    "coffee-liqueur": {
+      "name": "Koffielikeur"
+    },
+    "creme-de-cacao": {
+      "name": "Crème de cacao"
+    },
+    "creme-de-cassis": {
+      "name": "Crème de cassis"
+    },
+    "creme-de-menthe": {
+      "name": "Crème de menthe"
+    },
+    "creme-de-mure": {
+      "name": "Crème de mûre"
+    },
+    "creme-de-violette": {
+      "name": "Crème de violette"
+    },
+    "drambuie": {
+      "name": "Drambuie"
+    },
+    "fernet-branca": {
+      "name": "Fernet-Branca"
+    },
+    "galliano": {
+      "name": "Galliano"
+    },
+    "green-chartreuse": {
+      "name": "Groene Chartreuse"
+    },
+    "yellow-chartreuse": {
+      "name": "Gele Chartreuse"
+    },
+    "maraschino": {
+      "name": "Maraschinolikeur"
+    },
+    "peach-schnapps": {
+      "name": "Perziklikeur"
+    },
+    "raspberry-liqueur": {
+      "name": "Frambozenlikeur"
+    },
+    "campari": {
+      "name": "Campari"
+    },
+    "grand-marnier": {
+      "name": "Grand Marnier"
+    },
+    "sweet-vermouth": {
+      "name": "Rode vermout"
+    },
+    "dry-vermouth": {
+      "name": "Droge vermout"
+    },
+    "lillet-blanc": {
+      "name": "Lillet Blanc"
+    },
+    "sparkling-wine": {
+      "name": "Mousserende wijn"
+    },
+    "white-wine": {
+      "name": "Droge witte wijn"
+    },
+    "red-wine": {
+      "name": "Rode wijn"
+    },
+    "port": {
+      "name": "Tawny port"
+    },
+    "cola": {
+      "name": "Cola"
+    },
+    "soda-water": {
+      "name": "Sodawater"
+    },
+    "ginger-ale": {
+      "name": "Ginger ale"
+    },
+    "ginger-beer": {
+      "name": "Ginger beer"
+    },
+    "grapefruit-soda": {
+      "name": "Grapefruitfrisdrank"
+    },
+    "lime-juice": {
+      "name": "Vers limoensap"
+    },
+    "lemon-juice": {
+      "name": "Vers citroensap"
+    },
+    "orange-juice": {
+      "name": "Vers sinaasappelsap"
+    },
+    "pineapple-juice": {
+      "name": "Ananassap"
+    },
+    "cranberry-juice": {
+      "name": "Cranberrysap"
+    },
+    "grapefruit-juice": {
+      "name": "Grapefruitsap"
+    },
+    "tomato-juice": {
+      "name": "Tomatensap"
+    },
+    "sugar-cane-juice": {
+      "name": "Suikerrietsap"
+    },
+    "peach-puree": {
+      "name": "Perzikpuree"
+    },
+    "simple-syrup": {
+      "name": "Suikersiroop"
+    },
+    "grenadine": {
+      "name": "Grenadine"
+    },
+    "orgeat": {
+      "name": "Orgeat (amandelsiroop)"
+    },
+    "honey-syrup": {
+      "name": "Honingsiroop"
+    },
+    "agave-syrup": {
+      "name": "Agavesiroop"
+    },
+    "elderflower-cordial": {
+      "name": "Vlierbloesemsiroop"
+    },
+    "falernum": {
+      "name": "Falernum"
+    },
+    "raspberry-syrup": {
+      "name": "Framboossiroop"
+    },
+    "donns-mix": {
+      "name": "Donn's Mix"
+    },
+    "chamomile-cordial": {
+      "name": "Kamillesiroop"
+    },
+    "angostura-bitters": {
+      "name": "Angostura bitters"
+    },
+    "orange-bitters": {
+      "name": "Orange bitters"
+    },
+    "peychauds-bitters": {
+      "name": "Peychaud's bitters"
+    },
+    "cream": {
+      "name": "Room"
+    },
+    "coconut-cream": {
+      "name": "Kokosroom"
+    },
+    "egg-white": {
+      "name": "Eiwit"
+    },
+    "egg-yolk": {
+      "name": "Eidooier"
+    },
+    "salt": {
+      "name": "Zout"
+    },
+    "pepper": {
+      "name": "Peper"
+    },
+    "celery-salt": {
+      "name": "Selderijzout"
+    },
+    "tabasco": {
+      "name": "Tabasco"
+    },
+    "worcestershire-sauce": {
+      "name": "Worcestershiresaus"
+    },
+    "orange-flower-water": {
+      "name": "Oranjebloesemwater"
+    },
+    "vanilla-extract": {
+      "name": "Vanille-extract"
+    },
+    "mint": {
+      "name": "Munt"
+    },
+    "ginger": {
+      "name": "Gember"
+    },
+    "chili-pepper": {
+      "name": "Rode peper"
+    },
+    "sugar": {
+      "name": "Suiker"
+    },
+    "water": {
+      "name": "Water"
+    },
+    "coffee": {
+      "name": "Koffie"
+    },
+    "espresso": {
+      "name": "Espresso"
+    }
+  },
+  "cocktails": {
+    "negroni": {
+      "name": "Negroni",
+      "description": "De perfect gebalanceerde Italiaanse aperitief: bitter, kruidig en tijdloos.",
+      "instructions": [
+        "Vul een rocksglas met ijs.",
+        "Schenk gin, Campari en rode vermout in het glas.",
+        "Roer 20 seconden tot goed gekoeld.",
+        "Garneer met een schijfje sinaasappel."
+      ],
+      "garnish": "Schijfje sinaasappel"
+    },
+    "margarita": {
+      "name": "Margarita",
+      "description": "Fris en pittig met tequila, limoen en een zoutrand.",
+      "instructions": [
+        "Maak een zoutrand op het glas met een partje limoen en zout.",
+        "Doe tequila, triple sec en limoensap met ijs in een shaker.",
+        "Shake 15 seconden.",
+        "Zeef in het glas en garneer met limoen."
+      ],
+      "garnish": "Zoutrand en schijfje limoen"
+    },
+    "daiquiri": {
+      "name": "Daiquiri",
+      "description": "Drie ingrediënten in perfecte harmonie — rum, limoen en suiker.",
+      "instructions": [
+        "Doe alle ingrediënten met ijs in een shaker.",
+        "Shake stevig 15 seconden.",
+        "Dubbel zeven in een gekoelde coupe.",
+        "Garneer met een schijfje limoen."
+      ],
+      "garnish": "Schijfje limoen"
+    },
+    "mojito": {
+      "name": "Mojito",
+      "description": "Cubaanse verfrissing met munt, limoen en bruisend afgetopt.",
+      "instructions": [
+        "Muddle de munt zacht met suiker en limoensap in een longdrinkglas.",
+        "Voeg rum en gemalen ijs toe.",
+        "Roer en top af met sodawater.",
+        "Garneer royaal met munt."
+      ],
+      "garnish": "Munttakje en schijfje limoen"
+    },
+    "old-fashioned": {
+      "name": "Old Fashioned",
+      "description": "De oervorm van de cocktail: whiskey, suiker en bitters.",
+      "instructions": [
+        "Doe suikersiroop en bitters in een rocksglas.",
+        "Voeg de bourbon en een groot ijsblok toe.",
+        "Roer 30 seconden tot gekoeld en verdund.",
+        "Wring een sinaasappelschil boven het glas uit en leg erin."
+      ],
+      "garnish": "Sinaasappelschil"
+    },
+    "manhattan": {
+      "name": "Manhattan",
+      "description": "Elegant en krachtig: rye, zoete vermout en bitters.",
+      "instructions": [
+        "Roer whiskey, vermout en bitters met ijs in een mengglas.",
+        "Roer 25 seconden tot goed gekoeld.",
+        "Zeef in een gekoelde coupe of Nick & Nora.",
+        "Garneer met een cocktailkers."
+      ],
+      "garnish": "Cocktailkers"
+    },
+    "dry-martini": {
+      "name": "Dry Martini",
+      "description": "Zuiver en ijskoud — het icoon onder de cocktails.",
+      "instructions": [
+        "Roer gin en vermout met veel ijs in een mengglas.",
+        "Roer 30 seconden tot ijskoud.",
+        "Zeef in een gekoeld martiniglas.",
+        "Garneer met een olijf of een citroenschil."
+      ],
+      "garnish": "Olijf of citroenschil"
+    },
+    "cosmopolitan": {
+      "name": "Cosmopolitan",
+      "description": "Stijlvol en fruitig met wodka, cranberry en limoen.",
+      "instructions": [
+        "Doe alle ingrediënten met ijs in een shaker.",
+        "Shake 15 seconden.",
+        "Zeef in een gekoeld martiniglas.",
+        "Garneer met een sinaasappelschil."
+      ],
+      "garnish": "Sinaasappelschil"
+    },
+    "whiskey-sour": {
+      "name": "Whiskey Sour",
+      "description": "Zacht schuimend, met de perfecte balans tussen zuur en zoet.",
+      "instructions": [
+        "Doe bourbon, citroensap, siroop en eiwit zonder ijs in een shaker (dry shake).",
+        "Voeg ijs toe en shake nogmaals goed.",
+        "Zeef in een rocksglas met vers ijs.",
+        "Druppel bitters op het schuim en garneer."
+      ],
+      "garnish": "Cocktailkers en schijfje citroen"
+    },
+    "espresso-martini": {
+      "name": "Espresso Martini",
+      "description": "Wakker én ontspannen: wodka, koffielikeur en verse espresso.",
+      "instructions": [
+        "Doe alle ingrediënten met ijs in een shaker.",
+        "Shake hard 20 seconden voor een mooie schuimlaag.",
+        "Dubbel zeven in een gekoeld glas.",
+        "Garneer met drie koffiebonen."
+      ],
+      "garnish": "Drie koffiebonen"
+    },
+    "moscow-mule": {
+      "name": "Moscow Mule",
+      "description": "Pittige gember, wodka en limoen — traditioneel in een koperen mok.",
+      "instructions": [
+        "Vul een mok of longdrinkglas met ijs.",
+        "Schenk wodka en limoensap erin.",
+        "Top af met ginger beer.",
+        "Roer kort en garneer met limoen en munt."
+      ],
+      "garnish": "Schijfje limoen en munt"
+    },
+    "cuba-libre": {
+      "name": "Cuba Libre",
+      "description": "Rum en cola met een frisse scheut limoen.",
+      "instructions": [
+        "Vul een longdrinkglas met ijs.",
+        "Schenk rum en limoensap erin.",
+        "Top af met cola.",
+        "Knijp een partje limoen erboven uit."
+      ],
+      "garnish": "Partje limoen"
+    },
+    "mai-tai": {
+      "name": "Mai Tai",
+      "description": "Tropische tiki-klassieker met rum, amandel en citrus.",
+      "instructions": [
+        "Doe alle ingrediënten met ijs in een shaker.",
+        "Shake 15 seconden.",
+        "Schenk ongezeefd in een glas met gemalen ijs.",
+        "Garneer met munt en limoen."
+      ],
+      "garnish": "Munttakje en limoen"
+    },
+    "pina-colada": {
+      "name": "Piña Colada",
+      "description": "Romig-tropisch met rum, ananas en kokos.",
+      "instructions": [
+        "Doe alle ingrediënten met ijs in een blender.",
+        "Blend tot een gladde, romige textuur.",
+        "Schenk in een hurricaneglas.",
+        "Garneer met een ananaspunt."
+      ],
+      "garnish": "Ananaspunt"
+    },
+    "caipirinha": {
+      "name": "Caipirinha",
+      "description": "Braziliës nationale drankje: cachaça, limoen en suiker.",
+      "instructions": [
+        "Snijd de limoen in partjes en muddle met suiker in een rocksglas.",
+        "Voeg gemalen ijs toe.",
+        "Schenk de cachaça erover.",
+        "Roer goed door."
+      ],
+      "garnish": "Partje limoen"
+    },
+    "mimosa": {
+      "name": "Mimosa",
+      "description": "Brunch-klassieker: prosecco met vers sinaasappelsap.",
+      "instructions": [
+        "Schenk het sinaasappelsap in een gekoelde flûte.",
+        "Vul rustig aan met prosecco.",
+        "Roer één keer heel voorzichtig."
+      ],
+      "garnish": "Sinaasappelschil"
+    },
+    "bloody-mary": {
+      "name": "Bloody Mary",
+      "description": "Hartig en kruidig — het beroemde brunch-medicijn.",
+      "instructions": [
+        "Doe alle ingrediënten met ijs in een glas.",
+        "Rol de drank over tussen twee glazen om te mengen.",
+        "Breng op smaak met peper en zout.",
+        "Garneer met selderij en citroen."
+      ],
+      "garnish": "Selderijstengel en citroen"
+    },
+    "paloma": {
+      "name": "Paloma",
+      "description": "Mexicaanse dorstlesser met tequila en grapefruit.",
+      "instructions": [
+        "Vul een longdrinkglas met ijs.",
+        "Schenk tequila, grapefruitsap en limoensap erin.",
+        "Top af met sodawater en roer kort.",
+        "Garneer met limoen; optioneel een zoutrand."
+      ],
+      "garnish": "Partje limoen en zoutrand"
+    },
+    "french-75": {
+      "name": "French 75",
+      "description": "Elegant en feestelijk: gin, citroen en champagne.",
+      "instructions": [
+        "Shake gin, citroensap en siroop met ijs.",
+        "Zeef in een gekoelde flûte.",
+        "Top af met prosecco of champagne.",
+        "Garneer met een lange citroenschil."
+      ],
+      "garnish": "Citroenschil"
+    },
+    "sidecar": {
+      "name": "Sidecar",
+      "description": "Verfijnde cognac-sour met een suikerrand.",
+      "instructions": [
+        "Maak eventueel een suikerrand op de coupe.",
+        "Shake cognac, triple sec en citroensap met ijs.",
+        "Dubbel zeven in de coupe.",
+        "Garneer met een sinaasappelschil."
+      ],
+      "garnish": "Suikerrand en sinaasappelschil"
+    },
+    "mint-julep": {
+      "name": "Mint Julep",
+      "description": "Zuidelijke klassieker met bourbon en veel verse munt.",
+      "instructions": [
+        "Muddle munt zacht met suiker in een mok.",
+        "Vul met gemalen ijs.",
+        "Schenk de bourbon erover en roer tot het glas beslaat.",
+        "Garneer met een grote bos munt."
+      ],
+      "garnish": "Grote bos munt"
+    },
+    "dark-n-stormy": {
+      "name": "Dark 'n' Stormy",
+      "description": "Donkere rum die door de gingerbeer \"stormt\".",
+      "instructions": [
+        "Vul een longdrinkglas met ijs.",
+        "Schenk ginger beer en limoensap erin.",
+        "Laat de donkere rum er voorzichtig bovenop drijven.",
+        "Garneer met een partje limoen."
+      ],
+      "garnish": "Partje limoen"
+    },
+    "tequila-sunrise": {
+      "name": "Tequila Sunrise",
+      "description": "Zonsopgang in een glas dankzij een laagje grenadine.",
+      "instructions": [
+        "Vul een longdrinkglas met ijs.",
+        "Schenk tequila en sinaasappelsap erin.",
+        "Laat de grenadine langzaam langs de rand zakken.",
+        "Niet roeren — garneer met sinaasappel en kers."
+      ],
+      "garnish": "Schijfje sinaasappel en kers"
+    },
+    "americano": {
+      "name": "Americano",
+      "description": "De lichtere voorloper van de Negroni, met bruis.",
+      "instructions": [
+        "Vul een glas met ijs.",
+        "Schenk Campari en rode vermout erin.",
+        "Top af met sodawater.",
+        "Garneer met een schijfje sinaasappel."
+      ],
+      "garnish": "Schijfje sinaasappel"
+    },
+    "bramble": {
+      "name": "Bramble",
+      "description": "Gin-sour met een mooie sliert cassis door het ijs.",
+      "instructions": [
+        "Schud gin, citroensap en siroop met ijs.",
+        "Schenk ongezeefd in een glas met gemalen ijs.",
+        "Druppel de crème de cassis erover voor het marmereffect.",
+        "Garneer met citroen en verse bessen."
+      ],
+      "garnish": "Citroen en verse bessen"
+    }
+  }
+}

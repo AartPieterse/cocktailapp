@@ -3,16 +3,28 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { type Ingredient, type MakeableResult } from '@cocktailapp/shared';
-import { catchError, of, switchMap, tap } from 'rxjs';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+  expandCabinet,
+  type Ingredient,
+  type MakeableResult,
+} from '@cocktailapp/shared';
+import { catchError, combineLatest, of, switchMap, tap } from 'rxjs';
 import { CabinetService } from '../core/cabinet.service';
+import { SubstitutesService } from '../core/substitutes.service';
 import { CocktailService } from '../services/cocktail.service';
 import { IngredientService } from '../services/ingredient.service';
 import { CocktailCard } from '../cocktails/cocktail-card/cocktail-card';
 
 @Component({
   selector: 'app-bar',
-  imports: [RouterLink, MatButtonModule, MatIconModule, CocktailCard],
+  imports: [
+    RouterLink,
+    MatButtonModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    CocktailCard,
+  ],
   template: `
     @if (showOnboarding()) {
       <section class="onboard">
@@ -59,6 +71,19 @@ import { CocktailCard } from '../cocktails/cocktail-card/cocktail-card';
           }
         </div>
       </header>
+
+      <div class="subs">
+        <mat-slide-toggle
+          [checked]="subs.enabled()"
+          (change)="subs.toggle($event.checked)"
+        >
+          Vervangers meetellen
+        </mat-slide-toggle>
+        <span class="subs-hint">
+          Laat ook cocktails zien waarvoor je een gelijkwaardig alternatief in huis hebt
+          (bijv. donkere rum voor witte).
+        </span>
+      </div>
 
       @if (selected().length) {
         <div class="cabinet">
@@ -206,6 +231,18 @@ import { CocktailCard } from '../cocktails/cocktail-card/cocktail-card';
       gap: var(--sp-2);
       flex-wrap: wrap;
     }
+    .subs {
+      display: flex;
+      align-items: baseline;
+      gap: var(--sp-3);
+      flex-wrap: wrap;
+      margin: var(--sp-2) 0 var(--sp-4);
+    }
+    .subs-hint {
+      color: var(--muted);
+      font-size: var(--step--1);
+      flex: 1 1 260px;
+    }
     .cabinet {
       display: flex;
       flex-wrap: wrap;
@@ -277,6 +314,7 @@ import { CocktailCard } from '../cocktails/cocktail-card/cocktail-card';
 })
 export class Bar {
   protected readonly cabinet = inject(CabinetService);
+  protected readonly subs = inject(SubstitutesService);
   private readonly cocktailService = inject(CocktailService);
   private readonly ingredientService = inject(IngredientService);
   private readonly router = inject(Router);
@@ -308,17 +346,23 @@ export class Bar {
   constructor() {
     this.ingredientService.getAll().subscribe((list) => this.ingredients.set(list));
 
-    // Re-run the makeable search whenever the cabinet changes.
-    toObservable(this.cabinet.ids)
+    // Re-run the makeable search whenever the cabinet, the substitutes setting, or the loaded
+    // ingredient metadata changes. With substitutes on, the cabinet is expanded first (a specific
+    // bottle satisfies a generic call and vice-versa) via the shared `expandCabinet`.
+    combineLatest([
+      toObservable(this.cabinet.ids),
+      toObservable(this.subs.enabled),
+      toObservable(this.ingredients),
+    ])
       .pipe(
         tap(() => this.loading.set(true)),
-        switchMap((ids) =>
-          ids.length
-            ? this.cocktailService
-                .makeable(ids, 2)
-                .pipe(catchError(() => of<MakeableResult[]>([])))
-            : of<MakeableResult[]>([]),
-        ),
+        switchMap(([ids, substitutes, ingredients]) => {
+          if (!ids.length) return of<MakeableResult[]>([]);
+          const query = expandCabinet(ids, ingredients, { substitutes });
+          return this.cocktailService
+            .makeable(query, 2)
+            .pipe(catchError(() => of<MakeableResult[]>([])));
+        }),
         takeUntilDestroyed(),
       )
       .subscribe((res) => {

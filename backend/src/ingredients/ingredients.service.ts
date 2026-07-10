@@ -5,7 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { IngredientCategory } from '@cocktailapp/shared';
-import { Model, Types } from 'mongoose';
+import { slugify } from '@cocktailapp/shared';
+import { Model } from 'mongoose';
 import {
   Cocktail,
   CocktailDocument,
@@ -36,13 +37,11 @@ export class IngredientsService {
   }
 
   create(dto: CreateIngredientDto) {
-    return this.ingredientModel.create({ ...dto, name: dto.name.trim() });
+    const name = dto.name.trim();
+    return this.ingredientModel.create({ _id: slugify(name), ...dto, name });
   }
 
   async update(id: string, dto: UpdateIngredientDto) {
-    if (!Types.ObjectId.isValid(id)) {
-      throw new NotFoundException(`Ingredient ${id} not found`);
-    }
     const patch = dto.name ? { ...dto, name: dto.name.trim() } : dto;
     const updated = await this.ingredientModel
       .findByIdAndUpdate(id, patch, { new: true })
@@ -65,9 +64,6 @@ export class IngredientsService {
   }
 
   async remove(id: string) {
-    if (!Types.ObjectId.isValid(id)) {
-      throw new NotFoundException(`Ingredient ${id} not found`);
-    }
     // Guard referential integrity: refuse to orphan cocktail recipes.
     const usedBy = await this.cocktailModel
       .countDocuments({ 'ingredients.ingredientId': id })
@@ -84,15 +80,15 @@ export class IngredientsService {
   }
 
   /**
-   * Resolve an ingredient name to a catalog document, creating it if needed.
-   * Case-insensitive so typos in casing don't spawn duplicate catalog entries.
+   * Resolve an ingredient name to a catalog document, creating it if needed with an authored slug
+   * id. Case-insensitive so casing typos don't spawn duplicate catalog entries.
    */
   findOrCreateByName(name: string) {
     const trimmed = name.trim();
     return this.ingredientModel
       .findOneAndUpdate(
         { name: trimmed },
-        { $setOnInsert: { name: trimmed } },
+        { $setOnInsert: { _id: slugify(trimmed), name: trimmed } },
         { upsert: true, new: true, collation: CI },
       )
       .exec();

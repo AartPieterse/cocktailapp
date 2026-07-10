@@ -17,6 +17,14 @@ export type IngredientDocument = HydratedDocument<Ingredient>;
   },
 })
 export class Ingredient {
+  /**
+   * Authored, immutable slug id (e.g. `gin`, `white-rum`) — the SAME id space the offline bundle
+   * uses, so a user's cabinet (stored as ingredient ids) stays valid across bundle ⇄ API. Stored as
+   * the Mongo `_id` (a string, not an ObjectId); the `id` virtual surfaces it in JSON.
+   */
+  @Prop({ type: String })
+  _id: string;
+
   @Prop({ required: true, trim: true })
   name: string;
 
@@ -25,6 +33,18 @@ export class Ingredient {
 
   @Prop({ default: false })
   isStaple: boolean;
+
+  /** A broader base that may substitute this one (`cognac`.parentId = `brandy`). Opt-in expansion. */
+  @Prop({ type: String, required: false })
+  parentId?: string;
+
+  /** Explicit acceptable swaps, used sparingly. */
+  @Prop({ type: [String], default: undefined })
+  substitutes?: string[];
+
+  /** Folded spellings & brand names, kept for the search box. */
+  @Prop({ type: [String], default: undefined })
+  aliases?: string[];
 }
 
 export const IngredientSchema = SchemaFactory.createForClass(Ingredient);

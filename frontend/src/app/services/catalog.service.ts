@@ -1,30 +1,50 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import type { Cocktail, Ingredient, IngredientCategory, MakeableResult } from '@cocktailapp/shared';
-import { computeMakeable } from '@cocktailapp/shared';
-import { Observable, map, shareReplay, switchMap, throwError } from 'rxjs';
+import type {
+  Catalog,
+  Cocktail,
+  CatalogTranslations,
+  Ingredient,
+  IngredientCategory,
+  MakeableResult,
+} from '@cocktailapp/shared';
+import { applyCatalogTranslations, computeMakeable } from '@cocktailapp/shared';
+import {
+  Observable,
+  catchError,
+  combineLatest,
+  map,
+  of,
+  shareReplay,
+  switchMap,
+  throwError,
+} from 'rxjs';
 import { environment } from '../../environments/environment';
-
-interface Catalog {
-  ingredients: Ingredient[];
-  cocktails: Cocktail[];
-}
 
 /**
  * Static-first data source. Loads the curated catalog.json (generated at build time from
- * iba-cocktails-seed.json by scripts/build-catalog.mjs) once, caches it, and serves every
- * read operation in-memory — including the flagship "wat kan ik maken" search, ported 1:1
- * from the backend CocktailsService. Used when environment.dataSource === 'static'; there is
- * no live backend or database in production.
+ * iba-cocktails-seed.json by scripts/build-catalog.mjs), applies the Dutch display overlay
+ * (catalog.nl.json, same version), caches it, and serves every read operation in-memory —
+ * including the flagship "wat kan ik maken" search via the shared `computeMakeable`. Used when
+ * environment.dataSource === 'static'; there is no live backend or database in production.
  */
 @Injectable({ providedIn: 'root' })
 export class CatalogService {
   private readonly http = inject(HttpClient);
 
-  /** Loaded once and replayed to every subscriber. */
-  private readonly catalog$ = this.http
-    .get<Catalog>(environment.catalogUrl)
-    .pipe(shareReplay({ bufferSize: 1, refCount: false }));
+  /** Loaded once (catalog + Dutch overlay), overlaid, and replayed to every subscriber. */
+  private readonly catalog$ = combineLatest([
+    this.http.get<Catalog>(environment.catalogUrl),
+    environment.translationsUrl
+      ? this.http
+          .get<CatalogTranslations>(environment.translationsUrl)
+          .pipe(catchError(() => of(null)))
+      : of(null),
+  ]).pipe(
+    // A mismatched/failed overlay is ignored inside applyCatalogTranslations (English fallback).
+    map(([catalog, translations]) => applyCatalogTranslations(catalog, translations)),
+    shareReplay({ bufferSize: 1, refCount: false }),
+  );
 
   // --- Ingredients ---
 

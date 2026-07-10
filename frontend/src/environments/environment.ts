@@ -17,4 +17,6 @@ export const environment = {
   apiUrl: 'http://localhost:3000/api/',
   /** Static catalog location (used only when dataSource === 'static'). */
   catalogUrl: 'catalog.json',
+  /** Dutch display overlay applied on top of the canonical catalog (same version). */
+  translationsUrl: 'catalog.nl.json',
 };
