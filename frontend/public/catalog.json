@@ -1,11 +1,11 @@
 {
-  "version": "c75f54614bde",
+  "version": "c482de817fc4",
   "schemaVersion": 1,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
   "counts": {
-    "ingredients": 93,
-    "cocktails": 90
+    "ingredients": 104,
+    "cocktails": 102
   },
   "ingredients": [
     {
@@ -19,6 +19,15 @@
       "name": "Agave Syrup",
       "category": "syrup",
       "isStaple": false
+    },
+    {
+      "id": "allspice-liqueur",
+      "name": "Allspice Liqueur",
+      "category": "liqueur",
+      "isStaple": false,
+      "aliases": [
+        "Pimento Dram"
+      ]
     },
     {
       "id": "amaretto",
@@ -55,6 +64,15 @@
       "name": "Apricot Brandy",
       "category": "liqueur",
       "isStaple": false
+    },
+    {
+      "id": "basil",
+      "name": "Basil",
+      "category": "garnish",
+      "isStaple": false,
+      "aliases": [
+        "Italian Basil"
+      ]
     },
     {
       "id": "benedictine",
@@ -129,6 +147,12 @@
         "Red Chili Pepper",
         "thin Slices Red Chili Pepper"
       ]
+    },
+    {
+      "id": "cloves",
+      "name": "Cloves",
+      "category": "seasoning",
+      "isStaple": false
     },
     {
       "id": "coconut-cream",
@@ -223,6 +247,12 @@
       "isStaple": false
     },
     {
+      "id": "cynar",
+      "name": "Cynar",
+      "category": "liqueur",
+      "isStaple": false
+    },
+    {
       "id": "dark-rum",
       "name": "Dark Rum",
       "category": "spirit",
@@ -310,6 +340,12 @@
       "isStaple": false
     },
     {
+      "id": "frangelico",
+      "name": "Frangelico",
+      "category": "liqueur",
+      "isStaple": false
+    },
+    {
       "id": "lemon-juice",
       "name": "Fresh Lemon Juice",
       "category": "juice",
@@ -335,12 +371,6 @@
       "id": "orange-juice",
       "name": "Fresh Orange Juice",
       "category": "juice",
-      "isStaple": false
-    },
-    {
-      "id": "galliano",
-      "name": "Galliano",
-      "category": "liqueur",
       "isStaple": false
     },
     {
@@ -440,6 +470,12 @@
       "isStaple": false
     },
     {
+      "id": "lemon",
+      "name": "Lemon",
+      "category": "garnish",
+      "isStaple": false
+    },
+    {
       "id": "lillet-blanc",
       "name": "Lillet Blanc",
       "category": "wine",
@@ -477,6 +513,12 @@
       ]
     },
     {
+      "id": "orange",
+      "name": "Orange",
+      "category": "garnish",
+      "isStaple": false
+    },
+    {
       "id": "orange-bitters",
       "name": "Orange Bitters",
       "category": "bitters",
@@ -499,6 +541,24 @@
       ]
     },
     {
+      "id": "passion-fruit-liqueur",
+      "name": "Passion Fruit Liqueur",
+      "category": "liqueur",
+      "isStaple": false
+    },
+    {
+      "id": "passion-fruit-puree",
+      "name": "Passion Fruit Purée",
+      "category": "juice",
+      "isStaple": false
+    },
+    {
+      "id": "passion-fruit-syrup",
+      "name": "Passion Fruit Syrup",
+      "category": "syrup",
+      "isStaple": false
+    },
+    {
       "id": "peach-puree",
       "name": "Peach Purée",
       "category": "juice",
@@ -512,7 +572,10 @@
       "id": "peach-schnapps",
       "name": "Peach Schnapps",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "aliases": [
+        "Peach Brandy"
+      ]
     },
     {
       "id": "pepper",
@@ -531,6 +594,15 @@
       "name": "Peychaud's Bitters",
       "category": "bitters",
       "isStaple": false
+    },
+    {
+      "id": "pineapple",
+      "name": "Pineapple",
+      "category": "garnish",
+      "isStaple": false,
+      "aliases": [
+        "Pineapple Chunks"
+      ]
     },
     {
       "id": "pineapple-juice",
@@ -595,6 +667,16 @@
       ]
     },
     {
+      "id": "sherry",
+      "name": "Sherry",
+      "category": "wine",
+      "isStaple": false,
+      "aliases": [
+        "Amontillado Sherry",
+        "Palo Cortado Sherry"
+      ]
+    },
+    {
       "id": "simple-syrup",
       "name": "Simple Syrup",
       "category": "syrup",
@@ -630,6 +712,7 @@
         "Powdered Sugar",
         "Sugar Cube",
         "Superfine Sugar",
+        "Vanilla Sugar",
         "White Cane Sugar"
       ]
     },
@@ -914,58 +997,6 @@
       "method": "shaken",
       "difficulty": "medium",
       "garnish": "Optional Maraschino Cherry.",
-      "servings": 1,
-      "tags": [
-        "iba-official"
-      ]
-    },
-    {
-      "id": "barracuda",
-      "name": "Barracuda",
-      "category": "New Era Drinks",
-      "baseSpirit": "rum",
-      "description": "",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker except the Prosecco, shake well with ice, strain into chilled highball glass filled with ice and top up with Prosecco."
-      ],
-      "ingredients": [
-        {
-          "ingredientId": "dark-rum",
-          "name": "Dark Rum",
-          "call": "Gold Rum",
-          "amount": 45,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "galliano",
-          "name": "Galliano",
-          "amount": 15,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "pineapple-juice",
-          "name": "Pineapple Juice",
-          "amount": 60,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "lime-juice",
-          "name": "Fresh Lime Juice",
-          "amount": 1,
-          "unit": "dash"
-        },
-        {
-          "ingredientId": "sparkling-wine",
-          "name": "Sparkling Wine",
-          "call": "Prosecco",
-          "amount": 1,
-          "unit": "topup"
-        }
-      ],
-      "glass": "highball",
-      "method": "shaken",
-      "difficulty": "medium",
-      "garnish": "Pineapple and Cherry, optional mint sprig for additional aroma.",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -1438,6 +1469,45 @@
       ]
     },
     {
+      "id": "cardinale",
+      "name": "Cardinale",
+      "category": "Contemporary Classics",
+      "baseSpirit": "gin",
+      "description": "",
+      "instructions": [
+        "Stir all ingredients with ice.",
+        "Strain into a chilled cocktail glass."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "gin",
+          "name": "Gin",
+          "amount": 40,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "dry-vermouth",
+          "name": "Dry Vermouth",
+          "amount": 20,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "campari",
+          "name": "Campari",
+          "amount": 10,
+          "unit": "ml"
+        }
+      ],
+      "glass": "coupe",
+      "method": "stirred",
+      "difficulty": "easy",
+      "garnish": "Lemon zest",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
       "id": "casino",
       "name": "Casino",
       "category": "The Unforgettables",
@@ -1532,6 +1602,53 @@
       "method": "build",
       "difficulty": "medium",
       "garnish": "Garnish with orange zest and maraschino cherry.",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
+      "id": "chartreuse-swizzle",
+      "name": "Chartreuse Swizzle",
+      "category": "New Era Drinks",
+      "baseSpirit": "other",
+      "description": "",
+      "instructions": [
+        "Add all ingredients to a tall glass with pebble ice.",
+        "Swizzle vigorously.",
+        "Top with more pebble ice."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "green-chartreuse",
+          "name": "Green Chartreuse",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "pineapple-juice",
+          "name": "Pineapple Juice",
+          "call": "Fresh Pineapple Juice",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lime-juice",
+          "name": "Fresh Lime Juice",
+          "amount": 22.5,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "falernum",
+          "name": "Falernum",
+          "amount": 15,
+          "unit": "ml"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "medium",
+      "garnish": "Mint sprig and grated nutmeg",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -1796,6 +1913,59 @@
       ]
     },
     {
+      "id": "don-s-special-daiquiri",
+      "name": "Don's Special Daiquiri",
+      "category": "New Era Drinks",
+      "baseSpirit": "rum",
+      "description": "",
+      "instructions": [
+        "Flash-blend briefly with crushed ice.",
+        "Pour into a footed glass and top with crushed ice."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "dark-rum",
+          "name": "Dark Rum",
+          "call": "Gold Jamaican Rum",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "white-rum",
+          "name": "White Rum",
+          "call": "Cuban Rum",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "passion-fruit-syrup",
+          "name": "Passion Fruit Syrup",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lime-juice",
+          "name": "Fresh Lime Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "honey-syrup",
+          "name": "Honey Syrup",
+          "amount": 15,
+          "unit": "ml"
+        }
+      ],
+      "glass": "coupe",
+      "method": "blended",
+      "difficulty": "medium",
+      "garnish": "Half a passion fruit",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
       "id": "dry-martini",
       "name": "Dry Martini",
       "category": "The Unforgettables",
@@ -2026,6 +2196,85 @@
       ]
     },
     {
+      "id": "garibaldi",
+      "name": "Garibaldi",
+      "category": "Contemporary Classics",
+      "description": "",
+      "instructions": [
+        "Build in a highball glass over ice.",
+        "Ideally use aerated (fluffed) orange juice."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "campari",
+          "name": "Campari",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "orange-juice",
+          "name": "Fresh Orange Juice",
+          "amount": 120,
+          "unit": "ml"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Orange wedge",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
+      "id": "gin-basil-smash",
+      "name": "Gin Basil Smash",
+      "category": "New Era Drinks",
+      "baseSpirit": "gin",
+      "description": "",
+      "instructions": [
+        "Shake all ingredients with ice.",
+        "Double-strain into a chilled cocktail glass."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "gin",
+          "name": "Gin",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lemon-juice",
+          "name": "Fresh Lemon Juice",
+          "amount": 22.5,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "simple-syrup",
+          "name": "Simple Syrup",
+          "call": "Sugar Syrup",
+          "amount": 22.5,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "basil",
+          "name": "Basil",
+          "call": "Italian Basil",
+          "amount": 10,
+          "unit": "piece",
+          "note": "leaves"
+        }
+      ],
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "medium",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
       "id": "gin-fizz",
       "name": "Gin Fizz",
       "category": "The Unforgettables",
@@ -2072,45 +2321,40 @@
       ]
     },
     {
-      "id": "golden-dream",
-      "name": "Golden Dream",
-      "category": "Contemporary Classics",
+      "id": "grand-margarita",
+      "name": "Grand Margarita",
+      "category": "New Era Drinks",
+      "baseSpirit": "tequila",
       "description": "",
       "instructions": [
-        "Pour all ingredients into shaker filled with ice.",
-        "Shake briskly for few seconds.",
-        "Strain into chilled cocktail glass."
+        "Salt the rim of a rocks glass.",
+        "Shake with ice and strain over fresh ice."
       ],
       "ingredients": [
         {
-          "ingredientId": "galliano",
-          "name": "Galliano",
-          "amount": 20,
+          "ingredientId": "tequila",
+          "name": "Tequila",
+          "call": "Tequila (100% agave)",
+          "amount": 45,
           "unit": "ml"
         },
         {
-          "ingredientId": "triple-sec",
-          "name": "Triple Sec",
-          "amount": 20,
+          "ingredientId": "grand-marnier",
+          "name": "Grand Marnier",
+          "amount": 30,
           "unit": "ml"
         },
         {
-          "ingredientId": "orange-juice",
-          "name": "Fresh Orange Juice",
-          "amount": 20,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "cream",
-          "name": "Cream",
-          "call": "Fresh Cream",
-          "amount": 10,
+          "ingredientId": "lime-juice",
+          "name": "Fresh Lime Juice",
+          "amount": 15,
           "unit": "ml"
         }
       ],
-      "glass": "coupe",
+      "glass": "rocks",
       "method": "shaken",
       "difficulty": "medium",
+      "garnish": "Lime slice",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -2289,6 +2533,86 @@
       ]
     },
     {
+      "id": "iba-tiki",
+      "name": "IBA Tiki",
+      "category": "New Era Drinks",
+      "baseSpirit": "rum",
+      "description": "",
+      "instructions": [
+        "Muddle the ginger.",
+        "Add the remaining ingredients and shake with ice.",
+        "Strain into a Tiki glass filled with pebble ice."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "white-rum",
+          "name": "White Rum",
+          "call": "White Rum (Havana Club Profundo)",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "dark-rum",
+          "name": "Dark Rum",
+          "call": "Aged Rum (Havana Club Smoky)",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "amaretto",
+          "name": "Amaretto",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "frangelico",
+          "name": "Frangelico",
+          "amount": 5,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "maraschino",
+          "name": "Maraschino Liqueur",
+          "call": "Maraschino (Luxardo)",
+          "amount": 5,
+          "unit": "drop"
+        },
+        {
+          "ingredientId": "passion-fruit-puree",
+          "name": "Passion Fruit Purée",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "pineapple-juice",
+          "name": "Pineapple Juice",
+          "call": "Fresh Pineapple Juice",
+          "amount": 90,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lime-juice",
+          "name": "Fresh Lime Juice",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "ginger",
+          "name": "Ginger",
+          "amount": 1,
+          "unit": "slice"
+        }
+      ],
+      "glass": "mug",
+      "method": "muddled",
+      "difficulty": "advanced",
+      "garnish": "Citrus and dehydrated pineapple slice",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
       "id": "illegal",
       "name": "Illegal",
       "category": "New Era Drinks",
@@ -2446,6 +2770,59 @@
       "difficulty": "medium",
       "garnish": "Garnish with a lemon slice and maraschino cherry.",
       "notes": "Use ‘Old Tom' Gin for Tom Collins.",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
+      "id": "jungle-bird",
+      "name": "Jungle Bird",
+      "category": "New Era Drinks",
+      "baseSpirit": "rum",
+      "description": "",
+      "instructions": [
+        "Shake with ice.",
+        "Strain into a rocks glass over ice."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "dark-rum",
+          "name": "Dark Rum",
+          "call": "Blackstrap Rum",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "campari",
+          "name": "Campari",
+          "amount": 22.5,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "pineapple-juice",
+          "name": "Pineapple Juice",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lime-juice",
+          "name": "Fresh Lime Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "simple-syrup",
+          "name": "Simple Syrup",
+          "call": "Demerara Sugar Syrup",
+          "amount": 15,
+          "unit": "ml"
+        }
+      ],
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "medium",
+      "garnish": "Pineapple wedge",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -2949,6 +3326,68 @@
       "method": "muddled",
       "difficulty": "medium",
       "garnish": "Garnish with a mint sprig.",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
+      "id": "missionary-s-downfall",
+      "name": "Missionary's Downfall",
+      "category": "New Era Drinks",
+      "baseSpirit": "rum",
+      "description": "",
+      "instructions": [
+        "Blend all ingredients with half a cup of crushed ice.",
+        "Serve in a large coupe."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "white-rum",
+          "name": "White Rum",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "peach-schnapps",
+          "name": "Peach Schnapps",
+          "call": "Peach Brandy",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lime-juice",
+          "name": "Fresh Lime Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "honey-syrup",
+          "name": "Honey Syrup",
+          "call": "Honey Mix",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "mint",
+          "name": "Mint",
+          "amount": 10,
+          "unit": "piece",
+          "note": "leaves"
+        },
+        {
+          "ingredientId": "pineapple",
+          "name": "Pineapple",
+          "call": "Pineapple Chunks",
+          "amount": 3,
+          "amountMax": 4,
+          "unit": "piece"
+        }
+      ],
+      "glass": "coupe",
+      "method": "blended",
+      "difficulty": "medium",
+      "garnish": "Mint sprig and pineapple slice",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -3580,6 +4019,65 @@
       ]
     },
     {
+      "id": "pisco-punch",
+      "name": "Pisco Punch",
+      "category": "New Era Drinks",
+      "baseSpirit": "brandy",
+      "description": "",
+      "instructions": [
+        "Gently mash the cloves with the syrup.",
+        "Add everything except the wine and shake with ice.",
+        "Double-strain into a goblet.",
+        "Float the wine on top."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pisco",
+          "name": "Pisco",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "pineapple-juice",
+          "name": "Pineapple Juice",
+          "call": "Fresh Pineapple Juice",
+          "amount": 22.5,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "simple-syrup",
+          "name": "Simple Syrup",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lemon-juice",
+          "name": "Fresh Lemon Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "white-wine",
+          "name": "Dry White Wine",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "cloves",
+          "name": "Cloves",
+          "amount": 3,
+          "unit": "piece"
+        }
+      ],
+      "glass": "wine",
+      "method": "shaken",
+      "difficulty": "advanced",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
       "id": "pisco-sour",
       "name": "Pisco Sour",
       "category": "Contemporary Classics",
@@ -3666,6 +4164,61 @@
       ]
     },
     {
+      "id": "porn-star-martini",
+      "name": "Porn Star Martini",
+      "category": "New Era Drinks",
+      "baseSpirit": "vodka",
+      "description": "",
+      "instructions": [
+        "Shake with ice.",
+        "Double-strain into a chilled glass.",
+        "Serve with a side shot of Champagne."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "vodka",
+          "name": "Vodka",
+          "call": "Vanilla Vodka",
+          "amount": 50,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "passion-fruit-liqueur",
+          "name": "Passion Fruit Liqueur",
+          "amount": 20,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "passion-fruit-puree",
+          "name": "Passion Fruit Purée",
+          "amount": 50,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "call": "Vanilla Sugar",
+          "amount": 2,
+          "unit": "barspoon"
+        },
+        {
+          "ingredientId": "sparkling-wine",
+          "name": "Sparkling Wine",
+          "call": "Champagne (on the side)",
+          "amount": 50,
+          "unit": "ml"
+        }
+      ],
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "medium",
+      "garnish": "Passion fruit cup with sugar",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
       "id": "porto-flip",
       "name": "Porto Flip",
       "category": "The Unforgettables",
@@ -3699,6 +4252,54 @@
       "method": "shaken",
       "difficulty": "advanced",
       "garnish": "Sprinkle with fresh ground nutmeg.",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
+      "id": "rabo-de-galo",
+      "name": "Rabo de Galo",
+      "category": "Contemporary Classics",
+      "baseSpirit": "rum",
+      "description": "",
+      "instructions": [
+        "Combine all ingredients in a rocks glass.",
+        "Add ice and stir briefly."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cachaca",
+          "name": "Cachaça",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sweet-vermouth",
+          "name": "Sweet Vermouth",
+          "call": "Sweet Vermouth (Cinzano Rosso)",
+          "amount": 20,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "cynar",
+          "name": "Cynar",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "angostura-bitters",
+          "name": "Angostura Bitters",
+          "call": "Angostura",
+          "amount": 2,
+          "unit": "drop",
+          "optional": true
+        }
+      ],
+      "glass": "rocks",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Orange twist",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -3777,6 +4378,53 @@
       "method": "shaken",
       "difficulty": "advanced",
       "notes": "The drink was invented by Henry Ramos in 1888, at his bar Meyer's Table d'Hôtel Internationale in New Orleans. The Ramos Fizz was originally shaken for 12 minutes by a crew of 30 bartenders who passed the shaker from one to another.",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
+      "id": "remember-the-maine",
+      "name": "Remember the Maine",
+      "category": "The Unforgettables",
+      "baseSpirit": "whisky",
+      "description": "",
+      "instructions": [
+        "Rinse a coupe glass with the absinthe and discard.",
+        "Stir the remaining ingredients with ice.",
+        "Strain into the rinsed glass."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "rye-whiskey",
+          "name": "Rye Whiskey",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sweet-vermouth",
+          "name": "Sweet Vermouth",
+          "amount": 22.5,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "cherry-liqueur",
+          "name": "Cherry Liqueur",
+          "call": "Cherry Brandy (Luxardo)",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "absinthe",
+          "name": "Absinthe",
+          "amount": 7.5,
+          "unit": "ml"
+        }
+      ],
+      "glass": "coupe",
+      "method": "stirred",
+      "difficulty": "advanced",
+      "garnish": "Lemon zest",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -3991,6 +4639,62 @@
       "method": "build",
       "difficulty": "medium",
       "garnish": "Garnish with a half orange slice.",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
+      "id": "sherry-cobbler",
+      "name": "Sherry Cobbler",
+      "category": "New Era Drinks",
+      "baseSpirit": "other",
+      "description": "",
+      "instructions": [
+        "Shake with the citrus wheels and ice.",
+        "Strain into a julep cup packed with crushed ice."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "sherry",
+          "name": "Sherry",
+          "call": "Amontillado Sherry",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sherry",
+          "name": "Sherry",
+          "call": "Palo Cortado Sherry",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "call": "Superfine Sugar",
+          "amount": 1,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredientId": "orange",
+          "name": "Orange",
+          "amount": 0.5,
+          "unit": "slice",
+          "note": "wheel"
+        },
+        {
+          "ingredientId": "lemon",
+          "name": "Lemon",
+          "amount": 0.5,
+          "unit": "slice",
+          "note": "wheel"
+        }
+      ],
+      "glass": "mug",
+      "method": "shaken",
+      "difficulty": "medium",
+      "garnish": "Fresh berries and citrus wheels; serve with straws",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -4378,6 +5082,77 @@
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with half orange slice or an orange zest",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ]
+    },
+    {
+      "id": "three-dots-and-a-dash",
+      "name": "Three Dots and a Dash",
+      "category": "New Era Drinks",
+      "baseSpirit": "rum",
+      "description": "",
+      "instructions": [
+        "Flash-blend with crushed ice.",
+        "Pour into a footed glass and top with more crushed ice."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "dark-rum",
+          "name": "Dark Rum",
+          "call": "Rhum Agricole (Martinique)",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "dark-rum",
+          "name": "Dark Rum",
+          "call": "Blended Aged Rum",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "falernum",
+          "name": "Falernum",
+          "amount": 7.5,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "allspice-liqueur",
+          "name": "Allspice Liqueur",
+          "amount": 7.5,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lime-juice",
+          "name": "Fresh Lime Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "orange-juice",
+          "name": "Fresh Orange Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "honey-syrup",
+          "name": "Honey Syrup",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "angostura-bitters",
+          "name": "Angostura Bitters",
+          "amount": 2,
+          "unit": "dash"
+        }
+      ],
+      "glass": "coupe",
+      "method": "blended",
+      "difficulty": "advanced",
+      "garnish": "Three cherries and a pineapple chunk",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -4799,49 +5574,6 @@
       "glass": "coupe",
       "method": "shaken",
       "difficulty": "easy",
-      "servings": 1,
-      "tags": [
-        "iba-official"
-      ]
-    },
-    {
-      "id": "yellow-bird",
-      "name": "Yellow Bird",
-      "category": "New Era Drinks",
-      "baseSpirit": "rum",
-      "description": "",
-      "instructions": [
-        "Pour all ingredients into a cocktail shaker, shake well with ice, strain into chilled cocktail glass."
-      ],
-      "ingredients": [
-        {
-          "ingredientId": "white-rum",
-          "name": "White Rum",
-          "amount": 30,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "galliano",
-          "name": "Galliano",
-          "amount": 15,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "triple-sec",
-          "name": "Triple Sec",
-          "amount": 15,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "lime-juice",
-          "name": "Fresh Lime Juice",
-          "amount": 15,
-          "unit": "ml"
-        }
-      ],
-      "glass": "coupe",
-      "method": "shaken",
-      "difficulty": "medium",
       "servings": 1,
       "tags": [
         "iba-official"
