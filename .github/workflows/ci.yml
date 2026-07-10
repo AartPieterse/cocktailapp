@@ -91,6 +91,12 @@ jobs:
           tags: |
             ${{ steps.repo.outputs.name }}:${{ github.sha }}
             ${{ steps.repo.outputs.name }}:latest
+          # Stamp the git SHA into the image so the self-hosted auto-deploy poller can map the
+          # :latest it watches back to the exact immutable :<sha> tag — giving deploy.sh a real
+          # rollback target instead of an ambiguous "latest".
+          labels: |
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
   deploy:
     # Publish the static SPA to Netlify. Only after a green build on main (a merged PR).

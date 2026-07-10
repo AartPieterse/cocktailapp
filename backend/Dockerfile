@@ -16,7 +16,12 @@ COPY package.json package-lock.json ./
 COPY shared/package.json ./shared/
 COPY backend/package.json ./backend/
 COPY frontend/package.json ./frontend/
-RUN npm ci
+# --ignore-scripts: the shared workspace has a `prepare` script (tsc -p tsconfig.json) that npm
+# runs on both `npm ci` and `npm prune`. Here the manifests are copied before the sources (for
+# layer caching), so prepare would run with no tsconfig/src present and abort `npm ci` (TS5058).
+# We build shared explicitly below once its source is in the image. (The prune step is likewise
+# --ignore-scripts, else prepare re-runs after devDeps like typescript are gone -> "tsc: not found".)
+RUN npm ci --ignore-scripts
 
 # Sources (frontend source is excluded via .dockerignore — only its manifest is needed above).
 COPY shared ./shared
@@ -24,7 +29,7 @@ COPY backend ./backend
 
 RUN npm run build --workspace @cocktailapp/shared \
  && npm run build --workspace backend \
- && npm prune --omit=dev
+ && npm prune --omit=dev --ignore-scripts
 
 # ---- runtime stage: slim, non-root, production only ----
 FROM node:24-slim AS runtime
