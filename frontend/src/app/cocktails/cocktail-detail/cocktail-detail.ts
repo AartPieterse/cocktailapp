@@ -102,7 +102,8 @@ import { environment } from '../../../environments/environment';
                   </span>
                   <span class="amount">{{ scaled(i) }} {{ unitLabel(i) }}</span>
                   <span class="ing">
-                    {{ i.name }}
+                    {{ i.call ?? i.name }}
+                    @if (i.call && i.call !== i.name) { <span class="base">({{ i.name }})</span> }
                     @if (i.optional) { <em class="opt">optioneel</em> }
                     @if (i.note) { <span class="note">— {{ i.note }}</span> }
                   </span>
@@ -266,6 +267,11 @@ import { environment } from '../../../environments/environment';
       font-size: var(--step--1);
       margin-left: 4px;
     }
+    .ing .base {
+      color: var(--muted);
+      font-size: var(--step--1);
+      margin-left: 4px;
+    }
     .ing .note {
       color: var(--muted);
     }
@@ -393,8 +399,13 @@ export class CocktailDetail {
   scaled(i: CocktailIngredient): string {
     if (i.amount === undefined) return ''; // top-up / decorative lines carry no number
     const base = this.cocktail()?.servings ?? 1;
-    const value = (i.amount * this.servings()) / base;
-    return Number(value.toFixed(2)).toString().replace('.', ',');
+    const factor = this.servings() / base;
+    const fmt = (n: number) =>
+      Number((n * factor).toFixed(2)).toString().replace('.', ',');
+    // Authored ranges ("6–8 blaadjes") keep both bounds.
+    return i.amountMax !== undefined
+      ? `${fmt(i.amount)}–${fmt(i.amountMax)}`
+      : fmt(i.amount);
   }
 
   stepServings(delta: number): void {

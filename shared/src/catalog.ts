@@ -1,4 +1,4 @@
-import { Cocktail, CocktailIngredientRole } from './cocktail';
+import { BaseSpirit, Cocktail, CocktailIngredientRole } from './cocktail';
 import { Difficulty } from './difficulty';
 import { Glassware } from './glassware';
 import { Ingredient } from './ingredient';
@@ -55,8 +55,11 @@ export interface RawCatalogLine {
 
 /** Raw cocktail as it appears in the seed file or a Mongo document. */
 export interface RawCatalogCocktail {
+  /** Authored, immutable id. When present, used verbatim; otherwise derived via `slugify(name)`. */
+  id?: string;
   name: string;
   category?: string;
+  baseSpirit?: BaseSpirit;
   description?: string;
   instructions?: string[];
   ingredients?: RawCatalogLine[];
@@ -223,10 +226,23 @@ export function buildCatalog(
         };
       });
 
+      // Prefer an authored, immutable cocktail id; fall back to a slug of the name.
+      let cocktailId: string;
+      if (c.id) {
+        if (usedCocktailIds.has(c.id)) {
+          throw new Error(`Duplicate authored cocktail id "${c.id}" (on "${c.name}").`);
+        }
+        usedCocktailIds.add(c.id);
+        cocktailId = c.id;
+      } else {
+        cocktailId = makeUniqueId(c.name, usedCocktailIds);
+      }
+
       return {
-        id: makeUniqueId(c.name, usedCocktailIds),
+        id: cocktailId,
         name: c.name,
         ...(c.category ? { category: c.category } : {}),
+        ...(c.baseSpirit ? { baseSpirit: c.baseSpirit } : {}),
         description: c.description ?? '',
         instructions: c.instructions ?? [],
         ingredients: lines,

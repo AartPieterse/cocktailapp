@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
 // Default-import the CommonJS shared build, then destructure (robust across the CJS/ESM boundary).
 import shared from '@cocktailapp/shared';
 
-const { buildCatalog } = shared;
+const { buildCatalog, CATALOG_SCHEMA_VERSION } = shared;
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -46,7 +46,15 @@ const version = createHash('sha256')
   .digest('hex')
   .slice(0, 12);
 
-const catalog = { version, generatedFrom: 'iba-cocktails-seed.json', counts, ingredients, cocktails };
+const catalog = {
+  version,
+  schemaVersion: CATALOG_SCHEMA_VERSION,
+  generatedFrom: 'iba-cocktails-seed.json',
+  locale: 'en',
+  counts,
+  ingredients,
+  cocktails,
+};
 
 const json = JSON.stringify(catalog, null, 2) + '\n';
 for (const out of OUTPUTS) {

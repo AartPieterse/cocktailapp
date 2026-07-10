@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "build:shared": "npm run build --workspace @cocktailapp/shared",
-    "build:catalog": "node scripts/build-catalog.mjs",
+    "validate:seed": "node scripts/validate-seed.mjs",
+    "build:catalog": "npm run validate:seed && node scripts/build-catalog.mjs",
     "build": "npm run build:shared && npm run build --workspace backend && npm run build --workspace frontend",
     "build:app-web": "npm run build:shared && npm run build:catalog && npm run export:web --workspace @cocktailapp/app",
     "start:backend": "npm run start:dev --workspace backend",

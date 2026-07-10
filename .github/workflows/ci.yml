@@ -35,6 +35,9 @@ jobs:
       - name: Shared unit tests
         run: npm test --workspace @cocktailapp/shared
 
+      - name: Validate the frozen seed (ids, enums, refs, determinism)
+        run: npm run validate:seed
+
       - name: Regenerate catalog and verify both bundles are committed
         run: |
           npm run build:catalog

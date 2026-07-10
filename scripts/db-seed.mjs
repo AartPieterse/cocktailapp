@@ -2,22 +2,24 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
+// Default-import the CommonJS shared build, then destructure (robust across the CJS/ESM boundary).
+import shared from '@cocktailapp/shared';
 import { requireUri } from './_load-uri.mjs';
 
+const { buildCatalog } = shared;
 const here = dirname(fileURLToPath(import.meta.url));
 
-// Seed source: the IBA dataset (iba-cocktails-seed.json) by default; set
-// SEED_SRC=nl to use the curated Dutch set in seed-data.mjs instead.
-let ingredients, cocktails;
-if (process.env.SEED_SRC === 'nl') {
-  ({ ingredients, cocktails } = await import('./seed-data.mjs'));
-  console.log('Seed source: seed-data.mjs (curated NL set)');
-} else {
-  ({ ingredients, cocktails } = JSON.parse(
-    readFileSync(join(here, '..', 'iba-cocktails-seed.json'), 'utf8'),
-  ));
-  console.log('Seed source: iba-cocktails-seed.json (IBA set)');
-}
+// Seed from the frozen, hand-curated source of truth, SHAPED by the shared buildCatalog — the exact
+// same function scripts/build-catalog.mjs and the backend GET /api/catalog use. This stores the
+// authored slug ids (as Mongo `_id`) and slug line `ingredientId`s, so the API, the offline bundle,
+// and every client share one id space and the /api/catalog version matches the committed bundle.
+const raw = JSON.parse(
+  readFileSync(join(here, '..', 'iba-cocktails-seed.json'), 'utf8'),
+);
+const { ingredients, cocktails } = buildCatalog(
+  raw.ingredients ?? [],
+  raw.cocktails ?? [],
+);
 
 const uri = requireUri();
 const client = new MongoClient(uri);
@@ -31,10 +33,10 @@ try {
   const ingredientsCol = db.collection('ingredients');
   const cocktailsCol = db.collection('cocktails');
 
-  console.log('Clearing existing collections…');
+  console.log('Clearing catalog collections…');
+  // NOTE: only the catalog collections — never users / me-data / analytics.
   await Promise.all([ingredientsCol.deleteMany({}), cocktailsCol.deleteMany({})]);
 
-  // Drop stale indexes, then (re)create the ones the app relies on.
   await ingredientsCol.dropIndexes().catch(() => {});
   await cocktailsCol.dropIndexes().catch(() => {});
   await ingredientsCol.createIndex(
@@ -50,57 +52,38 @@ try {
 
   console.log(`Inserting ${ingredients.length} ingredients…`);
   const ingredientDocs = ingredients.map((ing) => ({
-    name: ing.name.trim(),
-    category: ing.category,
+    _id: ing.id, // authored slug id
+    name: ing.name,
+    ...(ing.category ? { category: ing.category } : {}),
     isStaple: ing.isStaple ?? false,
+    ...(ing.parentId ? { parentId: ing.parentId } : {}),
+    ...(ing.substitutes?.length ? { substitutes: ing.substitutes } : {}),
+    ...(ing.aliases?.length ? { aliases: ing.aliases } : {}),
     createdAt: now,
     updatedAt: now,
   }));
-  const { insertedIds } = await ingredientsCol.insertMany(ingredientDocs);
-
-  // name (lowercased) -> { _id, name }
-  const byName = new Map();
-  ingredientDocs.forEach((doc, i) => {
-    byName.set(doc.name.toLowerCase(), { _id: insertedIds[i], name: doc.name });
-  });
+  await ingredientsCol.insertMany(ingredientDocs);
 
   console.log(`Inserting ${cocktails.length} cocktails…`);
-  const cocktailDocs = cocktails.map((c) => {
-    const lines = (c.ingredients ?? []).map((line) => {
-      const found = byName.get(line.name.trim().toLowerCase());
-      if (!found) {
-        throw new Error(
-          `Cocktail "${c.name}" references unknown ingredient "${line.name}". Add it to the seed source.`,
-        );
-      }
-      return {
-        ingredientId: found._id,
-        name: found.name,
-        amount: line.amount,
-        unit: line.unit,
-        ...(line.note ? { note: line.note } : {}),
-        optional: line.optional ?? false,
-      };
-    });
-
-    return {
-      name: c.name,
-      ...(c.category ? { category: c.category } : {}),
-      description: c.description ?? '',
-      instructions: c.instructions ?? [],
-      ingredients: lines,
-      glass: c.glass,
-      method: c.method,
-      difficulty: c.difficulty,
-      garnish: c.garnish,
-      ...(c.notes ? { notes: c.notes } : {}),
-      servings: c.servings ?? 1,
-      tags: c.tags ?? [],
-      ...(c.imageUrl ? { imageUrl: c.imageUrl } : {}),
-      createdAt: now,
-      updatedAt: now,
-    };
-  });
+  const cocktailDocs = cocktails.map((c) => ({
+    _id: c.id, // authored slug id
+    name: c.name,
+    ...(c.category ? { category: c.category } : {}),
+    ...(c.baseSpirit ? { baseSpirit: c.baseSpirit } : {}),
+    description: c.description ?? '',
+    instructions: c.instructions ?? [],
+    ingredients: c.ingredients, // already resolved to slug ingredientId + call/role/alternativeIds
+    ...(c.glass ? { glass: c.glass } : {}),
+    ...(c.method ? { method: c.method } : {}),
+    ...(c.difficulty ? { difficulty: c.difficulty } : {}),
+    ...(c.garnish ? { garnish: c.garnish } : {}),
+    ...(c.notes ? { notes: c.notes } : {}),
+    servings: c.servings ?? 1,
+    tags: c.tags ?? [],
+    ...(c.imageUrl ? { imageUrl: c.imageUrl } : {}),
+    createdAt: now,
+    updatedAt: now,
+  }));
   await cocktailsCol.insertMany(cocktailDocs);
 
   const staples = ingredientDocs.filter((i) => i.isStaple).length;
