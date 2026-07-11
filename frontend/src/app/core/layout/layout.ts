@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Navbar } from '../navbar/navbar';
 import { InstallPrompt } from '../install-prompt/install-prompt';
+import { SyncService } from '../sync/sync.service';
 
 @Component({
   selector: 'app-layout',
@@ -50,4 +51,7 @@ import { InstallPrompt } from '../install-prompt/install-prompt';
     }
   `,
 })
-export class Layout {}
+export class Layout {
+  // Instantiated with the shell so cloud sync wires up at startup (inert when authEnabled is false).
+  private readonly sync = inject(SyncService);
+}

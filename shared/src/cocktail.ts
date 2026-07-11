@@ -61,6 +61,18 @@ export const BASE_SPIRITS: readonly BaseSpirit[] = [
   'none',
 ];
 
+/** Dutch labels for the base-spirit browse filter. Keys are stable; labels are what the UI renders. */
+export const BASE_SPIRIT_LABELS: Record<BaseSpirit, string> = {
+  gin: 'Gin',
+  vodka: 'Wodka',
+  rum: 'Rum',
+  tequila: 'Tequila',
+  whisky: 'Whisky',
+  brandy: 'Brandy',
+  other: 'Overig',
+  none: 'Geen',
+};
+
 /** Typed vocabulary for the cocktail filter UI. Populated in a later content pass (see plan Step 5). */
 export type CocktailTag =
   | 'iba-official'

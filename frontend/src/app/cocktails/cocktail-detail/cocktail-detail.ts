@@ -9,14 +9,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   type Cocktail,
   type CocktailIngredient,
+  type VolumeUnit,
+  convertMeasure,
   DIFFICULTY_LABELS,
   GLASSWARE_LABELS,
+  isVolumeUnit,
   MEASURE_LABELS,
   METHOD_LABELS,
 } from '@cocktailapp/shared';
 import { catchError, of, switchMap, tap } from 'rxjs';
 import { CabinetService } from '../../core/cabinet.service';
 import { FavoritesService } from '../../core/favorites.service';
+import { UnitPreferenceService } from '../../core/unit-preference.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { GlassArt } from '../../shared/glass-art/glass-art';
@@ -80,10 +84,25 @@ import { environment } from '../../../environments/environment';
 
             <div class="sec-label">Ingrediënten</div>
             <div class="lines">
-              <div class="servings no-print">
-                <button (click)="stepServings(-1)" [disabled]="servings() <= 1" aria-label="Minder">–</button>
-                <span>{{ servings() }} {{ servings() === 1 ? 'glas' : 'glazen' }}</span>
-                <button (click)="stepServings(1)" aria-label="Meer">+</button>
+              <div class="controls no-print">
+                <div class="servings">
+                  <button (click)="stepServings(-1)" [disabled]="servings() <= 1" aria-label="Minder">–</button>
+                  <span>{{ servings() }} {{ servings() === 1 ? 'glas' : 'glazen' }}</span>
+                  <button (click)="stepServings(1)" aria-label="Meer">+</button>
+                </div>
+                @if (hasVolume()) {
+                  <div class="unit-toggle" role="group" aria-label="Maateenheid">
+                    @for (u of unitOptions; track u) {
+                      <button
+                        [class.on]="unit() === u"
+                        [attr.aria-pressed]="unit() === u"
+                        (click)="setUnit(u)"
+                      >
+                        {{ u }}
+                      </button>
+                    }
+                  </div>
+                }
               </div>
               @for (i of c.ingredients; track i.ingredientId + i.name) {
                 <div class="line">
@@ -114,6 +133,11 @@ import { environment } from '../../../environments/environment';
                 <p class="muted">Geen instructies opgegeven.</p>
               }
             </div>
+
+            @if (c.notes) {
+              <div class="sec-label">Tips & variaties</div>
+              <p class="notes">{{ c.notes }}</p>
+            }
           </div>
         </div>
       </div>
@@ -274,15 +298,49 @@ import { environment } from '../../../environments/environment';
       margin-top: 8px;
       max-width: 520px;
     }
+    .controls {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 4px 0 8px;
+    }
     .servings {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin: 4px 0 8px;
       border: 1px solid var(--hairline);
       border-radius: var(--radius-pill);
       padding: 4px 10px;
       font: 600 0.813rem var(--font-body);
+    }
+    .unit-toggle {
+      display: inline-flex;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+    .unit-toggle button {
+      border: none;
+      background: none;
+      color: var(--muted);
+      font: 600 0.813rem var(--font-body);
+      padding: 6px 13px;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+    .unit-toggle button.on {
+      background: var(--accent);
+      color: #fff;
+    }
+    .notes {
+      margin-top: 12px;
+      max-width: 520px;
+      font: 500 0.938rem/1.6 var(--font-body);
+      color: var(--muted);
+      background: var(--surface-2);
+      border-radius: 14px;
+      padding: 16px 18px;
     }
     .servings button {
       border: none;
@@ -406,6 +464,7 @@ export class CocktailDetail {
   private readonly cocktailService = inject(CocktailService);
   private readonly cabinet = inject(CabinetService);
   private readonly favorites = inject(FavoritesService);
+  private readonly unitPref = inject(UnitPreferenceService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
@@ -415,6 +474,12 @@ export class CocktailDetail {
   readonly cocktail = signal<Cocktail | null>(null);
   readonly loading = signal(true);
   readonly servings = signal(1);
+
+  protected readonly unitOptions = this.unitPref.options;
+  readonly unit = this.unitPref.unit;
+
+  /** Whether the recipe has any volume line worth offering a ml/cl/oz toggle for. */
+  readonly hasVolume = computed(() => (this.cocktail()?.ingredients ?? []).some((i) => isVolumeUnit(i.unit)));
 
   readonly spec = computed(() => {
     const c = this.cocktail();
@@ -464,7 +529,11 @@ export class CocktailDetail {
     return c.difficulty ? DIFFICULTY_LABELS[c.difficulty] : '';
   }
   unitLabel(i: CocktailIngredient): string {
-    return MEASURE_LABELS[i.unit];
+    const unit = isVolumeUnit(i.unit) ? this.unit() : i.unit;
+    return MEASURE_LABELS[unit];
+  }
+  setUnit(u: VolumeUnit): void {
+    this.unitPref.set(u);
   }
   ingCat(i: CocktailIngredient): string | undefined {
     return i.role === 'garnish' ? 'garnish' : undefined;
@@ -491,8 +560,12 @@ export class CocktailDetail {
     if (i.amount === undefined) return '';
     const base = this.cocktail()?.servings ?? 1;
     const factor = this.servings() / base;
-    const fmt = (n: number): string => Number((n * factor).toFixed(2)).toString().replace('.', ',');
-    return i.amountMax !== undefined ? `${fmt(i.amount)}–${fmt(i.amountMax)}` : fmt(i.amount);
+    const target = this.unit();
+    const conv = (n: number): number => convertMeasure(n * factor, i.unit, target).amount;
+    const fmt = (n: number): string => Number(n.toFixed(2)).toString().replace('.', ',');
+    return i.amountMax !== undefined
+      ? `${fmt(conv(i.amount))}–${fmt(conv(i.amountMax))}`
+      : fmt(conv(i.amount));
   }
 
   stepServings(delta: number): void {

@@ -13,7 +13,15 @@ export const environment = {
   production: true,
   dataSource: 'static' as 'api' | 'static',
   admin: false,
+  /**
+   * Off for the static Netlify build: there is no backend to reach, so the app stays a fully
+   * anonymous, localStorage-only client (zero /api/* calls, account UI hidden). Flip to true —
+   * independently of `dataSource` — once a NestJS backend is deployed and `apiBaseUrl` points at it.
+   */
+  authEnabled: false,
   apiUrl: '/api/',
+  /** Base URL for auth + sync calls once a backend is deployed. Unused while `authEnabled` is false. */
+  apiBaseUrl: '/api/',
   catalogUrl: 'catalog.json',
   /** Dutch display overlay applied on top of the canonical catalog (same version). */
   translationsUrl: 'catalog.nl.json',
