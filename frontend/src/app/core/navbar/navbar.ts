@@ -2,7 +2,9 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { LOCALE_NAMES, LOCALE_SHORT } from '@cocktailapp/shared';
 import { CocktailService } from '../../services/cocktail.service';
+import { LanguageService } from '../language.service';
 import { ThemeService } from '../theme.service';
 import { PwaService } from '../pwa.service';
 import { AuthService } from '../auth/auth.service';
@@ -14,7 +16,7 @@ import { environment } from '../../../environments/environment';
   template: `
     <header class="bar">
       <div class="container inner">
-        <a class="brand" routerLink="/bar" aria-label="Barkast home">
+        <a class="brand" routerLink="/ontdek" [attr.aria-label]="lang.t().nav.brandHome">
           <span class="glyph" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -23,13 +25,13 @@ import { environment } from '../../../environments/environment';
               <line x1="8" y1="20" x2="16" y2="20" />
             </svg>
           </span>
-          <span class="mark">Barkast</span>
+          <span class="mark">{{ lang.t().common.appName }}</span>
         </a>
 
         <nav class="links" [class.open]="menuOpen()" (click)="menuOpen.set(false)">
-          <a routerLink="/bar" routerLinkActive="active">Mijn bar</a>
-          <a routerLink="/cocktails" routerLinkActive="active">Cocktails</a>
-          <a routerLink="/kast" routerLinkActive="active">Mijn kast</a>
+          <a routerLink="/ontdek" routerLinkActive="active">{{ lang.t().nav.discover }}</a>
+          <a routerLink="/cocktails" routerLinkActive="active">{{ lang.t().nav.cocktails }}</a>
+          <a routerLink="/bar" routerLinkActive="active">{{ lang.t().nav.myBar }}</a>
         </nav>
 
         <div class="actions">
@@ -38,22 +40,31 @@ import { environment } from '../../../environments/environment';
               class="icon-btn install"
               type="button"
               (click)="pwa.install()"
-              matTooltip="Installeer Barkast"
-              aria-label="Installeer Barkast"
+              [matTooltip]="lang.t().nav.install"
+              [attr.aria-label]="lang.t().nav.install"
             >
               <mat-icon>get_app</mat-icon>
             </button>
           }
           <button class="surprise" type="button" (click)="surprise()">
-            <mat-icon>casino</mat-icon> Verras me
+            <mat-icon>casino</mat-icon> {{ lang.t().nav.surpriseMe }}
+          </button>
+          <button
+            class="icon-btn lang-btn"
+            type="button"
+            (click)="lang.toggle()"
+            [matTooltip]="otherLanguageName()"
+            [attr.aria-label]="lang.t().nav.toggleLanguage"
+          >
+            {{ shortLabel() }}
           </button>
           @if (authEnabled) {
             <a
               class="icon-btn"
               routerLink="/account"
               routerLinkActive="active"
-              [matTooltip]="auth.isAuthenticated() ? 'Account' : 'Inloggen'"
-              [attr.aria-label]="auth.isAuthenticated() ? 'Account' : 'Inloggen'"
+              [matTooltip]="auth.isAuthenticated() ? lang.t().nav.account : lang.t().nav.login"
+              [attr.aria-label]="auth.isAuthenticated() ? lang.t().nav.account : lang.t().nav.login"
             >
               <mat-icon>{{ auth.isAuthenticated() ? 'account_circle' : 'login' }}</mat-icon>
             </a>
@@ -62,8 +73,8 @@ import { environment } from '../../../environments/environment';
             class="icon-btn"
             type="button"
             (click)="theme.toggle()"
-            [matTooltip]="theme.theme() === 'dark' ? 'Lichte modus' : 'Donkere modus'"
-            aria-label="Wissel thema"
+            [matTooltip]="theme.theme() === 'dark' ? lang.t().nav.lightMode : lang.t().nav.darkMode"
+            [attr.aria-label]="lang.t().nav.toggleTheme"
           >
             <mat-icon>{{ theme.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
           </button>
@@ -71,7 +82,7 @@ import { environment } from '../../../environments/environment';
             class="icon-btn burger"
             type="button"
             (click)="menuOpen.update((v) => !v)"
-            aria-label="Menu"
+            [attr.aria-label]="lang.t().nav.menu"
           >
             <mat-icon>{{ menuOpen() ? 'close' : 'menu' }}</mat-icon>
           </button>
@@ -181,6 +192,10 @@ import { environment } from '../../../environments/environment';
       background: var(--accent-soft);
       color: var(--accent);
     }
+    .lang-btn {
+      font: 700 0.75rem var(--font-body);
+      letter-spacing: 0.06em;
+    }
     .burger {
       display: none;
     }
@@ -233,11 +248,21 @@ import { environment } from '../../../environments/environment';
 export class Navbar {
   protected readonly theme = inject(ThemeService);
   protected readonly pwa = inject(PwaService);
+  protected readonly lang = inject(LanguageService);
   protected readonly auth = inject(AuthService);
   protected readonly authEnabled = environment.authEnabled;
   private readonly cocktails = inject(CocktailService);
   private readonly router = inject(Router);
   protected readonly menuOpen = signal(false);
+
+  /** The two-letter code of the language you'd switch TO (shown on the toggle). */
+  shortLabel(): string {
+    return LOCALE_SHORT[this.lang.locale() === 'nl' ? 'en' : 'nl'];
+  }
+
+  otherLanguageName(): string {
+    return LOCALE_NAMES[this.lang.locale() === 'nl' ? 'en' : 'nl'];
+  }
 
   surprise(): void {
     this.cocktails.getRandom().subscribe({

@@ -8,6 +8,7 @@ import {
   type IngredientCategory,
 } from '@cocktailapp/shared';
 import { CabinetService } from '../../core/cabinet.service';
+import { LanguageService } from '../../core/language.service';
 import { IngredientService } from '../../services/ingredient.service';
 import { IngredientGlyph } from '../../shared/ingredient-glyph/ingredient-glyph';
 
@@ -26,8 +27,8 @@ interface WizardStep {
       <div class="card">
         <div class="card-top">
           <div class="top-row">
-            <span class="step-of">Stap {{ current() + 1 }} van {{ steps().length }}</span>
-            <button class="skip" type="button" (click)="quit()">Overslaan</button>
+            <span class="step-of">{{ lang.t().wizard.step(current() + 1, steps().length) }}</span>
+            <button class="skip" type="button" (click)="quit()">{{ lang.t().wizard.skip }}</button>
           </div>
           <div class="track"><div class="fill" [style.width]="pct()"></div></div>
         </div>
@@ -49,7 +50,7 @@ interface WizardStep {
                   {{ ing.name }}
                 </button>
               } @empty {
-                <p class="muted">Geen ingrediënten in deze categorie.</p>
+                <p class="muted">{{ lang.t().wizard.emptyCategory }}</p>
               }
             </div>
           </div>
@@ -57,10 +58,10 @@ interface WizardStep {
 
         <div class="card-foot">
           @if (current() > 0) {
-            <button class="btn btn-back" type="button" (click)="prev()">Terug</button>
+            <button class="btn btn-back" type="button" (click)="prev()">{{ lang.t().wizard.back }}</button>
           }
           <button class="btn btn-next" type="button" (click)="next()">
-            {{ isLast() ? 'Klaar — toon mijn bar' : 'Volgende' }}
+            {{ isLast() ? lang.t().wizard.finish : lang.t().wizard.next }}
           </button>
         </div>
       </div>
@@ -194,6 +195,7 @@ interface WizardStep {
 })
 export class Wizard {
   private readonly cabinet = inject(CabinetService);
+  protected readonly lang = inject(LanguageService);
   private readonly ingredientService = inject(IngredientService);
   private readonly router = inject(Router);
 
@@ -204,13 +206,16 @@ export class Wizard {
   readonly steps = computed<WizardStep[]>(() => {
     const list = this.ingredients();
     if (!list.length) return [];
+    const locale = this.lang.locale();
+    const labels = CATEGORY_LABELS_PLURAL[locale];
+    const hints = CATEGORY_HINTS[locale];
     const staples = list.filter((i) => i.isStaple);
     const steps: WizardStep[] = [];
     if (staples.length) {
       steps.push({
         key: 'staples',
-        title: 'Dit heb je vast al in huis',
-        hint: 'IJs, suiker, citroensap… vink aan wat klopt. We hebben alvast wat aangevinkt.',
+        title: this.lang.t().wizard.staplesTitle,
+        hint: this.lang.t().wizard.staplesHint,
         items: staples,
       });
     }
@@ -219,8 +224,8 @@ export class Wizard {
       if (items.length) {
         steps.push({
           key: cat,
-          title: CATEGORY_LABELS_PLURAL[cat as IngredientCategory],
-          hint: CATEGORY_HINTS[cat as IngredientCategory],
+          title: labels[cat as IngredientCategory],
+          hint: hints[cat as IngredientCategory],
           items,
         });
       }
@@ -271,10 +276,10 @@ export class Wizard {
   finish(): void {
     this.cabinet.setAll(this.selection());
     this.cabinet.completeWizard();
-    void this.router.navigate(['/bar']);
+    void this.router.navigate(['/ontdek']);
   }
 
   quit(): void {
-    void this.router.navigate(['/bar']);
+    void this.router.navigate(['/ontdek']);
   }
 }

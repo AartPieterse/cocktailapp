@@ -1,24 +1,26 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import type { UiStrings } from '@cocktailapp/shared';
 import { catchError, throwError } from 'rxjs';
+import { LanguageService } from './language.service';
 
-/** Human-readable Dutch fallback per status code. */
-function messageFor(err: HttpErrorResponse): string {
+/** Human-readable, localized fallback per status code. */
+function messageFor(err: HttpErrorResponse, errors: UiStrings['errors']): string {
   const fromServer = typeof err.error?.message === 'string' ? err.error.message : null;
   switch (err.status) {
     case 0:
-      return 'Geen verbinding met de server. Draait de backend?';
+      return errors.network;
     case 400:
-      return fromServer ?? 'Ongeldige invoer.';
+      return fromServer ?? errors.invalid;
     case 404:
-      return fromServer ?? 'Niet gevonden.';
+      return fromServer ?? errors.notFound;
     case 409:
-      return fromServer ?? 'Bestaat al.';
+      return fromServer ?? errors.exists;
     case 429:
-      return 'Even rustig aan — te veel verzoeken.';
+      return errors.rateLimit;
     default:
-      return fromServer ?? 'Er ging iets mis. Probeer het opnieuw.';
+      return fromServer ?? errors.generic;
   }
 }
 
@@ -28,9 +30,11 @@ function messageFor(err: HttpErrorResponse): string {
  */
 export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const snackBar = inject(MatSnackBar);
+  const lang = inject(LanguageService);
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
-      snackBar.open(messageFor(err), 'Sluiten', {
+      const strings = lang.t();
+      snackBar.open(messageFor(err, strings.errors), strings.errors.dismiss, {
         duration: 5000,
         panelClass: 'snack-error',
       });

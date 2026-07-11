@@ -1,9 +1,15 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import {
+  TitleStrategy,
+  provideRouter,
+  withComponentInputBinding,
+  withInMemoryScrolling,
+} from '@angular/router';
 
 import { apiErrorInterceptor } from './core/api-error.interceptor';
+import { AppTitleStrategy } from './core/title-strategy';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { routes } from './app.routes';
 
@@ -19,5 +25,6 @@ export const appConfig: ApplicationConfig = {
     // would surface an error snackbar.
     provideHttpClient(withInterceptors([apiErrorInterceptor, authInterceptor])),
     provideAnimationsAsync(),
+    { provide: TitleStrategy, useClass: AppTitleStrategy },
   ],
 };

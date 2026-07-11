@@ -1,5 +1,6 @@
 import { Difficulty } from './difficulty';
 import { Glassware } from './glassware';
+import type { Locale } from './i18n';
 import { MeasureUnit } from './measure-unit';
 import { Method } from './method';
 
@@ -61,16 +62,28 @@ export const BASE_SPIRITS: readonly BaseSpirit[] = [
   'none',
 ];
 
-/** Dutch labels for the base-spirit browse filter. Keys are stable; labels are what the UI renders. */
-export const BASE_SPIRIT_LABELS: Record<BaseSpirit, string> = {
-  gin: 'Gin',
-  vodka: 'Wodka',
-  rum: 'Rum',
-  tequila: 'Tequila',
-  whisky: 'Whisky',
-  brandy: 'Brandy',
-  other: 'Overig',
-  none: 'Geen',
+/** Labels for the base-spirit browse filter, per locale. Keys are stable; labels are rendered. */
+export const BASE_SPIRIT_LABELS: Record<Locale, Record<BaseSpirit, string>> = {
+  nl: {
+    gin: 'Gin',
+    vodka: 'Wodka',
+    rum: 'Rum',
+    tequila: 'Tequila',
+    whisky: 'Whisky',
+    brandy: 'Brandy',
+    other: 'Overig',
+    none: 'Geen',
+  },
+  en: {
+    gin: 'Gin',
+    vodka: 'Vodka',
+    rum: 'Rum',
+    tequila: 'Tequila',
+    whisky: 'Whisky',
+    brandy: 'Brandy',
+    other: 'Other',
+    none: 'None',
+  },
 };
 
 /** Typed vocabulary for the cocktail filter UI. Populated in a later content pass (see plan Step 5). */

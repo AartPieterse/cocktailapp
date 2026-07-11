@@ -6,6 +6,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { expandCabinet, type Ingredient, type MakeableResult } from '@cocktailapp/shared';
 import { catchError, combineLatest, of, switchMap, tap } from 'rxjs';
 import { CabinetService } from '../core/cabinet.service';
+import { LanguageService } from '../core/language.service';
 import { SubstitutesService } from '../core/substitutes.service';
 import { CocktailService } from '../services/cocktail.service';
 import { IngredientService } from '../services/ingredient.service';
@@ -19,15 +20,12 @@ import { glassSpecFor } from '../shared/cocktail-visual';
   template: `
     @if (showOnboarding()) {
       <section class="onboard">
-        <p class="eyebrow">Welkom bij Barkast</p>
-        <h1 class="hero-title">Wat staat er<br />in jouw kast?</h1>
-        <p class="lede">
-          Vink aan wat je in huis hebt — sterke drank, mixers, dat ene flesje achterin —
-          en Barkast laat meteen zien welke cocktails je <em>nu</em> kunt maken.
-        </p>
+        <p class="eyebrow">{{ lang.t().home.welcome }}</p>
+        <h1 class="hero-title" [innerHTML]="lang.t().home.heroTitle"></h1>
+        <p class="lede" [innerHTML]="lang.t().home.heroLede"></p>
         <div class="cta">
-          <a class="btn btn-primary" routerLink="/bar/wizard">Stel je bar samen</a>
-          <a class="btn btn-ghost" routerLink="/cocktails">Blader eerst rond</a>
+          <a class="btn btn-primary" routerLink="/bar/wizard">{{ lang.t().home.buildBar }}</a>
+          <a class="btn btn-ghost" routerLink="/cocktails">{{ lang.t().home.browseFirst }}</a>
         </div>
       </section>
     } @else {
@@ -35,18 +33,17 @@ import { glassSpecFor } from '../shared/cocktail-visual';
         <!-- hero -->
         <div class="hero">
           <div class="hero-copy">
-            <p class="eyebrow">Mijn bar</p>
+            <p class="eyebrow">{{ lang.t().home.eyebrow }}</p>
             <h1 class="count">
-              Je kunt <span class="big">{{ displayCount() }}</span><br />
-              {{ displayCount() === 1 ? 'cocktail' : 'cocktails' }} maken
+              {{ lang.t().home.countPre }} <span class="big">{{ displayCount() }}</span><br />
+              {{ lang.t().home.countPost(displayCount()) }}
             </h1>
             <p class="lede">
-              Op basis van wat er nu in jouw kast staat. {{ makeableNow().length }} klaar om te
-              shaken, {{ almost1().length }} liggen binnen handbereik.
+              {{ lang.t().home.makeableLede(makeableNow().length, almost1().length) }}
             </p>
             <div class="cta">
-              <a class="btn btn-primary" routerLink="/kast">Bewerk mijn kast</a>
-              <a class="btn btn-ghost" routerLink="/bar/wizard">Wizard opnieuw</a>
+              <a class="btn btn-primary" routerLink="/bar">{{ lang.t().home.editBar }}</a>
+              <a class="btn btn-ghost" routerLink="/bar/wizard">{{ lang.t().home.wizardAgain }}</a>
             </div>
           </div>
           <div class="hero-glasses">
@@ -67,8 +64,8 @@ import { glassSpecFor } from '../shared/cocktail-visual';
         <div class="row">
           <div class="main">
             <div class="section-head">
-              <h2>Nu te maken</h2>
-              <span class="count-pill">{{ makeableNow().length }} cocktails</span>
+              <h2>{{ lang.t().home.makeNow }}</h2>
+              <span class="count-pill">{{ lang.t().home.cocktailsCount(makeableNow().length) }}</span>
             </div>
             @if (loading()) {
               <div class="grid">
@@ -84,12 +81,9 @@ import { glassSpecFor } from '../shared/cocktail-visual';
               </div>
             } @else {
               <div class="nudge">
-                <strong>Nog niks helemaal compleet.</strong>
-                <p class="muted">
-                  Voeg een sterke drank of mixer toe en je bent er zo. Kijk hiernaast wat je bijna
-                  kunt maken.
-                </p>
-                <a class="btn btn-ghost" routerLink="/kast">Kast aanvullen</a>
+                <strong>{{ lang.t().home.emptyTitle }}</strong>
+                <p class="muted">{{ lang.t().home.emptyBody }}</p>
+                <a class="btn btn-ghost" routerLink="/bar">{{ lang.t().home.refillBar }}</a>
               </div>
             }
           </div>
@@ -97,7 +91,7 @@ import { glassSpecFor } from '../shared/cocktail-visual';
           <aside class="side">
             @if (almost1().length) {
               <div class="card side-card">
-                <div class="side-eyebrow">Bijna — je mist er één</div>
+                <div class="side-eyebrow">{{ lang.t().home.almostHeader }}</div>
                 <div class="almost">
                   @for (r of almost1(); track r.cocktail.id) {
                     <div class="almost-row">
@@ -113,19 +107,19 @@ import { glassSpecFor } from '../shared/cocktail-visual';
               </div>
             }
             <div class="card night">
-              <div class="side-eyebrow dim">Jouw kast</div>
+              <div class="side-eyebrow dim">{{ lang.t().home.yourBar }}</div>
               <div class="cab-count">
-                {{ cabinet.count() }} <span>ingrediënten</span>
+                {{ cabinet.count() }} <span>{{ lang.t().common.ingredientsWord }}</span>
               </div>
               <label class="subs">
                 <mat-slide-toggle
                   [checked]="subs.enabled()"
                   (change)="subs.toggle($event.checked)"
                 >
-                  Vervangers meetellen
+                  {{ lang.t().home.countSubstitutes }}
                 </mat-slide-toggle>
               </label>
-              <a class="btn night-btn" routerLink="/kast">Bewerk kast</a>
+              <a class="btn night-btn" routerLink="/bar">{{ lang.t().home.editBarShort }}</a>
             </div>
           </aside>
         </div>
@@ -384,6 +378,7 @@ import { glassSpecFor } from '../shared/cocktail-visual';
 export class Bar {
   protected readonly cabinet = inject(CabinetService);
   protected readonly subs = inject(SubstitutesService);
+  protected readonly lang = inject(LanguageService);
   private readonly cocktailService = inject(CocktailService);
   private readonly ingredientService = inject(IngredientService);
 

@@ -27,6 +27,7 @@ import {
   tap,
 } from 'rxjs';
 import { CabinetService } from '../../core/cabinet.service';
+import { LanguageService } from '../../core/language.service';
 import { FavoritesService } from '../../core/favorites.service';
 import { SubstitutesService } from '../../core/substitutes.service';
 import { CocktailService } from '../../services/cocktail.service';
@@ -48,13 +49,13 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
   template: `
     <div class="page">
       <header class="head">
-        <h1>Alle cocktails</h1>
+        <h1>{{ lang.t().list.title }}</h1>
         <div class="tools">
           <input
             class="search"
             [formControl]="searchCtrl"
-            placeholder="Zoek op naam of ingrediënt…"
-            aria-label="Zoek cocktails op naam of ingrediënt"
+            [placeholder]="lang.t().list.searchPlaceholder"
+            [attr.aria-label]="lang.t().list.searchPlaceholder"
             autocomplete="off"
           />
           <button
@@ -63,18 +64,18 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
             [class.on]="onlyFavs()"
             [attr.aria-pressed]="onlyFavs()"
             (click)="onlyFavs.update((v) => !v)"
-            aria-label="Alleen favorieten"
+            [attr.aria-label]="lang.t().list.onlyFavorites"
           >
             <mat-icon>{{ onlyFavs() ? 'favorite' : 'favorite_border' }}</mat-icon>
           </button>
           @if (admin) {
-            <a mat-flat-button routerLink="/cocktails/add"><mat-icon>add</mat-icon> Nieuw</a>
+            <a mat-flat-button routerLink="/cocktails/add"><mat-icon>add</mat-icon> {{ lang.t().list.new }}</a>
           }
         </div>
       </header>
 
       <div class="filters">
-        <div class="chips" role="group" aria-label="Filter op basissterk">
+        <div class="chips" role="group" [attr.aria-label]="lang.t().list.filterBySpirit">
           @for (s of spiritOptions; track s) {
             <button
               class="chip"
@@ -93,23 +94,23 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
             [attr.aria-pressed]="alcoholFreeOnly()"
             (click)="alcoholFreeOnly.update((v) => !v)"
           >
-            Alcoholvrij
+            {{ lang.t().list.alcoholFree }}
           </button>
         </div>
         <div class="sortbox">
-          <label class="sr-only" for="sort-select">Sorteer op</label>
+          <label class="sr-only" for="sort-select">{{ lang.t().list.sortBy }}</label>
           <select
             id="sort-select"
             class="sort"
             [value]="sort()"
             (change)="onSort($event)"
           >
-            <option value="name-asc">Naam A–Z</option>
-            <option value="name-desc">Naam Z–A</option>
-            <option value="difficulty">Moeilijkheid</option>
+            <option value="name-asc">{{ lang.t().list.sortNameAsc }}</option>
+            <option value="name-desc">{{ lang.t().list.sortNameDesc }}</option>
+            <option value="difficulty">{{ lang.t().list.sortDifficulty }}</option>
           </select>
           @if (hasActiveFilters()) {
-            <button class="clear" type="button" (click)="clearFilters()">Wis filters</button>
+            <button class="clear" type="button" (click)="clearFilters()">{{ lang.t().list.clearFilters }}</button>
           }
         </div>
       </div>
@@ -130,8 +131,8 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
               [missingNames]="statusFor(c).names"
             >
               @if (admin) {
-                <a mat-button [routerLink]="['/cocktails', c.id, 'edit']">Bewerk</a>
-                <button mat-button (click)="remove(c)">Verwijder</button>
+                <a mat-button [routerLink]="['/cocktails', c.id, 'edit']">{{ lang.t().list.edit }}</a>
+                <button mat-button (click)="remove(c)">{{ lang.t().list.delete }}</button>
               }
             </app-cocktail-card>
           }
@@ -139,18 +140,18 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
       } @else {
         <div class="empty">
           <mat-icon>search_off</mat-icon>
-          <h3>Niets gevonden</h3>
+          <h3>{{ lang.t().list.emptyTitle }}</h3>
           <p class="muted">
             @if (onlyFavs()) {
-              Je hebt nog geen favorieten. Tik op het hartje van een cocktail.
+              {{ lang.t().list.emptyFavorites }}
             } @else if (alcoholFreeOnly()) {
-              Nog geen alcoholvrije recepten in de collectie.
+              {{ lang.t().list.emptyAlcoholFree }}
             } @else {
-              Pas je zoekopdracht of filters aan.
+              {{ lang.t().list.emptySearch }}
             }
           </p>
           @if (hasActiveFilters()) {
-            <button class="clear" type="button" (click)="clearFilters()">Wis filters</button>
+            <button class="clear" type="button" (click)="clearFilters()">{{ lang.t().list.clearFilters }}</button>
           }
         </div>
       }
@@ -325,6 +326,7 @@ export class CocktailList {
   private readonly ingredientService = inject(IngredientService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
+  protected readonly lang = inject(LanguageService);
 
   protected readonly admin = environment.admin;
 
@@ -420,7 +422,7 @@ export class CocktailList {
   }
 
   spiritLabel(s: BaseSpirit): string {
-    return BASE_SPIRIT_LABELS[s];
+    return BASE_SPIRIT_LABELS[this.lang.locale()][s];
   }
 
   toggleSpirit(s: BaseSpirit): void {
@@ -462,12 +464,12 @@ export class CocktailList {
 
   remove(cocktail: Cocktail): void {
     const ref = this.dialog.open(ConfirmDialog, {
-      data: { message: `Cocktail "${cocktail.name}" verwijderen?` },
+      data: { message: this.lang.t().list.confirmDelete(cocktail.name) },
     });
     ref.afterClosed().subscribe((confirmed) => {
       if (!confirmed) return;
       this.cocktailService.remove(cocktail.id).subscribe(() => {
-        this.snackBar.open('Cocktail verwijderd', 'OK', { duration: 2500 });
+        this.snackBar.open(this.lang.t().list.deleted, this.lang.t().common.ok, { duration: 2500 });
         this.reload.update((v) => v + 1);
       });
     });

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import type {
   Catalog,
   Cocktail,
@@ -20,6 +21,7 @@ import {
   throwError,
 } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { LanguageService } from '../core/language.service';
 
 /**
  * Static-first data source. Loads the curated catalog.json (generated at build time from
@@ -31,18 +33,27 @@ import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class CatalogService {
   private readonly http = inject(HttpClient);
+  private readonly lang = inject(LanguageService);
 
-  /** Loaded once (catalog + Dutch overlay), overlaid, and replayed to every subscriber. */
-  private readonly catalog$ = combineLatest([
+  /** The canonical (English) catalog + Dutch overlay, fetched once and replayed. */
+  private readonly source$ = combineLatest([
     this.http.get<Catalog>(environment.catalogUrl),
     environment.translationsUrl
       ? this.http
           .get<CatalogTranslations>(environment.translationsUrl)
           .pipe(catchError(() => of(null)))
       : of(null),
-  ]).pipe(
-    // A mismatched/failed overlay is ignored inside applyCatalogTranslations (English fallback).
-    map(([catalog, translations]) => applyCatalogTranslations(catalog, translations)),
+  ]).pipe(shareReplay({ bufferSize: 1, refCount: false }));
+
+  /**
+   * The display catalog for the current locale: Dutch applies the overlay, English serves the
+   * canonical names. Re-derives (no refetch) when the language switches. A mismatched/failed
+   * overlay is ignored inside applyCatalogTranslations (English fallback).
+   */
+  private readonly catalog$ = combineLatest([this.source$, toObservable(this.lang.locale)]).pipe(
+    map(([[catalog, translations], locale]) =>
+      locale === 'nl' ? applyCatalogTranslations(catalog, translations) : catalog,
+    ),
     shareReplay({ bufferSize: 1, refCount: false }),
   );
 
@@ -84,7 +95,8 @@ export class CatalogService {
   randomCocktail(): Observable<Cocktail> {
     return this.catalog$.pipe(
       switchMap((c) => {
-        if (!c.cocktails.length) return throwError(() => new Error('Er zijn nog geen cocktails'));
+        if (!c.cocktails.length)
+          return throwError(() => new Error(this.lang.t().errors.noCocktails));
         const pick = c.cocktails[Math.floor(Math.random() * c.cocktails.length)];
         return [pick];
       }),

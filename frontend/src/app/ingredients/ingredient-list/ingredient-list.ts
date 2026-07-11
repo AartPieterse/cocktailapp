@@ -18,6 +18,7 @@ import {
   type IngredientCategory,
   CATEGORY_LABELS,
 } from '@cocktailapp/shared';
+import { LanguageService } from '../../core/language.service';
 import { IngredientService } from '../../services/ingredient.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { environment } from '../../../environments/environment';
@@ -43,15 +44,12 @@ interface Group {
   template: `
     <header class="head">
       <div>
-        <p class="eyebrow">De catalogus</p>
-        <h1>Ingrediënten</h1>
+        <p class="eyebrow">{{ lang.t().ingredients.eyebrow }}</p>
+        <h1>{{ lang.t().ingredients.title }}</h1>
         @if (admin) {
-          <p class="lede">
-            De bouwstenen van je bar. Markeer wat de meeste mensen in huis hebben als
-            <strong>basis</strong> — die staan vooraan in de wizard.
-          </p>
+          <p class="lede">{{ lang.t().ingredients.ledeAdmin }}</p>
         } @else {
-          <p class="lede">De bouwstenen van je bar — alle ingrediënten in de catalogus.</p>
+          <p class="lede">{{ lang.t().ingredients.ledeUser }}</p>
         }
       </div>
     </header>
@@ -59,33 +57,33 @@ interface Group {
     @if (admin) {
       <form class="add-row" (ngSubmit)="save()">
         <mat-form-field appearance="outline" class="name">
-          <mat-label>Naam</mat-label>
+          <mat-label>{{ lang.t().ingredients.name }}</mat-label>
           <input matInput [formControl]="nameCtrl" required />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="cat">
-          <mat-label>Categorie</mat-label>
+          <mat-label>{{ lang.t().ingredients.category }}</mat-label>
           <mat-select [formControl]="categoryCtrl">
-            <mat-option [value]="null">— geen —</mat-option>
+            <mat-option [value]="null">{{ lang.t().ingredients.none }}</mat-option>
             @for (cat of categories; track cat) {
-              <mat-option [value]="cat">{{ catLabels[cat] }}</mat-option>
+              <mat-option [value]="cat">{{ catLabels()[cat] }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
 
-        <mat-checkbox [formControl]="stapleCtrl">Basis</mat-checkbox>
+        <mat-checkbox [formControl]="stapleCtrl">{{ lang.t().ingredients.staple }}</mat-checkbox>
 
         <button mat-flat-button type="submit" [disabled]="!nameCtrl.value.trim()">
-          {{ editingId() ? 'Bijwerken' : 'Toevoegen' }}
+          {{ editingId() ? lang.t().ingredients.update : lang.t().ingredients.add }}
         </button>
         @if (editingId()) {
-          <button mat-button type="button" (click)="cancelEdit()">Annuleren</button>
+          <button mat-button type="button" (click)="cancelEdit()">{{ lang.t().ingredients.cancel }}</button>
         }
       </form>
     }
 
     @if (loading()) {
-      <p class="muted">Laden…</p>
+      <p class="muted">{{ lang.t().ingredients.loading }}</p>
     } @else {
       @for (group of grouped(); track group.category) {
         <section class="group">
@@ -95,14 +93,14 @@ interface Group {
               <div class="item" [class.editing]="editingId() === ing.id">
                 <span class="name-cell">{{ ing.name }}</span>
                 @if (ing.isStaple) {
-                  <span class="pill pill--ok">basis</span>
+                  <span class="pill pill--ok">{{ lang.t().ingredients.stapleTag }}</span>
                 }
                 <span class="spacer"></span>
                 @if (admin) {
-                  <button mat-icon-button type="button" (click)="edit(ing)" aria-label="bewerk">
+                  <button mat-icon-button type="button" (click)="edit(ing)" [attr.aria-label]="lang.t().ingredients.edit">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button mat-icon-button type="button" (click)="remove(ing)" aria-label="verwijder">
+                  <button mat-icon-button type="button" (click)="remove(ing)" [attr.aria-label]="lang.t().ingredients.delete">
                     <mat-icon>delete_outline</mat-icon>
                   </button>
                 }
@@ -112,8 +110,8 @@ interface Group {
         </section>
       } @empty {
         <div class="empty">
-          <p class="muted">Nog geen ingrediënten. Voeg je eerste hierboven toe.</p>
-          <a mat-stroked-button routerLink="/bar/wizard">Naar de wizard</a>
+          <p class="muted">{{ lang.t().ingredients.empty }}</p>
+          <a mat-stroked-button routerLink="/bar/wizard">{{ lang.t().ingredients.toWizard }}</a>
         </div>
       }
     }
@@ -188,10 +186,11 @@ export class IngredientList {
   private readonly ingredientService = inject(IngredientService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
+  protected readonly lang = inject(LanguageService);
 
   protected readonly admin = environment.admin;
   readonly categories = INGREDIENT_CATEGORIES;
-  readonly catLabels = CATEGORY_LABELS;
+  readonly catLabels = computed(() => CATEGORY_LABELS[this.lang.locale()]);
   readonly ingredients = signal<Ingredient[]>([]);
   readonly editingId = signal<string | null>(null);
   readonly loading = signal(true);
@@ -208,9 +207,10 @@ export class IngredientList {
       list.push(ing);
       map.set(key, list);
     }
+    const plural = CATEGORY_LABELS_PLURAL[this.lang.locale()];
     return CATEGORY_ORDER.filter((c) => map.has(c)).map((c) => ({
       category: c,
-      label: CATEGORY_LABELS_PLURAL[c],
+      label: plural[c],
       items: (map.get(c) ?? []).sort((a, b) => a.name.localeCompare(b.name)),
     }));
   });
@@ -245,9 +245,11 @@ export class IngredientList {
 
     request.subscribe({
       next: () => {
-        this.snackBar.open(id ? 'Ingrediënt bijgewerkt' : 'Ingrediënt toegevoegd', 'OK', {
-          duration: 2000,
-        });
+        this.snackBar.open(
+          id ? this.lang.t().ingredients.updated : this.lang.t().ingredients.added,
+          this.lang.t().common.ok,
+          { duration: 2000 },
+        );
         this.cancelEdit();
         this.load();
       },
@@ -273,13 +275,13 @@ export class IngredientList {
 
   remove(ingredient: Ingredient): void {
     const ref = this.dialog.open(ConfirmDialog, {
-      data: { message: `Ingrediënt "${ingredient.name}" verwijderen?` },
+      data: { message: this.lang.t().ingredients.confirmDelete(ingredient.name) },
     });
     ref.afterClosed().subscribe((confirmed) => {
       if (!confirmed) return;
       this.ingredientService.remove(ingredient.id).subscribe({
         next: () => {
-          this.snackBar.open('Ingrediënt verwijderd', 'OK', { duration: 2000 });
+          this.snackBar.open(this.lang.t().ingredients.deleted, this.lang.t().common.ok, { duration: 2000 });
           this.load();
         },
         // 409 (in use) is surfaced by the global error interceptor; swallow here.

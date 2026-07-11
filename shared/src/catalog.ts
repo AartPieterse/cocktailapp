@@ -1,6 +1,7 @@
 import { BaseSpirit, Cocktail, CocktailIngredientRole, CocktailVariation } from './cocktail';
 import { Difficulty } from './difficulty';
 import { Glassware } from './glassware';
+import type { Locale } from './i18n';
 import { Ingredient } from './ingredient';
 import { IngredientCategory } from './ingredient-category';
 import { MeasureUnit } from './measure-unit';
@@ -92,9 +93,6 @@ export interface CatalogContent {
   ingredients: Ingredient[];
   cocktails: Cocktail[];
 }
-
-/** Base language of the catalog's names/instructions. English is the canonical id space. */
-export type Locale = 'en' | 'nl';
 
 /** Metadata stamped on top of {@link CatalogContent} to form the shipped/served {@link Catalog}. */
 export interface CatalogMeta {

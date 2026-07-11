@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { LanguageService } from '../language.service';
 import { Navbar } from '../navbar/navbar';
 import { InstallPrompt } from '../install-prompt/install-prompt';
 import { SyncService } from '../sync/sync.service';
@@ -16,10 +17,10 @@ import { SyncService } from '../sync/sync.service';
     </main>
     <footer class="no-print">
       <div class="container foot">
-        <span>Barkast — <span class="muted">wat kan jij maken?</span></span>
+        <span>{{ lang.t().common.appName }} — <span class="muted">{{ lang.t().common.tagline }}</span></span>
         <span class="muted">
-          <a routerLink="/cocktails">Cocktails</a> ·
-          <a routerLink="/kast">Mijn kast</a>
+          <a routerLink="/cocktails">{{ lang.t().nav.cocktails }}</a> ·
+          <a routerLink="/bar">{{ lang.t().nav.myBar }}</a>
         </span>
       </div>
     </footer>
@@ -52,6 +53,7 @@ import { SyncService } from '../sync/sync.service';
   `,
 })
 export class Layout {
+  protected readonly lang = inject(LanguageService);
   // Instantiated with the shell so cloud sync wires up at startup (inert when authEnabled is false).
   private readonly sync = inject(SyncService);
 }
