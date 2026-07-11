@@ -1,11 +1,11 @@
 {
-  "version": "c482de817fc4",
+  "version": "f7d07ee45069",
   "schemaVersion": 1,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
   "counts": {
-    "ingredients": 104,
-    "cocktails": 102
+    "ingredients": 156,
+    "cocktails": 156
   },
   "ingredients": [
     {
@@ -28,6 +28,12 @@
       "aliases": [
         "Pimento Dram"
       ]
+    },
+    {
+      "id": "almond-flavoring",
+      "name": "Almond flavoring",
+      "category": "seasoning",
+      "isStaple": false
     },
     {
       "id": "amaretto",
@@ -60,9 +66,33 @@
       "isStaple": false
     },
     {
+      "id": "apple",
+      "name": "Apple",
+      "category": "other",
+      "isStaple": false
+    },
+    {
+      "id": "apple-juice",
+      "name": "Apple juice",
+      "category": "juice",
+      "isStaple": false
+    },
+    {
       "id": "apricot-brandy",
       "name": "Apricot Brandy",
       "category": "liqueur",
+      "isStaple": false
+    },
+    {
+      "id": "asafoetida",
+      "name": "Asafoetida",
+      "category": "seasoning",
+      "isStaple": false
+    },
+    {
+      "id": "banana",
+      "name": "Banana",
+      "category": "other",
       "isStaple": false
     },
     {
@@ -84,6 +114,18 @@
       ]
     },
     {
+      "id": "berries",
+      "name": "Berries",
+      "category": "other",
+      "isStaple": false
+    },
+    {
+      "id": "black-pepper",
+      "name": "Black pepper",
+      "category": "seasoning",
+      "isStaple": false
+    },
+    {
       "id": "bourbon",
       "name": "Bourbon",
       "category": "spirit",
@@ -97,6 +139,18 @@
       "id": "brandy",
       "name": "Brandy",
       "category": "spirit",
+      "isStaple": false
+    },
+    {
+      "id": "brown-sugar",
+      "name": "Brown sugar",
+      "category": "seasoning",
+      "isStaple": false
+    },
+    {
+      "id": "butter",
+      "name": "Butter",
+      "category": "dairy",
       "isStaple": false
     },
     {
@@ -119,6 +173,36 @@
       "aliases": [
         "Bitter Campari"
       ]
+    },
+    {
+      "id": "cantaloupe",
+      "name": "Cantaloupe",
+      "category": "other",
+      "isStaple": false
+    },
+    {
+      "id": "carbonated-soft-drink",
+      "name": "Carbonated soft drink",
+      "category": "mixer",
+      "isStaple": false
+    },
+    {
+      "id": "cardamom",
+      "name": "Cardamom",
+      "category": "seasoning",
+      "isStaple": false
+    },
+    {
+      "id": "carrot",
+      "name": "Carrot",
+      "category": "other",
+      "isStaple": false
+    },
+    {
+      "id": "cayenne-pepper",
+      "name": "Cayenne pepper",
+      "category": "seasoning",
+      "isStaple": false
     },
     {
       "id": "celery-salt",
@@ -149,9 +233,33 @@
       ]
     },
     {
+      "id": "chocolate",
+      "name": "Chocolate",
+      "category": "other",
+      "isStaple": false
+    },
+    {
+      "id": "chocolate-syrup",
+      "name": "Chocolate syrup",
+      "category": "syrup",
+      "isStaple": false
+    },
+    {
+      "id": "cinnamon",
+      "name": "Cinnamon",
+      "category": "seasoning",
+      "isStaple": false
+    },
+    {
       "id": "cloves",
       "name": "Cloves",
       "category": "seasoning",
+      "isStaple": false
+    },
+    {
+      "id": "cocoa-powder",
+      "name": "Cocoa powder",
+      "category": "other",
       "isStaple": false
     },
     {
@@ -199,6 +307,24 @@
       ]
     },
     {
+      "id": "condensed-milk",
+      "name": "Condensed milk",
+      "category": "dairy",
+      "isStaple": false
+    },
+    {
+      "id": "coriander",
+      "name": "Coriander",
+      "category": "seasoning",
+      "isStaple": false
+    },
+    {
+      "id": "cornstarch",
+      "name": "Cornstarch",
+      "category": "seasoning",
+      "isStaple": false
+    },
+    {
       "id": "cranberry-juice",
       "name": "Cranberry Juice",
       "category": "juice",
@@ -244,6 +370,12 @@
       "id": "creme-de-violette",
       "name": "Crème de Violette",
       "category": "liqueur",
+      "isStaple": false
+    },
+    {
+      "id": "cumin-seed",
+      "name": "Cumin seed",
+      "category": "seasoning",
       "isStaple": false
     },
     {
@@ -295,6 +427,12 @@
       "id": "white-wine",
       "name": "Dry White Wine",
       "category": "wine",
+      "isStaple": false
+    },
+    {
+      "id": "egg",
+      "name": "Egg",
+      "category": "dairy",
       "isStaple": false
     },
     {
@@ -374,6 +512,18 @@
       "isStaple": false
     },
     {
+      "id": "fruit",
+      "name": "Fruit",
+      "category": "other",
+      "isStaple": false
+    },
+    {
+      "id": "fruit-juice",
+      "name": "Fruit juice",
+      "category": "juice",
+      "isStaple": false
+    },
+    {
       "id": "gin",
       "name": "Gin",
       "category": "spirit",
@@ -413,6 +563,12 @@
       "isStaple": false
     },
     {
+      "id": "grape-juice",
+      "name": "Grape juice",
+      "category": "juice",
+      "isStaple": false
+    },
+    {
       "id": "grapefruit-juice",
       "name": "Grapefruit Juice",
       "category": "juice",
@@ -426,6 +582,12 @@
       "aliases": [
         "Pink Grapefruit Soda"
       ]
+    },
+    {
+      "id": "grapes",
+      "name": "Grapes",
+      "category": "other",
+      "isStaple": false
     },
     {
       "id": "grappa",
@@ -453,6 +615,30 @@
       ]
     },
     {
+      "id": "guava-juice",
+      "name": "Guava juice",
+      "category": "juice",
+      "isStaple": false
+    },
+    {
+      "id": "half-and-half",
+      "name": "Half-and-half",
+      "category": "dairy",
+      "isStaple": false
+    },
+    {
+      "id": "heavy-cream",
+      "name": "Heavy cream",
+      "category": "dairy",
+      "isStaple": false
+    },
+    {
+      "id": "honey",
+      "name": "Honey",
+      "category": "syrup",
+      "isStaple": false
+    },
+    {
       "id": "honey-syrup",
       "name": "Honey Syrup",
       "category": "syrup",
@@ -464,9 +650,21 @@
       ]
     },
     {
+      "id": "ice",
+      "name": "Ice",
+      "category": "other",
+      "isStaple": true
+    },
+    {
       "id": "irish-whiskey",
       "name": "Irish Whiskey",
       "category": "spirit",
+      "isStaple": false
+    },
+    {
+      "id": "kiwi",
+      "name": "Kiwi",
+      "category": "other",
       "isStaple": false
     },
     {
@@ -482,6 +680,30 @@
       "isStaple": false
     },
     {
+      "id": "lime",
+      "name": "Lime",
+      "category": "other",
+      "isStaple": false
+    },
+    {
+      "id": "lime-peel",
+      "name": "Lime peel",
+      "category": "garnish",
+      "isStaple": false
+    },
+    {
+      "id": "mango",
+      "name": "Mango",
+      "category": "other",
+      "isStaple": false
+    },
+    {
+      "id": "maraschino-cherry",
+      "name": "Maraschino cherry",
+      "category": "garnish",
+      "isStaple": false
+    },
+    {
       "id": "maraschino",
       "name": "Maraschino Liqueur",
       "category": "liqueur",
@@ -490,6 +712,12 @@
         "Luxardo Maraschino",
         "Maraschino Luxardo"
       ]
+    },
+    {
+      "id": "marshmallows",
+      "name": "Marshmallows",
+      "category": "garnish",
+      "isStaple": false
     },
     {
       "id": "mezcal",
@@ -502,6 +730,12 @@
       ]
     },
     {
+      "id": "milk",
+      "name": "Milk",
+      "category": "dairy",
+      "isStaple": true
+    },
+    {
       "id": "mint",
       "name": "Mint",
       "category": "garnish",
@@ -511,6 +745,18 @@
         "Mint Leaves",
         "Mint Sprigs"
       ]
+    },
+    {
+      "id": "mint-syrup",
+      "name": "Mint syrup",
+      "category": "syrup",
+      "isStaple": false
+    },
+    {
+      "id": "nutmeg",
+      "name": "Nutmeg",
+      "category": "seasoning",
+      "isStaple": false
     },
     {
       "id": "orange",
@@ -531,6 +777,12 @@
       "isStaple": false
     },
     {
+      "id": "orange-peel",
+      "name": "Orange peel",
+      "category": "garnish",
+      "isStaple": false
+    },
+    {
       "id": "orgeat",
       "name": "Orgeat",
       "category": "syrup",
@@ -539,6 +791,18 @@
         "Orgeat (Almond Syrup)",
         "Orgeat Syrup"
       ]
+    },
+    {
+      "id": "papaya",
+      "name": "Papaya",
+      "category": "other",
+      "isStaple": false
+    },
+    {
+      "id": "passion-fruit-juice",
+      "name": "Passion fruit juice",
+      "category": "juice",
+      "isStaple": false
     },
     {
       "id": "passion-fruit-liqueur",
@@ -556,6 +820,12 @@
       "id": "passion-fruit-syrup",
       "name": "Passion Fruit Syrup",
       "category": "syrup",
+      "isStaple": false
+    },
+    {
+      "id": "peach-nectar",
+      "name": "Peach nectar",
+      "category": "juice",
       "isStaple": false
     },
     {
@@ -667,6 +937,12 @@
       ]
     },
     {
+      "id": "sherbet",
+      "name": "Sherbet",
+      "category": "other",
+      "isStaple": false
+    },
+    {
       "id": "sherry",
       "name": "Sherry",
       "category": "wine",
@@ -702,6 +978,12 @@
         "Chilled Champagne",
         "Prosecco"
       ]
+    },
+    {
+      "id": "strawberries",
+      "name": "Strawberries",
+      "category": "other",
+      "isStaple": false
     },
     {
       "id": "sugar",
@@ -747,6 +1029,12 @@
       ]
     },
     {
+      "id": "tea",
+      "name": "Tea",
+      "category": "other",
+      "isStaple": false
+    },
+    {
       "id": "tequila",
       "name": "Tequila",
       "category": "spirit",
@@ -778,6 +1066,12 @@
       ]
     },
     {
+      "id": "vanilla",
+      "name": "Vanilla",
+      "category": "seasoning",
+      "isStaple": false
+    },
+    {
       "id": "vanilla-extract",
       "name": "Vanilla Extract",
       "category": "seasoning",
@@ -804,6 +1098,18 @@
       "aliases": [
         "Plain Water"
       ]
+    },
+    {
+      "id": "whipped-cream",
+      "name": "Whipped cream",
+      "category": "dairy",
+      "isStaple": false
+    },
+    {
+      "id": "whipping-cream",
+      "name": "Whipping cream",
+      "category": "dairy",
+      "isStaple": false
     },
     {
       "id": "white-rum",
@@ -833,9 +1139,54 @@
       "name": "Yellow Chartreuse",
       "category": "liqueur",
       "isStaple": false
+    },
+    {
+      "id": "yoghurt",
+      "name": "Yoghurt",
+      "category": "dairy",
+      "isStaple": false
     }
   ],
   "cocktails": [
+    {
+      "id": "afterglow",
+      "name": "Afterglow",
+      "category": "Cocktail",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Mix.",
+        "Serve over ice."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "grenadine",
+          "name": "Grenadine",
+          "amount": 1,
+          "unit": "part"
+        },
+        {
+          "ingredientId": "orange-juice",
+          "name": "Fresh Orange Juice",
+          "call": "Orange juice",
+          "amount": 4,
+          "unit": "part"
+        },
+        {
+          "ingredientId": "pineapple-juice",
+          "name": "Pineapple Juice",
+          "call": "Pineapple juice",
+          "amount": 4,
+          "unit": "part"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
     {
       "id": "alexander",
       "name": "Alexander",
@@ -875,6 +1226,122 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "alice-cocktail",
+      "name": "Alice Cocktail",
+      "category": "Cocktail",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Shake well, strain into a large cocktail glass."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "grenadine",
+          "name": "Grenadine",
+          "amount": 1,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "orange-juice",
+          "name": "Fresh Orange Juice",
+          "call": "Orange juice",
+          "amount": 1,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "pineapple-juice",
+          "name": "Pineapple Juice",
+          "call": "Pineapple juice",
+          "amount": 2,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "cream",
+          "name": "Cream",
+          "amount": 4,
+          "unit": "cl"
+        }
+      ],
+      "glass": "coupe",
+      "method": "shaken",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "aloha-fruit-punch",
+      "name": "Aloha Fruit punch",
+      "category": "Punch / Party Drink",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Add 1/4 cup water to ginger root.",
+        "Boil 3 minutes.",
+        "Strain.",
+        "Add the liquid to the guava, lemon and pineapple juices.",
+        "Make a syrup of sugar and remaining water.",
+        "Cool.",
+        "Combine with juices and pineapple.",
+        "Chill throroughly."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 180,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "ginger",
+          "name": "Ginger",
+          "amount": 2,
+          "unit": "teaspoon",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "guava-juice",
+          "name": "Guava juice",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lemon-juice",
+          "name": "Fresh Lemon Juice",
+          "call": "Lemon juice",
+          "amount": 1.5,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredientId": "pineapple",
+          "name": "Pineapple",
+          "amount": 360,
+          "unit": "ml",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "pineapple-juice",
+          "name": "Pineapple Juice",
+          "call": "Pineapple juice",
+          "amount": 720,
+          "amountMax": 960,
+          "unit": "ml"
+        }
+      ],
+      "glass": "collins",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -957,6 +1424,114 @@
       ]
     },
     {
+      "id": "apello",
+      "name": "Apello",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Stirr.",
+        "Grnish with maraschino cherry."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "orange-juice",
+          "name": "Fresh Orange Juice",
+          "call": "Orange juice",
+          "amount": 4,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "grapefruit-juice",
+          "name": "Grapefruit Juice",
+          "call": "Grapefruit juice",
+          "amount": 3,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "apple-juice",
+          "name": "Apple juice",
+          "amount": 1,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "maraschino-cherry",
+          "name": "Maraschino cherry",
+          "amount": 1,
+          "unit": "piece",
+          "role": "garnish"
+        }
+      ],
+      "glass": "collins",
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "apple-berry-smoothie",
+      "name": "Apple Berry Smoothie",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Throw everything into a blender and liquify."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "berries",
+          "name": "Berries",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "apple",
+          "name": "Apple",
+          "amount": 2,
+          "unit": "piece"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "apple-karate",
+      "name": "Apple Karate",
+      "category": "Cocktail",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended.",
+        "Pour in one tall, 2 medium or 3 small glasses and drink up."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "apple-juice",
+          "name": "Apple juice",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "carrot",
+          "name": "Carrot",
+          "amount": 1,
+          "unit": "piece",
+          "note": "large"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "aviation",
       "name": "Aviation",
       "category": "The Unforgettables",
@@ -1000,6 +1575,172 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "banana-cantaloupe-smoothie",
+      "name": "Banana Cantaloupe Smoothie",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Juice cantaloupe, pour juice into blender, add banana, and liquify."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cantaloupe",
+          "name": "Cantaloupe",
+          "unit": "piece",
+          "note": "Juice of 1/2"
+        },
+        {
+          "ingredientId": "banana",
+          "name": "Banana",
+          "amount": 1,
+          "unit": "piece"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "banana-milk-shake",
+      "name": "Banana Milk Shake",
+      "category": "Shake",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Blend very well, preferably in a household mixer.",
+        "Serve in a wine glass, garnish with whipped cream and a piece of banana."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 10,
+          "unit": "cl",
+          "note": "cold"
+        },
+        {
+          "ingredientId": "orange-juice",
+          "name": "Fresh Orange Juice",
+          "call": "Orange juice",
+          "amount": 4,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "simple-syrup",
+          "name": "Simple Syrup",
+          "call": "Sugar syrup",
+          "amount": 2,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredientId": "banana",
+          "name": "Banana",
+          "amount": 0.5,
+          "unit": "piece"
+        }
+      ],
+      "glass": "wine",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "banana-strawberry-shake",
+      "name": "Banana Strawberry Shake",
+      "category": "Shake",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Blend all together in a blender until smooth."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "strawberries",
+          "name": "Strawberries",
+          "amount": 0.5,
+          "unit": "piece",
+          "note": "lb frozen"
+        },
+        {
+          "ingredientId": "banana",
+          "name": "Banana",
+          "amount": 1,
+          "unit": "piece",
+          "note": "frozen"
+        },
+        {
+          "ingredientId": "yoghurt",
+          "name": "Yoghurt",
+          "amount": 240,
+          "unit": "ml",
+          "note": "plain"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "honey",
+          "name": "Honey",
+          "unit": "piece",
+          "note": "to taste"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "banana-strawberry-shake-daiquiri",
+      "name": "Banana Strawberry Shake Daiquiri",
+      "category": "Shake",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Blend all together in a blender until smooth."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "strawberries",
+          "name": "Strawberries",
+          "amount": 0.5,
+          "unit": "piece",
+          "note": "lb frozen"
+        },
+        {
+          "ingredientId": "banana",
+          "name": "Banana",
+          "amount": 1,
+          "unit": "piece",
+          "note": "frozen"
+        },
+        {
+          "ingredientId": "apple-juice",
+          "name": "Apple juice",
+          "amount": 480,
+          "unit": "ml",
+          "note": "fresh"
+        }
+      ],
+      "glass": "coupe",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -1225,6 +1966,51 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "bora-bora",
+      "name": "Bora Bora",
+      "category": "Cocktail",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Prepare in a blender or shaker, serve in a highball glass on the rocks.",
+        "Garnish with 1 slice of pineapple and one cherry."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pineapple-juice",
+          "name": "Pineapple Juice",
+          "call": "Pineapple juice",
+          "amount": 10,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "passion-fruit-juice",
+          "name": "Passion fruit juice",
+          "amount": 6,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "lemon-juice",
+          "name": "Fresh Lemon Juice",
+          "call": "Lemon juice",
+          "amount": 1,
+          "unit": "cl"
+        },
+        {
+          "ingredientId": "grenadine",
+          "name": "Grenadine",
+          "amount": 1,
+          "unit": "cl"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -1554,6 +2340,61 @@
       ]
     },
     {
+      "id": "castillian-hot-chocolate",
+      "name": "Castillian Hot Chocolate",
+      "category": "Cocoa",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Shift the cocoa and sugar together into a medium-sized saucepan.",
+        "Dissolve the cornstarch in the water, and stir into the cocoa and sugar until it is a smooth paste.",
+        "Begin heating the mixture, stirring it with a whisk, and gradually pour in the milk.",
+        "Continue stirring with the whisk as you bring the liquid to a simmer.",
+        "Allow the chocolate to simmer for about 10 minutes, stirring often, until it is thick, glossy and completely smooth.",
+        "Serve steaming hot in coffee mug.",
+        "Serves six."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cocoa-powder",
+          "name": "Cocoa powder",
+          "amount": 120,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "cornstarch",
+          "name": "Cornstarch",
+          "amount": 7,
+          "unit": "teaspoon",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 120,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 946,
+          "unit": "ml"
+        }
+      ],
+      "glass": "mug",
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "champagne-cocktail",
       "name": "Champagne Cocktail",
       "category": "Contemporary Classics",
@@ -1655,6 +2496,97 @@
       ]
     },
     {
+      "id": "chocolate-beverage",
+      "name": "Chocolate Beverage",
+      "category": "Cocoa",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Boil milk in the top of a deep double boiler five minutes.",
+        "Remove from fire and add chocolate, mixed with the cinnamon, a little at a time, beating with molinillo or egg beater after each addition.",
+        "When the chocolate is thoroughly blended, heat to the boiling point.",
+        "Place over bottom of double boiler and add eggs, whipping constantly, until they are thoroughly blended and the mixture is frothing.",
+        "Serve in coffee mug.",
+        "Serves eight."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 1440,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "chocolate",
+          "name": "Chocolate",
+          "amount": 3,
+          "unit": "oz",
+          "note": "Mexican"
+        },
+        {
+          "ingredientId": "cinnamon",
+          "name": "Cinnamon",
+          "amount": 1,
+          "unit": "teaspoon",
+          "note": "powdered",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "egg",
+          "name": "Egg",
+          "amount": 3,
+          "unit": "piece"
+        }
+      ],
+      "glass": "mug",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "chocolate-drink",
+      "name": "Chocolate Drink",
+      "category": "Cocoa",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Melt the bar in a small amount of boiling water.",
+        "Add milk.",
+        "Cook over low heat, whipping gently (with a whisk, i would assume) until heated well.",
+        "Don't let it boil!",
+        "Serve in coffee mug."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "chocolate",
+          "name": "Chocolate",
+          "amount": 125,
+          "unit": "piece",
+          "note": "gr"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 750,
+          "unit": "ml",
+          "note": "L"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "unit": "piece"
+        }
+      ],
+      "glass": "mug",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "clover-club",
       "name": "Clover Club",
       "category": "The Unforgettables",
@@ -1697,6 +2629,39 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "coke-and-drops",
+      "name": "Coke and Drops",
+      "category": "Soft Drink",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Take a glass, pour the Coke in the glass, then you take 7 drops of lemon juice.",
+        "Granish with a lemon slice on the rim of the glass."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cola",
+          "name": "Cola",
+          "call": "Coca-Cola",
+          "amount": 100,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lemon-juice",
+          "name": "Fresh Lemon Juice",
+          "call": "Lemon juice",
+          "amount": 7,
+          "unit": "drop"
+        }
+      ],
+      "glass": "coupe",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -1796,6 +2761,60 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "cranberry-punch",
+      "name": "Cranberry Punch",
+      "category": "Punch / Party Drink",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Combine first four ingredients.",
+        "Stir until sugar is dissolved, chill.",
+        "Then add ginger ale just before serving.",
+        "Add ice ring to keep punch cold."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cranberry-juice",
+          "name": "Cranberry Juice",
+          "call": "Cranberry juice",
+          "amount": 960,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 360,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "pineapple-juice",
+          "name": "Pineapple Juice",
+          "call": "Pineapple juice",
+          "amount": 960,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "almond-flavoring",
+          "name": "Almond flavoring",
+          "amount": 1,
+          "unit": "tablespoon",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "ginger-ale",
+          "name": "Ginger Ale",
+          "call": "Ginger ale",
+          "amount": 1892,
+          "unit": "ml"
+        }
+      ],
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -1966,6 +2985,71 @@
       ]
     },
     {
+      "id": "drinking-chocolate",
+      "name": "Drinking Chocolate",
+      "category": "Cocoa",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Heat the cream and milk with the cinnamon and vanilla bean very slowly for 15-20 minutes. (If you don't have any beans add 1-2 tsp of vanilla after heating).",
+        "Remove the bean and cinnamon.",
+        "Add the chocolate.",
+        "Mix until fully melted.",
+        "Serve topped with some very dense fresh whipped cream.",
+        "Serves 1-2 depending upon how much of a glutton you are.",
+        "For a richer chocolate, use 4 oz of milk, 4 oz of cream, 4 oz of chocolate.",
+        "Serve in coffee mug."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "heavy-cream",
+          "name": "Heavy cream",
+          "amount": 2,
+          "unit": "oz"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 6,
+          "amountMax": 8,
+          "unit": "oz"
+        },
+        {
+          "ingredientId": "cinnamon",
+          "name": "Cinnamon",
+          "amount": 1,
+          "unit": "piece",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "vanilla",
+          "name": "Vanilla",
+          "amount": 1,
+          "unit": "piece",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "chocolate",
+          "name": "Chocolate",
+          "amount": 2,
+          "unit": "oz",
+          "note": "finely chopped dark"
+        },
+        {
+          "ingredientId": "whipped-cream",
+          "name": "Whipped cream",
+          "unit": "piece",
+          "note": "Fresh"
+        }
+      ],
+      "glass": "mug",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "dry-martini",
       "name": "Dry Martini",
       "category": "The Unforgettables",
@@ -1997,6 +3081,45 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "egg-cream",
+      "name": "Egg Cream",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Mix syrup and milk in a fountain glass.",
+        "Add soda water, serve with a straw."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "chocolate-syrup",
+          "name": "Chocolate syrup",
+          "amount": 2,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 6,
+          "unit": "oz",
+          "note": "whole"
+        },
+        {
+          "ingredientId": "soda-water",
+          "name": "Soda Water",
+          "call": "Soda water",
+          "amount": 6,
+          "unit": "oz"
+        }
+      ],
+      "glass": "mug",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -2074,6 +3197,50 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "frappe",
+      "name": "Frappé",
+      "category": "Coffee / Tea",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Mix together.",
+        "Blend at highest blender speed for about 1 minute.",
+        "Pour into a glass and drink with a straw.",
+        "Notes: This works best if everything is cold (if you make fresh coffee, mix it with the milk and let it sit in the fridge for 1/2 hour.",
+        "If it is not frothy, add more milk, or even just some more milk powder.",
+        "The froth gradually turns to liquid at the bottom of the glass, so you will find that you can sit and drink this for about 1/2 hour, with more iced coffee continually appearing at the bottom.",
+        "Very refreshing."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "coffee",
+          "name": "Coffee",
+          "amount": 120,
+          "unit": "ml",
+          "note": "black"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 120,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 1,
+          "amountMax": 2,
+          "unit": "teaspoon"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -2193,6 +3360,158 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "fruit-cooler",
+      "name": "Fruit Cooler",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Toss strawberries with sugar, and let sit overnight in refrigerator.",
+        "Cut lemon, reserve two slices.",
+        "Juice the rest.",
+        "Mix together the lemon juice, strawberries, apple juice, and soda water.",
+        "Add slices of lemon (decor, really).",
+        "In glasses, put ice cubes, and a slice of apple.",
+        "Pour drink in, and serve."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "apple-juice",
+          "name": "Apple juice",
+          "amount": 1,
+          "unit": "piece",
+          "note": "can frozen"
+        },
+        {
+          "ingredientId": "strawberries",
+          "name": "Strawberries",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 2,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredientId": "lemon",
+          "name": "Lemon",
+          "amount": 1,
+          "unit": "piece",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "apple",
+          "name": "Apple",
+          "amount": 1,
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "soda-water",
+          "name": "Soda Water",
+          "call": "Soda water",
+          "amount": 1000,
+          "unit": "ml",
+          "note": "L"
+        },
+        {
+          "ingredientId": "ice",
+          "name": "Ice",
+          "unit": "piece"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "fruit-flip-flop",
+      "name": "Fruit Flip-Flop",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended.",
+        "Pour in one tall, 2 medium or 3 small glasses and drink up."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "yoghurt",
+          "name": "Yoghurt",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "fruit-juice",
+          "name": "Fruit juice",
+          "amount": 240,
+          "unit": "ml"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "fruit-shake",
+      "name": "Fruit Shake",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Blend til smooth."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "yoghurt",
+          "name": "Yoghurt",
+          "amount": 240,
+          "unit": "ml",
+          "note": "fruit"
+        },
+        {
+          "ingredientId": "banana",
+          "name": "Banana",
+          "amount": 1,
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "orange-juice",
+          "name": "Fresh Orange Juice",
+          "call": "Orange juice",
+          "amount": 4,
+          "unit": "oz",
+          "note": "frozen"
+        },
+        {
+          "ingredientId": "fruit",
+          "name": "Fruit",
+          "amount": 0.5,
+          "unit": "piece",
+          "note": "piece textural"
+        },
+        {
+          "ingredientId": "ice",
+          "name": "Ice",
+          "amount": 6,
+          "unit": "piece"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -2361,6 +3680,44 @@
       ]
     },
     {
+      "id": "grape-lemon-pineapple-smoothie",
+      "name": "Grape lemon pineapple Smoothie",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Throw everything into a blender and liquify."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "grapes",
+          "name": "Grapes",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lemon",
+          "name": "Lemon",
+          "amount": 0.25,
+          "unit": "piece",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "pineapple",
+          "name": "Pineapple",
+          "amount": 0.5,
+          "unit": "piece",
+          "role": "garnish"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "grasshopper",
       "name": "Grasshopper",
       "category": "Contemporary Classics",
@@ -2492,6 +3849,48 @@
       ]
     },
     {
+      "id": "holloween-punch",
+      "name": "Holloween Punch",
+      "category": "Punch / Party Drink",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Take a bunch of grape juice and a bunch of fizzy stuff (club soda, ginger ale, lemonlime, whatever).",
+        "Mix them in a punch bowl.",
+        "Take orange sherbet and lime sherbet.",
+        "Scoop out scoops and float them in the punch, let them melt a little so that a nasty film spreads all over the top of the punch but there are still \"bubbles\" in it in the form of sherbet scoops.",
+        "Looks horrible, tastes just fine."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "grape-juice",
+          "name": "Grape juice",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "carbonated-soft-drink",
+          "name": "Carbonated soft drink",
+          "unit": "piece",
+          "note": "orange"
+        },
+        {
+          "ingredientId": "sherbet",
+          "name": "Sherbet",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "sherbet",
+          "name": "Sherbet",
+          "unit": "piece"
+        }
+      ],
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "horse-s-neck",
       "name": "Horse's Neck",
       "category": "Contemporary Classics",
@@ -2530,6 +3929,59 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "hot-chocolate-to-die-for",
+      "name": "Hot Chocolate to Die for",
+      "category": "Cocoa",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Melt the chocolate, butter and vanilla in a double boiler.",
+        "When just smooth stir in the cream."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "chocolate",
+          "name": "Chocolate",
+          "amount": 12,
+          "unit": "oz",
+          "note": "fine"
+        },
+        {
+          "ingredientId": "butter",
+          "name": "Butter",
+          "amount": 1,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredientId": "vanilla-extract",
+          "name": "Vanilla Extract",
+          "call": "Vanilla extract",
+          "amount": 0.5,
+          "unit": "teaspoon",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "half-and-half",
+          "name": "Half-and-half",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "marshmallows",
+          "name": "Marshmallows",
+          "unit": "piece",
+          "note": "mini",
+          "role": "garnish"
+        }
+      ],
+      "glass": "mug",
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -2610,6 +4062,55 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "iced-coffee",
+      "name": "Iced Coffee",
+      "category": "Coffee / Tea",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Mix together until coffee and sugar is dissolved.",
+        "Add milk.",
+        "Shake well.",
+        "Using a blender or milk shake maker produces a very foamy drink.",
+        "Serve in coffee mug."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "coffee",
+          "name": "Coffee",
+          "amount": 60,
+          "unit": "ml",
+          "note": "instant"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 60,
+          "unit": "ml",
+          "note": "hot"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 960,
+          "unit": "ml",
+          "note": "cold"
+        }
+      ],
+      "glass": "mug",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -2829,6 +4330,82 @@
       ]
     },
     {
+      "id": "just-a-moonmint",
+      "name": "Just a Moonmint",
+      "category": "Shake",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended.",
+        "Pour in one tall, 2 medium or 3 small glasses and drink up."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "chocolate-syrup",
+          "name": "Chocolate syrup",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "mint-syrup",
+          "name": "Mint syrup",
+          "unit": "piece"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "kill-the-cold-smoothie",
+      "name": "Kill the cold Smoothie",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Juice ginger and lemon and add it to hot water.",
+        "You may add cardomom."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "ginger",
+          "name": "Ginger",
+          "amount": 1,
+          "unit": "piece",
+          "note": "inch",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "lemon",
+          "name": "Lemon",
+          "amount": 0.25,
+          "unit": "piece",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 240,
+          "unit": "ml",
+          "note": "hot"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "kir",
       "name": "KIR",
       "category": "Contemporary Classics",
@@ -2857,6 +4434,287 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "kiwi-papaya-smoothie",
+      "name": "Kiwi Papaya Smoothie",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Throw everything into a blender and liquify."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "kiwi",
+          "name": "Kiwi",
+          "amount": 3,
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "papaya",
+          "name": "Papaya",
+          "amount": 0.5,
+          "unit": "piece"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "lassi-a-south-indian-drink",
+      "name": "Lassi - A South Indian Drink",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Blend in a blender for 3 seconds.",
+        "Lassi is one of the easiest things to make, and there are many ways of making it.",
+        "Basically, it is buttermilk (yoghurt whisked with water), and you can choose almost any consistency that you like, from the thinnest to the thickest.",
+        "Serve cold."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "yoghurt",
+          "name": "Yoghurt",
+          "amount": 120,
+          "unit": "ml",
+          "note": "plain"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 300,
+          "unit": "ml",
+          "note": "cold"
+        },
+        {
+          "ingredientId": "cumin-seed",
+          "name": "Cumin seed",
+          "amount": 0.5,
+          "unit": "teaspoon",
+          "note": "ground roasted",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "salt",
+          "name": "Salt",
+          "amount": 0.25,
+          "unit": "teaspoon",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "mint",
+          "name": "Mint",
+          "amount": 0.25,
+          "unit": "teaspoon",
+          "note": "dried",
+          "role": "garnish"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "lassi-mango",
+      "name": "Lassi - Mango",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Put it all in a blender and pour over crushed ice.",
+        "You can also use other fruits like strawberries and bananas."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "mango",
+          "name": "Mango",
+          "amount": 2,
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "yoghurt",
+          "name": "Yoghurt",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 120,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 240,
+          "unit": "ml",
+          "note": "iced"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "lassi-sweet",
+      "name": "Lassi - Sweet",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Put all ingredients into a blender and blend until nice and frothy.",
+        "Serve chilled."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "yoghurt",
+          "name": "Yoghurt",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 480,
+          "unit": "ml",
+          "note": "cold"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 4,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredientId": "salt",
+          "name": "Salt",
+          "unit": "pinch",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "lemon-juice",
+          "name": "Fresh Lemon Juice",
+          "call": "Lemon juice",
+          "amount": 2,
+          "unit": "tablespoon"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "lassi-khara",
+      "name": "Lassi Khara",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Blend (frappe) in blender until frothy.",
+        "Add torn curry leaves and serve cold."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "yoghurt",
+          "name": "Yoghurt",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 480,
+          "unit": "ml",
+          "note": "cold"
+        },
+        {
+          "ingredientId": "salt",
+          "name": "Salt",
+          "amount": 1,
+          "unit": "teaspoon",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "asafoetida",
+          "name": "Asafoetida",
+          "amount": 1,
+          "unit": "pinch",
+          "role": "seasoning"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "lassi-raita",
+      "name": "Lassi Raita",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Blend the yoghurt and ice cubes together, until the yoghurt becomes more liquid.",
+        "Add sugar to taste.",
+        "The lemon/lime is optional but it gives it a slightly tart taste.",
+        "Dash of salt.",
+        "Raita is also good for the summer.",
+        "Instead of having a traditional salad you can make raita instead."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "yoghurt",
+          "name": "Yoghurt",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "ice",
+          "name": "Ice",
+          "amount": 4,
+          "amountMax": 6,
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "lime",
+          "name": "Lime",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "salt",
+          "name": "Salt",
+          "unit": "piece",
+          "role": "seasoning"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -2941,6 +4799,111 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "lemouroudji",
+      "name": "Lemouroudji",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Juice the lemons.",
+        "Peel and grate the ginger.",
+        "Place the grated ginger and a liberal dash of the cayenne pepper into a piece of cheesecloth, and tie it into a knot.",
+        "Let soak in the water.",
+        "After 15 minutes or so, add the sugar, and the lemon juice.",
+        "Chill, and serve."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "ginger",
+          "name": "Ginger",
+          "amount": 2,
+          "unit": "piece",
+          "note": "pieces",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 3785,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lemon",
+          "name": "Lemon",
+          "amount": 1,
+          "unit": "piece",
+          "note": "lb",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "cayenne-pepper",
+          "name": "Cayenne pepper",
+          "unit": "piece",
+          "note": "ground",
+          "role": "seasoning"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "limeade",
+      "name": "Limeade",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "In a large glass, put the lime juice and sugar, and stir well.",
+        "Add cold seltzer water to fill.",
+        "Put the lime peels in the glass.",
+        "Drink.",
+        "Repeat until limes or soda run out."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "lime",
+          "name": "Lime",
+          "unit": "piece",
+          "note": "Juice of 1"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 1,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredientId": "soda-water",
+          "name": "Soda Water",
+          "call": "Soda water",
+          "unit": "piece",
+          "note": "seltzer water"
+        },
+        {
+          "ingredientId": "lime-peel",
+          "name": "Lime peel",
+          "unit": "piece",
+          "role": "garnish"
+        }
+      ],
+      "glass": "highball",
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -3074,6 +5037,37 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "mango-orange-smoothie",
+      "name": "Mango Orange Smoothie",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Throw everything into a blender and liquify."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "mango",
+          "name": "Mango",
+          "amount": 1,
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "orange",
+          "name": "Orange",
+          "amount": 2,
+          "unit": "piece",
+          "role": "garnish"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -3248,6 +5242,198 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "masala-chai",
+      "name": "Masala Chai",
+      "category": "Coffee / Tea",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Bring 2 cups of water to boil.",
+        "Add all the ingredients and boil again for about 15 seconds.",
+        "Let stand for a minute.",
+        "Warm milk in a pot.",
+        "Filter tea into cups.",
+        "Add milk and sugar.",
+        "That's IT."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "tea",
+          "name": "Tea",
+          "amount": 3,
+          "amountMax": 4,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredientId": "ginger",
+          "name": "Ginger",
+          "amount": 1,
+          "unit": "piece",
+          "note": "chunk dried",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "cardamom",
+          "name": "Cardamom",
+          "amount": 3,
+          "amountMax": 4,
+          "unit": "piece",
+          "note": "crushed",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "cloves",
+          "name": "Cloves",
+          "amount": 3,
+          "unit": "piece",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "cinnamon",
+          "name": "Cinnamon",
+          "amount": 1,
+          "unit": "piece",
+          "note": "piece",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "black-pepper",
+          "name": "Black pepper",
+          "amount": 1,
+          "amountMax": 2,
+          "unit": "piece",
+          "note": "whole",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "unit": "piece",
+          "note": "to taste"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "unit": "piece",
+          "note": "to taste"
+        }
+      ],
+      "glass": "mug",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "melya",
+      "name": "Melya",
+      "category": "Coffee / Tea",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Brew espresso.",
+        "In a coffee mug, place 1 teaspoon of unsweetened powdered cocoa, then cover a teaspoon with honey and drizzle it into the cup.",
+        "Stir while the coffee brews, this is the fun part.",
+        "The cocoa seems to coat the honey without mixing, so you get a dusty, sticky mass that looks as though it will never mix.",
+        "Then all at once, presto!",
+        "It looks like dark chocolate sauce.",
+        "Pour hot espresso over the honey, stirring to dissolve.",
+        "Serve with cream."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "espresso",
+          "name": "Espresso",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "honey",
+          "name": "Honey",
+          "unit": "piece",
+          "note": "Unsweetened"
+        },
+        {
+          "ingredientId": "cocoa-powder",
+          "name": "Cocoa powder",
+          "unit": "piece"
+        }
+      ],
+      "glass": "mug",
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "microwave-hot-cocoa",
+      "name": "Microwave Hot Cocoa",
+      "category": "Cocoa",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Combine sugar, cocoa, salt and hot water in 1-quart micro-proof measuring cup (or coffee mug).",
+        "Microwave at HIGH (100%) for 1 to 1 1/2 minutes or until boiling.",
+        "Add milk, sitr and microwave an additonal 1 1/2 to 2 minutes or until hot.",
+        "Stir in vanilla, blend well."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 5,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredientId": "cocoa-powder",
+          "name": "Cocoa powder",
+          "amount": 3,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredientId": "salt",
+          "name": "Salt",
+          "amount": 1,
+          "unit": "dash",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 3,
+          "unit": "tablespoon",
+          "note": "hot"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "vanilla-extract",
+          "name": "Vanilla Extract",
+          "call": "Vanilla extract",
+          "amount": 0.25,
+          "unit": "teaspoon",
+          "role": "seasoning"
+        }
+      ],
+      "glass": "mug",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -3676,6 +5862,54 @@
       ]
     },
     {
+      "id": "nuked-hot-chocolate",
+      "name": "Nuked Hot Chocolate",
+      "category": "Cocoa",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Mix with a bit of milk (1 oz or so) in coffee mug.",
+        "Nuke mug for about 30-50 seconds.",
+        "Stir until the heated cocoa dissolves.",
+        "Fill mug with milk.",
+        "Nuke for 1-2 minutes, depending on wattage and preferences as to burnt mouth parts."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cocoa-powder",
+          "name": "Cocoa powder",
+          "amount": 2,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 1,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredientId": "vanilla-extract",
+          "name": "Vanilla Extract",
+          "call": "Vanilla extract",
+          "amount": 0.5,
+          "unit": "teaspoon",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 12,
+          "unit": "oz"
+        }
+      ],
+      "glass": "mug",
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "old-cuban",
       "name": "Old Cuban",
       "category": "New Era Drinks",
@@ -3789,6 +6023,70 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "orange-scented-hot-chocolate",
+      "name": "Orange Scented Hot Chocolate",
+      "category": "Cocoa",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Combine all ingredients in heavy medium saucepan.",
+        "Stir over low heat until chocolate melts.",
+        "Increase heat and bring just to a boil, stirring often.",
+        "Remove from heat and whisk untily frothy.",
+        "Return to heat and bring to boil again.",
+        "Remove from heat, whisk until frothy.",
+        "Repeat heating and whisking once again.",
+        "Discard orange peel. (Can be prepared 2 hours ahead.",
+        "Let stand at room temperature.",
+        "Before serving, bring just to boil, remove from heat and whisk until frothy.) Pour hot chocolate into coffee mugs.",
+        "Makes 2 servings."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "chocolate",
+          "name": "Chocolate",
+          "amount": 4,
+          "unit": "oz",
+          "note": "chopped bittersweet or semi-sweet"
+        },
+        {
+          "ingredientId": "orange-peel",
+          "name": "Orange peel",
+          "amount": 3,
+          "unit": "piece",
+          "note": "inch strips",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "espresso",
+          "name": "Espresso",
+          "amount": 0.5,
+          "unit": "teaspoon",
+          "note": "instant"
+        },
+        {
+          "ingredientId": "nutmeg",
+          "name": "Nutmeg",
+          "amount": 0.13,
+          "unit": "teaspoon",
+          "note": "ground",
+          "role": "seasoning"
+        }
+      ],
+      "glass": "mug",
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -4016,6 +6314,39 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "pineapple-gingerale-smoothie",
+      "name": "Pineapple Gingerale Smoothie",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Throw everything into a blender and liquify."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "ginger",
+          "name": "Ginger",
+          "amount": 0.25,
+          "unit": "piece",
+          "note": "inch",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "pineapple",
+          "name": "Pineapple",
+          "amount": 0.5,
+          "unit": "piece",
+          "role": "garnish"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -4865,6 +7196,120 @@
       ]
     },
     {
+      "id": "spanish-chocolate",
+      "name": "Spanish chocolate",
+      "category": "Cocoa",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Stir the milk with the chocolate and the cinnamon over low heat until the chocolate dissolves.",
+        "Add the eggs and beat the mixture until it becomes thick, taking care not to boil.",
+        "Serve in coffee mug."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "chocolate",
+          "name": "Chocolate",
+          "amount": 2,
+          "unit": "oz",
+          "note": "sweet"
+        },
+        {
+          "ingredientId": "cinnamon",
+          "name": "Cinnamon",
+          "amount": 0.5,
+          "unit": "teaspoon",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "egg-yolk",
+          "name": "Egg Yolk",
+          "call": "Egg yolk",
+          "amount": 2,
+          "unit": "piece",
+          "note": "beaten"
+        }
+      ],
+      "glass": "mug",
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "spiced-peach-punch",
+      "name": "Spiced Peach Punch",
+      "category": "Punch / Party Drink",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Combine peach nectar, orange juice and brown sugar in a large saucepan.",
+        "Tie cinnamon and cloves in a small cheesecloth bag.",
+        "Drop into saucepan.",
+        "Heat slowly, stirring constantly, until sugar dissolves.",
+        "Simmer 10 minutes.",
+        "Stir in lime juice.",
+        "Serve in hot mugs."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "peach-nectar",
+          "name": "Peach nectar",
+          "amount": 46,
+          "unit": "oz"
+        },
+        {
+          "ingredientId": "orange-juice",
+          "name": "Fresh Orange Juice",
+          "call": "Orange juice",
+          "amount": 20,
+          "unit": "oz"
+        },
+        {
+          "ingredientId": "brown-sugar",
+          "name": "Brown sugar",
+          "amount": 120,
+          "unit": "ml",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "cinnamon",
+          "name": "Cinnamon",
+          "amount": 3,
+          "unit": "piece",
+          "note": "inch",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "cloves",
+          "name": "Cloves",
+          "amount": 0.5,
+          "unit": "teaspoon",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "lime-juice",
+          "name": "Fresh Lime Juice",
+          "call": "Lime juice",
+          "amount": 2,
+          "unit": "tablespoon"
+        }
+      ],
+      "glass": "collins",
+      "method": "stirred",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "spicy-fifty",
       "name": "Spicy Fifty",
       "category": "New Era Drinks",
@@ -4916,6 +7361,36 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "spiking-coffee",
+      "name": "Spiking coffee",
+      "category": "Coffee / Tea",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Incidentally, a pinch of cinnamon is indeed a nice addition to coffee but true heaven is a cardamom seed.",
+        "Of course, you serve it in a coffee mug."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "coffee",
+          "name": "Coffee",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "cinnamon",
+          "name": "Cinnamon",
+          "unit": "piece",
+          "role": "seasoning"
+        }
+      ],
+      "glass": "mug",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -4994,6 +7469,89 @@
       ]
     },
     {
+      "id": "strawberry-lemonade",
+      "name": "Strawberry Lemonade",
+      "category": "Punch / Party Drink",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Throw everything into a blender and mix until fairly smooth.",
+        "Serve over ice."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "lemon",
+          "name": "Lemon",
+          "unit": "piece",
+          "note": "Juice of 1",
+          "role": "garnish"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "amount": 1,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredientId": "strawberries",
+          "name": "Strawberries",
+          "amount": 8,
+          "amountMax": 10,
+          "unit": "piece",
+          "note": "ripe"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 240,
+          "unit": "ml"
+        }
+      ],
+      "glass": "collins",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "strawberry-shivers",
+      "name": "Strawberry Shivers",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended.",
+        "Pour in one tall, 2 medium or 3 small glasses and drink up."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "strawberries",
+          "name": "Strawberries",
+          "amount": 360,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "honey",
+          "name": "Honey",
+          "amount": 4,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 120,
+          "unit": "ml"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "suffering-bastard",
       "name": "Suffering Bastard",
       "category": "New Era Drinks",
@@ -5049,6 +7607,43 @@
       ]
     },
     {
+      "id": "sweet-bananas",
+      "name": "Sweet Bananas",
+      "category": "Shake",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended.",
+        "Pour in one tall, 2 medium or 3 small glasses and drink up."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "milk",
+          "name": "Milk",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "banana",
+          "name": "Banana",
+          "amount": 1,
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "honey",
+          "name": "Honey",
+          "amount": 1,
+          "unit": "tablespoon"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
       "id": "tequila-sunrise",
       "name": "Tequila Sunrise",
       "category": "Contemporary Classics",
@@ -5085,6 +7680,167 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "thai-coffee",
+      "name": "Thai Coffee",
+      "category": "Coffee / Tea",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Place the coffee and spices in the filter cone of your coffee maker.",
+        "Brew coffee as usual, let it cool.",
+        "In a tall glass, dissolve 1 or 2 teaspoons of sugar in an ounce of the coffee (it's easier to dissolve than if you put it right over ice).",
+        "Add 5-6 ice cubes and pour coffee to within about 1 inch of the top of the glass.",
+        "Rest a spoon on top of the coffee and slowly pour whipping cream into the spoon.",
+        "This will make the cream float on top of the coffee rather than dispersing into it right away."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "coffee",
+          "name": "Coffee",
+          "amount": 6,
+          "unit": "tablespoon",
+          "note": "ground"
+        },
+        {
+          "ingredientId": "coriander",
+          "name": "Coriander",
+          "amount": 0.25,
+          "unit": "teaspoon",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "cardamom",
+          "name": "Cardamom",
+          "amount": 4,
+          "amountMax": 5,
+          "unit": "piece",
+          "note": "whole green",
+          "role": "seasoning"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "whipping-cream",
+          "name": "Whipping cream",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "ice",
+          "name": "Ice",
+          "unit": "piece"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "thai-iced-coffee",
+      "name": "Thai Iced Coffee",
+      "category": "Coffee / Tea",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Prepare a pot of coffee at a good European strength.",
+        "In the ground coffee, add 2 or 3 freshly ground cardamom pods.",
+        "Sweeten while hot, then cool quickly.",
+        "Serve in highball glass over ice, with cream.",
+        "To get the layered effect, place a spoon atop the coffee and pour the milk carefully into the spoon so that it floats on the top of the coffee."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "coffee",
+          "name": "Coffee",
+          "unit": "piece",
+          "note": "black"
+        },
+        {
+          "ingredientId": "sugar",
+          "name": "Sugar",
+          "unit": "piece"
+        },
+        {
+          "ingredientId": "cream",
+          "name": "Cream",
+          "unit": "piece",
+          "note": "pods"
+        },
+        {
+          "ingredientId": "cardamom",
+          "name": "Cardamom",
+          "unit": "piece",
+          "role": "seasoning"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "servings": 1,
+      "tags": [
+        "mocktail"
+      ]
+    },
+    {
+      "id": "thai-iced-tea",
+      "name": "Thai Iced Tea",
+      "category": "Coffee / Tea",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Combine Thai tea (i.e., the powder), boiling water, and sweetened condensed milk, stir until blended.",
+        "Pour into 2 tall glasses filled with ice cubes.",
+        "Garnish with mint leaves.",
+        "Makes 2 servings."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "tea",
+          "name": "Tea",
+          "amount": 60,
+          "unit": "ml",
+          "note": "Thai"
+        },
+        {
+          "ingredientId": "water",
+          "name": "Water",
+          "amount": 120,
+          "unit": "ml",
+          "note": "boiling"
+        },
+        {
+          "ingredientId": "condensed-milk",
+          "name": "Condensed milk",
+          "amount": 2,
+          "unit": "teaspoon",
+          "note": "sweetened"
+        },
+        {
+          "ingredientId": "ice",
+          "name": "Ice",
+          "unit": "piece",
+          "note": "cubes"
+        },
+        {
+          "ingredientId": "mint",
+          "name": "Mint",
+          "unit": "piece",
+          "note": "garnish",
+          "role": "garnish"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -5203,6 +7959,48 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "tomato-tang",
+      "name": "Tomato Tang",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended.",
+        "Pour in one tall, 2 medium or 3 small glasses and drink up."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "tomato-juice",
+          "name": "Tomato Juice",
+          "call": "Tomato juice",
+          "amount": 480,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "lemon-juice",
+          "name": "Fresh Lemon Juice",
+          "call": "Lemon juice",
+          "amount": 1,
+          "amountMax": 2,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredientId": "celery-salt",
+          "name": "Celery Salt",
+          "call": "Celery salt",
+          "amount": 1,
+          "unit": "dash",
+          "role": "seasoning"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {
@@ -5577,6 +8375,44 @@
       "servings": 1,
       "tags": [
         "iba-official"
+      ]
+    },
+    {
+      "id": "yoghurt-cooler",
+      "name": "Yoghurt Cooler",
+      "category": "Other / Unknown",
+      "baseSpirit": "none",
+      "description": "",
+      "instructions": [
+        "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended.",
+        "Pour in one tall, 2 medium or 3 small glasses and drink up.",
+        "Note: Use lots of ice in this one - great on hot days!",
+        "To add ice: Remove the center of the cover while the blender is on - drop 3 or 4 ice cubs and blend until they're completely crushed."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "yoghurt",
+          "name": "Yoghurt",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "fruit",
+          "name": "Fruit",
+          "amount": 240,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "ice",
+          "name": "Ice",
+          "unit": "piece"
+        }
+      ],
+      "glass": "highball",
+      "method": "blended",
+      "servings": 1,
+      "tags": [
+        "mocktail"
       ]
     },
     {

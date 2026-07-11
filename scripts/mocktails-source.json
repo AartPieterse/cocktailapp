@@ -1,0 +1,1850 @@
+{
+  "meta": {
+    "title": "Mocktails (non-alcoholic drinks)",
+    "authority": "None — unlike cocktails (IBA), there is no official governing body or canonical list for mocktails.",
+    "source": {
+      "name": "TheCocktailDB (community recipe database)",
+      "url": "https://www.thecocktaildb.com/",
+      "via": "https://github.com/xavibarra/custom-api-cocktaildb (full JSON dump, 413 drinks)",
+      "note": "Filtered on strAlcoholic. Ingredients/measures are structured facts; instructions are the community DB's short functional steps. Attribution belongs to TheCocktailDB and its contributors."
+    },
+    "generated": "2026-07-11",
+    "counts": {
+      "non_alcoholic": 54,
+      "optional_alcohol": 8,
+      "by_category_non_alcoholic": {
+        "Other / Unknown": 22,
+        "Cocoa": 9,
+        "Coffee / Tea": 8,
+        "Punch / Party Drink": 5,
+        "Shake": 5,
+        "Cocktail": 4,
+        "Soft Drink": 1
+      }
+    }
+  },
+  "mocktails": [
+    {
+      "name": "Afterglow",
+      "category": "Cocktail",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Grenadine",
+          "measure": "1 part"
+        },
+        {
+          "ingredient": "Orange juice",
+          "measure": "4 parts"
+        },
+        {
+          "ingredient": "Pineapple juice",
+          "measure": "4 parts"
+        }
+      ],
+      "instructions": "Mix. Serve over ice.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/vuquyv1468876052.jpg",
+      "source_id": "12560",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Alice Cocktail",
+      "category": "Cocktail",
+      "glass": "Cocktail glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Grenadine",
+          "measure": "1 cl"
+        },
+        {
+          "ingredient": "Orange juice",
+          "measure": "1 cl"
+        },
+        {
+          "ingredient": "Pineapple juice",
+          "measure": "2 cl"
+        },
+        {
+          "ingredient": "Cream",
+          "measure": "4 cl"
+        }
+      ],
+      "instructions": "Shake well, strain into a large cocktail glass.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/qyqtpv1468876144.jpg",
+      "source_id": "12562",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Aloha Fruit punch",
+      "category": "Punch / Party Drink",
+      "glass": "Collins Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Water",
+          "measure": "3/4 cup"
+        },
+        {
+          "ingredient": "Ginger",
+          "measure": "2 tsp"
+        },
+        {
+          "ingredient": "Guava juice",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Lemon juice",
+          "measure": "1 1/2 tblsp"
+        },
+        {
+          "ingredient": "Pineapple",
+          "measure": "1 1/2 cup"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Pineapple juice",
+          "measure": "3-4 cups"
+        }
+      ],
+      "instructions": "Add 1/4 cup water to ginger root. Boil 3 minutes. Strain. Add the liquid to the guava, lemon and pineapple juices. Make a syrup of sugar and remaining water. Cool. Combine with juices and pineapple. Chill throroughly.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/wsyvrt1468876267.jpg",
+      "source_id": "12862",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Apello",
+      "category": "Other / Unknown",
+      "glass": "Collins Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Orange juice",
+          "measure": "4 cl"
+        },
+        {
+          "ingredient": "Grapefruit juice",
+          "measure": "3 cl"
+        },
+        {
+          "ingredient": "Apple juice",
+          "measure": "1 cl"
+        },
+        {
+          "ingredient": "Maraschino cherry",
+          "measure": "1"
+        }
+      ],
+      "instructions": "Stirr. Grnish with maraschino cherry.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/uptxtv1468876415.jpg",
+      "source_id": "15106",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Apple Berry Smoothie",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Berries",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Apple",
+          "measure": "2"
+        }
+      ],
+      "instructions": "Throw everything into a blender and liquify.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/xwqvur1468876473.jpg",
+      "source_id": "12710",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Apple Karate",
+      "category": "Cocktail",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Apple juice",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Carrot",
+          "measure": "1 large"
+        }
+      ],
+      "instructions": "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended. Pour in one tall, 2 medium or 3 small glasses and drink up.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/syusvw1468876634.jpg",
+      "source_id": "12564",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Banana Cantaloupe Smoothie",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Cantaloupe",
+          "measure": "Juice of 1/2"
+        },
+        {
+          "ingredient": "Banana",
+          "measure": "1"
+        }
+      ],
+      "instructions": "Juice cantaloupe, pour juice into blender, add banana, and liquify.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/uqxqsy1468876703.jpg",
+      "source_id": "12708",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Banana Milk Shake",
+      "category": "Shake",
+      "glass": "White wine glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Milk",
+          "measure": "10 cl cold"
+        },
+        {
+          "ingredient": "Orange juice",
+          "measure": "4 cl"
+        },
+        {
+          "ingredient": "Sugar syrup",
+          "measure": "2 tsp"
+        },
+        {
+          "ingredient": "Banana",
+          "measure": "1/2"
+        }
+      ],
+      "instructions": "Blend very well, preferably in a household mixer. Serve in a wine glass, garnish with whipped cream and a piece of banana.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/rtwwsx1472720307.jpg",
+      "source_id": "12654",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Banana Strawberry Shake",
+      "category": "Shake",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Strawberries",
+          "measure": "1/2 lb frozen"
+        },
+        {
+          "ingredient": "Banana",
+          "measure": "1 frozen"
+        },
+        {
+          "ingredient": "Yoghurt",
+          "measure": "1 cup plain"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Honey",
+          "measure": "to taste"
+        }
+      ],
+      "instructions": "Blend all together in a blender until smooth.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/vqquwx1472720634.jpg",
+      "source_id": "12656",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Banana Strawberry Shake Daiquiri",
+      "category": "Shake",
+      "glass": "Cocktail Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Strawberries",
+          "measure": "1/2 lb frozen"
+        },
+        {
+          "ingredient": "Banana",
+          "measure": "1 frozen"
+        },
+        {
+          "ingredient": "Apple juice",
+          "measure": "2 cups fresh"
+        }
+      ],
+      "instructions": "Blend all together in a blender until smooth.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/uvypss1472720581.jpg",
+      "source_id": "12658",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Bora Bora",
+      "category": "Cocktail",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Pineapple juice",
+          "measure": "10 cl"
+        },
+        {
+          "ingredient": "Passion fruit juice",
+          "measure": "6 cl"
+        },
+        {
+          "ingredient": "Lemon juice",
+          "measure": "1 cl"
+        },
+        {
+          "ingredient": "Grenadine",
+          "measure": "1 cl"
+        }
+      ],
+      "instructions": "Prepare in a blender or shaker, serve in a highball glass on the rocks. Garnish with 1 slice of pineapple and one cherry.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/xwuqvw1473201811.jpg",
+      "source_id": "12572",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Castillian Hot Chocolate",
+      "category": "Cocoa",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Cocoa powder",
+          "measure": "1/2 cup"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Cornstarch",
+          "measure": "7 tsp"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "1/2 cup"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "1 qt"
+        }
+      ],
+      "instructions": "Shift the cocoa and sugar together into a medium-sized saucepan. Dissolve the cornstarch in the water, and stir into the cocoa and sugar until it is a smooth paste. Begin heating the mixture, stirring it with a whisk, and gradually pour in the milk. Continue stirring with the whisk as you bring the liquid to a simmer. Allow the chocolate to simmer for about 10 minutes, stirring often, until it is thick, glossy and completely smooth. Serve steaming hot in coffee mug. Serves six.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/3nbu4a1487603196.jpg",
+      "source_id": "12730",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Chocolate Beverage",
+      "category": "Cocoa",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Milk",
+          "measure": "6 cups"
+        },
+        {
+          "ingredient": "Chocolate",
+          "measure": "3 oz Mexican"
+        },
+        {
+          "ingredient": "Cinnamon",
+          "measure": "1 tsp powdered"
+        },
+        {
+          "ingredient": "Egg",
+          "measure": "3"
+        }
+      ],
+      "instructions": "Boil milk in the top of a deep double boiler five minutes. Remove from fire and add chocolate, mixed with the cinnamon, a little at a time, beating with molinillo or egg beater after each addition. When the chocolate is thoroughly blended, heat to the boiling point. Place over bottom of double boiler and add eggs, whipping constantly, until they are thoroughly blended and the mixture is frothing. Serve in coffee mug. Serves eight.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/jbqrhv1487603186.jpg",
+      "source_id": "12732",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Chocolate Drink",
+      "category": "Cocoa",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Chocolate",
+          "measure": "125 gr"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "3/4 L"
+        },
+        {
+          "ingredient": "Water",
+          "measure": null
+        }
+      ],
+      "instructions": "Melt the bar in a small amount of boiling water. Add milk. Cook over low heat, whipping gently (with a whisk, i would assume) until heated well. Don't let it boil! Serve in coffee mug.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/q7w4xu1487603180.jpg",
+      "source_id": "12734",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Coke and Drops",
+      "category": "Soft Drink",
+      "glass": "Cocktail glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Coca-Cola",
+          "measure": "1 dl"
+        },
+        {
+          "ingredient": "Lemon juice",
+          "measure": "7 drops"
+        }
+      ],
+      "instructions": "Take a glass, pour the Coke in the glass, then you take 7 drops of lemon juice. Granish with a lemon slice on the rim of the glass.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/yrtxxp1472719367.jpg",
+      "source_id": "17108",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Cranberry Punch",
+      "category": "Punch / Party Drink",
+      "glass": "Punch Bowl",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Cranberry juice",
+          "measure": "4 cups"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1 1/2 cup"
+        },
+        {
+          "ingredient": "Pineapple juice",
+          "measure": "4 cups"
+        },
+        {
+          "ingredient": "Almond flavoring",
+          "measure": "1 tblsp"
+        },
+        {
+          "ingredient": "Ginger ale",
+          "measure": "2 qt"
+        }
+      ],
+      "instructions": "Combine first four ingredients. Stir until sugar is dissolved, chill. Then add ginger ale just before serving. Add ice ring to keep punch cold.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/mzgaqu1504389248.jpg",
+      "source_id": "12890",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Drinking Chocolate",
+      "category": "Cocoa",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Heavy cream",
+          "measure": "2 oz"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "6-8 oz"
+        },
+        {
+          "ingredient": "Cinnamon",
+          "measure": "1 stick"
+        },
+        {
+          "ingredient": "Vanilla",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Chocolate",
+          "measure": "2 oz finely chopped dark"
+        },
+        {
+          "ingredient": "Whipped cream",
+          "measure": "Fresh"
+        }
+      ],
+      "instructions": "Heat the cream and milk with the cinnamon and vanilla bean very slowly for 15-20 minutes. (If you don't have any beans add 1-2 tsp of vanilla after heating). Remove the bean and cinnamon. Add the chocolate. Mix until fully melted. Serve topped with some very dense fresh whipped cream. Serves 1-2 depending upon how much of a glutton you are. For a richer chocolate, use 4 oz of milk, 4 oz of cream, 4 oz of chocolate. Serve in coffee mug.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/u6jrdf1487603173.jpg",
+      "source_id": "12736",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Egg Cream",
+      "category": "Other / Unknown",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Chocolate syrup",
+          "measure": "2 tblsp"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "6 oz whole"
+        },
+        {
+          "ingredient": "Soda water",
+          "measure": "6 oz"
+        }
+      ],
+      "instructions": "Mix syrup and milk in a fountain glass. Add soda water, serve with a straw.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/mvis731484430445.jpg",
+      "source_id": "12668",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Frappé",
+      "category": "Coffee / Tea",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Coffee",
+          "measure": "1/2 cup black"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "1/2 cup"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1-2 tsp"
+        }
+      ],
+      "instructions": "Mix together. Blend at highest blender speed for about 1 minute. Pour into a glass and drink with a straw. Notes: This works best if everything is cold (if you make fresh coffee, mix it with the milk and let it sit in the fridge for 1/2 hour. If it is not frothy, add more milk, or even just some more milk powder. The froth gradually turns to liquid at the bottom of the glass, so you will find that you can sit and drink this for about 1/2 hour, with more iced coffee continually appearing at the bottom. Very refreshing.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/vqwryq1441245927.jpg",
+      "source_id": "12768",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Fruit Cooler",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Apple juice",
+          "measure": "1 can frozen"
+        },
+        {
+          "ingredient": "Strawberries",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "2 tblsp"
+        },
+        {
+          "ingredient": "Lemon",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Apple",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Soda water",
+          "measure": "1 L"
+        },
+        {
+          "ingredient": "Ice",
+          "measure": null
+        }
+      ],
+      "instructions": "Toss strawberries with sugar, and let sit overnight in refrigerator. Cut lemon, reserve two slices. Juice the rest. Mix together the lemon juice, strawberries, apple juice, and soda water. Add slices of lemon (decor, really). In glasses, put ice cubes, and a slice of apple. Pour drink in, and serve.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/i3tfn31484430499.jpg",
+      "source_id": "12670",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Fruit Flip-Flop",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Yoghurt",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Fruit juice",
+          "measure": "1 cup"
+        }
+      ],
+      "instructions": "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended. Pour in one tall, 2 medium or 3 small glasses and drink up.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/nfdx6p1484430633.jpg",
+      "source_id": "12672",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Fruit Shake",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Yoghurt",
+          "measure": "1 cup fruit"
+        },
+        {
+          "ingredient": "Banana",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Orange juice",
+          "measure": "4 oz frozen"
+        },
+        {
+          "ingredient": "Fruit",
+          "measure": "1/2 piece textural"
+        },
+        {
+          "ingredient": "Ice",
+          "measure": "6"
+        }
+      ],
+      "instructions": "Blend til smooth.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/q0fg2m1484430704.jpg",
+      "source_id": "12674",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Grape lemon pineapple Smoothie",
+      "category": "Other / Unknown",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Grapes",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Lemon",
+          "measure": "1/4"
+        },
+        {
+          "ingredient": "Pineapple",
+          "measure": "1/2"
+        }
+      ],
+      "instructions": "Throw everything into a blender and liquify.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/54z5h71487603583.jpg",
+      "source_id": "12712",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Holloween Punch",
+      "category": "Punch / Party Drink",
+      "glass": "Punch bowl",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Grape juice",
+          "measure": null
+        },
+        {
+          "ingredient": "Carbonated soft drink",
+          "measure": ", orange"
+        },
+        {
+          "ingredient": "Sherbet",
+          "measure": null
+        },
+        {
+          "ingredient": "Sherbet",
+          "measure": null
+        }
+      ],
+      "instructions": "Take a bunch of grape juice and a bunch of fizzy stuff (club soda, ginger ale, lemonlime, whatever). Mix them in a punch bowl. Take orange sherbet and lime sherbet. Scoop out scoops and float them in the punch, let them melt a little so that a nasty film spreads all over the top of the punch but there are still \"bubbles\" in it in the form of sherbet scoops. Looks horrible, tastes just fine.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/lfeoe41504888925.jpg",
+      "source_id": "12954",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Hot Chocolate to Die for",
+      "category": "Cocoa",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Chocolate",
+          "measure": "12 oz fine"
+        },
+        {
+          "ingredient": "Butter",
+          "measure": "1 tsp"
+        },
+        {
+          "ingredient": "Vanilla extract",
+          "measure": "1/2 tsp"
+        },
+        {
+          "ingredient": "Half-and-half",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Marshmallows",
+          "measure": "mini"
+        }
+      ],
+      "instructions": "Melt the chocolate, butter and vanilla in a double boiler. When just smooth stir in the cream.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/0lrmjp1487603166.jpg",
+      "source_id": "12738",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Iced Coffee",
+      "category": "Coffee / Tea",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Coffee",
+          "measure": "1/4 cup instant"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1/4 cup"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "1/4 cup hot"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "4 cups cold"
+        }
+      ],
+      "instructions": "Mix together until coffee and sugar is dissolved. Add milk. Shake well. Using a blender or milk shake maker produces a very foamy drink. Serve in coffee mug.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/ytprxy1454513855.jpg",
+      "source_id": "12770",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Just a Moonmint",
+      "category": "Shake",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Milk",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Chocolate syrup",
+          "measure": null
+        },
+        {
+          "ingredient": "Mint syrup",
+          "measure": null
+        }
+      ],
+      "instructions": "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended. Pour in one tall, 2 medium or 3 small glasses and drink up.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/znald61487604035.jpg",
+      "source_id": "12688",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Kill the cold Smoothie",
+      "category": "Other / Unknown",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Ginger",
+          "measure": "1 inch"
+        },
+        {
+          "ingredient": "Lemon",
+          "measure": "1/4"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "1 cup hot"
+        }
+      ],
+      "instructions": "Juice ginger and lemon and add it to hot water. You may add cardomom.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/7j1z2e1487603414.jpg",
+      "source_id": "12720",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Kiwi Papaya Smoothie",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Kiwi",
+          "measure": "3"
+        },
+        {
+          "ingredient": "Papaya",
+          "measure": "1/2"
+        }
+      ],
+      "instructions": "Throw everything into a blender and liquify.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/jogv4w1487603571.jpg",
+      "source_id": "12714",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Lassi - A South Indian Drink",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Yoghurt",
+          "measure": "1/2 cup plain"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "1 1/4 cup cold"
+        },
+        {
+          "ingredient": "Cumin seed",
+          "measure": "1/2 tsp ground roasted"
+        },
+        {
+          "ingredient": "Salt",
+          "measure": "1/4 tsp"
+        },
+        {
+          "ingredient": "Mint",
+          "measure": "1/4 tsp dried"
+        }
+      ],
+      "instructions": "Blend in a blender for 3 seconds. Lassi is one of the easiest things to make, and there are many ways of making it. Basically, it is buttermilk (yoghurt whisked with water), and you can choose almost any consistency that you like, from the thinnest to the thickest. Serve cold.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/iq6scx1487603980.jpg",
+      "source_id": "12690",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Lassi - Mango",
+      "category": "Other / Unknown",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Mango",
+          "measure": "2"
+        },
+        {
+          "ingredient": "Yoghurt",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1/2 cup"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "1 cup iced"
+        }
+      ],
+      "instructions": "Put it all in a blender and pour over crushed ice. You can also use other fruits like strawberries and bananas.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/1bw6sd1487603816.jpg",
+      "source_id": "12698",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Lassi - Sweet",
+      "category": "Other / Unknown",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Yoghurt",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "2 cups cold"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "4 tblsp"
+        },
+        {
+          "ingredient": "Salt",
+          "measure": "pinch"
+        },
+        {
+          "ingredient": "Lemon juice",
+          "measure": "2 tblsp"
+        }
+      ],
+      "instructions": "Put all ingredients into a blender and blend until nice and frothy. Serve chilled.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/9jeifz1487603885.jpg",
+      "source_id": "12696",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Lassi Khara",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Yoghurt",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "2 cups cold"
+        },
+        {
+          "ingredient": "Salt",
+          "measure": "1 tsp"
+        },
+        {
+          "ingredient": "Asafoetida",
+          "measure": "1 pinch"
+        }
+      ],
+      "instructions": "Blend (frappe) in blender until frothy. Add torn curry leaves and serve cold.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/m1suzm1487603970.jpg",
+      "source_id": "12692",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Lassi Raita",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Yoghurt",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Ice",
+          "measure": "4-6"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": null
+        },
+        {
+          "ingredient": "Lime",
+          "measure": null
+        },
+        {
+          "ingredient": "Salt",
+          "measure": null
+        }
+      ],
+      "instructions": "Blend the yoghurt and ice cubes together, until the yoghurt becomes more liquid. Add sugar to taste. The lemon/lime is optional but it gives it a slightly tart taste. Dash of salt. Raita is also good for the summer. Instead of having a traditional salad you can make raita instead.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/s4x0qj1487603933.jpg",
+      "source_id": "12694",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Lemouroudji",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Ginger",
+          "measure": "2 pieces"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "1 gal"
+        },
+        {
+          "ingredient": "Lemon",
+          "measure": "1 lb"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Cayenne pepper",
+          "measure": "ground"
+        }
+      ],
+      "instructions": "Juice the lemons. Peel and grate the ginger. Place the grated ginger and a liberal dash of the cayenne pepper into a piece of cheesecloth, and tie it into a knot. Let soak in the water. After 15 minutes or so, add the sugar, and the lemon juice. Chill, and serve.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/eirmo71487603745.jpg",
+      "source_id": "12702",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Limeade",
+      "category": "Other / Unknown",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Lime",
+          "measure": "Juice of 1"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1 tblsp"
+        },
+        {
+          "ingredient": "Soda water",
+          "measure": "(seltzer water)"
+        },
+        {
+          "ingredient": "Lime peel",
+          "measure": null
+        }
+      ],
+      "instructions": "In a large glass, put the lime juice and sugar, and stir well. Add cold seltzer water to fill. Put the lime peels in the glass. Drink. Repeat until limes or soda run out.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/5jdp5r1487603680.jpg",
+      "source_id": "12704",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Mango Orange Smoothie",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Mango",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Orange",
+          "measure": "2"
+        }
+      ],
+      "instructions": "Throw everything into a blender and liquify.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/vdp2do1487603520.jpg",
+      "source_id": "12716",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Masala Chai",
+      "category": "Coffee / Tea",
+      "glass": "Coffee Mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Water",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Tea",
+          "measure": "3-4 tsp"
+        },
+        {
+          "ingredient": "Ginger",
+          "measure": "1 chunk dried"
+        },
+        {
+          "ingredient": "Cardamom",
+          "measure": "3-4 crushed"
+        },
+        {
+          "ingredient": "Cloves",
+          "measure": "3"
+        },
+        {
+          "ingredient": "Cinnamon",
+          "measure": "1 piece"
+        },
+        {
+          "ingredient": "Black pepper",
+          "measure": "1-2 whole"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "to taste"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "to taste"
+        }
+      ],
+      "instructions": "Bring 2 cups of water to boil. Add all the ingredients and boil again for about 15 seconds. Let stand for a minute. Warm milk in a pot. Filter tea into cups. Add milk and sugar. That's IT.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/uyrpww1441246384.jpg",
+      "source_id": "12774",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Melya",
+      "category": "Coffee / Tea",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Espresso",
+          "measure": null
+        },
+        {
+          "ingredient": "Honey",
+          "measure": "Unsweetened"
+        },
+        {
+          "ingredient": "Cocoa powder",
+          "measure": null
+        }
+      ],
+      "instructions": "Brew espresso. In a coffee mug, place 1 teaspoon of unsweetened powdered cocoa, then cover a teaspoon with honey and drizzle it into the cup. Stir while the coffee brews, this is the fun part. The cocoa seems to coat the honey without mixing, so you get a dusty, sticky mass that looks as though it will never mix. Then all at once, presto! It looks like dark chocolate sauce. Pour hot espresso over the honey, stirring to dissolve. Serve with cream.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/xwtptq1441247579.jpg",
+      "source_id": "12776",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Microwave Hot Cocoa",
+      "category": "Cocoa",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Sugar",
+          "measure": "5 tblsp"
+        },
+        {
+          "ingredient": "Cocoa powder",
+          "measure": "3 tblsp"
+        },
+        {
+          "ingredient": "Salt",
+          "measure": "1 dash"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "3 tblsp hot"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Vanilla extract",
+          "measure": "1/4 tsp"
+        }
+      ],
+      "instructions": "Combine sugar, cocoa, salt and hot water in 1-quart micro-proof measuring cup (or coffee mug). Microwave at HIGH (100%) for 1 to 1 1/2 minutes or until boiling. Add milk, sitr and microwave an additonal 1 1/2 to 2 minutes or until hot. Stir in vanilla, blend well.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/8y4x5f1487603151.jpg",
+      "source_id": "12744",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Nuked Hot Chocolate",
+      "category": "Cocoa",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Cocoa powder",
+          "measure": "2 tsp"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1 tsp"
+        },
+        {
+          "ingredient": "Vanilla extract",
+          "measure": "1/2 tsp"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "12 oz"
+        }
+      ],
+      "instructions": "Mix with a bit of milk (1 oz or so) in coffee mug. Nuke mug for about 30-50 seconds. Stir until the heated cocoa dissolves. Fill mug with milk. Nuke for 1-2 minutes, depending on wattage and preferences as to burnt mouth parts.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/xcu6nb1487603142.jpg",
+      "source_id": "12746",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Orange Scented Hot Chocolate",
+      "category": "Cocoa",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Milk",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Chocolate",
+          "measure": "4 oz chopped bittersweet or semi-sweet"
+        },
+        {
+          "ingredient": "Orange peel",
+          "measure": "3 2-inch strips"
+        },
+        {
+          "ingredient": "Espresso",
+          "measure": "1/2 tsp instant"
+        },
+        {
+          "ingredient": "Nutmeg",
+          "measure": "1/8 tsp ground"
+        }
+      ],
+      "instructions": "Combine all ingredients in heavy medium saucepan. Stir over low heat until chocolate melts. Increase heat and bring just to a boil, stirring often. Remove from heat and whisk untily frothy. Return to heat and bring to boil again. Remove from heat, whisk until frothy. Repeat heating and whisking once again. Discard orange peel. (Can be prepared 2 hours ahead. Let stand at room temperature. Before serving, bring just to boil, remove from heat and whisk until frothy.) Pour hot chocolate into coffee mugs. Makes 2 servings.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/hdzwrh1487603131.jpg",
+      "source_id": "12748",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Pineapple Gingerale Smoothie",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Ginger",
+          "measure": "1/4 inch"
+        },
+        {
+          "ingredient": "Pineapple",
+          "measure": "1/2"
+        }
+      ],
+      "instructions": "Throw everything into a blender and liquify.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/eg9i1d1487603469.jpg",
+      "source_id": "12718",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Spanish chocolate",
+      "category": "Cocoa",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Milk",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Chocolate",
+          "measure": "2 oz sweet"
+        },
+        {
+          "ingredient": "Cinnamon",
+          "measure": "1/2 tsp"
+        },
+        {
+          "ingredient": "Egg yolk",
+          "measure": "2 beaten"
+        }
+      ],
+      "instructions": "Stir the milk with the chocolate and the cinnamon over low heat until the chocolate dissolves. Add the eggs and beat the mixture until it becomes thick, taking care not to boil. Serve in coffee mug.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/pra8vt1487603054.jpg",
+      "source_id": "12750",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Spiced Peach Punch",
+      "category": "Punch / Party Drink",
+      "glass": "Collins Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Peach nectar",
+          "measure": "46 oz"
+        },
+        {
+          "ingredient": "Orange juice",
+          "measure": "20 oz"
+        },
+        {
+          "ingredient": "Brown sugar",
+          "measure": "1/2 cup"
+        },
+        {
+          "ingredient": "Cinnamon",
+          "measure": "3 3-inch"
+        },
+        {
+          "ingredient": "Cloves",
+          "measure": "1/2 tsp"
+        },
+        {
+          "ingredient": "Lime juice",
+          "measure": "2 tblsp"
+        }
+      ],
+      "instructions": "Combine peach nectar, orange juice and brown sugar in a large saucepan. Tie cinnamon and cloves in a small cheesecloth bag. Drop into saucepan. Heat slowly, stirring constantly, until sugar dissolves. Simmer 10 minutes. Stir in lime juice. Serve in hot mugs.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/qxvypq1468924331.jpg",
+      "source_id": "13032",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Spiking coffee",
+      "category": "Coffee / Tea",
+      "glass": "Coffee mug",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Coffee",
+          "measure": null
+        },
+        {
+          "ingredient": "Cinnamon",
+          "measure": null
+        }
+      ],
+      "instructions": "Incidentally, a pinch of cinnamon is indeed a nice addition to coffee but true heaven is a cardamom seed. Of course, you serve it in a coffee mug.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/isql6y1487602375.jpg",
+      "source_id": "12780",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Strawberry Lemonade",
+      "category": "Punch / Party Drink",
+      "glass": "Collins Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Lemon",
+          "measure": "Juice of 1"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1 tblsp"
+        },
+        {
+          "ingredient": "Strawberries",
+          "measure": "8-10 ripe"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "1 cup"
+        }
+      ],
+      "instructions": "Throw everything into a blender and mix until fairly smooth. Serve over ice.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/spvvxp1468924425.jpg",
+      "source_id": "13036",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Strawberry Shivers",
+      "category": "Other / Unknown",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Strawberries",
+          "measure": "1 1/2 cup"
+        },
+        {
+          "ingredient": "Honey",
+          "measure": "4 tsp"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "1/2 cup"
+        }
+      ],
+      "instructions": "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended. Pour in one tall, 2 medium or 3 small glasses and drink up.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/9h1vvt1487603404.jpg",
+      "source_id": "12722",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Sweet Bananas",
+      "category": "Shake",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Milk",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Banana",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Honey",
+          "measure": "1 tblsp"
+        }
+      ],
+      "instructions": "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended. Pour in one tall, 2 medium or 3 small glasses and drink up.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/sxpcj71487603345.jpg",
+      "source_id": "12724",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Thai Coffee",
+      "category": "Coffee / Tea",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Coffee",
+          "measure": "6 tblsp ground"
+        },
+        {
+          "ingredient": "Coriander",
+          "measure": "1/4 tsp"
+        },
+        {
+          "ingredient": "Cardamom",
+          "measure": "4-5 whole green"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": null
+        },
+        {
+          "ingredient": "Whipping cream",
+          "measure": null
+        },
+        {
+          "ingredient": "Ice",
+          "measure": null
+        }
+      ],
+      "instructions": "Place the coffee and spices in the filter cone of your coffee maker. Brew coffee as usual, let it cool. In a tall glass, dissolve 1 or 2 teaspoons of sugar in an ounce of the coffee (it's easier to dissolve than if you put it right over ice). Add 5-6 ice cubes and pour coffee to within about 1 inch of the top of the glass. Rest a spoon on top of the coffee and slowly pour whipping cream into the spoon. This will make the cream float on top of the coffee rather than dispersing into it right away.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/wquwxs1441247025.jpg",
+      "source_id": "12782",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Thai Iced Coffee",
+      "category": "Coffee / Tea",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Coffee",
+          "measure": "black"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": null
+        },
+        {
+          "ingredient": "Cream",
+          "measure": "pods"
+        },
+        {
+          "ingredient": "Cardamom",
+          "measure": null
+        }
+      ],
+      "instructions": "Prepare a pot of coffee at a good European strength. In the ground coffee, add 2 or 3 freshly ground cardamom pods. Sweeten while hot, then cool quickly. Serve in highball glass over ice, with cream. To get the layered effect, place a spoon atop the coffee and pour the milk carefully into the spoon so that it floats on the top of the coffee.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/rqpypv1441245650.jpg",
+      "source_id": "12784",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Thai Iced Tea",
+      "category": "Coffee / Tea",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Tea",
+          "measure": "1/4 cup Thai"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "1/2 cup boiling"
+        },
+        {
+          "ingredient": "Condensed milk",
+          "measure": "2 tsp sweetened"
+        },
+        {
+          "ingredient": "Ice",
+          "measure": "cubes"
+        },
+        {
+          "ingredient": "Mint",
+          "measure": "garnish"
+        }
+      ],
+      "instructions": "Combine Thai tea (i.e., the powder), boiling water, and sweetened condensed milk, stir until blended. Pour into 2 tall glasses filled with ice cubes. Garnish with mint leaves. Makes 2 servings.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/trvwpu1441245568.jpg",
+      "source_id": "12786",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Tomato Tang",
+      "category": "Other / Unknown",
+      "glass": "Highball glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Tomato juice",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Lemon juice",
+          "measure": "1-2 tblsp"
+        },
+        {
+          "ingredient": "Celery salt",
+          "measure": "1 dash"
+        }
+      ],
+      "instructions": "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended. Pour in one tall, 2 medium or 3 small glasses and drink up.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/869qr81487603278.jpg",
+      "source_id": "12726",
+      "alcoholic_flag": "Non alcoholic"
+    },
+    {
+      "name": "Yoghurt Cooler",
+      "category": "Other / Unknown",
+      "glass": "Highball Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Yoghurt",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Fruit",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Ice",
+          "measure": null
+        }
+      ],
+      "instructions": "Place all ingredients in the blender jar - cover and whiz on medium speed until well blended. Pour in one tall, 2 medium or 3 small glasses and drink up. Note: Use lots of ice in this one - great on hot days! To add ice: Remove the center of the cover while the blender is on - drop 3 or 4 ice cubs and blend until they're completely crushed.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/trttrv1441254466.jpg",
+      "source_id": "12728",
+      "alcoholic_flag": "Non alcoholic"
+    }
+  ],
+  "optional_alcohol": [
+    {
+      "name": "Apple Cider Punch",
+      "category": "Punch / Party Drink",
+      "glass": "Collins Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Apple cider",
+          "measure": "4 qt"
+        },
+        {
+          "ingredient": "Brown sugar",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Lemonade",
+          "measure": "6 oz frozen"
+        },
+        {
+          "ingredient": "Orange juice",
+          "measure": "6 oz frozen"
+        },
+        {
+          "ingredient": "Cloves",
+          "measure": "6 whole"
+        },
+        {
+          "ingredient": "Allspice",
+          "measure": "6 whole"
+        },
+        {
+          "ingredient": "Nutmeg",
+          "measure": "1 tsp ground"
+        },
+        {
+          "ingredient": "Cinnamon",
+          "measure": "3 sticks"
+        }
+      ],
+      "instructions": "If you use the whole all spice and cloves, tie them in cheesecloth. Heat the mixture. Stir occasionally. If you want an alcoholic drink, rum would be nice.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/xrqxuv1454513218.jpg",
+      "source_id": "12864",
+      "alcoholic_flag": "Optional alcohol"
+    },
+    {
+      "name": "Chocolate Monkey",
+      "category": "Shake",
+      "glass": "Parfait glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Banana liqueur",
+          "measure": "1 shot"
+        },
+        {
+          "ingredient": "Creme de Cacao",
+          "measure": "2 shots"
+        },
+        {
+          "ingredient": "Chocolate ice-cream",
+          "measure": "2 scoops"
+        },
+        {
+          "ingredient": "Chocolate syrup",
+          "measure": "1 oz"
+        },
+        {
+          "ingredient": "Chocolate milk",
+          "measure": "4 oz"
+        },
+        {
+          "ingredient": "Whipped cream",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Cherry",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Banana",
+          "measure": "1 piece"
+        }
+      ],
+      "instructions": "blend liqeuors with ice-cream, milk and syrup. pour into parfait glass, top with whipped cream and garnish with banana and cherry.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/tyvpxt1468875212.jpg",
+      "source_id": "15615",
+      "alcoholic_flag": "Optional alcohol"
+    },
+    {
+      "name": "Egg Nog #4",
+      "category": "Punch / Party Drink",
+      "glass": "Punch bowl",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Egg yolk",
+          "measure": "6"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1/4 cup"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Light rum",
+          "measure": "1/2 cup"
+        },
+        {
+          "ingredient": "Bourbon",
+          "measure": "1/2 cup"
+        },
+        {
+          "ingredient": "Vanilla extract",
+          "measure": "1 tsp"
+        },
+        {
+          "ingredient": "Salt",
+          "measure": "1/4 tsp"
+        },
+        {
+          "ingredient": "Whipping cream",
+          "measure": "1 cup"
+        },
+        {
+          "ingredient": "Egg white",
+          "measure": "6"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1/4 cup"
+        },
+        {
+          "ingredient": "Nutmeg",
+          "measure": "Ground"
+        }
+      ],
+      "instructions": "In a small mixer bowl beat egg yolks till blended. Gradually add 1/4 cup sugar, beating at high speed till thick and lemon colored. Stir in milk, stir in rum, bourbon, vanilla, and salt. Chill thoroughly. Whip cream. Wash beaters well. In a large mixer bowl beat egg whites till soft peaks form. Gradually add remaining 1/4 cup sugar, beating to stiff peaks. Fold yolk mixture and whipped cream into egg whites. Serve immediately. Sprinkle nutmeg over each serving. Serve in a punch bowl or another big bowl. NOTE: For a nonalcoholic eggnog, prepare Eggnog as above, except omit the bourbon and rum and increase the milk to 3 cups.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/wpspsy1468875747.jpg",
+      "source_id": "12910",
+      "alcoholic_flag": "Optional alcohol"
+    },
+    {
+      "name": "Egg Nog - Healthy",
+      "category": "Punch / Party Drink",
+      "glass": "Collins Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Egg",
+          "measure": "1/2 cup"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "3 tblsp"
+        },
+        {
+          "ingredient": "Condensed milk",
+          "measure": "13 oz skimmed"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "3/4 cup skimmed"
+        },
+        {
+          "ingredient": "Vanilla extract",
+          "measure": "1 tsp"
+        },
+        {
+          "ingredient": "Rum",
+          "measure": "1 tsp"
+        },
+        {
+          "ingredient": "Nutmeg",
+          "measure": null
+        }
+      ],
+      "instructions": "Whip egg substitute and sugar together, combine with the two kinds of milk, vanilla, and rum. Mix well. Chill over night. Sprinkle with nutmeg. Makes 6 servings.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/qxuppv1468875308.jpg",
+      "source_id": "12916",
+      "alcoholic_flag": "Optional alcohol"
+    },
+    {
+      "name": "Egg-Nog - Classic Cooked",
+      "category": "Punch / Party Drink",
+      "glass": "Pitcher",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Egg",
+          "measure": "6"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "1/4 cup"
+        },
+        {
+          "ingredient": "Salt",
+          "measure": "1/4 tsp"
+        },
+        {
+          "ingredient": "Milk",
+          "measure": "1 qt"
+        },
+        {
+          "ingredient": "Vanilla extract",
+          "measure": "1 tsp"
+        }
+      ],
+      "instructions": "In large saucepan, beat together eggs, sugar and salt, if desired. Stir in 2 cups of the milk. Cook over low heat, stirring constantly, until mixture is thick enough to coat a metal spoon and reaches 160 degrees F. Remove from heat. Stir in remaining 2 cups milk and vanilla. Cover and regfigerate until thoroughly chilled, several hours or overnight. Just before serving, pour into bowl or pitcher. Garnish or add stir-ins, if desired. Choose 1 or several of: Chocolate curls, cinnamon sticks, extracts of flavorings, flavored brandy or liqueur, fruit juice or nectar, ground nutmeg, maraschino cherries, orange slices, peppermint sticks or candy canes, plain brandy, run or whiskey, sherbet or ice-cream, whipping cream, whipped. Serve immediately.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/quxsvt1468875505.jpg",
+      "source_id": "12914",
+      "alcoholic_flag": "Optional alcohol"
+    },
+    {
+      "name": "Gluehwein",
+      "category": "Punch / Party Drink",
+      "glass": "Irish coffee cup",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Red wine",
+          "measure": "1 L"
+        },
+        {
+          "ingredient": "Water",
+          "measure": "125 ml"
+        },
+        {
+          "ingredient": "Sugar",
+          "measure": "60 gr"
+        },
+        {
+          "ingredient": "Cinnamon",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Cloves",
+          "measure": "3"
+        },
+        {
+          "ingredient": "Lemon peel",
+          "measure": "1 tblsp"
+        }
+      ],
+      "instructions": "Boil sugar and spices in water, leave in the water for 30 minutes. Strain the spiced water and mix with the wine. Heat slowly until short of boiling temperature. (To remove alcohol, let it boil for a while.) You may add lemon or orange juice to taste. Serve in irish coffee cup.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/vuxwvt1468875418.jpg",
+      "source_id": "12944",
+      "alcoholic_flag": "Optional alcohol"
+    },
+    {
+      "name": "Sunny Holiday Punch",
+      "category": "Punch / Party Drink",
+      "glass": "Punch bowl",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Pineapple juice",
+          "measure": "46 oz chilled"
+        },
+        {
+          "ingredient": "Club soda",
+          "measure": "28 oz"
+        },
+        {
+          "ingredient": "Orange juice",
+          "measure": "6 oz frozen"
+        },
+        {
+          "ingredient": "Lemon",
+          "measure": "1"
+        },
+        {
+          "ingredient": "Berries",
+          "measure": "2 cups"
+        },
+        {
+          "ingredient": "Champagne",
+          "measure": "1 bottle"
+        }
+      ],
+      "instructions": "Combine all ingredients in a punch bowl.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/rywtwy1468924758.jpg",
+      "source_id": "13042",
+      "alcoholic_flag": "Optional alcohol"
+    },
+    {
+      "name": "Wine Cooler",
+      "category": "Punch / Party Drink",
+      "glass": "Collins Glass",
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient": "Red wine",
+          "measure": "2 oz white or"
+        },
+        {
+          "ingredient": "Lemon-lime soda",
+          "measure": "5 oz"
+        },
+        {
+          "ingredient": "Ice",
+          "measure": "cubes"
+        }
+      ],
+      "instructions": "Mix wine and soft drink. Pour into glass. Add ice.",
+      "thumbnail": "https://www.thecocktaildb.com/images/media/drink/yutxtv1473344210.jpg",
+      "source_id": "13056",
+      "alcoholic_flag": "Optional alcohol"
+    }
+  ]
+}
