@@ -477,7 +477,12 @@
         "Schenk de cachaça erover.",
         "Roer goed door."
       ],
-      "garnish": "Partje limoen"
+      "garnish": "Partje limoen",
+      "variations": [
+        {
+          "description": "Gebruik wodka in plaats van cachaça."
+        }
+      ]
     },
     "mimosa": {
       "name": "Mimosa",

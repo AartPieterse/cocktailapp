@@ -1,5 +1,6 @@
 import { Difficulty } from './difficulty';
 import { Glassware } from './glassware';
+import type { Locale } from './i18n';
 import { MeasureUnit } from './measure-unit';
 import { Method } from './method';
 
@@ -61,6 +62,30 @@ export const BASE_SPIRITS: readonly BaseSpirit[] = [
   'none',
 ];
 
+/** Labels for the base-spirit browse filter, per locale. Keys are stable; labels are rendered. */
+export const BASE_SPIRIT_LABELS: Record<Locale, Record<BaseSpirit, string>> = {
+  nl: {
+    gin: 'Gin',
+    vodka: 'Wodka',
+    rum: 'Rum',
+    tequila: 'Tequila',
+    whisky: 'Whisky',
+    brandy: 'Brandy',
+    other: 'Overig',
+    none: 'Geen',
+  },
+  en: {
+    gin: 'Gin',
+    vodka: 'Vodka',
+    rum: 'Rum',
+    tequila: 'Tequila',
+    whisky: 'Whisky',
+    brandy: 'Brandy',
+    other: 'Other',
+    none: 'None',
+  },
+};
+
 /** Typed vocabulary for the cocktail filter UI. Populated in a later content pass (see plan Step 5). */
 export type CocktailTag =
   | 'iba-official'
@@ -93,6 +118,34 @@ export interface CocktailImage {
   blurhash?: string;
 }
 
+/**
+ * A structured ingredient swap inside a variation ("use Vodka instead of Cachaça"). Both sides are
+ * *base* ids (resolved from names by `buildCatalog`, mirroring `CocktailIngredient.alternativeIds`).
+ * Informational only — swaps never affect `computeMakeable`.
+ */
+export interface CocktailVariationSwap {
+  fromId: string;
+  toId: string;
+}
+
+/**
+ * A named variation of a cocktail (Caipirinha → Caipiroska, Kir → Kir Royal, Bellini → Puccini…).
+ * `description` carries free prose; `swaps` expresses the change structurally when both ingredients
+ * are catalog bases; `makesCocktailId` optionally links to another catalog cocktail (a future hook).
+ * Distinct from `CocktailIngredient.alternativeIds` (an "X or Y" line within ONE recipe) and from
+ * `Ingredient.substitutes`/`parentId` (cabinet makeability) — a variation is a different drink.
+ */
+export interface CocktailVariation {
+  /** Display name of the variation (required, translatable). */
+  name: string;
+  /** Free-form prose describing the variation (translatable). */
+  description?: string;
+  /** Structured ingredient swaps (from → to), resolved to base ids. */
+  swaps?: CocktailVariationSwap[];
+  /** Optional link to another catalog cocktail this variation effectively produces. */
+  makesCocktailId?: string;
+}
+
 export interface Cocktail {
   id: string;
   name: string;
@@ -113,6 +166,8 @@ export interface Cocktail {
   servings?: number;
   // NOTE: typed as `string[]` for now; migrates to `CocktailTag[]` when tags are populated (plan Step 5).
   tags?: string[];
+  /** Named variations of this drink (swaps + prose), resolved to base ids by `buildCatalog`. */
+  variations?: CocktailVariation[];
   /** Bundled, offline-safe image. Preferred over the legacy remote `imageUrl`. */
   image?: CocktailImage;
   imageUrl?: string;

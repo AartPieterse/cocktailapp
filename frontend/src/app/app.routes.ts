@@ -34,6 +34,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./ingredients/ingredient-list/ingredient-list').then((m) => m.IngredientList),
       },
+      {
+        path: 'account',
+        title: 'Account — Barkast',
+        loadComponent: () => import('./account/account').then((m) => m.Account),
+      },
     ],
   },
   { path: '**', redirectTo: 'ontdek' },

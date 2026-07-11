@@ -72,11 +72,11 @@ export class CatalogService {
   // --- Cocktails ---
 
   listCocktails(q?: string, tag?: string): Observable<Cocktail[]> {
-    const needle = q?.trim().toLowerCase();
+    const needle = q ? normalize(q.trim()) : '';
     return this.catalog$.pipe(
       map((c) =>
         c.cocktails
-          .filter((ck) => !needle || ck.name.toLowerCase().includes(needle))
+          .filter((ck) => !needle || matchesQuery(ck, needle))
           .filter((ck) => !tag || (ck.tags ?? []).includes(tag))
           .sort((a, b) => a.name.localeCompare(b.name)),
       ),
@@ -114,4 +114,22 @@ export class CatalogService {
       map((c) => computeMakeable(c.cocktails, availableIngredientIds, maxMissing)),
     );
   }
+}
+
+/** Lowercase + strip diacritics so "cafe" matches "café" and "Curaçao" matches "curacao". */
+function normalize(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '');
+}
+
+/** A cocktail matches the (already-normalized) needle on its name or any ingredient line. */
+function matchesQuery(cocktail: Cocktail, needle: string): boolean {
+  if (normalize(cocktail.name).includes(needle)) return true;
+  return cocktail.ingredients.some(
+    (line) =>
+      normalize(line.name).includes(needle) ||
+      (line.call ? normalize(line.call).includes(needle) : false),
+  );
 }

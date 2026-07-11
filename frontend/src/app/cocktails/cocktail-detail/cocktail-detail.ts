@@ -9,8 +9,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   type Cocktail,
   type CocktailIngredient,
+  type VolumeUnit,
+  convertMeasure,
   DIFFICULTY_LABELS,
   GLASSWARE_LABELS,
+  isVolumeUnit,
   MEASURE_LABELS,
   METHOD_LABELS,
 } from '@cocktailapp/shared';
@@ -18,6 +21,8 @@ import { catchError, of, switchMap, tap } from 'rxjs';
 import { CabinetService } from '../../core/cabinet.service';
 import { LanguageService } from '../../core/language.service';
 import { FavoritesService } from '../../core/favorites.service';
+import { UnitPreferenceService } from '../../core/unit-preference.service';
+import { IngredientService } from '../../services/ingredient.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { GlassArt } from '../../shared/glass-art/glass-art';
@@ -81,10 +86,25 @@ import { environment } from '../../../environments/environment';
 
             <div class="sec-label">{{ lang.t().detail.ingredients }}</div>
             <div class="lines">
-              <div class="servings no-print">
-                <button (click)="stepServings(-1)" [disabled]="servings() <= 1" [attr.aria-label]="lang.t().detail.less">–</button>
-                <span>{{ lang.t().detail.glasses(servings()) }}</span>
-                <button (click)="stepServings(1)" [attr.aria-label]="lang.t().detail.more">+</button>
+              <div class="controls no-print">
+                <div class="servings">
+                  <button (click)="stepServings(-1)" [disabled]="servings() <= 1" [attr.aria-label]="lang.t().detail.less">–</button>
+                  <span>{{ lang.t().detail.glasses(servings()) }}</span>
+                  <button (click)="stepServings(1)" [attr.aria-label]="lang.t().detail.more">+</button>
+                </div>
+                @if (hasVolume()) {
+                  <div class="unit-toggle" role="group" [attr.aria-label]="lang.t().form.unit">
+                    @for (u of unitOptions; track u) {
+                      <button
+                        [class.on]="unit() === u"
+                        [attr.aria-pressed]="unit() === u"
+                        (click)="setUnit(u)"
+                      >
+                        {{ u }}
+                      </button>
+                    }
+                  </div>
+                }
               </div>
               @for (i of c.ingredients; track i.ingredientId + i.name) {
                 <div class="line">
@@ -115,6 +135,39 @@ import { environment } from '../../../environments/environment';
                 <p class="muted">{{ lang.t().detail.noInstructions }}</p>
               }
             </div>
+
+            @if (c.notes) {
+              <div class="sec-label">{{ lang.t().detail.tips }}</div>
+              <p class="notes">{{ c.notes }}</p>
+            }
+
+            @if (c.variations?.length) {
+              <div class="sec-label">{{ lang.t().detail.variations }}</div>
+              <div class="variations">
+                @for (v of c.variations; track v.name) {
+                  <div class="variation">
+                    <div class="v-head">
+                      <span class="v-name">{{ v.name }}</span>
+                      @if (v.makesCocktailId) {
+                        <a class="v-link" [routerLink]="['/cocktails', v.makesCocktailId]">{{ lang.t().detail.viewRecipe }}</a>
+                      }
+                    </div>
+                    @if (v.swaps?.length) {
+                      <div class="v-swaps">
+                        @for (s of v.swaps; track s.fromId + s.toId) {
+                          <span class="swap">
+                            <span class="from">{{ ingName(s.fromId) }}</span>
+                            <mat-icon>arrow_forward</mat-icon>
+                            <span class="to">{{ ingName(s.toId) }}</span>
+                          </span>
+                        }
+                      </div>
+                    }
+                    @if (v.description) { <p class="v-desc">{{ v.description }}</p> }
+                  </div>
+                }
+              </div>
+            }
           </div>
         </div>
       </div>
@@ -275,15 +328,109 @@ import { environment } from '../../../environments/environment';
       margin-top: 8px;
       max-width: 520px;
     }
+    .controls {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 4px 0 8px;
+    }
     .servings {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin: 4px 0 8px;
       border: 1px solid var(--hairline);
       border-radius: var(--radius-pill);
       padding: 4px 10px;
       font: 600 0.813rem var(--font-body);
+    }
+    .unit-toggle {
+      display: inline-flex;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+    .unit-toggle button {
+      border: none;
+      background: none;
+      color: var(--muted);
+      font: 600 0.813rem var(--font-body);
+      padding: 6px 13px;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+    .unit-toggle button.on {
+      background: var(--accent);
+      color: #fff;
+    }
+    .notes {
+      margin-top: 12px;
+      max-width: 520px;
+      font: 500 0.938rem/1.6 var(--font-body);
+      color: var(--muted);
+      background: var(--surface-2);
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+    .variations {
+      margin-top: 12px;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .variation {
+      border: 1px solid var(--hairline);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .v-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .v-name {
+      font: 600 1rem var(--font-body);
+      color: var(--ink);
+    }
+    .v-link {
+      font: 600 0.813rem var(--font-body);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .v-link:hover {
+      text-decoration: underline;
+    }
+    .v-swaps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .swap {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface-2);
+      border-radius: var(--radius-pill);
+      padding: 5px 12px;
+      font: 600 0.781rem var(--font-body);
+      color: var(--muted);
+    }
+    .swap .to {
+      color: var(--accent);
+    }
+    .swap mat-icon {
+      font-size: 15px;
+      width: 15px;
+      height: 15px;
+      color: var(--faint);
+    }
+    .v-desc {
+      margin: 8px 0 0;
+      font: 500 0.906rem/1.55 var(--font-body);
+      color: var(--muted);
     }
     .servings button {
       border: none;
@@ -407,6 +554,8 @@ export class CocktailDetail {
   private readonly cocktailService = inject(CocktailService);
   private readonly cabinet = inject(CabinetService);
   private readonly favorites = inject(FavoritesService);
+  private readonly unitPref = inject(UnitPreferenceService);
+  private readonly ingredientService = inject(IngredientService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
@@ -417,6 +566,15 @@ export class CocktailDetail {
   readonly cocktail = signal<Cocktail | null>(null);
   readonly loading = signal(true);
   readonly servings = signal(1);
+
+  /** Base id → display name, so variation swaps read in the display language (translated catalog). */
+  private readonly ingredientNames = signal<Map<string, string>>(new Map());
+
+  protected readonly unitOptions = this.unitPref.options;
+  readonly unit = this.unitPref.unit;
+
+  /** Whether the recipe has any volume line worth offering a ml/cl/oz toggle for. */
+  readonly hasVolume = computed(() => (this.cocktail()?.ingredients ?? []).some((i) => isVolumeUnit(i.unit)));
 
   readonly spec = computed(() => {
     const c = this.cocktail();
@@ -443,6 +601,10 @@ export class CocktailDetail {
   );
 
   constructor() {
+    this.ingredientService
+      .getAll()
+      .subscribe((list) => this.ingredientNames.set(new Map(list.map((i) => [i.id, i.name]))));
+
     toObservable(this.id)
       .pipe(
         tap(() => this.loading.set(true)),
@@ -466,10 +628,17 @@ export class CocktailDetail {
     return c.difficulty ? DIFFICULTY_LABELS[this.lang.locale()][c.difficulty] : '';
   }
   unitLabel(i: CocktailIngredient): string {
-    return MEASURE_LABELS[this.lang.locale()][i.unit];
+    const unit = isVolumeUnit(i.unit) ? this.unit() : i.unit;
+    return MEASURE_LABELS[this.lang.locale()][unit];
+  }
+  setUnit(u: VolumeUnit): void {
+    this.unitPref.set(u);
   }
   ingCat(i: CocktailIngredient): string | undefined {
     return i.role === 'garnish' ? 'garnish' : undefined;
+  }
+  ingName(id: string): string {
+    return this.ingredientNames().get(id) ?? id;
   }
 
   inBar(i: CocktailIngredient): boolean {
@@ -493,8 +662,12 @@ export class CocktailDetail {
     if (i.amount === undefined) return '';
     const base = this.cocktail()?.servings ?? 1;
     const factor = this.servings() / base;
-    const fmt = (n: number): string => Number((n * factor).toFixed(2)).toString().replace('.', ',');
-    return i.amountMax !== undefined ? `${fmt(i.amount)}–${fmt(i.amountMax)}` : fmt(i.amount);
+    const target = this.unit();
+    const conv = (n: number): number => convertMeasure(n * factor, i.unit, target).amount;
+    const fmt = (n: number): string => Number(n.toFixed(2)).toString().replace('.', ',');
+    return i.amountMax !== undefined
+      ? `${fmt(conv(i.amount))}–${fmt(conv(i.amountMax))}`
+      : fmt(conv(i.amount));
   }
 
   stepServings(delta: number): void {

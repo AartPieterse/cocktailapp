@@ -28,6 +28,17 @@ export const INGREDIENT_CATEGORIES: readonly IngredientCategory[] = [
   'other',
 ];
 
+/**
+ * Categories whose ingredients contain alcohol. Used to derive whether a cocktail is alcohol-free
+ * (no non-optional line references an ingredient in one of these categories) for the mocktail filter.
+ */
+export const ALCOHOLIC_INGREDIENT_CATEGORIES: readonly IngredientCategory[] = [
+  'spirit',
+  'liqueur',
+  'wine',
+  'bitters',
+];
+
 /** Category labels (singular), per locale. */
 export const CATEGORY_LABELS: Record<Locale, Record<IngredientCategory, string>> = {
   nl: {

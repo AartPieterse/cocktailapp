@@ -21,6 +21,11 @@ export class FavoritesService {
     this._ids.set(next);
   }
 
+  /** Replace the whole favorites set at once (used by cloud sync when applying remote state). */
+  setAll(ids: Iterable<string>): void {
+    this._ids.set(new Set(ids));
+  }
+
   constructor() {
     effect(() => {
       try {

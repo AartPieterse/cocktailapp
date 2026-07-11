@@ -7,6 +7,8 @@ import { CocktailService } from '../../services/cocktail.service';
 import { LanguageService } from '../language.service';
 import { ThemeService } from '../theme.service';
 import { PwaService } from '../pwa.service';
+import { AuthService } from '../auth/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -56,6 +58,17 @@ import { PwaService } from '../pwa.service';
           >
             {{ shortLabel() }}
           </button>
+          @if (authEnabled) {
+            <a
+              class="icon-btn"
+              routerLink="/account"
+              routerLinkActive="active"
+              [matTooltip]="auth.isAuthenticated() ? lang.t().nav.account : lang.t().nav.login"
+              [attr.aria-label]="auth.isAuthenticated() ? lang.t().nav.account : lang.t().nav.login"
+            >
+              <mat-icon>{{ auth.isAuthenticated() ? 'account_circle' : 'login' }}</mat-icon>
+            </a>
+          }
           <button
             class="icon-btn"
             type="button"
@@ -236,6 +249,8 @@ export class Navbar {
   protected readonly theme = inject(ThemeService);
   protected readonly pwa = inject(PwaService);
   protected readonly lang = inject(LanguageService);
+  protected readonly auth = inject(AuthService);
+  protected readonly authEnabled = environment.authEnabled;
   private readonly cocktails = inject(CocktailService);
   private readonly router = inject(Router);
   protected readonly menuOpen = signal(false);

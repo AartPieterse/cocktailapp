@@ -3,6 +3,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { LanguageService } from '../language.service';
 import { Navbar } from '../navbar/navbar';
 import { InstallPrompt } from '../install-prompt/install-prompt';
+import { SyncService } from '../sync/sync.service';
 
 @Component({
   selector: 'app-layout',
@@ -53,4 +54,6 @@ import { InstallPrompt } from '../install-prompt/install-prompt';
 })
 export class Layout {
   protected readonly lang = inject(LanguageService);
+  // Instantiated with the shell so cloud sync wires up at startup (inert when authEnabled is false).
+  private readonly sync = inject(SyncService);
 }

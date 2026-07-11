@@ -6,7 +6,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { expandCabinet, type Cocktail, type Ingredient, type MakeableResult } from '@cocktailapp/shared';
+import {
+  ALCOHOLIC_INGREDIENT_CATEGORIES,
+  BASE_SPIRITS,
+  BASE_SPIRIT_LABELS,
+  DIFFICULTIES,
+  expandCabinet,
+  type BaseSpirit,
+  type Cocktail,
+  type Ingredient,
+  type MakeableResult,
+} from '@cocktailapp/shared';
 import {
   catchError,
   combineLatest,
@@ -31,6 +41,8 @@ interface Status {
   names: string[];
 }
 
+type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
+
 @Component({
   selector: 'app-cocktail-list',
   imports: [RouterLink, ReactiveFormsModule, MatButtonModule, MatIconModule, CocktailCard],
@@ -43,12 +55,14 @@ interface Status {
             class="search"
             [formControl]="searchCtrl"
             [placeholder]="lang.t().list.searchPlaceholder"
+            [attr.aria-label]="lang.t().list.searchPlaceholder"
             autocomplete="off"
           />
           <button
             class="fav-toggle"
             type="button"
             [class.on]="onlyFavs()"
+            [attr.aria-pressed]="onlyFavs()"
             (click)="onlyFavs.update((v) => !v)"
             [attr.aria-label]="lang.t().list.onlyFavorites"
           >
@@ -59,6 +73,47 @@ interface Status {
           }
         </div>
       </header>
+
+      <div class="filters">
+        <div class="chips" role="group" [attr.aria-label]="lang.t().list.filterBySpirit">
+          @for (s of spiritOptions; track s) {
+            <button
+              class="chip"
+              type="button"
+              [class.on]="spirit() === s"
+              [attr.aria-pressed]="spirit() === s"
+              (click)="toggleSpirit(s)"
+            >
+              {{ spiritLabel(s) }}
+            </button>
+          }
+          <button
+            class="chip"
+            type="button"
+            [class.on]="alcoholFreeOnly()"
+            [attr.aria-pressed]="alcoholFreeOnly()"
+            (click)="alcoholFreeOnly.update((v) => !v)"
+          >
+            {{ lang.t().list.alcoholFree }}
+          </button>
+        </div>
+        <div class="sortbox">
+          <label class="sr-only" for="sort-select">{{ lang.t().list.sortBy }}</label>
+          <select
+            id="sort-select"
+            class="sort"
+            [value]="sort()"
+            (change)="onSort($event)"
+          >
+            <option value="name-asc">{{ lang.t().list.sortNameAsc }}</option>
+            <option value="name-desc">{{ lang.t().list.sortNameDesc }}</option>
+            <option value="difficulty">{{ lang.t().list.sortDifficulty }}</option>
+          </select>
+          @if (hasActiveFilters()) {
+            <button class="clear" type="button" (click)="clearFilters()">{{ lang.t().list.clearFilters }}</button>
+          }
+        </div>
+      </div>
 
       @if (loading()) {
         <div class="grid">
@@ -89,10 +144,15 @@ interface Status {
           <p class="muted">
             @if (onlyFavs()) {
               {{ lang.t().list.emptyFavorites }}
+            } @else if (alcoholFreeOnly()) {
+              {{ lang.t().list.emptyAlcoholFree }}
             } @else {
               {{ lang.t().list.emptySearch }}
             }
           </p>
+          @if (hasActiveFilters()) {
+            <button class="clear" type="button" (click)="clearFilters()">{{ lang.t().list.clearFilters }}</button>
+          }
         </div>
       }
     </div>
@@ -108,7 +168,7 @@ interface Status {
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     .head h1 {
       font-size: var(--step-4);
@@ -148,6 +208,78 @@ interface Status {
     .fav-toggle.on {
       color: var(--accent);
       border-color: var(--accent);
+    }
+    .filters {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+      color: var(--muted);
+      padding: 8px 15px;
+      font: 600 0.813rem var(--font-body);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .chip.on {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .sortbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sort {
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--ink);
+      padding: 10px 14px;
+      font: 600 0.813rem var(--font-body);
+      cursor: pointer;
+    }
+    .sort:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .clear {
+      border: none;
+      background: none;
+      color: var(--accent);
+      font: 600 0.813rem var(--font-body);
+      cursor: pointer;
+      padding: 8px 4px;
+    }
+    .clear:hover {
+      text-decoration: underline;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
     .grid {
       display: grid;
@@ -198,18 +330,49 @@ export class CocktailList {
 
   protected readonly admin = environment.admin;
 
+  /** Base spirits shown as filter chips (all but the empty `none` bucket). */
+  protected readonly spiritOptions = BASE_SPIRITS.filter((s) => s !== 'none');
+
   readonly searchCtrl = new FormControl('', { nonNullable: true });
   readonly onlyFavs = signal(false);
+  readonly spirit = signal<BaseSpirit | null>(null);
+  readonly alcoholFreeOnly = signal(false);
+  readonly sort = signal<SortKey>('name-asc');
   readonly loading = signal(true);
   readonly cocktails = signal<Cocktail[]>([]);
   private readonly ingredients = signal<Ingredient[]>([]);
   private readonly status = signal<Map<string, Status>>(new Map());
   private readonly reload = signal(0);
 
-  readonly visible = computed(() => {
-    const list = this.cocktails();
-    return this.onlyFavs() ? list.filter((c) => this.favorites.has(c.id)) : list;
+  /** Ids of ingredients that carry alcohol — drives the "alcoholvrij" filter. */
+  private readonly alcoholicIds = computed(() => {
+    const cats = new Set<string>(ALCOHOLIC_INGREDIENT_CATEGORIES);
+    const ids = new Set<string>();
+    for (const ing of this.ingredients()) {
+      if (ing.category && cats.has(ing.category)) ids.add(ing.id);
+    }
+    return ids;
   });
+
+  readonly visible = computed(() => {
+    const spirit = this.spirit();
+    const alcoholFree = this.alcoholFreeOnly();
+    const sort = this.sort();
+    let list = this.cocktails();
+    if (this.onlyFavs()) list = list.filter((c) => this.favorites.has(c.id));
+    if (spirit) list = list.filter((c) => c.baseSpirit === spirit);
+    if (alcoholFree) list = list.filter((c) => this.isAlcoholFree(c));
+    return [...list].sort((a, b) => this.compare(a, b, sort));
+  });
+
+  readonly hasActiveFilters = computed(
+    () =>
+      this.onlyFavs() ||
+      this.spirit() !== null ||
+      this.alcoholFreeOnly() ||
+      this.sort() !== 'name-asc' ||
+      this.searchCtrl.value.trim().length > 0,
+  );
 
   private readonly query = toSignal(
     this.searchCtrl.valueChanges.pipe(debounceTime(250), startWith(this.searchCtrl.value)),
@@ -219,7 +382,7 @@ export class CocktailList {
   constructor() {
     this.ingredientService.getAll().subscribe((list) => this.ingredients.set(list));
 
-    // Cocktail list (with name search).
+    // Cocktail list (with name / ingredient search).
     combineLatest([toObservable(this.query), toObservable(this.reload)])
       .pipe(
         tap(() => this.loading.set(true)),
@@ -256,6 +419,47 @@ export class CocktailList {
 
   statusFor(c: Cocktail): Status {
     return this.status().get(c.id) ?? { count: c.ingredients.length ? 99 : 0, names: [] };
+  }
+
+  spiritLabel(s: BaseSpirit): string {
+    return BASE_SPIRIT_LABELS[this.lang.locale()][s];
+  }
+
+  toggleSpirit(s: BaseSpirit): void {
+    this.spirit.update((cur) => (cur === s ? null : s));
+  }
+
+  onSort(event: Event): void {
+    this.sort.set((event.target as HTMLSelectElement).value as SortKey);
+  }
+
+  clearFilters(): void {
+    this.onlyFavs.set(false);
+    this.spirit.set(null);
+    this.alcoholFreeOnly.set(false);
+    this.sort.set('name-asc');
+    this.searchCtrl.setValue('');
+  }
+
+  /** No non-optional, non-garnish line references an alcoholic ingredient. */
+  private isAlcoholFree(c: Cocktail): boolean {
+    const alco = this.alcoholicIds();
+    return !c.ingredients.some(
+      (i) =>
+        !i.optional &&
+        i.role !== 'garnish' &&
+        i.role !== 'seasoning' &&
+        alco.has(i.ingredientId),
+    );
+  }
+
+  private compare(a: Cocktail, b: Cocktail, sort: SortKey): number {
+    if (sort === 'name-desc') return b.name.localeCompare(a.name);
+    if (sort === 'difficulty') {
+      const rank = (c: Cocktail): number => (c.difficulty ? DIFFICULTIES.indexOf(c.difficulty) : 99);
+      return rank(a) - rank(b) || a.name.localeCompare(b.name);
+    }
+    return a.name.localeCompare(b.name);
   }
 
   remove(cocktail: Cocktail): void {

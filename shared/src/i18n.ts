@@ -68,6 +68,8 @@ export interface UiStrings {
     menu: string;
     brandHome: string;
     install: string;
+    account: string;
+    login: string;
   };
   /** Home / discover dashboard (route was "Mijn bar", now "Ontdek"). */
   home: {
@@ -124,6 +126,14 @@ export interface UiStrings {
     emptyTitle: string;
     emptyFavorites: string;
     emptySearch: string;
+    emptyAlcoholFree: string;
+    filterBySpirit: string;
+    alcoholFree: string;
+    sortBy: string;
+    sortNameAsc: string;
+    sortNameDesc: string;
+    sortDifficulty: string;
+    clearFilters: string;
     confirmDelete: (name: string) => string;
     deleted: string;
   };
@@ -147,6 +157,9 @@ export interface UiStrings {
     add: string;
     preparation: string;
     noInstructions: string;
+    tips: string;
+    variations: string;
+    viewRecipe: string;
     notFoundTitle: string;
     backToCollection: string;
     confirmDelete: (name: string) => string;
@@ -285,6 +298,8 @@ const nl: UiStrings = {
     menu: 'Menu',
     brandHome: 'Barkast home',
     install: 'Installeer Barkast',
+    account: 'Account',
+    login: 'Inloggen',
   },
   home: {
     welcome: 'Welkom bij Barkast',
@@ -330,14 +345,22 @@ const nl: UiStrings = {
   },
   list: {
     title: 'Alle cocktails',
-    searchPlaceholder: 'Zoek op naam…',
+    searchPlaceholder: 'Zoek op naam of ingrediënt…',
     onlyFavorites: 'Alleen favorieten',
     new: 'Nieuw',
     edit: 'Bewerk',
     delete: 'Verwijder',
     emptyTitle: 'Niets gevonden',
     emptyFavorites: 'Je hebt nog geen favorieten. Tik op het hartje van een cocktail.',
-    emptySearch: 'Pas je zoekopdracht aan.',
+    emptySearch: 'Pas je zoekopdracht of filters aan.',
+    emptyAlcoholFree: 'Nog geen alcoholvrije recepten in de collectie.',
+    filterBySpirit: 'Filter op basissterk',
+    alcoholFree: 'Alcoholvrij',
+    sortBy: 'Sorteer op',
+    sortNameAsc: 'Naam A–Z',
+    sortNameDesc: 'Naam Z–A',
+    sortDifficulty: 'Moeilijkheid',
+    clearFilters: 'Wis filters',
     confirmDelete: (name) => `Cocktail "${name}" verwijderen?`,
     deleted: 'Cocktail verwijderd',
   },
@@ -360,6 +383,9 @@ const nl: UiStrings = {
     add: '+ Toevoegen',
     preparation: 'Bereiding',
     noInstructions: 'Geen instructies opgegeven.',
+    tips: 'Tips',
+    variations: 'Variaties',
+    viewRecipe: 'Bekijk recept ›',
     notFoundTitle: 'Deze cocktail bestaat niet (meer)',
     backToCollection: 'Terug naar de collectie',
     confirmDelete: (name) => `Cocktail "${name}" verwijderen?`,
@@ -493,6 +519,8 @@ const en: UiStrings = {
     menu: 'Menu',
     brandHome: 'Barkast home',
     install: 'Install Barkast',
+    account: 'Account',
+    login: 'Log in',
   },
   home: {
     welcome: 'Welcome to Barkast',
@@ -538,14 +566,22 @@ const en: UiStrings = {
   },
   list: {
     title: 'All cocktails',
-    searchPlaceholder: 'Search by name…',
+    searchPlaceholder: 'Search by name or ingredient…',
     onlyFavorites: 'Favorites only',
     new: 'New',
     edit: 'Edit',
     delete: 'Delete',
     emptyTitle: 'Nothing found',
     emptyFavorites: "You don't have any favorites yet. Tap the heart on a cocktail.",
-    emptySearch: 'Try adjusting your search.',
+    emptySearch: 'Try adjusting your search or filters.',
+    emptyAlcoholFree: 'No alcohol-free recipes in the collection yet.',
+    filterBySpirit: 'Filter by base spirit',
+    alcoholFree: 'Alcohol-free',
+    sortBy: 'Sort by',
+    sortNameAsc: 'Name A–Z',
+    sortNameDesc: 'Name Z–A',
+    sortDifficulty: 'Difficulty',
+    clearFilters: 'Clear filters',
     confirmDelete: (name) => `Delete cocktail "${name}"?`,
     deleted: 'Cocktail deleted',
   },
@@ -568,6 +604,9 @@ const en: UiStrings = {
     add: '+ Add',
     preparation: 'Method',
     noInstructions: 'No instructions provided.',
+    tips: 'Tips',
+    variations: 'Variations',
+    viewRecipe: 'View recipe ›',
     notFoundTitle: "This cocktail doesn't exist (anymore)",
     backToCollection: 'Back to the collection',
     confirmDelete: (name) => `Delete cocktail "${name}"?`,
