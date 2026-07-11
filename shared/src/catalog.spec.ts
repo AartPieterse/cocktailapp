@@ -64,6 +64,60 @@ describe('buildCatalog', () => {
       ),
     ).toThrow(/unknown ingredient/i);
   });
+
+  it('resolves variation swaps (names → base ids) and makesCocktail (name → cocktail id)', () => {
+    const { cocktails } = buildCatalog(
+      [
+        { id: 'cachaca', name: 'Cachaça', category: 'spirit' },
+        { id: 'vodka', name: 'Vodka', category: 'spirit' },
+        { id: 'lime-juice', name: 'Fresh Lime Juice', category: 'juice' },
+      ],
+      [
+        {
+          id: 'caipiroska',
+          name: 'Caipiroska',
+          ingredients: [{ name: 'Vodka', amount: 60, unit: 'ml' }],
+        },
+        {
+          id: 'caipirinha',
+          name: 'Caipirinha',
+          ingredients: [{ name: 'Cachaça', amount: 60, unit: 'ml' }],
+          variations: [
+            {
+              name: 'Caipiroska',
+              description: 'Met wodka.',
+              swaps: [{ from: 'Cachaça', to: 'Vodka' }],
+              makesCocktail: 'Caipiroska',
+            },
+          ],
+        },
+      ],
+    );
+    const caipirinha = cocktails.find((c) => c.id === 'caipirinha')!;
+    expect(caipirinha.variations).toEqual([
+      {
+        name: 'Caipiroska',
+        description: 'Met wodka.',
+        swaps: [{ fromId: 'cachaca', toId: 'vodka' }],
+        makesCocktailId: 'caipiroska',
+      },
+    ]);
+  });
+
+  it('throws on a variation swap that references an unknown ingredient', () => {
+    expect(() =>
+      buildCatalog(
+        [{ id: 'gin', name: 'Gin' }],
+        [
+          {
+            name: 'X',
+            ingredients: [{ name: 'Gin', amount: 1, unit: 'ml' }],
+            variations: [{ name: 'V', swaps: [{ from: 'Gin', to: 'Mezcal' }] }],
+          },
+        ],
+      ),
+    ).toThrow(/unknown ingredient "Mezcal"/i);
+  });
 });
 
 describe('applyCatalogTranslations', () => {
@@ -99,5 +153,31 @@ describe('applyCatalogTranslations', () => {
   it('is a no-op when no overlay is given', () => {
     const cat = makeCatalog();
     expect(applyCatalogTranslations(cat, null)).toBe(cat);
+  });
+
+  it('overlays variation name/description by index, leaving swaps/ids intact', () => {
+    const content = buildCatalog(
+      [
+        { id: 'cachaca', name: 'Cachaça', category: 'spirit' },
+        { id: 'vodka', name: 'Vodka', category: 'spirit' },
+      ],
+      [
+        {
+          id: 'caipirinha',
+          name: 'Caipirinha',
+          ingredients: [{ name: 'Cachaça', amount: 60, unit: 'ml' }],
+          variations: [{ name: 'Caipiroska', description: 'With vodka.', swaps: [{ from: 'Cachaça', to: 'Vodka' }] }],
+        },
+      ],
+    );
+    const cat: Catalog = { version: 'v1', schemaVersion: 1, generatedFrom: 't', locale: 'en', ...content };
+    const out = applyCatalogTranslations(cat, {
+      version: 'v1',
+      ingredients: {},
+      cocktails: { caipirinha: { variations: [{ name: 'Caipiroska', description: 'Met wodka.' }] } },
+    });
+    const v = out.cocktails.find((c) => c.id === 'caipirinha')!.variations![0];
+    expect(v.description).toBe('Met wodka.');
+    expect(v.swaps).toEqual([{ fromId: 'cachaca', toId: 'vodka' }]);
   });
 });

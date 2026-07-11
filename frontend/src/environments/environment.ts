@@ -14,7 +14,15 @@ export const environment = {
   dataSource: 'api' as 'api' | 'static',
   /** When true, the create/edit/delete admin UI + routes are enabled. */
   admin: true,
+  /**
+   * Master switch for the optional accounts + cloud-sync feature. When false the AuthService,
+   * SyncService and auth interceptor are inert and the account UI is hidden — the app behaves
+   * exactly as an anonymous, localStorage-only client. Deliberately decoupled from `dataSource`.
+   */
+  authEnabled: true,
   apiUrl: 'http://localhost:3000/api/',
+  /** Base URL for auth + sync calls (auth/*, me/*). In dev this equals `apiUrl`. */
+  apiBaseUrl: 'http://localhost:3000/api/',
   /** Static catalog location (used only when dataSource === 'static'). */
   catalogUrl: 'catalog.json',
   /** Dutch display overlay applied on top of the canonical catalog (same version). */

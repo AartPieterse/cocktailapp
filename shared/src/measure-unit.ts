@@ -3,6 +3,7 @@ export type MeasureUnit =
   | 'part'
   | 'ml'
   | 'cl'
+  | 'oz'
   | 'piece'
   | 'cube'
   | 'drop'
@@ -21,6 +22,7 @@ export const MEASURE_UNITS: readonly MeasureUnit[] = [
   'part',
   'ml',
   'cl',
+  'oz',
   'piece',
   'cube',
   'drop',
@@ -41,6 +43,7 @@ export const MEASURE_LABELS: Record<MeasureUnit, string> = {
   part: 'deel',
   ml: 'ml',
   cl: 'cl',
+  oz: 'oz',
   piece: 'stuk',
   cube: 'blokje',
   drop: 'druppel',

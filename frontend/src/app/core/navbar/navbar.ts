@@ -5,6 +5,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CocktailService } from '../../services/cocktail.service';
 import { ThemeService } from '../theme.service';
 import { PwaService } from '../pwa.service';
+import { AuthService } from '../auth/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -45,6 +47,17 @@ import { PwaService } from '../pwa.service';
           <button class="surprise" type="button" (click)="surprise()">
             <mat-icon>casino</mat-icon> Verras me
           </button>
+          @if (authEnabled) {
+            <a
+              class="icon-btn"
+              routerLink="/account"
+              routerLinkActive="active"
+              [matTooltip]="auth.isAuthenticated() ? 'Account' : 'Inloggen'"
+              [attr.aria-label]="auth.isAuthenticated() ? 'Account' : 'Inloggen'"
+            >
+              <mat-icon>{{ auth.isAuthenticated() ? 'account_circle' : 'login' }}</mat-icon>
+            </a>
+          }
           <button
             class="icon-btn"
             type="button"
@@ -220,6 +233,8 @@ import { PwaService } from '../pwa.service';
 export class Navbar {
   protected readonly theme = inject(ThemeService);
   protected readonly pwa = inject(PwaService);
+  protected readonly auth = inject(AuthService);
+  protected readonly authEnabled = environment.authEnabled;
   private readonly cocktails = inject(CocktailService);
   private readonly router = inject(Router);
   protected readonly menuOpen = signal(false);

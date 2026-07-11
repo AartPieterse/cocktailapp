@@ -32,6 +32,8 @@ export class CatalogService {
     // hash) exactly, instead of re-slugging names. Alternatives are stored as ids but buildCatalog
     // resolves them by name, so map ids → names first.
     const nameById = new Map(ingDocs.map((d) => [d.id, d.name]));
+    // Variations link to other cocktails by id; buildCatalog re-resolves them by name, so map back.
+    const cocktailNameById = new Map(cktDocs.map((d) => [d.id, d.name]));
 
     const rawIngredients = ingDocs.map((d) => ({
       id: d.id,
@@ -69,6 +71,20 @@ export class CatalogService {
       notes: d.notes,
       servings: d.servings,
       tags: d.tags,
+      // Reverse-map variations to their raw (name-based) form so buildCatalog re-resolves to the
+      // identical ids — same treatment as line `alternativeIds` above (keeps version parity).
+      variations: d.variations?.map((v) => ({
+        name: v.name,
+        description: v.description,
+        swaps: v.swaps?.map((s) => ({
+          // ids are authored and always resolve to a base name (asserted, like alternatives above).
+          from: nameById.get(s.fromId) as string,
+          to: nameById.get(s.toId) as string,
+        })),
+        makesCocktail: v.makesCocktailId
+          ? cocktailNameById.get(v.makesCocktailId)
+          : undefined,
+      })),
       imageUrl: d.imageUrl,
     }));
 

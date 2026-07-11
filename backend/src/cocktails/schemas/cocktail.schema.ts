@@ -66,6 +66,38 @@ export class CocktailIngredient {
 const CocktailIngredientSchema =
   SchemaFactory.createForClass(CocktailIngredient);
 
+@Schema({ _id: false })
+export class CocktailVariationSwap {
+  /** Base slug id of the ingredient being replaced. */
+  @Prop({ type: String, ref: 'Ingredient', required: true })
+  fromId: string;
+
+  /** Base slug id of the replacement ingredient. */
+  @Prop({ type: String, ref: 'Ingredient', required: true })
+  toId: string;
+}
+
+const CocktailVariationSwapSchema =
+  SchemaFactory.createForClass(CocktailVariationSwap);
+
+@Schema({ _id: false })
+export class CocktailVariation {
+  @Prop({ required: true, trim: true })
+  name: string;
+
+  @Prop({ trim: true })
+  description?: string;
+
+  @Prop({ type: [CocktailVariationSwapSchema], default: undefined })
+  swaps?: CocktailVariationSwap[];
+
+  /** Optional link to another catalog cocktail this variation produces. */
+  @Prop({ type: String, ref: 'Cocktail', required: false })
+  makesCocktailId?: string;
+}
+
+const CocktailVariationSchema = SchemaFactory.createForClass(CocktailVariation);
+
 @Schema({
   timestamps: true,
   toJSON: {
@@ -121,6 +153,10 @@ export class Cocktail {
 
   @Prop({ type: [String], default: [] })
   tags: string[];
+
+  /** Named variations (swaps + prose), resolved to base ids. */
+  @Prop({ type: [CocktailVariationSchema], default: undefined })
+  variations?: CocktailVariation[];
 
   @Prop()
   imageUrl?: string;

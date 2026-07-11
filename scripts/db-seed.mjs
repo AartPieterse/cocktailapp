@@ -80,6 +80,7 @@ try {
     ...(c.notes ? { notes: c.notes } : {}),
     servings: c.servings ?? 1,
     tags: c.tags ?? [],
+    ...(c.variations?.length ? { variations: c.variations } : {}), // resolved (swap fromId/toId + makesCocktailId)
     ...(c.imageUrl ? { imageUrl: c.imageUrl } : {}),
     createdAt: now,
     updatedAt: now,
