@@ -28,8 +28,8 @@ import { PwaService } from '../pwa.service';
             </svg>
           </span>
           <div>
-            <h2 id="install-title">Installeer Barkast</h2>
-            <p class="sub">Zet Barkast op je beginscherm — snel te openen en werkt offline.</p>
+            <h2 id="install-title">Installeer Welke Cocktail</h2>
+            <p class="sub">Zet Welke Cocktail op je beginscherm — snel te openen en werkt offline.</p>
           </div>
         </div>
 

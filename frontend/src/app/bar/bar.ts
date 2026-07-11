@@ -19,11 +19,11 @@ import { glassSpecFor } from '../shared/cocktail-visual';
   template: `
     @if (showOnboarding()) {
       <section class="onboard">
-        <p class="eyebrow">Welkom bij Barkast</p>
+        <p class="eyebrow">Welkom bij Welke Cocktail</p>
         <h1 class="hero-title">Wat staat er<br />in jouw kast?</h1>
         <p class="lede">
           Vink aan wat je in huis hebt — sterke drank, mixers, dat ene flesje achterin —
-          en Barkast laat meteen zien welke cocktails je <em>nu</em> kunt maken.
+          en Welke Cocktail laat meteen zien welke cocktails je <em>nu</em> kunt maken.
         </p>
         <div class="cta">
           <a class="btn btn-primary" routerLink="/bar/wizard">Stel je bar samen</a>

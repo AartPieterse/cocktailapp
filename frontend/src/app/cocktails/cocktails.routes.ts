@@ -5,12 +5,12 @@ import { environment } from '../../environments/environment';
 const ADMIN_ROUTES: Routes = [
   {
     path: 'add',
-    title: 'Nieuwe cocktail — Barkast',
+    title: 'Nieuwe cocktail — Welke Cocktail',
     loadComponent: () => import('./cocktail-form/cocktail-form').then((m) => m.CocktailForm),
   },
   {
     path: ':id/edit',
-    title: 'Cocktail bewerken — Barkast',
+    title: 'Cocktail bewerken — Welke Cocktail',
     loadComponent: () => import('./cocktail-form/cocktail-form').then((m) => m.CocktailForm),
   },
 ];
@@ -18,7 +18,7 @@ const ADMIN_ROUTES: Routes = [
 export const COCKTAIL_ROUTES: Routes = [
   {
     path: '',
-    title: 'Cocktails — Barkast',
+    title: 'Cocktails — Welke Cocktail',
     loadComponent: () => import('./cocktail-list/cocktail-list').then((m) => m.CocktailList),
   },
   ...(environment.admin ? ADMIN_ROUTES : []),

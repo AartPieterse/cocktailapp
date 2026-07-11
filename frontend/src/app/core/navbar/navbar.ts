@@ -12,7 +12,7 @@ import { PwaService } from '../pwa.service';
   template: `
     <header class="bar">
       <div class="container inner">
-        <a class="brand" routerLink="/bar" aria-label="Barkast home">
+        <a class="brand" routerLink="/bar" aria-label="Welke Cocktail home">
           <span class="glyph" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -21,7 +21,7 @@ import { PwaService } from '../pwa.service';
               <line x1="8" y1="20" x2="16" y2="20" />
             </svg>
           </span>
-          <span class="mark">Barkast</span>
+          <span class="mark">Welke Cocktail</span>
         </a>
 
         <nav class="links" [class.open]="menuOpen()" (click)="menuOpen.set(false)">
@@ -36,8 +36,8 @@ import { PwaService } from '../pwa.service';
               class="icon-btn install"
               type="button"
               (click)="pwa.install()"
-              matTooltip="Installeer Barkast"
-              aria-label="Installeer Barkast"
+              matTooltip="Installeer Welke Cocktail"
+              aria-label="Installeer Welke Cocktail"
             >
               <mat-icon>get_app</mat-icon>
             </button>

@@ -9,17 +9,17 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'bar' },
       {
         path: 'bar',
-        title: 'Mijn bar — Barkast',
+        title: 'Mijn bar — Welke Cocktail',
         loadComponent: () => import('./bar/bar').then((m) => m.Bar),
       },
       {
         path: 'bar/wizard',
-        title: 'Stel je bar samen — Barkast',
+        title: 'Stel je bar samen — Welke Cocktail',
         loadComponent: () => import('./bar/wizard/wizard').then((m) => m.Wizard),
       },
       {
         path: 'kast',
-        title: 'Mijn kast — Barkast',
+        title: 'Mijn kast — Welke Cocktail',
         loadComponent: () => import('./bar/cabinet/cabinet').then((m) => m.Cabinet),
       },
       {
@@ -28,7 +28,7 @@ export const routes: Routes = [
       },
       {
         path: 'ingredienten',
-        title: 'Ingrediënten — Barkast',
+        title: 'Ingrediënten — Welke Cocktail',
         loadComponent: () =>
           import('./ingredients/ingredient-list/ingredient-list').then((m) => m.IngredientList),
       },

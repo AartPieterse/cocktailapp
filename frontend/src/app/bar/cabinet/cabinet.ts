@@ -29,7 +29,7 @@ interface Group {
       <header class="head">
         <div>
           <h1>Mijn kast</h1>
-          <p class="sub">Vink aan wat je in huis hebt — de rest rekent Barkast uit.</p>
+          <p class="sub">Vink aan wat je in huis hebt — de rest rekent Welke Cocktail uit.</p>
         </div>
         <div class="tally">
           <div class="makeable">

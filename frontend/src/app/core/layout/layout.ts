@@ -15,7 +15,7 @@ import { InstallPrompt } from '../install-prompt/install-prompt';
     </main>
     <footer class="no-print">
       <div class="container foot">
-        <span>Barkast — <span class="muted">wat kan jij maken?</span></span>
+        <span>Welke Cocktail — <span class="muted">wat kan jij maken?</span></span>
         <span class="muted">
           <a routerLink="/cocktails">Cocktails</a> ·
           <a routerLink="/kast">Mijn kast</a>
