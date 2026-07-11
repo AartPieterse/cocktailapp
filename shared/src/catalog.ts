@@ -1,4 +1,4 @@
-import { BaseSpirit, Cocktail, CocktailIngredientRole } from './cocktail';
+import { BaseSpirit, Cocktail, CocktailIngredientRole, CocktailVariation } from './cocktail';
 import { Difficulty } from './difficulty';
 import { Glassware } from './glassware';
 import { Ingredient } from './ingredient';
@@ -53,6 +53,18 @@ export interface RawCatalogLine {
   alternatives?: string[];
 }
 
+/**
+ * Raw variation as authored in the seed. `swaps` reference ingredient *names* (resolved to base ids
+ * here, like `RawCatalogLine.alternatives`); `makesCocktail` references another cocktail by *name*
+ * (or its authored id). Resolved into {@link CocktailVariation} (id-based) by `buildCatalog`.
+ */
+export interface RawCatalogVariation {
+  name: string;
+  description?: string;
+  swaps?: { from: string; to: string }[];
+  makesCocktail?: string;
+}
+
 /** Raw cocktail as it appears in the seed file or a Mongo document. */
 export interface RawCatalogCocktail {
   /** Authored, immutable id. When present, used verbatim; otherwise derived via `slugify(name)`. */
@@ -70,6 +82,7 @@ export interface RawCatalogCocktail {
   notes?: string;
   servings?: number;
   tags?: string[];
+  variations?: RawCatalogVariation[];
   imageUrl?: string;
 }
 
@@ -121,6 +134,8 @@ export interface CatalogTranslations {
       instructions?: string[];
       notes?: string;
       garnish?: string;
+      /** Index-aligned with the cocktail's `variations`; each overlays that variation's strings. */
+      variations?: { name?: string; description?: string }[];
     }
   >;
 }
@@ -156,9 +171,20 @@ export function applyCatalogTranslations(
         ? { ...line, name: translated }
         : line;
     });
+    // Overlay each variation's name/description by index; anything untranslated stays canonical.
+    const variations = ck.variations?.map((v, i) => {
+      const tv = t?.variations?.[i];
+      if (!tv) return v;
+      return {
+        ...v,
+        ...(tv.name ? { name: tv.name } : {}),
+        ...(tv.description !== undefined ? { description: tv.description } : {}),
+      };
+    });
     return {
       ...ck,
       ingredients: lines,
+      ...(variations ? { variations } : {}),
       ...(t?.name ? { name: t.name } : {}),
       ...(t?.description !== undefined ? { description: t.description } : {}),
       ...(t?.instructions ? { instructions: t.instructions } : {}),
@@ -232,11 +258,32 @@ export function buildCatalog(
     });
 
   // Cocktails: sort by name, then assign ids and resolve ingredient lines to ingredient ids.
-  const usedCocktailIds = new Set<string>();
-  const cocktails: Cocktail[] = [...rawCocktails]
+  const sortedCocktails = [...rawCocktails]
     .map((c) => ({ ...c, name: c.name.trim() }))
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .map((c) => {
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  // Pass 1: assign every cocktail id up front, so a variation's `makesCocktail` (a name → id link)
+  // can resolve against the full set regardless of authoring order.
+  const usedCocktailIds = new Set<string>();
+  const cocktailIdByName = new Map<string, string>();
+  const cocktailIds = sortedCocktails.map((c) => {
+    let id: string;
+    if (c.id) {
+      if (usedCocktailIds.has(c.id)) {
+        throw new Error(`Duplicate authored cocktail id "${c.id}" (on "${c.name}").`);
+      }
+      usedCocktailIds.add(c.id);
+      id = c.id;
+    } else {
+      id = makeUniqueId(c.name, usedCocktailIds);
+    }
+    cocktailIdByName.set(c.name.toLowerCase(), id);
+    return id;
+  });
+
+  // Pass 2: resolve ingredient lines + variations to ids.
+  const cocktails: Cocktail[] = sortedCocktails.map((c, index) => {
+      const cocktailId = cocktailIds[index];
       const lines = (c.ingredients ?? []).map((line) => {
         const found = byName.get(line.name.trim().toLowerCase());
         if (!found) {
@@ -270,17 +317,40 @@ export function buildCatalog(
         };
       });
 
-      // Prefer an authored, immutable cocktail id; fall back to a slug of the name.
-      let cocktailId: string;
-      if (c.id) {
-        if (usedCocktailIds.has(c.id)) {
-          throw new Error(`Duplicate authored cocktail id "${c.id}" (on "${c.name}").`);
+      // Resolve variations: swap names → base ids (like alternatives) and makesCocktail name → id.
+      const variations: CocktailVariation[] = (c.variations ?? []).map((v) => {
+        const swaps = (v.swaps ?? []).map((swap) => {
+          const from = byName.get(swap.from.trim().toLowerCase());
+          const to = byName.get(swap.to.trim().toLowerCase());
+          if (!from) {
+            throw new Error(
+              `Cocktail "${c.name}" variation "${v.name}" swaps from unknown ingredient "${swap.from}".`,
+            );
+          }
+          if (!to) {
+            throw new Error(
+              `Cocktail "${c.name}" variation "${v.name}" swaps to unknown ingredient "${swap.to}".`,
+            );
+          }
+          return { fromId: from.id, toId: to.id };
+        });
+        let makesCocktailId: string | undefined;
+        if (v.makesCocktail) {
+          const key = v.makesCocktail.trim().toLowerCase();
+          makesCocktailId = cocktailIdByName.get(key) ?? (usedCocktailIds.has(v.makesCocktail) ? v.makesCocktail : undefined);
+          if (!makesCocktailId) {
+            throw new Error(
+              `Cocktail "${c.name}" variation "${v.name}" links to unknown cocktail "${v.makesCocktail}".`,
+            );
+          }
         }
-        usedCocktailIds.add(c.id);
-        cocktailId = c.id;
-      } else {
-        cocktailId = makeUniqueId(c.name, usedCocktailIds);
-      }
+        return {
+          name: v.name.trim(),
+          ...(v.description ? { description: v.description } : {}),
+          ...(swaps.length ? { swaps } : {}),
+          ...(makesCocktailId ? { makesCocktailId } : {}),
+        };
+      });
 
       return {
         id: cocktailId,
@@ -297,6 +367,7 @@ export function buildCatalog(
         ...(c.notes ? { notes: c.notes } : {}),
         servings: c.servings ?? 1,
         ...(c.tags?.length ? { tags: c.tags } : {}),
+        ...(variations.length ? { variations } : {}),
         ...(c.imageUrl ? { imageUrl: c.imageUrl } : {}),
       } as Cocktail;
     });

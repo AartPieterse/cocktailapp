@@ -1001,7 +1001,6 @@
       "glass": "flute",
       "method": "stirred",
       "difficulty": "easy",
-      "notes": "PUCCINI - Fresh Mandarin Orange Juice; ROSSINI - Fresh Strawberry Puree; TINTORETTO - Fresh Pomegranate Juice.",
       "tags": [
         "iba-official"
       ],
@@ -1017,6 +1016,20 @@
           "call": "White Peach Purée",
           "amount": 50,
           "unit": "ml"
+        }
+      ],
+      "variations": [
+        {
+          "name": "Puccini",
+          "description": "Made with fresh mandarin orange juice instead of peach purée."
+        },
+        {
+          "name": "Rossini",
+          "description": "Made with fresh strawberry purée instead of peach purée."
+        },
+        {
+          "name": "Tintoretto",
+          "description": "Made with fresh pomegranate juice instead of peach purée."
         }
       ]
     },
@@ -1118,7 +1131,6 @@
       "glass": "rocks",
       "method": "muddled",
       "difficulty": "easy",
-      "notes": "CAIPIROSKA - Instead of Cachaça use Vodka;",
       "tags": [
         "iba-official"
       ],
@@ -1140,6 +1152,18 @@
           "call": "White Cane Sugar",
           "amount": 4,
           "unit": "teaspoon"
+        }
+      ],
+      "variations": [
+        {
+          "name": "Caipiroska",
+          "description": "Use vodka instead of cachaça.",
+          "swaps": [
+            {
+              "from": "Cachaça",
+              "to": "Vodka"
+            }
+          ]
         }
       ]
     },
@@ -1537,7 +1561,6 @@
       "glass": "wine",
       "method": "build",
       "difficulty": "easy",
-      "notes": "KIR ROYAL - Use Champagne instead of white wine",
       "tags": [
         "iba-official"
       ],
@@ -1551,6 +1574,18 @@
           "name": "Crème de Cassis",
           "amount": 10,
           "unit": "ml"
+        }
+      ],
+      "variations": [
+        {
+          "name": "Kir Royal",
+          "description": "Use champagne (sparkling wine) instead of dry white wine.",
+          "swaps": [
+            {
+              "from": "Dry White Wine",
+              "to": "Sparkling Wine"
+            }
+          ]
         }
       ]
     },
@@ -2938,7 +2973,6 @@
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with a slice of orange.",
-      "notes": "There are other versions of the Spritz that use Campari, Cynar or Select instead of Aperol.",
       "tags": [
         "iba-official"
       ],
@@ -2958,6 +2992,32 @@
           "name": "Soda Water",
           "amount": 1,
           "unit": "splash"
+        }
+      ],
+      "variations": [
+        {
+          "name": "Campari Spritz",
+          "description": "Swap the Aperol for Campari for a more bitter profile.",
+          "swaps": [
+            {
+              "from": "Aperol",
+              "to": "Campari"
+            }
+          ]
+        },
+        {
+          "name": "Cynar Spritz",
+          "description": "Swap the Aperol for Cynar (artichoke amaro).",
+          "swaps": [
+            {
+              "from": "Aperol",
+              "to": "Cynar"
+            }
+          ]
+        },
+        {
+          "name": "Select Spritz",
+          "description": "The Venetian original, made with Select instead of Aperol."
         }
       ]
     },

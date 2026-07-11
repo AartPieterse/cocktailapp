@@ -1,5 +1,5 @@
 {
-  "version": "f7d07ee45069",
+  "version": "4f96b3dc18b4",
   "schemaVersion": 1,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
@@ -1817,10 +1817,23 @@
       "glass": "flute",
       "method": "stirred",
       "difficulty": "easy",
-      "notes": "PUCCINI - Fresh Mandarin Orange Juice; ROSSINI - Fresh Strawberry Puree; TINTORETTO - Fresh Pomegranate Juice.",
       "servings": 1,
       "tags": [
         "iba-official"
+      ],
+      "variations": [
+        {
+          "name": "Puccini",
+          "description": "Made with fresh mandarin orange juice instead of peach purée."
+        },
+        {
+          "name": "Rossini",
+          "description": "Made with fresh strawberry purée instead of peach purée."
+        },
+        {
+          "name": "Tintoretto",
+          "description": "Made with fresh pomegranate juice instead of peach purée."
+        }
       ]
     },
     {
@@ -2200,10 +2213,21 @@
       "glass": "rocks",
       "method": "muddled",
       "difficulty": "easy",
-      "notes": "CAIPIROSKA - Instead of Cachaça use Vodka;",
       "servings": 1,
       "tags": [
         "iba-official"
+      ],
+      "variations": [
+        {
+          "name": "Caipiroska",
+          "description": "Use vodka instead of cachaça.",
+          "swaps": [
+            {
+              "fromId": "cachaca",
+              "toId": "vodka"
+            }
+          ]
+        }
       ]
     },
     {
@@ -4430,10 +4454,21 @@
       "glass": "wine",
       "method": "build",
       "difficulty": "easy",
-      "notes": "KIR ROYAL - Use Champagne instead of white wine",
       "servings": 1,
       "tags": [
         "iba-official"
+      ],
+      "variations": [
+        {
+          "name": "Kir Royal",
+          "description": "Use champagne (sparkling wine) instead of dry white wine.",
+          "swaps": [
+            {
+              "fromId": "white-wine",
+              "toId": "sparkling-wine"
+            }
+          ]
+        }
       ]
     },
     {
@@ -7427,10 +7462,35 @@
       "method": "stirred",
       "difficulty": "easy",
       "garnish": "Garnish with a slice of orange.",
-      "notes": "There are other versions of the Spritz that use Campari, Cynar or Select instead of Aperol.",
       "servings": 1,
       "tags": [
         "iba-official"
+      ],
+      "variations": [
+        {
+          "name": "Campari Spritz",
+          "description": "Swap the Aperol for Campari for a more bitter profile.",
+          "swaps": [
+            {
+              "fromId": "aperol",
+              "toId": "campari"
+            }
+          ]
+        },
+        {
+          "name": "Cynar Spritz",
+          "description": "Swap the Aperol for Cynar (artichoke amaro).",
+          "swaps": [
+            {
+              "fromId": "aperol",
+              "toId": "cynar"
+            }
+          ]
+        },
+        {
+          "name": "Select Spritz",
+          "description": "The Venetian original, made with Select instead of Aperol."
+        }
       ]
     },
     {

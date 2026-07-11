@@ -21,6 +21,7 @@ import { catchError, of, switchMap, tap } from 'rxjs';
 import { CabinetService } from '../../core/cabinet.service';
 import { FavoritesService } from '../../core/favorites.service';
 import { UnitPreferenceService } from '../../core/unit-preference.service';
+import { IngredientService } from '../../services/ingredient.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { GlassArt } from '../../shared/glass-art/glass-art';
@@ -135,8 +136,36 @@ import { environment } from '../../../environments/environment';
             </div>
 
             @if (c.notes) {
-              <div class="sec-label">Tips & variaties</div>
+              <div class="sec-label">Tips</div>
               <p class="notes">{{ c.notes }}</p>
+            }
+
+            @if (c.variations?.length) {
+              <div class="sec-label">Variaties</div>
+              <div class="variations">
+                @for (v of c.variations; track v.name) {
+                  <div class="variation">
+                    <div class="v-head">
+                      <span class="v-name">{{ v.name }}</span>
+                      @if (v.makesCocktailId) {
+                        <a class="v-link" [routerLink]="['/cocktails', v.makesCocktailId]">Bekijk recept ›</a>
+                      }
+                    </div>
+                    @if (v.swaps?.length) {
+                      <div class="v-swaps">
+                        @for (s of v.swaps; track s.fromId + s.toId) {
+                          <span class="swap">
+                            <span class="from">{{ ingName(s.fromId) }}</span>
+                            <mat-icon>arrow_forward</mat-icon>
+                            <span class="to">{{ ingName(s.toId) }}</span>
+                          </span>
+                        }
+                      </div>
+                    }
+                    @if (v.description) { <p class="v-desc">{{ v.description }}</p> }
+                  </div>
+                }
+              </div>
             }
           </div>
         </div>
@@ -342,6 +371,66 @@ import { environment } from '../../../environments/environment';
       border-radius: 14px;
       padding: 16px 18px;
     }
+    .variations {
+      margin-top: 12px;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .variation {
+      border: 1px solid var(--hairline);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .v-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .v-name {
+      font: 600 1rem var(--font-body);
+      color: var(--ink);
+    }
+    .v-link {
+      font: 600 0.813rem var(--font-body);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .v-link:hover {
+      text-decoration: underline;
+    }
+    .v-swaps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .swap {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface-2);
+      border-radius: var(--radius-pill);
+      padding: 5px 12px;
+      font: 600 0.781rem var(--font-body);
+      color: var(--muted);
+    }
+    .swap .to {
+      color: var(--accent);
+    }
+    .swap mat-icon {
+      font-size: 15px;
+      width: 15px;
+      height: 15px;
+      color: var(--faint);
+    }
+    .v-desc {
+      margin: 8px 0 0;
+      font: 500 0.906rem/1.55 var(--font-body);
+      color: var(--muted);
+    }
     .servings button {
       border: none;
       background: none;
@@ -465,6 +554,7 @@ export class CocktailDetail {
   private readonly cabinet = inject(CabinetService);
   private readonly favorites = inject(FavoritesService);
   private readonly unitPref = inject(UnitPreferenceService);
+  private readonly ingredientService = inject(IngredientService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
@@ -474,6 +564,9 @@ export class CocktailDetail {
   readonly cocktail = signal<Cocktail | null>(null);
   readonly loading = signal(true);
   readonly servings = signal(1);
+
+  /** Base id → display name, so variation swaps read in the display language (translated catalog). */
+  private readonly ingredientNames = signal<Map<string, string>>(new Map());
 
   protected readonly unitOptions = this.unitPref.options;
   readonly unit = this.unitPref.unit;
@@ -506,6 +599,10 @@ export class CocktailDetail {
   );
 
   constructor() {
+    this.ingredientService
+      .getAll()
+      .subscribe((list) => this.ingredientNames.set(new Map(list.map((i) => [i.id, i.name]))));
+
     toObservable(this.id)
       .pipe(
         tap(() => this.loading.set(true)),
@@ -537,6 +634,9 @@ export class CocktailDetail {
   }
   ingCat(i: CocktailIngredient): string | undefined {
     return i.role === 'garnish' ? 'garnish' : undefined;
+  }
+  ingName(id: string): string {
+    return this.ingredientNames().get(id) ?? id;
   }
 
   inBar(i: CocktailIngredient): boolean {
