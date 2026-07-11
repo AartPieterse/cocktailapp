@@ -141,11 +141,17 @@ jobs:
         #   2. There is no netlify.toml / package.json above this dir, so the CLI can't resolve
         #      a build command or plugins — it does a pure static upload (no build, no plugin).
         # (The site's server-side @netlify/angular-runtime plugin registration was also removed
-        # via the API; this keeps the deploy plugin-free regardless.) SPA routing ships via the
-        # committed frontend/public/_redirects, which is inside the copied bundle.
+        # via the API; this keeps the deploy plugin-free regardless.) SPA routing + custom headers
+        # ship via the committed frontend/public/_redirects and _headers, copied in explicitly
+        # below: the @angular/build:application builder drops these underscore-prefixed public
+        # files from dist/, so relying on the build output alone silently loses the SPA fallback.
         run: |
           publish="$RUNNER_TEMP/netlify-publish"
           rm -rf "$publish"; mkdir -p "$publish"
           cp -a "$GITHUB_WORKSPACE/frontend/dist/frontend/browser/." "$publish/"
+          # Guarantee Netlify's _redirects (SPA fallback) and _headers reach the deploy root,
+          # independent of whether the Angular builder emitted them.
+          cp "$GITHUB_WORKSPACE/frontend/public/_redirects" "$publish/_redirects"
+          cp "$GITHUB_WORKSPACE/frontend/public/_headers" "$publish/_headers"
           cd "$publish"
           npx --yes netlify-cli deploy --prod --dir=. --site="$NETLIFY_SITE_ID" --message="CI deploy ${GITHUB_SHA::7} (${GITHUB_REF_NAME})"

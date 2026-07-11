@@ -1,0 +1,5 @@
+# Netlify custom response headers (https://docs.netlify.com/manage/routing/headers/).
+# Netlify's MIME map does not recognise the .webmanifest extension and serves it as
+# application/octet-stream, which strict PWA parsers reject. Pin the correct type.
+/manifest.webmanifest
+  Content-Type: application/manifest+json
