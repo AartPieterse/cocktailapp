@@ -8,6 +8,7 @@ import { LanguageService } from '../language.service';
 import { ThemeService } from '../theme.service';
 import { PwaService } from '../pwa.service';
 import { AuthService } from '../auth/auth.service';
+import { AnalyticsService } from '../analytics.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -253,6 +254,7 @@ export class Navbar {
   protected readonly authEnabled = environment.authEnabled;
   private readonly cocktails = inject(CocktailService);
   private readonly router = inject(Router);
+  private readonly analytics = inject(AnalyticsService);
   protected readonly menuOpen = signal(false);
 
   /** The two-letter code of the language you'd switch TO (shown on the toggle). */
@@ -265,6 +267,7 @@ export class Navbar {
   }
 
   surprise(): void {
+    this.analytics.track('surprise_me');
     this.cocktails.getRandom().subscribe({
       next: (c) => void this.router.navigate(['/cocktails', c.id]),
       error: () => undefined,

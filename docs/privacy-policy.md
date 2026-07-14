@@ -6,6 +6,11 @@ Barkast is een cocktail-app die laat zien welke drankjes je kunt maken met wat j
 app is **local-first**: je kunt hem volledig gebruiken **zonder account** en **zonder internet**. Dit
 beleid legt uit welke gegevens we verwerken, waarom, en wat je rechten zijn.
 
+In de **huidige, gepubliceerde versie** draait de app volledig op je eigen apparaat: hij werkt met een
+ingebouwde cocktailcatalogus en stuurt **geen** persoonsgegevens naar een server. De paragrafen
+hieronder over **accounts, synchronisatie en statistieken** beschrijven een optionele (zelf-gehoste)
+backend die in de huidige app **nog niet is ingeschakeld**.
+
 **Verwerkingsverantwoordelijke:** de beheerder van deze Barkast-installatie (particulier, Nederland).
 **Contact:** a.pieterse@ratho.nl.
 
@@ -18,12 +23,16 @@ Zonder in te loggen slaat Barkast **alleen op jouw apparaat** op:
 
 - je bar (welke ingrediënten je hebt),
 - je favoriete cocktails,
-- je voorkeuren (thema, of de wizard is afgerond, je statistiek-keuze).
+- je voorkeuren (thema, of de wizard is afgerond, of vervangers meetellen, en of de
+  installatie-melding is weggeklikt).
 
 Deze gegevens verlaten je apparaat niet en worden niet naar een server gestuurd. Verwijder je de app
 (of wis je de app-opslag), dan zijn ze weg.
 
 ## 2. Optioneel account & synchronisatie
+
+> Accounts en synchronisatie zijn voorbereid in de backend, maar staan in de **huidige versie van de
+> app nog niet open**. Deze paragraaf beschrijft wat er gebeurt zodra je een account kunt aanmaken.
 
 Maak je een account aan (e-mail + wachtwoord), dan synchroniseren we je **bar** en **favorieten**
 tussen je apparaten. Daarvoor verwerken we:
@@ -42,15 +51,16 @@ profilering of advertenties.
 
 ## 3. Anonieme, geaggregeerde statistieken
 
-Om te begrijpen hoe de app gebruikt wordt, kan de app **anonieme** gebeurtenissen sturen
-(bijvoorbeeld: “een cocktail bekeken”, “een ingrediënt toegevoegd”). Hierbij geldt:
+De **huidige app verstuurt geen enkele statistiek** — er wordt niets over je gebruik naar een server
+gestuurd. Mocht dit in een toekomstige versie (met de optionele backend) worden ingeschakeld, dan zou
+de app **anonieme** gebeurtenissen kunnen sturen (bijvoorbeeld: “een cocktail bekeken”, “een ingrediënt
+toegevoegd”), en geldt:
 
 - **geen** gebruikers-id, **geen** apparaat-vingerafdruk, **geen** IP-adres wordt opgeslagen;
 - de server bewaart **uitsluitend geaggregeerde tellers** per dag (totalen per gebeurtenis en per
   cocktail/ingrediënt) — er is **geen** herleidbare gebeurtenissenlog;
 - deze statistieken zijn **niet** te herleiden tot een persoon;
-- je kunt dit **uitzetten** in de app (Account → Voorkeuren → “Anonieme statistieken delen”); staat
-  het uit, dan verstuurt de app niets.
+- het is **uit te zetten** in de app, en staat het uit, dan verstuurt de app niets.
 
 De geaggregeerde cijfers en technische metrics (aantal verzoeken, foutpercentage, latency, uptime)
 zijn alleen in te zien door de beheerder op het **lokale thuisnetwerk**; ze zijn niet bereikbaar via
@@ -71,9 +81,10 @@ het openbare internet.
 Je hebt recht op inzage, correctie, verwijdering, beperking en overdraagbaarheid van je
 persoonsgegevens, en je kunt bezwaar maken tegen verwerking.
 
-- **Verwijderen:** in de app via **Account → Account verwijderen**. Dit verwijdert je account én alle
-  gesynchroniseerde gegevens (bar, favorieten) definitief van de server (`DELETE /api/me`). Je lokale
-  kopie op het apparaat blijft bestaan tot je de app-opslag wist.
+- **Verwijderen:** zodra accounts opengesteld zijn, verwijder je je account in de app; dit verwijdert
+  je account én alle gesynchroniseerde gegevens (bar, favorieten) definitief van de server
+  (`DELETE /api/me`). Zolang er nog geen account-functie in de app zit, kun je hiervoor contact opnemen
+  via het adres bovenaan. Je lokale kopie op het apparaat blijft bestaan tot je de app-opslag wist.
 - **Inzage/export:** neem contact op via het adres bovenaan.
 - **Klacht:** je kunt een klacht indienen bij de Autoriteit Persoonsgegevens.
 

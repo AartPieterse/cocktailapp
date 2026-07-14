@@ -1,6 +1,6 @@
 /**
  * Cross-client contracts for the optional accounts + sync feature. The backend implements these
- * and the web/Expo clients consume them, so the shapes live here in the shared package.
+ * and the web client + backend consume them, so the shapes live here in the shared package.
  *
  * Accounts are optional: the app is fully usable offline with no account. Signing in syncs the
  * user's cabinet + favorites (arrays of catalog ingredient/cocktail ids — see `buildCatalog`).

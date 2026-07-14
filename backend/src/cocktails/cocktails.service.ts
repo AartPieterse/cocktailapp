@@ -92,7 +92,7 @@ export class CocktailsService {
 
   /**
    * The flagship "what can I make with what I have" search — now running the SINGLE shared
-   * `computeMakeable` engine (the same one the web/Expo clients use) over the ~90 cocktails loaded
+   * `computeMakeable` engine (the same one the web client uses) over the ~90 cocktails loaded
    * from Mongo, instead of a separate Mongo `$aggregate` pipeline. This keeps the backend byte-for-
    * byte in agreement with the offline bundle: same slug id space, same optional/garnish/seasoning
    * rules, same "X or Y" alternatives handling, same ordering.

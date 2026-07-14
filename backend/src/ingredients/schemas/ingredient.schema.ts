@@ -59,3 +59,11 @@ IngredientSchema.index(
     collation: { locale: 'en', strength: 2 },
   },
 );
+
+// Backs `GET /ingredients?category=…`, which filters by `category` and sorts by `name` under the
+// case-insensitive collation (see IngredientsService.findAll). The index MUST carry the same
+// collation, or Mongo can't use it for the collated query and falls back to a collection scan.
+IngredientSchema.index(
+  { category: 1, name: 1 },
+  { name: 'category_name_ci', collation: { locale: 'en', strength: 2 } },
+);

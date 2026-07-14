@@ -593,6 +593,620 @@
         "Garneer met citroen en verse bessen."
       ],
       "garnish": "Citroen en verse bessen"
+    },
+    "alexander": {
+      "name": "Alexander",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker gevuld met ijsblokjes.",
+        "Shake en zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Bestrooi met versgeraspte nootmuskaat."
+    },
+    "angel-face": {
+      "name": "Angel Face",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker gevuld met ijsblokjes.",
+        "Shake en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "aviation": {
+      "name": "Aviation",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker.",
+        "Shake met gebroken ijs en zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Optioneel een maraschinokers."
+    },
+    "bee-s-knees": {
+      "name": "Bee's Knees",
+      "instructions": [
+        "Roer de honing door het citroen- en sinaasappelsap tot ze oplost, voeg de gin toe en shake met ijs.",
+        "Zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Garneer eventueel met een schilletje citroen of sinaasappel."
+    },
+    "bellini": {
+      "name": "Bellini",
+      "instructions": [
+        "Doe de perzikpuree met ijs in het mengglas en voeg de prosecco toe.",
+        "Roer voorzichtig en schenk in een gekoeld flûteglas."
+      ],
+      "notes": "PUCCINI - vers mandarijnensap; ROSSINI - verse aardbeienpuree; TINTORETTO - vers granaatappelsap."
+    },
+    "between-the-sheets": {
+      "name": "Between the Sheets",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker.",
+        "Shake met ijs en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "black-russian": {
+      "name": "Black Russian",
+      "instructions": [
+        "Doe de ingrediënten in een old-fashionedglas gevuld met ijsblokjes.",
+        "Roer voorzichtig."
+      ],
+      "notes": "WHITE RUSSIAN - laat verse room bovenop drijven en roer langzaam door."
+    },
+    "boulevardier": {
+      "name": "Boulevardier",
+      "instructions": [
+        "Doe alle ingrediënten met ijsblokjes in een mengglas.",
+        "Roer goed.",
+        "Zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Garneer met een schilletje sinaasappel, eventueel een schilletje citroen."
+    },
+    "brandy-crusta": {
+      "name": "Brandy Crusta",
+      "instructions": [
+        "Meng alle ingrediënten met ijsblokjes in een mengglas en zeef in een voorbereid smal cocktailglas."
+      ],
+      "garnish": "Wrijf een schijfje sinaasappel (of citroen) langs de rand van het glas en doop de rand in fijne witte suiker, zodat de suiker aan de glasrand blijft plakken. Krul de sinaasappel- of citroenschil voorzichtig langs de binnenkant van het glas."
+    },
+    "canchanchara": {
+      "name": "Canchanchara",
+      "instructions": [
+        "Meng de honing met water en limoensap en verdeel het mengsel over de bodem en de zijkanten van het glas.",
+        "Voeg gebroken ijs toe en daarna de rum.",
+        "Roer tot slot krachtig van onder naar boven."
+      ],
+      "garnish": "Partje limoen."
+    },
+    "cardinale": {
+      "name": "Cardinale",
+      "instructions": [
+        "Roer alle ingrediënten met ijs.",
+        "Zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Schilletje citroen"
+    },
+    "casino": {
+      "name": "Casino",
+      "instructions": [
+        "Doe alle ingrediënten in de shaker, shake goed met ijs en zeef in een gekoeld rocks glas met ijs."
+      ],
+      "garnish": "Garneer met een schilletje citroen en een maraschinokers."
+    },
+    "champagne-cocktail": {
+      "name": "Champagne Cocktail",
+      "instructions": [
+        "Leg het suikerklontje met 2 scheutjes bitters in een groot champagneglas en voeg de cognac toe.",
+        "Schenk er voorzichtig gekoelde champagne bij."
+      ],
+      "garnish": "Garneer met een schilletje sinaasappel en een maraschinokers."
+    },
+    "chartreuse-swizzle": {
+      "name": "Chartreuse Swizzle",
+      "instructions": [
+        "Doe alle ingrediënten in een hoog glas met pebble ijs.",
+        "Swizzle krachtig met een swizzlestick.",
+        "Vul aan met meer pebble ijs."
+      ],
+      "garnish": "Munttakje en geraspte nootmuskaat"
+    },
+    "clover-club": {
+      "name": "Clover Club",
+      "instructions": [
+        "Doe alle ingrediënten in de shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Verse frambozen."
+    },
+    "corpse-reviver-2": {
+      "name": "Corpse Reviver #2",
+      "instructions": [
+        "Doe alle ingrediënten met ijs in de shaker.",
+        "Shake goed en zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Garneer met een schilletje sinaasappel"
+    },
+    "don-s-special-daiquiri": {
+      "name": "Don's Special Daiquiri",
+      "instructions": [
+        "Blend kort (flash-blend) met crushed ice.",
+        "Schenk in een glas op voet en vul aan met crushed ice."
+      ],
+      "garnish": "Een halve passievrucht"
+    },
+    "fernandito": {
+      "name": "Fernandito",
+      "instructions": [
+        "Schenk de Fernet-Branca in een dubbel old fashioned glas met ijs en vul het glas aan met cola.",
+        "Roer voorzichtig."
+      ]
+    },
+    "french-connection": {
+      "name": "French Connection",
+      "instructions": [
+        "Schenk alle ingrediënten rechtstreeks in een old fashioned glas gevuld met ijsblokjes.",
+        "Roer voorzichtig."
+      ]
+    },
+    "french-martini": {
+      "name": "French Martini",
+      "instructions": [
+        "Doe alle ingrediënten in de shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Knijp de olie uit een schilletje citroen boven de drank."
+    },
+    "garibaldi": {
+      "name": "Garibaldi",
+      "instructions": [
+        "Bouw op in een highballglas met ijs.",
+        "Gebruik bij voorkeur luchtig opgeschuimd (aerated) sinaasappelsap."
+      ],
+      "garnish": "Partje sinaasappel"
+    },
+    "gin-basil-smash": {
+      "name": "Gin Basil Smash",
+      "instructions": [
+        "Shake alle ingrediënten met ijs.",
+        "Dubbel zeven in een gekoeld cocktailglas."
+      ]
+    },
+    "gin-fizz": {
+      "name": "Gin Fizz",
+      "instructions": [
+        "Shake alle ingrediënten behalve het sodawater met ijs.",
+        "Schenk in een hoog, smal tumblerglas en vul aan met een scheutje sodawater."
+      ],
+      "notes": "Serveer zonder ijs.",
+      "garnish": "Garneer met een schijfje citroen, eventueel een schilletje citroen."
+    },
+    "grand-margarita": {
+      "name": "Grand Margarita",
+      "instructions": [
+        "Maak een zoutrandje op een rocksglas.",
+        "Shake met ijs en zeef over vers ijs."
+      ],
+      "garnish": "Schijfje limoen"
+    },
+    "grasshopper": {
+      "name": "Grasshopper",
+      "instructions": [
+        "Doe alle ingrediënten in een met ijs gevulde shaker.",
+        "Shake een paar seconden stevig.",
+        "Zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Geen, eventueel een muntblaadje."
+    },
+    "hanky-panky": {
+      "name": "Hanky Panky",
+      "instructions": [
+        "Doe alle ingrediënten met ijsblokjes in een mengglas.",
+        "Roer goed.",
+        "Zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Schilletje sinaasappel."
+    },
+    "hemingway-special": {
+      "name": "Hemingway Special",
+      "instructions": [
+        "Doe alle ingrediënten met ijs in een shaker.",
+        "Shake goed en zeef in een groot cocktailglas."
+      ]
+    },
+    "horse-s-neck": {
+      "name": "Horse's Neck",
+      "instructions": [
+        "Schenk de cognac en ginger ale rechtstreeks in een highballglas met ijsblokjes.",
+        "Roer voorzichtig.",
+        "Voeg naar wens een paar scheutjes Angostura bitters toe."
+      ],
+      "garnish": "Garneer met een spiraal van citroenschil."
+    },
+    "iba-tiki": {
+      "name": "IBA Tiki",
+      "instructions": [
+        "Plet de gember.",
+        "Voeg de overige ingrediënten toe en shake met ijs.",
+        "Zeef in een tikiglas gevuld met pebble-ijs."
+      ],
+      "garnish": "Citrus en een schijfje gedroogde ananas"
+    },
+    "illegal": {
+      "name": "Illegal",
+      "instructions": [
+        "Doe alle ingrediënten in de shaker.",
+        "Shake stevig met ijs.",
+        "Zeef in een gekoeld cocktailglas, of serveer met ijs in een traditionele klei- of terracottamok."
+      ]
+    },
+    "irish-coffee": {
+      "name": "Irish Coffee",
+      "instructions": [
+        "Schenk warme zwarte koffie in een voorverwarmd Irish coffee-glas.",
+        "Voeg de whiskey en minstens een theelepel suiker toe en roer tot de suiker is opgelost.",
+        "Schenk verse, dikke gekoelde room voorzichtig over de bolle kant van een lepel die je net boven het koffieoppervlak houdt.",
+        "De laag room blijft zonder te mengen op de koffie drijven.",
+        "Gewone suiker kan worden vervangen door suikersiroop."
+      ]
+    },
+    "john-collins": {
+      "name": "John Collins",
+      "instructions": [
+        "Schenk alle ingrediënten rechtstreeks in een met ijs gevuld highballglas.",
+        "Roer voorzichtig."
+      ],
+      "notes": "Gebruik 'Old Tom'-gin voor een Tom Collins.",
+      "garnish": "Garneer met een schijfje citroen en een maraschinokers."
+    },
+    "jungle-bird": {
+      "name": "Jungle Bird",
+      "instructions": [
+        "Shake met ijs.",
+        "Zeef in een rocksglas over ijs."
+      ],
+      "garnish": "Partje ananas"
+    },
+    "kir": {
+      "name": "KIR",
+      "instructions": [
+        "Schenk crème de cassis in het glas en vul aan met droge witte wijn."
+      ],
+      "notes": "KIR ROYAL - Gebruik champagne in plaats van witte wijn."
+    },
+    "last-word": {
+      "name": "Last word",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker.",
+        "Shake met ijs en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "lemon-drop-martini": {
+      "name": "Lemon drop Martini",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Garneer met een suikerrand rond het glas."
+    },
+    "long-island-ice-tea": {
+      "name": "Long Island Ice Tea",
+      "instructions": [
+        "Doe alle ingrediënten in een met ijs gevuld highballglas.",
+        "Roer voorzichtig."
+      ],
+      "garnish": "Schijfje citroen (optioneel)"
+    },
+    "martinez": {
+      "name": "Martinez",
+      "instructions": [
+        "Doe alle ingrediënten met ijsblokjes in een mengglas.",
+        "Roer goed.",
+        "Zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Schilletje citroen."
+    },
+    "mary-pickford": {
+      "name": "Mary Pickford",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "missionary-s-downfall": {
+      "name": "Missionary's Downfall",
+      "instructions": [
+        "Blend alle ingrediënten met een half kopje gemalen ijs.",
+        "Serveer in een grote coupe."
+      ],
+      "garnish": "Munttakje en schijfje ananas"
+    },
+    "monkey-gland": {
+      "name": "Monkey Gland",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "naked-and-famous": {
+      "name": "Naked and Famous",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "new-york-sour": {
+      "name": "New York Sour",
+      "instructions": [
+        "Doe alle ingrediënten in de shaker.",
+        "Shake stevig met ijs.",
+        "Zeef in een gekoeld rocksglas gevuld met ijs.",
+        "Laat de wijn er bovenop drijven."
+      ],
+      "garnish": "Garneer met een schilletje citroen of sinaasappel en een kers."
+    },
+    "old-cuban": {
+      "name": "Old Cuban",
+      "instructions": [
+        "Doe alle ingrediënten behalve de wijn in een shaker, shake goed met ijs en zeef in een gekoeld, elegant cocktailglas.",
+        "Vul aan met de mousserende wijn."
+      ],
+      "garnish": "Garneer met munttakjes."
+    },
+    "paper-plane": {
+      "name": "Paper Plane",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "paradise": {
+      "name": "Paradise",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "penicillin": {
+      "name": "Penicillin",
+      "instructions": [
+        "Plet verse gember in een shaker en voeg de overige ingrediënten toe, behalve de Islay single malt whisky.",
+        "Vul de shaker met ijs en shake.",
+        "Dubbel zeven in een gekoeld old fashioned glas met ijs.",
+        "Laat de single malt whisky bovenop drijven."
+      ],
+      "garnish": "Garneer met gekonfijte gember."
+    },
+    "pisco-punch": {
+      "name": "Pisco Punch",
+      "instructions": [
+        "Plet de kruidnagels voorzichtig met de siroop.",
+        "Voeg alles toe behalve de wijn en shake met ijs.",
+        "Dubbel zeven in een bokaal.",
+        "Laat de wijn bovenop drijven."
+      ]
+    },
+    "pisco-sour": {
+      "name": "Pisco Sour",
+      "instructions": [
+        "Doe alle ingrediënten met ijs in een shaker.",
+        "Shake en zeef in een gekoelde bokaal."
+      ],
+      "garnish": "Een paar scheutjes Amargo bitters erover als aromatische garnering."
+    },
+    "planter-s-punch": {
+      "name": "Planter's Punch",
+      "instructions": [
+        "Schenk alle ingrediënten rechtstreeks in een kleine tumbler of een typisch terracotta glas."
+      ],
+      "notes": "Voeg naar smaak verdunning toe met water, ijs of vers sap.",
+      "garnish": "Garneer met een schilletje sinaasappel."
+    },
+    "porn-star-martini": {
+      "name": "Porn Star Martini",
+      "instructions": [
+        "Shake met ijs.",
+        "Dubbel zeven in een gekoeld glas.",
+        "Serveer met een shotje Champagne ernaast."
+      ],
+      "garnish": "Halve passievrucht met suiker."
+    },
+    "porto-flip": {
+      "name": "Porto Flip",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Bestrooi met versgemalen nootmuskaat."
+    },
+    "rabo-de-galo": {
+      "name": "Rabo de Galo",
+      "instructions": [
+        "Doe alle ingrediënten samen in een rocks glas.",
+        "Voeg ijs toe en roer kort."
+      ],
+      "garnish": "Schilletje sinaasappel."
+    },
+    "ramos-fizz": {
+      "name": "Ramos Fizz",
+      "instructions": [
+        "Doe alle ingrediënten behalve het sodawater met ijs in een shaker, shake twee minuten, dubbel zeven in een glas, schenk de drank terug in de shaker en shake een minuut stevig zonder ijs.",
+        "Zeef in een highball glas en vul aan met sodawater."
+      ],
+      "notes": "De cocktail werd in 1888 uitgevonden door Henry Ramos in zijn bar Meyer's Table d'Hôtel Internationale in New Orleans. De Ramos Fizz werd oorspronkelijk twaalf minuten geshaket door een ploeg van 30 barmannen die de shaker aan elkaar doorgaven."
+    },
+    "remember-the-maine": {
+      "name": "Remember the Maine",
+      "instructions": [
+        "Spoel een coupeglas met de absint en giet het overtollige weg.",
+        "Roer de overige ingrediënten met ijs.",
+        "Zeef in het gespoelde glas."
+      ],
+      "garnish": "Schilletje citroen."
+    },
+    "russian-spring-punch": {
+      "name": "Russian Spring Punch",
+      "instructions": [
+        "Doe alle ingrediënten behalve de mousserende wijn in een shaker, schud goed met ijs, zeef in een gekoeld hoog tumblerglas gevuld met ijs en vul aan met mousserende wijn."
+      ],
+      "garnish": "Garneer met bramen en eventueel een schijfje citroen."
+    },
+    "rusty-nail": {
+      "name": "Rusty Nail",
+      "instructions": [
+        "Doe alle ingrediënten rechtstreeks in een old-fashionedglas gevuld met ijs.",
+        "Roer voorzichtig."
+      ],
+      "garnish": "Garneer met een schilletje citroen."
+    },
+    "sazerac": {
+      "name": "Sazerac",
+      "instructions": [
+        "Spoel een gekoeld old-fashionedglas met de absint, voeg gemalen ijs toe en zet het opzij.",
+        "Roer de overige ingrediënten met ijs in een mengglas.",
+        "Gooi het ijs en de overtollige absint uit het voorbereide glas en zeef de drank in het glas."
+      ],
+      "notes": "Het originele recept veranderde na de Amerikaanse Burgeroorlog: rye whiskey verving cognac, dat moeilijk verkrijgbaar werd.",
+      "garnish": "Garneer met een schilletje citroen."
+    },
+    "sea-breeze": {
+      "name": "Sea Breeze",
+      "instructions": [
+        "Bouw alle ingrediënten op in een highballglas gevuld met ijs."
+      ],
+      "garnish": "Garneer met een schilletje sinaasappel en een kers."
+    },
+    "sex-on-the-beach": {
+      "name": "Sex on the Beach",
+      "instructions": [
+        "Bouw alle ingrediënten op in een highballglas gevuld met ijs."
+      ],
+      "garnish": "Garneer met een half schijfje sinaasappel."
+    },
+    "sherry-cobbler": {
+      "name": "Sherry Cobbler",
+      "instructions": [
+        "Schud met de citrusschijfjes en ijs.",
+        "Zeef in een julepbeker gevuld met gemalen ijs."
+      ],
+      "garnish": "Verse bessen en citrusschijfjes; serveer met rietjes."
+    },
+    "singapore-sling": {
+      "name": "Singapore Sling",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker gevuld met ijsblokjes.",
+        "Schud goed.",
+        "Zeef in een hurricaneglas."
+      ],
+      "garnish": "Garneer met ananas en een maraschinokers."
+    },
+    "southside": {
+      "name": "Southside",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, schud goed met ijs en zeef dubbel in een gekoeld cocktailglas."
+      ],
+      "notes": "Als je eiwit gebruikt, schud dan krachtig.",
+      "garnish": "Garneer met takjes munt."
+    },
+    "spicy-fifty": {
+      "name": "Spicy Fifty",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, schud goed met ijs en zeef dubbel in een gekoeld cocktailglas."
+      ],
+      "garnish": "Garneer met een rode peper."
+    },
+    "spritz": {
+      "name": "Spritz",
+      "instructions": [
+        "Bouw alle ingrediënten op in een wijnglas gevuld met ijs.",
+        "Roer voorzichtig."
+      ],
+      "notes": "Er zijn andere versies van de Spritz die Campari, Cynar of Select gebruiken in plaats van Aperol.",
+      "garnish": "Garneer met een schijfje sinaasappel."
+    },
+    "stinger": {
+      "name": "Stinger",
+      "instructions": [
+        "Doe alle ingrediënten in een mengglas met ijsblokjes.",
+        "Roer goed.",
+        "Zeef in een gekoeld martiniglas."
+      ],
+      "garnish": "Eventueel een muntblaadje."
+    },
+    "suffering-bastard": {
+      "name": "Suffering Bastard",
+      "instructions": [
+        "Doe alle ingrediënten behalve de ginger beer in een shaker, shake goed met ijs en schenk ongezeefd in een Collins-glas of in de originele S.",
+        "Bastard-mok, en vul aan met ginger beer."
+      ],
+      "garnish": "Garneer met munttakjes en eventueel ook een schijfje sinaasappel."
+    },
+    "three-dots-and-a-dash": {
+      "name": "Three Dots and a Dash",
+      "instructions": [
+        "Blend kort (flash-blend) met crushed ice.",
+        "Schenk in een glas op voet en vul aan met meer crushed ice."
+      ],
+      "garnish": "Drie kersen en een stuk ananas."
+    },
+    "tipperary": {
+      "name": "Tipperary",
+      "instructions": [
+        "Doe alle ingrediënten met ijsblokjes in een mengglas.",
+        "Roer goed.",
+        "Zeef in een gekoeld martiniglas."
+      ],
+      "garnish": "Garneer met een schijfje sinaasappel."
+    },
+    "tommy-s-margarita": {
+      "name": "Tommy's Margarita",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld rocksglas gevuld met ijs."
+      ],
+      "garnish": "Garneer met een schijfje limoen."
+    },
+    "trinidad-sour": {
+      "name": "Trinidad Sour",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "tuxedo": {
+      "name": "Tuxedo",
+      "instructions": [
+        "Doe alle ingrediënten met ijsblokjes in een mengglas.",
+        "Roer goed.",
+        "Zeef in een gekoeld martiniglas."
+      ],
+      "garnish": "Garneer met een kers en een schilletje citroen."
+    },
+    "ve-n-to": {
+      "name": "VE.N.TO",
+      "instructions": [
+        "Doe alle ingrediënten in de shaker.",
+        "Shake krachtig met ijs.",
+        "Zeef in een gekoeld klein tumblerglas gevuld met ijs."
+      ],
+      "notes": "Desgewenst kan het water in de honingmix worden vervangen door een kamille-infusie.",
+      "garnish": "Garneer met een schilletje citroen en witte druiven."
+    },
+    "vesper": {
+      "name": "Vesper",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker gevuld met ijsblokjes.",
+        "Shake en zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Schilletje citroen."
+    },
+    "vieux-carre": {
+      "name": "Vieux Carrè",
+      "instructions": [
+        "Doe alle ingrediënten met ijsblokjes in een mengglas.",
+        "Roer goed.",
+        "Zeef in een gekoeld cocktailglas."
+      ],
+      "garnish": "Garneer met een schilletje sinaasappel en een maraschinokers."
+    },
+    "white-lady": {
+      "name": "White Lady",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
+      ]
+    },
+    "zombie": {
+      "name": "Zombie",
+      "instructions": [
+        "Doe alle ingrediënten met 170 gram gebroken ijs in een elektrische blender.",
+        "Blend enkele seconden met de pulsknop.",
+        "Serveer in een hoog tumblerglas."
+      ],
+      "notes": "Donn's Mix: 2 delen verse gele grapefruit en 1 deel kaneelsiroop.",
+      "garnish": "Garneer met muntblaadjes."
     }
   }
 }

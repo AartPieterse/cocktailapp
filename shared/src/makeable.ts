@@ -1,9 +1,36 @@
-import { Cocktail, MakeableResult } from './cocktail';
+import { Cocktail, CocktailIngredient, MakeableResult } from './cocktail';
 import { Ingredient } from './ingredient';
 
 /**
+ * The required ingredient lines of a single cocktail that the available set does NOT satisfy.
+ * A line counts as missing unless it is `optional`, a `garnish`/`seasoning`, or one of its ids
+ * (its `ingredientId` OR any `alternativeIds` — the recipe "X or Y") is available.
+ *
+ * This is the ONE rule behind "wat kan ik maken": {@link computeMakeable} maps it over the whole
+ * catalog, and per-cocktail views (e.g. the detail page) must call it directly rather than
+ * re-deriving the predicate — that duplication is how the detail page silently drifted from the
+ * list. Pass an *expanded* cabinet (see {@link expandCabinet}) to honour substitutions.
+ */
+export function missingLines(
+  cocktail: Cocktail,
+  availableIngredientIds: Iterable<string>,
+): CocktailIngredient[] {
+  const available =
+    availableIngredientIds instanceof Set
+      ? (availableIngredientIds as Set<string>)
+      : new Set(availableIngredientIds);
+  const has = (line: CocktailIngredient): boolean =>
+    available.has(line.ingredientId) ||
+    (line.alternativeIds?.some((id) => available.has(id)) ?? false);
+  return cocktail.ingredients.filter(
+    (line) =>
+      !line.optional && line.role !== 'garnish' && line.role !== 'seasoning' && !has(line),
+  );
+}
+
+/**
  * The flagship "what can I make with what I have" computation, as a pure function so every
- * client (Angular web, Expo native + web, and the backend) shares one implementation.
+ * client (the Angular web app and the backend) shares one implementation.
  *
  * Returns cocktails ordered by how many *required* ingredients you are still missing, up to
  * `maxMissing` (0 = makeable right now). Rules:
@@ -28,21 +55,13 @@ export function computeMakeable(
   maxMissing = 0,
 ): MakeableResult[] {
   const available = new Set(availableIngredientIds);
-  const has = (line: Cocktail['ingredients'][number]): boolean =>
-    available.has(line.ingredientId) ||
-    (line.alternativeIds?.some((id) => available.has(id)) ?? false);
   return cocktails
     .filter((ck) => ck.ingredients.length > 0)
     .map((ck) => {
-      const missing = ck.ingredients
-        .filter(
-          (line) =>
-            !line.optional &&
-            line.role !== 'garnish' &&
-            line.role !== 'seasoning' &&
-            !has(line),
-        )
-        .map((line) => ({ ingredientId: line.ingredientId, name: line.name }));
+      const missing = missingLines(ck, available).map((line) => ({
+        ingredientId: line.ingredientId,
+        name: line.name,
+      }));
       return { cocktail: ck, missing, missingCount: missing.length };
     })
     .filter((r) => r.missingCount <= maxMissing)

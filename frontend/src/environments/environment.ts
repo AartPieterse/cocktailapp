@@ -23,6 +23,8 @@ export const environment = {
   apiUrl: 'http://localhost:3000/api/',
   /** Base URL for auth + sync calls (auth/*, me/*). In dev this equals `apiUrl`. */
   apiBaseUrl: 'http://localhost:3000/api/',
+  /** Anonymous product-analytics ingest endpoint (POST). Empty ⇒ AnalyticsService is inert. */
+  analyticsUrl: 'http://localhost:3000/api/events',
   /** Static catalog location (used only when dataSource === 'static'). */
   catalogUrl: 'catalog.json',
   /** Dutch display overlay applied on top of the canonical catalog (same version). */

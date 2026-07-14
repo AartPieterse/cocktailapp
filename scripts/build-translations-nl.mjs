@@ -5,10 +5,11 @@
  * version — build-catalog.mjs stamps the current catalog version when it emits catalog.nl.json).
  *
  *   - ingredient names come from the authored NL_INGREDIENTS map below (one line per base id);
- *   - cocktail name/description/instructions/notes/garnish are harvested from the curated Dutch set
- *     in scripts/seed-data.mjs, matched to catalog ids by slug. Cocktails with no Dutch source keep
- *     their canonical English text (the overlay simply omits them; applyCatalogTranslations falls
- *     back). This replaces the retired SEED_SRC=nl fork — one id space, a display overlay on top.
+ *   - cocktail name/description/instructions/notes/garnish come from two sources, merged: the curated
+ *     Dutch set in scripts/seed-data.mjs (matched to catalog ids by slug), plus
+ *     scripts/translations-nl-cocktails.json for every other cocktail (seed-data.mjs wins on overlap).
+ *     Any cocktail still without Dutch text keeps its canonical English (applyCatalogTranslations
+ *     falls back). This replaces the retired SEED_SRC=nl fork — one id space, a display overlay on top.
  *
  * Re-run after editing NL_INGREDIENTS or seed-data.mjs, then rebuild the catalog. Usage:
  *   node scripts/build-translations-nl.mjs
@@ -29,6 +30,15 @@ const catalog = JSON.parse(
 );
 const ingredientIds = new Set(catalog.ingredients.map((i) => i.id));
 const cocktailIds = new Set(catalog.cocktails.map((c) => c.id));
+
+// Dutch for cocktails the curated seed-data.mjs set doesn't cover (id-keyed { name, description?,
+// instructions[], notes?, garnish? }). Optional file — absent is fine.
+let supplement = {};
+try {
+  supplement = JSON.parse(readFileSync(join(here, 'translations-nl-cocktails.json'), 'utf8'));
+} catch {
+  /* no supplement — curated set only */
+}
 
 /** Dutch display name per base id (canonical English lives in the seed; this only renames display). */
 const NL_INGREDIENTS = {
@@ -107,6 +117,20 @@ for (const c of nlCocktails) {
   };
 }
 
+// Fill in cocktails the curated set doesn't cover (curated seed-data.mjs wins on overlap).
+let fromSupplement = 0;
+for (const [id, entry] of Object.entries(supplement)) {
+  if (!cocktailIds.has(id) || cocktails[id]) continue;
+  cocktails[id] = {
+    ...(entry.name ? { name: entry.name } : {}),
+    ...(entry.description ? { description: entry.description } : {}),
+    ...(entry.instructions?.length ? { instructions: entry.instructions } : {}),
+    ...(entry.notes ? { notes: entry.notes } : {}),
+    ...(entry.garnish ? { garnish: entry.garnish } : {}),
+  };
+  fromSupplement++;
+}
+
 const out = { ingredients, cocktails };
 writeFileSync(
   join(here, 'translations-nl.json'),
@@ -115,4 +139,7 @@ writeFileSync(
 );
 console.log('Dutch overlay source → scripts/translations-nl.json:');
 console.log(`  ingredients: ${Object.keys(ingredients).length}/${ingredientIds.size} translated`);
-console.log(`  cocktails:   ${matched}/${cocktailIds.size} with Dutch text (rest fall back to English)`);
+console.log(
+  `  cocktails:   ${matched + fromSupplement}/${cocktailIds.size} with Dutch text ` +
+    `(${matched} curated + ${fromSupplement} supplement; rest fall back to English)`,
+);

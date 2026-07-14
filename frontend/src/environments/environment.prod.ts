@@ -22,6 +22,8 @@ export const environment = {
   apiUrl: '/api/',
   /** Base URL for auth + sync calls once a backend is deployed. Unused while `authEnabled` is false. */
   apiBaseUrl: '/api/',
+  /** No backend in the static production build ⇒ AnalyticsService stays inert. */
+  analyticsUrl: '',
   catalogUrl: 'catalog.json',
   /** Dutch display overlay applied on top of the canonical catalog (same version). */
   translationsUrl: 'catalog.nl.json',

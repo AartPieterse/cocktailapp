@@ -1,22 +1,24 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal, untracked } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { expandCabinet, type Ingredient, type MakeableResult } from '@cocktailapp/shared';
 import { catchError, combineLatest, of, switchMap, tap } from 'rxjs';
+import { AnalyticsService } from '../core/analytics.service';
 import { CabinetService } from '../core/cabinet.service';
 import { LanguageService } from '../core/language.service';
 import { SubstitutesService } from '../core/substitutes.service';
 import { CocktailService } from '../services/cocktail.service';
 import { IngredientService } from '../services/ingredient.service';
 import { CocktailCard } from '../cocktails/cocktail-card/cocktail-card';
+import { FactCard } from './fact-card/fact-card';
 import { GlassArt } from '../shared/glass-art/glass-art';
 import { glassSpecFor } from '../shared/cocktail-visual';
 
 @Component({
   selector: 'app-bar',
-  imports: [RouterLink, MatIconModule, MatSlideToggleModule, CocktailCard, GlassArt],
+  imports: [RouterLink, MatIconModule, MatSlideToggleModule, CocktailCard, FactCard, GlassArt],
   template: `
     @if (showOnboarding()) {
       <section class="onboard">
@@ -106,6 +108,7 @@ import { glassSpecFor } from '../shared/cocktail-visual';
                 </div>
               </div>
             }
+            <app-fact-card />
             <div class="card night">
               <div class="side-eyebrow dim">{{ lang.t().home.yourBar }}</div>
               <div class="cab-count">
@@ -119,6 +122,16 @@ import { glassSpecFor } from '../shared/cocktail-visual';
                   {{ lang.t().home.countSubstitutes }}
                 </mat-slide-toggle>
               </label>
+              @if (analytics.available) {
+                <label class="subs">
+                  <mat-slide-toggle
+                    [checked]="!analytics.optedOut()"
+                    (change)="analytics.setOptOut(!$event.checked)"
+                  >
+                    Anonieme statistieken delen
+                  </mat-slide-toggle>
+                </label>
+              }
               <a class="btn night-btn" routerLink="/bar">{{ lang.t().home.editBarShort }}</a>
             </div>
           </aside>
@@ -379,6 +392,7 @@ export class Bar {
   protected readonly cabinet = inject(CabinetService);
   protected readonly subs = inject(SubstitutesService);
   protected readonly lang = inject(LanguageService);
+  protected readonly analytics = inject(AnalyticsService);
   private readonly cocktailService = inject(CocktailService);
   private readonly ingredientService = inject(IngredientService);
 
@@ -390,8 +404,11 @@ export class Bar {
 
   readonly makeableNow = computed(() => this.results().filter((r) => r.missingCount === 0));
   readonly almost1 = computed(() => this.results().filter((r) => r.missingCount === 1));
-  readonly displayCount = computed(() => this.makeableNow().length);
+  /** Eased, animated mirror of makeableNow().length so the hero number counts up when the cabinet changes. */
+  readonly displayCount = signal(0);
   readonly heroGlasses = computed(() => this.makeableNow().slice(0, 3));
+
+  private countRaf = 0;
 
   constructor() {
     this.ingredientService.getAll().subscribe((list) => this.ingredients.set(list));
@@ -414,6 +431,31 @@ export class Bar {
         this.results.set(res);
         this.loading.set(false);
       });
+
+    // Tween the hero count toward the live makeable total whenever it changes.
+    effect(() => {
+      const target = this.makeableNow().length;
+      untracked(() => this.animateCount(target));
+    });
+  }
+
+  private animateCount(target: number): void {
+    const start = untracked(this.displayCount);
+    if (start === target) return;
+    cancelAnimationFrame(this.countRaf);
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      this.displayCount.set(target);
+      return;
+    }
+    const t0 = performance.now();
+    const dur = 450;
+    const step = (now: number) => {
+      const p = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      this.displayCount.set(Math.round(start + (target - start) * eased));
+      if (p < 1) this.countRaf = requestAnimationFrame(step);
+    };
+    this.countRaf = requestAnimationFrame(step);
   }
 
   spec(r: MakeableResult) {

@@ -1,4 +1,5 @@
-import { Injectable, computed, effect, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { AnalyticsService } from './analytics.service';
 
 const IDS_KEY = 'barkast.cabinet';
 const DONE_KEY = 'barkast.wizardDone';
@@ -9,6 +10,7 @@ const DONE_KEY = 'barkast.wizardDone';
  */
 @Injectable({ providedIn: 'root' })
 export class CabinetService {
+  private readonly analytics = inject(AnalyticsService);
   private readonly _ids = signal<Set<string>>(this.readIds());
   private readonly _wizardDone = signal<boolean>(this.readDone());
 
@@ -28,11 +30,14 @@ export class CabinetService {
   }
 
   toggle(id: string, on?: boolean): void {
-    const next = new Set(this._ids());
-    const shouldAdd = on ?? !next.has(id);
+    const current = this._ids();
+    const shouldAdd = on ?? !current.has(id);
+    const next = new Set(current);
     if (shouldAdd) next.add(id);
     else next.delete(id);
     this._ids.set(next);
+    // Anonymous "most-added ingredient" signal — only on a genuine add, never a re-add or removal.
+    if (shouldAdd && !current.has(id)) this.analytics.track('cabinet_add', { ingredientId: id });
   }
 
   /** Replace the whole cabinet at once (used when finishing the wizard). */

@@ -7,6 +7,7 @@ import {
   type Ingredient,
   type IngredientCategory,
 } from '@cocktailapp/shared';
+import { AnalyticsService } from '../../core/analytics.service';
 import { CabinetService } from '../../core/cabinet.service';
 import { LanguageService } from '../../core/language.service';
 import { IngredientService } from '../../services/ingredient.service';
@@ -240,6 +241,8 @@ export class Wizard {
     return Math.round(((this.current() + 1) / n) * 100) + '%';
   });
 
+  private readonly analytics = inject(AnalyticsService);
+
   constructor() {
     this.ingredientService.getAll().subscribe((list) => {
       this.ingredients.set(list);
@@ -276,6 +279,7 @@ export class Wizard {
   finish(): void {
     this.cabinet.setAll(this.selection());
     this.cabinet.completeWizard();
+    this.analytics.track('wizard_complete');
     void this.router.navigate(['/ontdek']);
   }
 

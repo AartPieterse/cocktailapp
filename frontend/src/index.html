@@ -9,6 +9,11 @@
   <!-- theme-color is kept in sync with the active (light/dark) theme by ThemeService. -->
   <meta id="theme-color-meta" name="theme-color" content="#f4ebd8">
 
+  <!-- Start the catalog fetch during HTML parse so it overlaps JS download/parse — it's the data the
+       first screen needs. Same-origin (no crossorigin); HttpClient reuses it via withFetch(). -->
+  <link rel="preload" href="catalog.json" as="fetch">
+  <link rel="preload" href="catalog.nl.json" as="fetch">
+
   <!-- Progressive Web App: installable + offline-capable -->
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="mobile-web-app-capable" content="yes">

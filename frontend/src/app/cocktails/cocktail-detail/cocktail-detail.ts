@@ -12,18 +12,23 @@ import {
   type VolumeUnit,
   convertMeasure,
   DIFFICULTY_LABELS,
+  expandCabinet,
   GLASSWARE_LABELS,
   isVolumeUnit,
+  type Ingredient,
   MEASURE_LABELS,
   METHOD_LABELS,
+  missingLines,
 } from '@cocktailapp/shared';
 import { catchError, of, switchMap, tap } from 'rxjs';
+import { AnalyticsService } from '../../core/analytics.service';
 import { CabinetService } from '../../core/cabinet.service';
 import { LanguageService } from '../../core/language.service';
 import { FavoritesService } from '../../core/favorites.service';
 import { UnitPreferenceService } from '../../core/unit-preference.service';
-import { IngredientService } from '../../services/ingredient.service';
+import { SubstitutesService } from '../../core/substitutes.service';
 import { CocktailService } from '../../services/cocktail.service';
+import { IngredientService } from '../../services/ingredient.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { GlassArt } from '../../shared/glass-art/glass-art';
 import { IngredientGlyph } from '../../shared/ingredient-glyph/ingredient-glyph';
@@ -552,20 +557,23 @@ export class CocktailDetail {
   readonly id = input.required<string>();
 
   private readonly cocktailService = inject(CocktailService);
+  private readonly ingredientService = inject(IngredientService);
   private readonly cabinet = inject(CabinetService);
+  private readonly subs = inject(SubstitutesService);
   private readonly favorites = inject(FavoritesService);
   private readonly unitPref = inject(UnitPreferenceService);
-  private readonly ingredientService = inject(IngredientService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
   protected readonly lang = inject(LanguageService);
+  private readonly analytics = inject(AnalyticsService);
 
   protected readonly admin = environment.admin;
 
   readonly cocktail = signal<Cocktail | null>(null);
   readonly loading = signal(true);
   readonly servings = signal(1);
+  private readonly ingredients = signal<Ingredient[]>([]);
 
   /** Base id → display name, so variation swaps read in the display language (translated catalog). */
   private readonly ingredientNames = signal<Map<string, string>>(new Map());
@@ -585,25 +593,35 @@ export class CocktailDetail {
     return c ? tintFor(c) : 'var(--surface-2)';
   });
 
-  /** Required, non-optional, non-garnish lines the user still misses. */
-  private readonly missingLines = computed(() => {
+  /**
+   * The cabinet expanded for substitutions (parent/child + the "vervangers meetellen" toggle) — the
+   * exact same expansion the bar and list run — as a Set for O(1) line lookups. Keeping this
+   * identical to the other surfaces is what stops the detail page's verdict from disagreeing with them.
+   */
+  private readonly availableIds = computed(
+    () =>
+      new Set(
+        expandCabinet(this.cabinet.ids(), this.ingredients(), { substitutes: this.subs.enabled() }),
+      ),
+  );
+
+  /** Required lines still missing — via the shared rule (honours alternativeIds + substitutes). */
+  private readonly missing = computed(() => {
     const c = this.cocktail();
-    if (!c) return [];
-    return c.ingredients.filter(
-      (i) => !i.optional && i.role !== 'garnish' && i.role !== 'seasoning' && !this.cabinet.has(i.ingredientId),
-    );
+    return c ? missingLines(c, this.availableIds()) : [];
   });
-  readonly makeable = computed(() => this.missingLines().length === 0);
+  readonly makeable = computed(() => this.missing().length === 0);
   readonly missingNames = computed(() =>
-    this.missingLines()
+    this.missing()
       .map((i) => i.call ?? i.name)
       .join(', '),
   );
 
   constructor() {
-    this.ingredientService
-      .getAll()
-      .subscribe((list) => this.ingredientNames.set(new Map(list.map((i) => [i.id, i.name]))));
+    this.ingredientService.getAll().subscribe((list) => {
+      this.ingredients.set(list);
+      this.ingredientNames.set(new Map(list.map((i) => [i.id, i.name])));
+    });
 
     toObservable(this.id)
       .pipe(
@@ -615,6 +633,7 @@ export class CocktailDetail {
         this.cocktail.set(c);
         this.servings.set(c?.servings ?? 1);
         this.loading.set(false);
+        if (c) this.analytics.track('cocktail_view', { cocktailId: c.id });
       });
   }
 
@@ -641,14 +660,16 @@ export class CocktailDetail {
     return this.ingredientNames().get(id) ?? id;
   }
 
+  /** True when the line is satisfied by the (expanded) cabinet — same rule as the makeable banner. */
   inBar(i: CocktailIngredient): boolean {
-    return this.cabinet.has(i.ingredientId);
+    const avail = this.availableIds();
+    return avail.has(i.ingredientId) || (i.alternativeIds?.some((id) => avail.has(id)) ?? false);
   }
   add(i: CocktailIngredient): void {
     this.cabinet.toggle(i.ingredientId, true);
   }
   addAllMissing(): void {
-    for (const i of this.missingLines()) this.cabinet.toggle(i.ingredientId, true);
+    for (const i of this.missing()) this.cabinet.toggle(i.ingredientId, true);
   }
 
   isFav(c: Cocktail): boolean {

@@ -107,7 +107,7 @@ export class CatalogService {
    * "What can I make with what I have." Returns cocktails ordered by how many *required*
    * ingredients you are missing, up to `maxMissing` (0 = makeable right now). Optional lines
    * never count as missing, and cocktails with no ingredients are excluded. Delegates to the
-   * shared `computeMakeable` so web (Angular), the coming Expo app, and the backend all agree.
+   * shared `computeMakeable` so the web (Angular) app and the backend agree.
    */
   makeable(availableIngredientIds: string[], maxMissing = 0): Observable<MakeableResult[]> {
     return this.catalog$.pipe(

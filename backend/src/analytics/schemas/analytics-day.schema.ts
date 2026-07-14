@@ -10,8 +10,8 @@ export type AnalyticsDayDocument = HydratedDocument<AnalyticsDay>;
  */
 @Schema({ collection: 'analytics', timestamps: false })
 export class AnalyticsDay {
-  /** UTC day, `YYYY-MM-DD`. One doc per day. */
-  @Prop({ required: true, unique: true, index: true })
+  /** UTC day, `YYYY-MM-DD`. One doc per day. `unique` already builds the index the range query uses. */
+  @Prop({ required: true, unique: true })
   date: string;
 
   /** Per-event-type totals, e.g. `{ cocktail_view: 42, cabinet_add: 17 }`. */

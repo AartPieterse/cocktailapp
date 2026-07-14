@@ -286,6 +286,12 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
       grid-template-columns: repeat(4, 1fr);
       gap: 22px;
     }
+    /* Skip layout + paint (and the per-card generated glass SVG) for cards not near the viewport;
+       the intrinsic-size placeholder keeps the scrollbar stable and is remembered once measured. */
+    .grid app-cocktail-card {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 230px;
+    }
     .sk-card {
       height: 230px;
       border-radius: var(--radius-lg);

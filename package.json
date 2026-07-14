@@ -13,7 +13,7 @@
     "build:shared": "npm run build --workspace @cocktailapp/shared",
     "validate:seed": "node scripts/validate-seed.mjs",
     "build:translations": "node scripts/build-translations-nl.mjs",
-    "build:catalog": "npm run validate:seed && node scripts/build-catalog.mjs",
+    "build:catalog": "npm run build:shared && npm run validate:seed && node scripts/build-catalog.mjs",
     "build": "npm run build:shared && npm run build --workspace backend && npm run build --workspace frontend",
     "start:backend": "npm run start:dev --workspace backend",
     "start:frontend": "npm run start --workspace frontend",
