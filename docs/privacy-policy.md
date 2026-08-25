@@ -23,8 +23,7 @@ Zonder in te loggen slaat Barkast **alleen op jouw apparaat** op:
 
 - je bar (welke ingrediënten je hebt),
 - je favoriete cocktails,
-- je voorkeuren (thema, of de wizard is afgerond, of vervangers meetellen, en of de
-  installatie-melding is weggeklikt).
+- je voorkeuren (thema, taal, eenheden, wizard, vervangers, installatie-melding).
 
 Deze gegevens verlaten je apparaat niet en worden niet naar een server gestuurd. Verwijder je de app
 (of wis je de app-opslag), dan zijn ze weg.
