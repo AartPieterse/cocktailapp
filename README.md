@@ -8,20 +8,13 @@ you have on hand (**"Mijn bar"** / *"My bar"*), and it instantly shows which coc
 
 - **First-run wizard** walks you through your bar in sections, starting with the staples you
   probably already own (ice, sugar, citrus, soda…) pre-checked, then spirits, liqueurs, mixers, and so on.
-- **Ontdek** / *Discover* (home) is the discovery surface: *"Je kunt 19 cocktails maken"*, a
+- **Ontdek** / *Discover* (`/ontdek`, home) is the discovery surface: *"Je kunt 19 cocktails maken"*, a
   **Nu te maken** grid, and **Bijna — je mist er één** with the exact missing ingredient per drink.
-- **Mijn bar** is where you tick what you own; the wizard fills it for you on first run.
+- **Mijn bar** (`/bar`) is where you tick what you own; the wizard fills it for you on first run.
 - Your bar is persisted locally, so the app remembers what you have.
 - **Bilingual UI (🇳🇱 / 🇬🇧).** Every screen ships in Dutch and English with an in-app language
   toggle. English is the canonical data language; Dutch names are a display overlay. Your choice is
   remembered locally.
-
-## Background
-
-This project began as a reconstruction of a lost app (only the compiled Netlify frontend survived).
-It has since been **rebuilt around the availability-search flow** as the product's core, with a clean,
-redesigned data model and an editorial visual identity. The UI is fully bilingual (Dutch + English),
-switchable at runtime.
 
 ## How it ships
 
@@ -31,7 +24,7 @@ Barkast is **static-first and local-first**:
   (`catalog.json` + Dutch overlay `catalog.nl.json`) and computes "wat kan ik maken" **client-side**
   via `@cocktailapp/shared`. There is **no live backend or database in production**.
 - The **frontend is local-first**: the primary persistence is `localStorage`. Accounts + cloud sync
-  are an optional, deliberately decoupled feature (off in the static build).
+  are an optional, deliberately decoupled feature (off in the static build via `authEnabled: false`).
 - The **NestJS backend** is used in **dev for catalog authoring**, and can be **self-hosted** (see
   [`deploy/`](deploy/README.md)). It additionally implements optional **accounts**, per-user **cabinet/
   favorites sync**, and **anonymous aggregate analytics** — capabilities the shipped static site does
@@ -50,122 +43,25 @@ Barkast is **static-first and local-first**:
   Material, themed with a custom editorial design system (Fraunces + Inter), light **and** dark mode.
   Ships as an **installable PWA** (web app manifest + hand-written service worker): mobile visitors get
   an "install to home screen" prompt (native on Android/Chromium, guided Add-to-Home-Screen steps on
-  iOS Safari), and the app shell works offline. Tuned for touch — safe-area insets, 16px inputs (no iOS
-  zoom), and larger tap targets.
+  iOS Safari), and the app shell works offline.
 
 ## Data model
 
-The catalog uses a **two-level ingredient model** so that "makeable" matching works reliably: a small
-set of canonical **base** ingredients (what your cabinet holds and what matching runs against), and a
-per-recipe **`call`** that preserves the recipe's own wording.
+The catalog uses a **two-level ingredient model**: stockable **base** ingredients (cabinet + matching)
+and a per-recipe **`call`** (verbatim wording). Makeable matching, substitutes (`expandCabinet`), and
+vocabularies are documented in [`docs/data-model.md`](docs/data-model.md).
 
-```ts
-// A stockable base ingredient (your cabinet is a set of these ids)
-Ingredient {
-  id, name,
-  category?, isStaple?,
-  parentId?,            // a specific base (old-tom-gin) points at a broader one (gin)
-  substitutes?: string[],   // explicit swap ids
-  aliases?: string[],
-  createdAt?, updatedAt?
-}
+`buildCatalog` shapes raw seed data into the resolved catalog; Node callers stamp a content-hash
+`version`. The same function feeds `scripts/build-catalog.mjs` and `GET /api/catalog`.
 
-// An embedded recipe line — references a base by ingredientId
-CocktailIngredient {
-  ingredientId,         // matched against the cabinet
-  name,                 // denormalized base name (shown in "missing")
-  call?,                // verbatim recipe wording, e.g. "fresh lime juice"
-  amount?, amountMax?,  // amountMax = upper bound of a range
-  unit,
-  note?, optional?,
-  role?,                // 'ingredient' | 'garnish' | 'seasoning'
-  alternativeIds?: string[]  // "X or Y" — any one satisfies the line
-}
+## REST API
 
-Cocktail {
-  id, name, description,
-  instructions: string[],
-  ingredients: CocktailIngredient[],
-  category?, baseSpirit?, glass?, method?, difficulty?,
-  garnish?, notes?, servings?,   // servings defaults to 1
-  tags?: string[],               // typed CocktailTag vocabulary exists; not yet narrowed
-  image?, imageUrl?,             // image = { assetId, blurhash? } (bundled, offline-safe)
-  createdAt?, updatedAt?
-}
-```
+All routes mount under `/api`. Full route list, auth model, and env vars:
+[`backend/README.md`](backend/README.md).
 
-Vocabularies are **string-literal unions** (not TS enums), each with a companion runtime array and a
-Dutch label map:
-
-- `unit` ∈ `part | ml | cl | piece | cube | drop | dash | splash | pinch | teaspoon | tablespoon | barspoon | slice | wedge | sprig | topup`
-- `category` ∈ `spirit | liqueur | wine | mixer | juice | syrup | bitters | dairy | seasoning | garnish | other`
-- `glass` ∈ `coupe | martini | rocks | highball | collins | nick_and_nora | flute | wine | hurricane | mug | shot`
-- `method` ∈ `build | shaken | stirred | blended | muddled | layered`
-- `difficulty` ∈ `easy | medium | advanced`
-- `baseSpirit` ∈ `gin | vodka | rum | tequila | whisky | brandy | other | none`
-
-**Makeable semantics** (`computeMakeable`): a line counts as *missing* only when it is **not
-`optional`** **and** its `role` is not `garnish`/`seasoning` **and** neither its `ingredientId` nor any
-of its `alternativeIds` is in the cabinet. "Makeable now" = 0 missing; "bijna" = 1 missing. Cocktails
-with no ingredient lines are excluded. `isStaple` marks pantry basics that are pre-checked in the
-wizard.
-
-**Substitutes** are a deliberately separate, opt-in pass (`expandCabinet`, behind the "Vervangers
-meetellen" toggle): stocking a child base satisfies its parent's generic call and vice-versa, and
-explicit `substitutes` are folded in — `computeMakeable` itself never applies substitutes or staples.
-
-`buildCatalog` is the pure, dependency-free function that shapes raw seed data into the catalog and
-stamps a content-hash `version`. The **same** function feeds `scripts/build-catalog.mjs` (the committed
-offline bundle) and the backend `GET /api/catalog`, so ids and versions match across the static bundle
-and the API.
-
-## REST API (served under `/api`)
-
-The backend mounts everything under a global `/api` prefix. Auth column: **public** (no guard), **JWT**
-(`Authorization: Bearer <accessToken>`), or **admin** (`AdminGuard` = HTTP Basic auth **and** LAN-only
-— any request carrying a Cloudflare `CF-Connecting-IP` header is rejected).
-
-### Catalog (public)
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/api/ingredients?category=` | List ingredients |
-| POST | `/api/ingredients` | Create an ingredient |
-| PATCH | `/api/ingredients/:id` | Update (renames propagate into cocktail lines) |
-| DELETE | `/api/ingredients/:id` | Delete (blocked with 409 if used by a cocktail) |
-| GET | `/api/cocktails?q=&tag=` | List / name-search (regex-escaped) / tag-filter cocktails |
-| GET | `/api/cocktails/random` | A random cocktail |
-| POST | `/api/cocktails` | Create a cocktail |
-| GET | `/api/cocktails/:id` | Get one cocktail |
-| PATCH | `/api/cocktails/:id` | Update a cocktail |
-| DELETE | `/api/cocktails/:id` | Delete a cocktail |
-| POST | `/api/cocktails/makeable` | `{ availableIngredientIds, maxMissing? (0–3) }` → makeable + "almost" results (HTTP 200) |
-| GET | `/api/catalog` | Full catalog with a content-hash version (strong ETag; 304 on `If-None-Match`) |
-
-> **Note:** the catalog **write** endpoints (POST/PATCH/DELETE on ingredients & cocktails) and
-> `GET /api/catalog` are **public** — anyone who can reach the API can mutate the catalog. This is
-> acceptable because production is static (the backend isn't publicly reachable); a self-hosted backend
-> should sit behind the Cloudflare tunnel and trusted network only.
-
-### Accounts, sync & telemetry
-
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| POST | `/api/auth/register` | public | Create account (email + password; bcrypt cost 12); throttled 10/min |
-| POST | `/api/auth/login` | public | Log in (login-throttled 10 attempts / 15 min per email\|IP) |
-| POST | `/api/auth/refresh` | public | Rotate the refresh token (single-use jti) |
-| POST | `/api/auth/logout` | public | Revoke the refresh token |
-| GET | `/api/auth/me` | JWT | Current account |
-| GET | `/api/me/data` | JWT | Get synced cabinet + favorites |
-| PUT | `/api/me/data` | JWT | Replace synced cabinet + favorites |
-| DELETE | `/api/me` | JWT | GDPR account wipe (data + all tokens + user) |
-| POST | `/api/events` | public | Anonymous aggregate analytics (batched; HTTP 202); throttled 60/min |
-| GET | `/api/admin/metrics` | admin | Aggregate product + operational metrics (JSON) |
-| GET | `/api/admin/dashboard` | admin | The same metrics as an HTML dashboard |
-
-Access tokens are signed with `JWT_SECRET` (default 15m); refresh tokens with `JWT_REFRESH_SECRET`
-(default 30d) and are persisted as only a random `jti` + `userId` + `expiresAt` (TTL-reaped, rotated on
-every refresh).
+Catalog CRUD and `GET /api/catalog` are **public** (acceptable because production is static; a
+self-hosted backend must sit behind the Cloudflare tunnel). JWT protects `/api/auth/me` and `/api/me/*`;
+admin routes require Basic auth **and** LAN-only (`AdminGuard` rejects `CF-Connecting-IP`).
 
 ## Prerequisites
 
@@ -182,7 +78,7 @@ every refresh).
 npm install                            # links workspaces + builds shared
 cp backend/.env.example backend/.env   # then paste your MONGODB_URI + JWT secrets
 npm run build:shared                   # (re)build the shared types package
-npm run db:seed                        # seed 104 ingredients + 102 cocktails (IBA 2024 list)
+npm run db:seed                        # seed ingredients + cocktails (IBA 2024 list)
 ```
 
 ## Running
@@ -240,21 +136,20 @@ npm run db:shell    # interactive mongosh shell
   - `ADMIN_USER` + `ADMIN_PASSWORD` (both required for the admin dashboard; fail-closed)
 - **Frontend**: environments are swapped at build time. Dev `environment.ts`
   (`apiUrl: http://localhost:3000/api/`, `dataSource: 'api'`, `admin: true`); prod `environment.prod.ts`
-  (`dataSource: 'static'`, `admin: false` — the catalog is read from the bundle). `public/_redirects`
+  (`dataSource: 'static'`, `admin: false`, `authEnabled: false`). `public/_redirects`
   provides the SPA fallback (`/* /index.html 200`) for static hosts.
 
 ## Project structure
 
 ```
 barkast/
-├─ shared/                  @cocktailapp/shared — domain types, enums, localized labels + UI strings (nl/en), makeable/catalog logic
-├─ backend/                 NestJS + Mongoose API (catalog CRUD, makeable, catalog, auth, /me sync, analytics, admin)
-├─ frontend/                Angular PWA — Ontdek (home), Mijn bar, wizard, cocktails, ingredienten
+├─ shared/                  @cocktailapp/shared — domain types, labels + UI strings (nl/en), makeable/catalog logic
+├─ backend/                 NestJS + Mongoose API (catalog CRUD, auth, /me sync, analytics, admin)
+├─ frontend/                Angular PWA — Ontdek, Mijn bar, wizard, cocktails, ingredienten
 ├─ scripts/                 build-catalog · validate-seed · build-translations-nl · db-ping/count/seed/shell
-│                           (+ archived one-shots build-iba-seed · fold-seed; seed-data.mjs = Dutch-text source)
-├─ deploy/                  Docker Compose self-hosting stack (api + mongo + cloudflared), backup/restore/deploy
+├─ deploy/                  Docker Compose self-hosting (api + mongo + cloudflared), backup/restore/deploy
 ├─ docs/                    data-model.md · privacy-policy.md
-└─ iba-cocktails-seed.json  the frozen, hand-curated catalog source of truth
+└─ iba-cocktails-seed.json  frozen, hand-curated catalog source of truth
 ```
 
 ## Deployment
