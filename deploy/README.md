@@ -147,7 +147,7 @@ The base stack publishes no host ports, so reach it over the LAN with the overla
 ```bash
 cd deploy
 docker compose -f docker-compose.yml -f docker-compose.admin.yml up -d
-# then, on the home network (optionally publish barkast.local via avahi/mDNS):
+# then, on the home network (optionally publish aartfileserver.local via avahi/mDNS):
 #   http://<box-lan-ip>:8080/api/admin/dashboard
 ```
 Never add `/api/admin` to the Cloudflare Tunnel ingress.

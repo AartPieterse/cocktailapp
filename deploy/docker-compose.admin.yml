@@ -11,7 +11,7 @@
 #
 # Usage:
 #   docker compose -f docker-compose.yml -f docker-compose.admin.yml up -d
-# Then browse (optionally publish `barkast.local` via avahi/mDNS):
+# Then browse (optionally publish `aartfileserver.local` via avahi/mDNS):
 #   http://<box-lan-ip>:8080/api/admin/dashboard
 services:
   api:

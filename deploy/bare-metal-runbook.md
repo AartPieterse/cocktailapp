@@ -35,7 +35,7 @@ iba-cocktails-seed.json ──db:seed──▶ MongoDB ◀──▶ API (:3000, 
 - [ ] A spare **USB stick ≥ 4 GB** (it gets erased).
 - [ ] This dev laptop (to make the USB and to SSH into the box).
 - [ ] ~1.5–2 hours; a wired ethernet connection for the box if possible (USB-Ethernet adapter is fine).
-- [ ] Decide the box's **hostname** (this runbook uses `barkast`) and your **Linux username**.
+- [ ] Decide the box's **hostname** (this runbook uses `aartfileserver`) and your **Linux username**.
 
 ## Phase map
 
@@ -103,7 +103,7 @@ Follow the text installer:
    - **Two SSDs:** *Use an entire disk* → select **Disk 0** only. Leave Disk 1 untouched (mounted
      later, Appendix B).
    - Confirm the destructive write when prompted.
-6. **Profile:** your name; server name `barkast`; pick a **username** and a strong password.
+6. **Profile:** your name; server name `aartfileserver`; pick a **username** and a strong password.
 7. **✅ Install OpenSSH server** (tick it). Import SSH keys from GitHub if you want key-only login.
 8. Skip all the featured snaps.
 9. Let it install, then **Reboot Now** and pull the USB when told.
@@ -115,7 +115,7 @@ Follow the text installer:
 From now on you can unplug the box's monitor/keyboard and work over SSH.
 
 ```bash
-ssh <username>@<box-ip>          # e.g. ssh barkast@192.168.1.50
+ssh <username>@<box-ip>          # e.g. ssh aart@192.168.1.100
 
 # Update everything
 sudo apt update && sudo apt full-upgrade -y
