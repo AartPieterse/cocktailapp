@@ -45,7 +45,7 @@ Ubuntu Server / Debian + Docker Engine. Laptop-as-server tweaks:
 cd deploy
 cp .env.example .env
 # generate strong secrets:
-openssl rand -base64 24   # MONGO_PASSWORD
+openssl rand -hex 32      # MONGO_PASSWORD (hex — base64 breaks the Mongo URI)
 openssl rand -base64 48   # JWT_SECRET
 openssl rand -base64 48   # JWT_REFRESH_SECRET (must DIFFER from JWT_SECRET)
 # set CORS_ORIGIN to the deployed web origin, TUNNEL_TOKEN from step 2, AGE_RECIPIENT from step 6.

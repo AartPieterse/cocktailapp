@@ -192,7 +192,7 @@ cp .env.example .env
 
 Generate strong secrets and edit `.env` (`nano .env`):
 ```bash
-openssl rand -base64 24     # → MONGO_PASSWORD
+openssl rand -hex 32        # → MONGO_PASSWORD  (hex, NOT base64 — see the warning below)
 openssl rand -base64 48     # → JWT_SECRET
 openssl rand -base64 48     # → JWT_REFRESH_SECRET  (MUST differ from JWT_SECRET)
 openssl rand -base64 24     # → ADMIN_PASSWORD
@@ -203,6 +203,13 @@ Set in `.env`:
 - `TUNNEL_TOKEN` — from Phase 7.
 - `IMAGE_REPO` — your GHCR package (for auto-deploy later); leave default if unsure.
 - `AGE_RECIPIENT` — fill in Phase 12 (backups); a placeholder is fine until then.
+
+> **`MONGO_PASSWORD` must be URI-safe.** `docker-compose.yml` interpolates it straight into
+> `mongodb://USER:PASSWORD@mongo:27017/…`, so base64's `+`, `/` and `=` make the driver fail at boot
+> with `MongoParseError: Password contains unescaped characters`. Hex has no such characters.
+> If you hit this after Mongo already initialised, changing `.env` is not enough — the root user was
+> created on first start, so you must `docker compose down -v` (drops the data volume) and come back
+> up. Do that before seeding and it costs nothing.
 
 > `.env` is gitignored — never commit it. The API **refuses to boot** in production if `CORS_ORIGIN`
 > is unset or if the two JWT secrets are equal.
@@ -248,8 +255,9 @@ docker compose -f docker-compose.yml up -d mongo
 `db:seed` reseeds **only** the catalog (`ingredients`, `cocktails`) — it never touches
 `users`/analytics.
 
-**Checkpoint:** `npm run db:count` (same `MONGODB_URI`, with the seed binding up) reports 104
-ingredients + 102 cocktails.
+**Checkpoint:** `npm run db:count` (same `MONGODB_URI`, with the seed binding up) reports the same
+counts as the seed file — `node -e "const d=require('./iba-cocktails-seed.json');console.log(d.ingredients.length,d.cocktails.length)"`.
+Do not hard-code a number here: the catalog grows.
 
 ## Phase 11 — Point the frontend at the API + verify end-to-end
 
