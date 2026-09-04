@@ -1,7 +1,10 @@
 # Barkast data model
 
 _Reference for the shipped catalog data model. The domain types and logic live in `@cocktailapp/shared`
-(`shared/src`); this document explains the shape and the reasoning behind it._
+(`shared/src`); this document explains the shape and the reasoning behind it. It replaces the retired
+`docs/data-model-refinement.md` — source comments in `shared/src`, `frontend/src`, `backend/src` and
+`scripts/` still cite that filename, sometimes with section numbers (§2.5, §3.1, §3.3, §3.4, §5) that no
+longer resolve anywhere._
 
 The whole app is organized around one question — **"what can I make with what I have?"** — so the data
 model is designed to make that matching reliable.
@@ -64,6 +67,8 @@ interface Cocktail {
   garnish?: string;
   notes?: string;
   servings?: number;              // defaults to 1
+  variations?: CocktailVariation[]; // named variants (Caipiroska, Kir Royal…): prose + base-id swaps,
+                                    // resolved from names by buildCatalog; never affect makeable
   tags?: string[];                // typed CocktailTag vocabulary exists but tags are not yet narrowed
   image?: { assetId: string; blurhash?: string };  // bundled, offline-safe (see "Open" below)
   imageUrl?: string;              // legacy
@@ -75,20 +80,35 @@ interface Cocktail {
 ## Vocabularies
 
 Every enumeration is a **string-literal union** (not a TS `enum`) with a companion runtime array and a
-Dutch label map (`shared/src/*.ts`):
+per-locale label map — `Record<Locale, Record<…, string>>`, filled for both `nl` and `en`
+(`shared/src/*.ts`):
 
 | Type | Values |
 | --- | --- |
-| `MeasureUnit` (16) | `part` `ml` `cl` `piece` `cube` `drop` `dash` `splash` `pinch` `teaspoon` `tablespoon` `barspoon` `slice` `wedge` `sprig` `topup` |
+| `MeasureUnit` (17) | `part` `ml` `cl` `oz` `piece` `cube` `drop` `dash` `splash` `pinch` `teaspoon` `tablespoon` `barspoon` `slice` `wedge` `sprig` `topup` |
 | `IngredientCategory` (11) | `spirit` `liqueur` `wine` `mixer` `juice` `syrup` `bitters` `dairy` `seasoning` `garnish` `other` |
 | `Glassware` (11) | `coupe` `martini` `rocks` `highball` `collins` `nick_and_nora` `flute` `wine` `hurricane` `mug` `shot` |
 | `Method` (6) | `build` `shaken` `stirred` `blended` `muddled` `layered` |
 | `Difficulty` (3) | `easy` `medium` `advanced` |
 | `BaseSpirit` (8) | `gin` `vodka` `rum` `tequila` `whisky` `brandy` `other` `none` |
 
-Dutch labels (`MEASURE_LABELS`, `CATEGORY_LABELS`/`_PLURAL`/`_HINTS`, `GLASSWARE_LABELS`,
-`METHOD_LABELS`, `DIFFICULTY_LABELS`) translate the **vocabularies**; the seeded catalog **content**
-(names, descriptions, instructions) is translated separately — see [Localization](#localization).
+These label maps (`MEASURE_LABELS`, `CATEGORY_LABELS`, `CATEGORY_LABELS_PLURAL`, `CATEGORY_HINTS`,
+`GLASSWARE_LABELS`, `METHOD_LABELS`, `DIFFICULTY_LABELS`, `BASE_SPIRIT_LABELS`) translate the
+**vocabularies** only. UI chrome lives in `UI_STRINGS` (`shared/src/i18n.ts`), and the seeded catalog
+**content** (names, descriptions, instructions) is translated separately — see
+[Localization](#localization).
+
+`MeasureUnit` is the **authored** unit, not necessarily the displayed one. `shared/src/measure-convert.ts`
+re-expresses volume amounts in the reader's preferred unit — `VolumeUnit` is `ml` | `cl` | `oz`, and
+`convertMeasure` is driven by `frontend/src/app/core/unit-preference.service.ts`. `oz` is the round 30 ml
+bartending jigger, deliberately **not** the 29.5735 ml US fluid ounce, and non-volume units are never
+converted, so a `2 dash` line never becomes `2 oz`.
+
+Alcohol is derived from the ingredient **category**, not from a per-ingredient flag:
+`ALCOHOLIC_INGREDIENT_CATEGORIES` (`spirit` `liqueur` `wine` `bitters`, `shared/src/ingredient-category.ts`)
+makes a cocktail alcohol-free when **no non-optional line** references an ingredient in one of those
+categories — that is the whole mocktail filter. There is no `abv` field anywhere in the model (see
+"Open" below).
 
 ## Makeable matching
 
@@ -105,6 +125,12 @@ So: **"makeable now"** = `maxMissing 0` (0 missing); **"bijna — je mist er é�
 `maxMissing 1`. `computeMakeable` does **not** itself apply staples or substitutes — its 3-arg
 signature is deliberately locked.
 
+`missingLines(cocktail, availableIngredientIds)` (same module) **is** that per-cocktail predicate;
+`computeMakeable` just maps it over the catalog. A single-cocktail view — the detail page — must call it
+directly instead of re-deriving the rule: that duplication is how the detail page once silently drifted
+from the list. Like `computeMakeable` it expects an already-**expanded** cabinet if substitutions are to
+count.
+
 ## Substitutes (opt-in)
 
 `expandCabinet(availableIngredientIds, ingredients, opts)` is a separate, opt-in pass run **before**
@@ -119,6 +145,10 @@ off it just de-duplicates ids. With substitutes on it is **bidirectional**:
 `isStaple` is not referenced by either function — staples factor in only by being ticked into the
 cabinet during the wizard.
 
+Today's seed authors this machinery sparsely: **1** ingredient has a `parentId` and **2** have
+`substitutes`, so flipping the toggle changes almost nothing on current data. A substitution that
+"doesn't work" is usually one that was never written.
+
 ## Catalog build & versioning
 
 `buildCatalog(rawIngredients, rawCocktails)` (`shared/src/catalog.ts`) shapes raw seed data into the
@@ -129,16 +159,44 @@ function feeds both `scripts/build-catalog.mjs` (the committed offline bundle) a
 - **Ids** prefer an authored immutable `id` verbatim, else `slugify(name)` with numeric-suffix
   collision handling. Both lists are sorted by name **before** ids are assigned, so id derivation is
   order-independent (seed-file order or Mongo query order resolve identically).
-- **Fails loud:** a duplicate authored id, an unknown line ingredient name, or an unknown alternative
-  name throws — a seed typo breaks the build instead of shipping a broken catalog.
+- **Fails loud:** a duplicate authored id (ingredient *or* cocktail), an unknown line ingredient name,
+  an unknown alternative name, an unknown variation swap ingredient, or a variation `makesCocktail`
+  naming no catalog cocktail all throw — a seed typo breaks the build instead of shipping a broken
+  catalog.
 - **`version`** is a `sha256` of `JSON.stringify({ ingredients, cocktails })` sliced to 12 hex chars.
   It doubles as the `GET /api/catalog` **ETag**. The recipe is duplicated in `build-catalog.mjs`,
   `validate-seed.mjs`, and the backend `CatalogService` and **must stay byte-identical** so the offline
   bundle and the API report the same version for the same seed.
 
-The frozen source of truth is **`iba-cocktails-seed.json`** (repo root) — the official IBA 2024 list,
-currently **104 ingredients / 102 cocktails** (5 staples: Cola, Soda Water, Simple Syrup, Sugar,
-Water). See the root [`README.md`](../README.md#build--catalog-pipeline) for the build pipeline.
+Only **one** of those two sinks is live in production. The deployed SPA is static:
+`frontend/src/environments/environment.prod.ts` sets `dataSource: 'static'` with
+`catalogUrl: 'catalog.json'` and `translationsUrl: 'catalog.nl.json'`, so it reads the committed bundle
+and never calls `GET /api/catalog`. The LAN box serves the identical catalog from the API, but a seed
+change deployed only there reaches no user until the bundle is rebuilt and the frontend redeployed.
+
+The frozen source of truth is **`iba-cocktails-seed.json`** (repo root) — the IBA 2024 official list
+(tagged `iba-official`) plus an alcohol-free set (tagged `mocktail`). The seed file is the authority
+on the catalog's size and on which ingredients are staples; `npm run build:catalog` prints the live
+totals — ingredients, staples, cocktails and NL overlay coverage — on every run
+(`scripts/build-catalog.mjs`). See the root [`README.md`](../README.md#build--catalog-pipeline) for
+the build pipeline.
+
+What the seed actually authors is thinner than the model allows: **4** recipe lines carry
+`alternativeIds`, **4** cocktails carry `variations`, line roles are **37** `seasoning` and **20**
+`garnish`, and `baseSpirit` is set on all but **8** cocktails. Worth knowing before debugging a
+feature that may simply have no data behind it.
+
+### Changing the data
+
+```bash
+npm run build:translations   # scripts/build-translations-nl.mjs → scripts/translations-nl.json
+npm run build:catalog        # build:shared + validate:seed + scripts/build-catalog.mjs
+```
+
+`build:catalog` regenerates `frontend/public/catalog.json` **and** `catalog.nl.json`, and both must be
+committed: the CI step *"Regenerate catalog and verify both bundles are committed"*
+(`.github/workflows/ci.yml`) re-runs the build, stages the two bundles and fails on any diff — including
+an untracked one. Editing the seed without regenerating is a red build.
 
 ## Localization
 
@@ -149,15 +207,22 @@ Water). See the root [`README.md`](../README.md#build--catalog-pipeline) for the
   translated base name (so `missing[]` reads in Dutch) — leaving ids, `call`, matching, and the version
   untouched.
 - **A stale overlay can never corrupt display:** if the overlay `version` ≠ the catalog `version` (or
-  the overlay is missing), the canonical English catalog is returned unchanged. The build emits
-  `catalog.nl.json` with the **same** version as `catalog.json`.
+  the overlay is missing), the canonical English catalog is returned unchanged. The same holds per
+  *entry*: an id with no overlay entry keeps its canonical English text.
+- **Version parity is stamped, not earned.** `build-catalog.mjs` writes the current catalog `version`
+  onto whatever `scripts/translations-nl.json` contains, so an **incomplete** overlay still passes the
+  version gate and silently falls back to English for the ids it does not cover. The overlay lags the
+  seed today — the build's `nl overlay:` line prints the real coverage against the catalog totals
+  right above it. To close a gap: add the ids to `NL_INGREDIENTS` /
+  `scripts/translations-nl-cocktails.json`, then `npm run build:translations && npm run build:catalog`.
 
 ---
 
 ## Status & history
 
 The two-level model shipped over commits `966b7ef`, `81e085a`, and `a5e798a` (July 2026). It replaced
-an earlier design where the catalog fragmented into ~152 hyper-specific ingredients and the backend ran
+an earlier design where 90 cocktails fragmented into 152 hyper-specific ingredients — nearly two per
+drink, versus roughly one canonical base per drink today — and the backend ran
 a **separate** Mongo `$aggregate` makeable query over ObjectIds — a second, diverging id space that
 broke matching. Today the frontend, the offline bundle, and the backend all share **one slug id space**
 and **one** `computeMakeable` engine (the backend `$aggregate` was deleted), asserted by a cross-sink
@@ -165,4 +230,6 @@ CI check.
 
 **Open (post-launch):** id tombstones for renamed/removed ingredients, **bundled cocktail images**
 (the `image` field type exists but no images are bundled yet — pending licensing), abv/dietary flags,
-and narrowing `Cocktail.tags` from `string[]` to the typed `CocktailTag[]`.
+and narrowing `Cocktail.tags` from `string[]` to the typed `CocktailTag[]` — which first needs
+`mocktail` added to `CocktailTag`/`COCKTAIL_TAGS`: the seed tags 54 cocktails with it and it is not a
+member of the union today.

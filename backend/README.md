@@ -2,12 +2,17 @@
 
 The **Barkast** NestJS API: the cocktail catalog authoring service, plus the optional accounts /
 per-user sync / anonymous-analytics backend for the app. Built on **NestJS 11**, **Mongoose 9**,
-**MongoDB**, **TypeScript 5.7**, and the workspace package **`@cocktailapp/shared`**.
+**MongoDB**, **TypeScript 5**, and the workspace package **`@cocktailapp/shared`** (exact versions live
+in `package.json` / the root `package-lock.json`).
 
 > In production the app ships as a **static SPA** that reads a pre-built catalog bundle and computes
 > "makeable" client-side — this backend is **not** part of the public production deployment. It is used
 > in **dev** for catalog authoring, and can be **self-hosted** (see [`../deploy/README.md`](../deploy/README.md))
-> to enable optional accounts, cabinet/favorites sync, and analytics.
+> to enable optional accounts, cabinet/favorites sync, and analytics. Standing up this API is not enough
+> on its own: the shipped SPA has `authEnabled: false`, `apiBaseUrl: '/api/'` and `analyticsUrl: ''` in
+> `frontend/src/environments/environment.prod.ts`, so it makes **zero** `/api/*` calls until
+> `authEnabled` is flipped, `apiBaseUrl` and `analyticsUrl` point at the deployed backend, and the
+> frontend is rebuilt and redeployed.
 
 ## Modules
 
@@ -38,7 +43,16 @@ All routes are mounted under a global **`/api`** prefix (`app.setGlobalPrefix('a
 - `POST /api/cocktails/makeable` — body `{ availableIngredientIds, maxMissing? (0–3) }`, forced
   HTTP 200, returns `MakeableResult[]`
 - `GET /api/catalog` — full catalog; sets a strong ETag (`sha256`/12 of the content) and returns 304 on
-  a matching `If-None-Match`
+  a matching `If-None-Match`. **Clients are expected to send `If-None-Match`** — the ETag is the only
+  cache there is. Every non-304 request rebuilds the payload end to end (`findAll()` on both
+  collections, id→name re-mapping for alternatives/variations, a fresh `buildCatalog`, a fresh
+  sha256); `CatalogService` memoises nothing. On the self-hosted box a 200 costs ~135 ms and a
+  body of well over 100 KB that grows with `iba-cocktails-seed.json`, against a bodyless 304:
+
+  ```bash
+  curl -sD- -o /dev/null http://localhost:3000/api/catalog                    # 200 + ETag: "<version>"
+  curl -sD- -o /dev/null -H 'If-None-Match: "<version>"' http://localhost:3000/api/catalog   # 304
+  ```
 
 **Auth:**
 
@@ -63,11 +77,18 @@ All routes are mounted under a global **`/api`** prefix (`app.setGlobalPrefix('a
   refresh tokens fail here because they use a different secret).
 - The **only admin routes** are `/api/admin/*`, protected by `AdminGuard` — **two independent
   defenses, both must pass**: (1) any request carrying a Cloudflare `CF-Connecting-IP` header is
-  rejected (so it's invisible over the tunnel and reachable only on the LAN), and (2) HTTP Basic auth
-  against `ADMIN_USER` / `ADMIN_PASSWORD` (fail-closed if either is unset).
-- **Everything else is public**, including all catalog write endpoints and `GET /api/catalog`. A
-  self-hosted backend must therefore rely on the network boundary (Cloudflare tunnel + trusted origin),
-  not per-route auth, to protect catalog writes.
+  rejected, and (2) HTTP Basic auth against `ADMIN_USER` / `ADMIN_PASSWORD` (fail-closed if either is
+  unset). **On the current LAN-only stack defense (1) buys nothing** — there is no tunnel, and any
+  caller controls that header (see the spoofability note below). Basic auth is what is actually
+  holding the door. The header check only becomes meaningful once a tunnel is in front and something
+  strips client-supplied `CF-*` headers.
+- **Everything else is public**, including all catalog write endpoints and `GET /api/catalog`. There is
+  **no per-route auth on catalog writes** — the only protection is the network boundary you put the API
+  behind. On the LAN-only deployment ([`../deploy/docker-compose.admin.yml`](../deploy/docker-compose.admin.yml)
+  publishes `8080:3000` on all interfaces, with no Cloudflare Tunnel in front) that means **anyone on
+  the LAN can `POST`/`PATCH`/`DELETE` the catalog**: an unauthenticated `POST /api/ingredients` answers
+  `400` (validation), not `401`. Keep the box on a trusted network, bind the published port to one
+  interface, or put an authenticating reverse proxy in front before exposing it.
 - **Tokens:** access tokens signed with `JWT_SECRET` (default `15m`); refresh tokens signed with
   `JWT_REFRESH_SECRET` (default `30d`) and stored as only a random `jti` + `userId` + `expiresAt`
   (TTL-reaped). Each refresh **rotates** the token (single-use jti); the JWT itself is never stored.
@@ -78,14 +99,21 @@ All routes are mounted under a global **`/api`** prefix (`app.setGlobalPrefix('a
 - **Global rate limiting:** `ThrottlerModule` (ttl 60s / limit 120) via `CfThrottlerGuard`, which keys
   on the **real client IP** (`CF-Connecting-IP` header, else `req.ip`). Plus per-route throttles
   (register 10/min, events 60/min) and the in-memory `LoginThrottleGuard` (10 attempts / 15 min,
-  composite `email|IP` key so an attacker can't lock out a victim).
+  composite `email|IP` key so an attacker can't lock out a victim). ⚠️ `CF-Connecting-IP` is only
+  trustworthy when the origin is reachable *exclusively* through the tunnel (see
+  `src/common/client-ip.ts`). On a directly-published deployment — such as the LAN-only stack — any
+  caller can set that header and rotate it to walk around the per-IP limits.
 - **Global `ValidationPipe`** — `whitelist` (strips unknown props) + `transform` + implicit conversion.
 - **Global `MongoExceptionFilter`** — maps Mongo/Mongoose errors to clean HTTP (duplicate key → 409,
   `CastError`/`ValidationError` → 400, unknown → 500); `HttpException`s pass through.
 - **CORS** — explicit comma-separated allowlist in production; reflects any origin only when
   `CORS_ORIGIN` is unset (dev).
-- **`trust proxy`** — set from `TRUST_PROXY` (default 1 hop) so Express resolves the real client IP
-  behind the Cloudflare tunnel.
+- **`trust proxy`** — set from `TRUST_PROXY` (`src/main.ts`, default 1 hop) so Express resolves the
+  real client IP behind a reverse proxy such as the Cloudflare Tunnel. **When nothing is actually in
+  front of the API** — as on the LAN-only deployment, where Docker's port publish is NAT and adds no
+  `X-Forwarded-For` — that one trusted hop makes Express take the client's *own* `X-Forwarded-For`, so
+  set `TRUST_PROXY=0`. Note the Compose file hard-sets `TRUST_PROXY: "1"` in the service
+  `environment:` block, which overrides `env_file`, so changing it in `../deploy/.env` does nothing.
 
 > The login throttle and the global throttler both use **in-memory** state — correct for the
 > single-replica self-hosted v1, but horizontal scaling would need a shared store.

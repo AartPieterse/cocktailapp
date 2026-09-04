@@ -10,6 +10,11 @@ The frontend stays a **static SPA on Netlify**. This box runs the **backend only
 MongoDB + a Cloudflare Tunnel, reachable at `https://api.<yourdomain>` with **no inbound ports**
 opened (the tunnel dials outbound; the home IP stays hidden).
 
+> **What this box actually runs today: the LAN-only variant — see [Appendix D](#appendix-d--lan-only-first-no-cloudflare-tunnel-yet).**
+> Phase 7 was skipped, `TUNNEL_TOKEN` is still `change-me`, and the stack is `api` + `mongo` only,
+> served at `http://<box-lan-ip>:8080/api/…` (here: `192.168.1.100`). Read Appendix D alongside
+> Phases 8/9/11; the tunnel description above is the *future* shape.
+
 ```
 iba-cocktails-seed.json ──db:seed──▶ MongoDB ◀──▶ API (:3000, internal only)
                                                      │
@@ -24,13 +29,14 @@ iba-cocktails-seed.json ──db:seed──▶ MongoDB ◀──▶ API (:3000, 
 |---|---|---|
 | CPU | Intel Core i7 8th-gen (Coffee Lake) | Has **AVX/AVX2** → `mongo:7` runs as-is (no fallback) |
 | RAM | 16 GB | Plenty (stack idles well under 2 GB) |
-| Disk | SSD (in RAID mode) | **Switch BIOS to AHCI first** — see Phase 2 |
+| Disk | Single **477 GB NVMe** SSD (in RAID mode) | **Switch BIOS to AHCI first** — see Phase 2. One disk, so Appendix B does not apply. ⚠️ The installer only allocates **100 GB** of it — see Phase 3 |
 | GPU | NVIDIA GTX 1050 | Unused headless; skip the driver — see Appendix A |
-| Power | i7 laptop | ~10–25 W idle (≈ €30–50/yr); battery doubles as a mini-UPS |
+| Power | i7 laptop | ~10–25 W idle (≈ €30–50/yr); the battery is a small UPS — **check its health first**, see below |
 
 ## Before you start — gather these
 
-- [ ] A **Cloudflare account** and a **domain** managed in Cloudflare (~€10/yr) — needed for the tunnel hostname.
+- [ ] *(Tunnel path only — skip for LAN-only, Appendix D)* A **Cloudflare account** and a **domain**
+      managed in Cloudflare (~€10/yr) — needed for the tunnel hostname.
 - [ ] The web origin the frontend is served from (your **Netlify URL**) — becomes `CORS_ORIGIN`.
 - [ ] A spare **USB stick ≥ 4 GB** (it gets erased).
 - [ ] This dev laptop (to make the USB and to SSH into the box).
@@ -54,6 +60,23 @@ iba-cocktails-seed.json ──db:seed──▶ MongoDB ◀──▶ API (:3000, 
 12. Encrypted backups
 13. Auto-deploy timer
 14. Hardening pass
+
+## State of this box
+
+This runbook has been walked on the real hardware. Where it stands today:
+
+| Phases | State |
+|---|---|
+| 0–6 — install, base setup, Docker, Node | Done |
+| 7 — Cloudflare Tunnel | **Skipped** — this box runs the LAN-only variant, [Appendix D](#appendix-d--lan-only-first-no-cloudflare-tunnel-yet) |
+| 8–11 — secrets, stack, seed, verify | Done in their Appendix D form; the API answers on the LAN |
+| 12 — encrypted backups | **Not done** — `age` isn't installed and `AGE_RECIPIENT` is still the placeholder |
+| 13 — auto-deploy timer | **Not done** — no `barkast-autodeploy` units, nothing in `systemctl list-timers` |
+| 14 — hardening pass | **Not walked** |
+
+One local deviation: the deploy user has passwordless `sudo` via `/etc/sudoers.d/90-aart-nopasswd`.
+That was a convenience choice on this box, not a step of this runbook — nothing here needs `NOPASSWD`,
+so don't copy it onto a box you care about.
 
 ---
 
@@ -99,12 +122,26 @@ Follow the text installer:
 3. Network: accept **DHCP** for now (we pin a static IP in Phase 4).
 4. Proxy / mirror: leave blank / default.
 5. **Storage:**
-   - **One SSD:** *Use an entire disk* → select the SSD → default LVM layout is fine → *Done*.
+   - **One SSD:** *Use an entire disk* → select the SSD → *Done*.
+     > ⚠️ **The default LVM layout is NOT fine.** The installer sizes the `ubuntu-lv` logical volume at
+     > only **100 GB** however big the disk is, and leaves the rest of the volume group unallocated.
+     > On the storage-summary screen select `ubuntu-lv` → *Edit* and raise **Size** to the maximum
+     > before confirming. Already installed? Fix it afterwards (safe, online, no data loss):
+     > ```bash
+     > sudo vgs                                         # VFree shows what the installer left behind
+     > sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+     > sudo resize2fs /dev/ubuntu-vg/ubuntu-lv          # ext4; use xfs_growfs on xfs
+     > df -h /                                          # this box: 100 GB → 466 GB
+     > ```
    - **Two SSDs:** *Use an entire disk* → select **Disk 0** only. Leave Disk 1 untouched (mounted
      later, Appendix B).
    - Confirm the destructive write when prompted.
 6. **Profile:** your name; server name `aartfileserver`; pick a **username** and a strong password.
 7. **✅ Install OpenSSH server** (tick it). Import SSH keys from GitHub if you want key-only login.
+   - **Verify it actually came up.** On this box the checkbox installed the package but left the
+     service *disabled*, so the first `ssh` from the laptop hit a closed port with nothing in the
+     journal to explain it. On the console, before you unplug the monitor:
+     `systemctl is-active ssh` — if that is not `active`, run `sudo systemctl enable --now ssh`.
 8. Skip all the featured snaps.
 9. Let it install, then **Reboot Now** and pull the USB when told.
 
@@ -123,7 +160,12 @@ sudo apt update && sudo apt full-upgrade -y
 # Don't suspend when the lid closes (it's a server now)
 sudo sed -i 's/^#\?HandleLidSwitch=.*/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
 sudo sed -i 's/^#\?HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=ignore/' /etc/systemd/logind.conf
+sudo sed -i 's/^#\?HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/systemd/logind.conf
 sudo systemctl restart systemd-logind
+
+# Belt and braces: logind only governs the LID. Mask the sleep targets so nothing at all can
+# suspend a headless box (idle policy, ACPI events, an accidental `systemctl suspend`).
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
 # Automatic security updates
 sudo apt install -y unattended-upgrades
@@ -133,12 +175,39 @@ sudo dpkg-reconfigure -f noninteractive unattended-upgrades
 Then:
 - **Give it a stable address:** set a **DHCP reservation** on your router for the box's MAC (easiest),
   or configure a static IP via netplan.
+- **On Wi-Fi? Turn off power saving.** It is on by default and adds ~250 ms to every request (this
+  box: 227–299 ms → 3–54 ms after disabling). Ubuntu Server uses **systemd-networkd +
+  wpa_supplicant**, *not* NetworkManager, so the usual `wifi.powersave=2` recipe does not apply —
+  make it stick with a unit (replace `wlo1` with your interface from `ip -br link`):
+
+```bash
+iw dev wlo1 get power_save                       # "Power save: on" = the problem
+sudo tee /etc/systemd/system/wifi-powersave-off.service >/dev/null <<'EOF'
+[Unit]
+Description=Disable Wi-Fi power saving on wlo1 (server, not a laptop)
+After=sys-subsystem-net-devices-wlo1.device
+Wants=sys-subsystem-net-devices-wlo1.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/iw dev wlo1 set power_save off
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl enable --now wifi-powersave-off.service
+```
+
 - **(Optional) GTX 1050 power:** keep the idle dGPU asleep — see Appendix A.
 - **(Optional) Second SSD:** mount it — see Appendix B.
 - **(Optional) ASUS battery:** if MyASUS/BIOS offers a charge limit (60–80%), enable it — 24/7 mains
   power otherwise degrades the battery.
 
-**Checkpoint:** `ssh` works, the box is patched, and it won't sleep on lid close.
+**Checkpoint:** `ssh` works, the box is patched, and it cannot sleep at all —
+`systemctl status sleep.target suspend.target hibernate.target hybrid-sleep.target` reports
+`Loaded: masked` for all four, and `/etc/systemd/logind.conf` has the three `HandleLidSwitch*=ignore`
+lines.
 
 ## Phase 5 — Install Docker Engine
 
@@ -199,7 +268,9 @@ openssl rand -base64 24     # → ADMIN_PASSWORD
 ```
 Set in `.env`:
 - `MONGO_PASSWORD`, `JWT_SECRET`, `JWT_REFRESH_SECRET`, `ADMIN_PASSWORD` — the values above.
-- `CORS_ORIGIN` — your Netlify web origin, e.g. `https://barkast.netlify.app` (no trailing slash).
+- `CORS_ORIGIN` — the web origin that will call this API, no trailing slash. The repo hard-codes no
+  such origin: take it from your own deploy. Leave a placeholder if nothing calls the API yet — the
+  API refuses to boot with it unset, but any syntactically valid origin will do until then.
 - `TUNNEL_TOKEN` — from Phase 7.
 - `IMAGE_REPO` — your GHCR package (for auto-deploy later); leave default if unsure.
 - `AGE_RECIPIENT` — fill in Phase 12 (backups); a placeholder is fine until then.
@@ -227,7 +298,28 @@ docker compose logs -f api        # expect: Barkast API listening on http://loca
 First build takes a few minutes (it builds the API image from source). `Ctrl-C` stops following logs
 (containers keep running).
 
+**Reboot drill — do it now, not the first time the power blips.** `docker.service` is enabled and both
+containers are `restart: unless-stopped`, so the stack *should* come back on its own; nothing proves it
+until you try:
+
+```bash
+sudo reboot                                   # wait ~30 s, then reconnect
+ssh <username>@<box-ip>
+cd ~/cocktailapp/deploy && docker compose ps  # api + mongo Up again — without you typing a compose command
+docker compose logs --tail 5 api              # listening again
+```
+
+Once the catalog is seeded (Phase 10), repeat the drill and finish it with the Phase 11 request —
+`http://<box-lan-ip>:8080/api/catalog` on the LAN-only path (Appendix D), or
+`https://api.<yourdomain>/api/catalog` through the tunnel. The `8080` publish is baked into the
+existing container, so it should survive a reboot without re-specifying the admin overlay.
+
 **Checkpoint:** all three containers are up and the API log shows it's listening.
+
+> **Untested as of 4 Sep 2026:** nobody has actually rebooted this box and confirmed the stack returns
+> unattended. `restart: unless-stopped` plus an enabled `docker.service` *should* do it, but a
+> production box that has never survived a reboot is an assumption, not a fact. Run the drill above
+> before treating it as done.
 
 ## Phase 10 — Seed the catalog
 
@@ -282,7 +374,11 @@ age-keygen -o ~/age-key.txt       # prints the PUBLIC key; keep age-key.txt OFF 
 Put the **public** key in `AGE_RECIPIENT` in `.env`. Schedule nightly:
 ```bash
 crontab -e
-# 0 3 * * *  /home/<you>/cocktailapp/deploy/backup.sh >> /var/log/barkast-backup.log 2>&1
+# A USER crontab cannot write to /var/log (root:syslog, mode 775) — the redirect fails and the
+# backup never runs. Log into your home dir instead:
+# 0 3 * * *  /home/<you>/cocktailapp/deploy/backup.sh >> /home/<you>/barkast-backup.log 2>&1
+# (Prefer /var/log? Install it as root — `sudo crontab -e` — or pre-create the file:
+#  sudo install -o <you> -g <you> -m 0644 /dev/null /var/log/barkast-backup.log)
 ```
 **Then do a restore drill** (an untested backup isn't a backup):
 ```bash
@@ -307,6 +403,13 @@ sudo systemctl enable --now barkast-autodeploy.timer
 systemctl list-timers barkast-autodeploy.timer            # confirm it's scheduled
 ```
 If your GHCR package is private: `docker login ghcr.io` once with a `read:packages` PAT.
+
+> ⚠️ **Not compatible with the LAN-only path (Appendix D) as-is.** `deploy.sh` composes with the base
+> file only (`COMPOSE=(docker compose -f docker-compose.yml)`), so the first automatic roll-out
+> recreates `api` **without** the `8080:3000` publish from `docker-compose.admin.yml` (LAN API and
+> admin dashboard disappear) and starts `cloudflared`, which crash-loops on
+> `TUNNEL_TOKEN=change-me`. Do Phase 13 only after the tunnel is real, or first add
+> `-f docker-compose.admin.yml` to the `COMPOSE=(...)` array in `deploy.sh`.
 
 **Checkpoint:** the timer is listed and scheduled.
 
@@ -368,6 +471,10 @@ project's data-safety answer is the nightly off-box encrypted backup, and RAID i
 | API container restarts / exits | Usually `CORS_ORIGIN` unset or JWT secrets equal — `docker compose logs api` |
 | `curl https://api.<domain>` fails | Check `docker compose logs cloudflared`; confirm the public hostname maps to `http://api:3000` |
 | Seed can't connect | The seed override must be up (`docker-compose.seed.yml`) and `MONGODB_URI` must match `.env` creds |
+| Root filesystem is only ~100 GB on a much bigger SSD | The installer sized `ubuntu-lv` at 100 GB — grow it with `lvextend` + `resize2fs` (Phase 3) |
+| 200–300 ms latency to the API across the LAN | Wi-Fi power saving is on — turn it off and make it persistent (Phase 4) |
+| `cloudflared` restarting, exit code 255 | `TUNNEL_TOKEN` is still `change-me` — name the services on `up` (Appendix D) or do Phase 7 |
+| `MongoParseError: Password contains unescaped characters` | `MONGO_PASSWORD` is base64 — regenerate with `openssl rand -hex 32`, then `docker compose down -v` (Phase 8) |
 
 ## Appendix D — LAN-only first (no Cloudflare Tunnel yet)
 
@@ -395,6 +502,13 @@ curl http://<box-lan-ip>:8080/api/catalog     # JSON with a `version`
 
 The admin dashboard lives at `http://<box-lan-ip>:8080/api/admin/dashboard` (basic-auth via
 `ADMIN_USER`/`ADMIN_PASSWORD`).
+
+> **The Netlify frontend cannot use a LAN-only backend.** Skip Phase 11 step 2 until the tunnel
+> exists: an HTTPS page calling `http://<lan-ip>:8080` is active mixed content and is blocked by the
+> browser, and `CORS_ORIGIN` here is still the placeholder `http://localhost:4200`, so the API would
+> refuse the Netlify origin anyway. On this path the box is verified with `curl` (and a
+> LAN-served dev build), and accounts/sync stay off — `authEnabled: false` in
+> `frontend/src/environments/environment.prod.ts`.
 
 > `:8080` binds to **all** interfaces. That is fine on a trusted home LAN; do not port-forward it
 > from the router. Publishing the API to the internet is what the tunnel is for.

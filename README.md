@@ -2,19 +2,34 @@
 
 **Wat staat er in jouw bar — en wat kun je daarmee maken?**
 
+> **Where this actually stands (4 Sep 2026).** Production today is still the static SPA — it ships
+> with the catalog bundled and makes **no API calls at all**. Separately, a self-hosted backend now
+> runs for real on a dedicated Ubuntu box, but **LAN-only**: no Cloudflare Tunnel, nothing public,
+> nobody's data on it. Where this README describes the tunnel as the deployment shape, read that as
+> the *target*, not as what is running.
+>
+> The agreed direction is to make that box production: Caddy on the box serving the SPA **and**
+> proxying `/api`, behind a Cloudflare Tunnel that keeps the home IP private — which retires the
+> Netlify deploy and collapses CORS to a same-origin path. Nothing in that direction has been built
+> yet. Backups (`deploy/README.md` §6) and the hardening pass (§9) are **blocking** before any real
+> account data lands, and the box has never been rebooted to prove the stack returns unattended.
+> See [`deploy/bare-metal-runbook.md`](deploy/bare-metal-runbook.md) for what was actually done.
+
 Barkast is a full-stack cocktail app built around one flagship idea: you tick off the ingredients
 you have on hand (**"Mijn bar"** / *"My bar"*), and it instantly shows which cocktails you can make
 **right now** — plus the ones you're only one or two ingredients away from.
 
 - **First-run wizard** walks you through your bar in sections, starting with the staples you
-  probably already own (ice, sugar, citrus, soda…) pre-checked, then spirits, liqueurs, mixers, and so on.
+  probably already own (ice, sugar, simple syrup, water, milk, cola, soda water — the `isStaple`
+  bases) pre-checked, then spirits, liqueurs, mixers, and so on.
 - **Ontdek** / *Discover* (home) is the discovery surface: *"Je kunt 19 cocktails maken"*, a
   **Nu te maken** grid, and **Bijna — je mist er één** with the exact missing ingredient per drink.
 - **Mijn bar** is where you tick what you own; the wizard fills it for you on first run.
 - Your bar is persisted locally, so the app remembers what you have.
-- **Bilingual UI (🇳🇱 / 🇬🇧).** Every screen ships in Dutch and English with an in-app language
-  toggle. English is the canonical data language; Dutch names are a display overlay. Your choice is
-  remembered locally.
+- **Bilingual UI (🇳🇱 / 🇬🇧).** Every screen's chrome ships in Dutch and English with an in-app
+  language toggle. English is the canonical data language; Dutch names are a display overlay
+  (`catalog.nl.json`) that does **not yet cover the whole catalog — untranslated ingredients and
+  cocktails fall back to their English names**. Your choice is remembered locally.
 
 ## Background
 
@@ -31,7 +46,13 @@ Barkast is **static-first and local-first**:
   (`catalog.json` + Dutch overlay `catalog.nl.json`) and computes "wat kan ik maken" **client-side**
   via `@cocktailapp/shared`. There is **no live backend or database in production**.
 - The **frontend is local-first**: the primary persistence is `localStorage`. Accounts + cloud sync
-  are an optional, deliberately decoupled feature (off in the static build).
+  are an optional, deliberately decoupled feature (off in the static build). `environment.prod.ts`
+  ships `authEnabled: false` with `apiBaseUrl: '/api/'`, so **the deployed SPA never calls a
+  self-hosted backend, even when one is running**. Turning it on takes three coordinated changes: set
+  `authEnabled: true` and point `apiBaseUrl` at the box in
+  `frontend/src/environments/environment.prod.ts`, redeploy the frontend, and add the site's origin to
+  `CORS_ORIGIN` in `deploy/.env` on the box (it is a placeholder today, so a flip alone would fail
+  CORS).
 - The **NestJS backend** is used in **dev for catalog authoring**, and can be **self-hosted** (see
   [`deploy/`](deploy/README.md)). It additionally implements optional **accounts**, per-user **cabinet/
   favorites sync**, and **anonymous aggregate analytics** — capabilities the shipped static site does
@@ -89,6 +110,7 @@ Cocktail {
   category?, baseSpirit?, glass?, method?, difficulty?,
   garnish?, notes?, servings?,   // servings defaults to 1
   tags?: string[],               // typed CocktailTag vocabulary exists; not yet narrowed
+  variations?: CocktailVariation[],  // named variants: { name, description?, swaps?, makesCocktailId? }
   image?, imageUrl?,             // image = { assetId, blurhash? } (bundled, offline-safe)
   createdAt?, updatedAt?
 }
@@ -97,7 +119,7 @@ Cocktail {
 Vocabularies are **string-literal unions** (not TS enums), each with a companion runtime array and a
 Dutch label map:
 
-- `unit` ∈ `part | ml | cl | piece | cube | drop | dash | splash | pinch | teaspoon | tablespoon | barspoon | slice | wedge | sprig | topup`
+- `unit` ∈ `part | ml | cl | oz | piece | cube | drop | dash | splash | pinch | teaspoon | tablespoon | barspoon | slice | wedge | sprig | topup`
 - `category` ∈ `spirit | liqueur | wine | mixer | juice | syrup | bitters | dairy | seasoning | garnish | other`
 - `glass` ∈ `coupe | martini | rocks | highball | collins | nick_and_nora | flute | wine | hurricane | mug | shot`
 - `method` ∈ `build | shaken | stirred | blended | muddled | layered`
@@ -172,6 +194,9 @@ every refresh).
 - Node.js `>= 24` (Angular 21 CLI + the backend Docker image both target Node 24)
 - For the backend: a **MongoDB** connection string — either **MongoDB Atlas** (allowlist your IP under
   Atlas → Network Access) or the self-hosted `mongo:7` from the `deploy/` stack
+- For self-hosting: **Docker Engine + Docker Compose v2** — every path in [`deploy/`](deploy/README.md)
+  is `docker compose`. `mongo:7` also requires a host CPU with **AVX**, which is worth checking before
+  you pick a machine.
 
 > The **frontend alone needs no backend or database** — in a production build it reads the bundled
 > catalog. You only need Mongo to run the backend (dev authoring or self-hosting).
@@ -182,8 +207,14 @@ every refresh).
 npm install                            # links workspaces + builds shared
 cp backend/.env.example backend/.env   # then paste your MONGODB_URI + JWT secrets
 npm run build:shared                   # (re)build the shared types package
-npm run db:seed                        # seed 104 ingredients + 102 cocktails (IBA 2024 list)
+npm run db:seed                        # (re)seed the catalog from iba-cocktails-seed.json (IBA classics + mocktails)
 ```
+
+> **URI passwords must be URL-safe.** A password embedded in `MONGODB_URI` goes through the connection
+> string, so generate it with `openssl rand -hex 32`. `openssl rand -base64 24` produces `+`, `/` and
+> `=`, and the API then refuses to boot with `MongoParseError: Password contains unescaped characters`
+> — the same trap as an Atlas password containing `+ / = @`. `JWT_SECRET` and `JWT_REFRESH_SECRET`
+> never appear in a URI and may stay base64.
 
 ## Running
 
@@ -197,12 +228,24 @@ npm run start:frontend            # Angular on http://localhost:4200
 In dev the frontend (`dataSource: 'api'`) talks to the backend for authoring; a production build
 (`dataSource: 'static'`) reads the bundled catalog instead.
 
+## Tests
+
+```bash
+npm test --workspace @cocktailapp/shared   # vitest — makeable/catalog logic
+npm test --workspace backend               # jest
+npm test --workspace frontend              # ng test
+```
+
+CI runs the first two on every build (see [Deployment](#deployment)).
+
 ## Build & catalog pipeline
 
 The static site serves a **pre-built catalog bundle**. `iba-cocktails-seed.json` (repo root) is the
-**frozen, hand-curated source of truth** — you edit it directly; nothing regenerates it. (The archived
-one-shots `scripts/build-iba-seed.mjs` and `scripts/fold-seed.mjs` bootstrapped it once and must not be
-re-run.)
+**frozen, hand-curated source of truth** — you edit it directly; no build step regenerates it. (The
+archived one-shots `scripts/build-iba-seed.mjs` and `scripts/fold-seed.mjs` bootstrapped it once and
+must not be re-run. `scripts/import-mocktails.mjs` also *rewrites* the seed — it re-folds the
+non-alcoholic drinks from `scripts/mocktails-source.json` and strips/re-adds everything tagged
+`mocktail`, so hand edits to a mocktail belong in that source file, not in the seed.)
 
 ```bash
 npm run build:shared        # compile @cocktailapp/shared (prerequisite for the rest)
@@ -213,9 +256,16 @@ npm run build               # full monorepo build: shared → backend → fronte
 ```
 
 To refresh the Dutch overlay after editing NL sources, the order is
-`build:shared → build:catalog → build:translations → build:catalog`. Netlify runs
-`build:shared && build:catalog && build --workspace frontend` (it does **not** run `build:translations`
-— it ships the committed `translations-nl.json`).
+`build:shared → build:catalog → build:translations → build:catalog`. That closing `build:catalog` is
+not optional: `applyCatalogTranslations` (`shared/src/catalog.ts`) drops an overlay whose `version`
+does not match the catalog's content hash **wholesale**, not per entry — skip it and the Dutch UI
+silently renders the entire catalog in English, with no error.
+
+Production is built **and** deployed by GitHub Actions (`.github/workflows/ci.yml`, job `deploy`): it
+runs `build:shared && build:catalog && build --workspace frontend` and uploads the result with
+`netlify-cli deploy --prod`. It does **not** run `build:translations` — the committed
+`translations-nl.json` ships as-is. Netlify's own builds are disabled for this site, so
+`netlify.toml` is kept for reference but is not the operative build config.
 
 ## Database helpers
 
@@ -251,18 +301,28 @@ barkast/
 ├─ backend/                 NestJS + Mongoose API (catalog CRUD, makeable, catalog, auth, /me sync, analytics, admin)
 ├─ frontend/                Angular PWA — Ontdek (home), Mijn bar, wizard, cocktails, ingredienten
 ├─ scripts/                 build-catalog · validate-seed · build-translations-nl · db-ping/count/seed/shell
-│                           (+ archived one-shots build-iba-seed · fold-seed; seed-data.mjs = Dutch-text source)
-├─ deploy/                  Docker Compose self-hosting stack (api + mongo + cloudflared), backup/restore/deploy
+│                           (+ import-mocktails ← mocktails-source.json, rewrites the seed; archived
+│                           one-shots build-iba-seed · fold-seed; seed-data.mjs = Dutch-text source)
+├─ deploy/                  Docker Compose self-hosting stack (api + mongo + cloudflared), backup/restore/deploy,
+│                           systemd/ units, and bare-metal-runbook.md (the from-scratch host build)
 ├─ docs/                    data-model.md · privacy-policy.md
 └─ iba-cocktails-seed.json  the frozen, hand-curated catalog source of truth
 ```
 
 ## Deployment
 
-- **Frontend (production):** static SPA on **Netlify** — see `netlify.toml` (publish
-  `dist/frontend/browser`). No live DB; the catalog is generated at build time.
+- **Release branch: `main`.** `.github/workflows/ci.yml` is the gate — a PR into `main` or a push to
+  `development` builds and verifies (shared + backend tests, `validate:seed`, and a check that the
+  committed `catalog.json` / `catalog.nl.json` bundles are up to date). A push to `main` additionally
+  deploys the frontend to Netlify and pushes `ghcr.io/<owner>/barkast-api:<sha>` and `:latest`.
+  **Merging to `main` is what ships.**
+- **Frontend (production):** static SPA hosted on **Netlify**, but built and uploaded by **GitHub
+  Actions** (`.github/workflows/ci.yml`, job `deploy`) from `frontend/dist/frontend/browser`;
+  Netlify's own builds are disabled for this site. No live DB; the catalog is generated at build time.
 - **Backend (optional):** self-hosted from home via Docker Compose (API + locked-down MongoDB +
-  Cloudflare Tunnel, no inbound ports) — see [`deploy/README.md`](deploy/README.md).
+  Cloudflare Tunnel, no inbound ports) — see [`deploy/README.md`](deploy/README.md). To check a
+  deployment end to end, `curl -s -m 20 http://<host>:8080/api/catalog` should return HTTP 200 with a
+  `version` equal to the one in the committed `frontend/public/catalog.json`.
 
 > **Security note:** never commit a real `backend/.env` or `deploy/.env` (both are gitignored). If a
 > live connection string or JWT secret was ever shared for review, rotate it.
