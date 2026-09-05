@@ -6,8 +6,9 @@
  *
  *   - ingredient names come from scripts/translations-nl-ingredients.mjs (one line per base id,
  *     100% coverage enforced by validate-seed.mjs rule 17);
- *   - cocktail name/description/instructions/notes/garnish come from two sources, merged: the curated
- *     Dutch set in scripts/seed-data.mjs (matched to catalog ids by slug), plus
+ *   - cocktail name/description/instructions/notes/garnish are resolved by
+ *     scripts/translations-nl-text.mjs (shared with validate-seed.mjs rule 18) from two sources:
+ *     the curated Dutch set in scripts/seed-data.mjs (matched to catalog ids by slug), plus
  *     scripts/translations-nl-cocktails.json for every other cocktail (seed-data.mjs wins on overlap).
  *     Any cocktail still without Dutch text keeps its canonical English (applyCatalogTranslations
  *     falls back). This replaces the retired SEED_SRC=nl fork — one id space, a display overlay on top.
@@ -25,11 +26,9 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import shared from '@cocktailapp/shared';
-import { cocktails as nlCocktails } from './seed-data.mjs';
 import { NL_INGREDIENTS } from './translations-nl-ingredients.mjs';
+import { resolveDutchCocktails } from './translations-nl-text.mjs';
 
-const { slugify } = shared;
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
 
@@ -38,40 +37,7 @@ const catalog = JSON.parse(
   readFileSync(join(root, 'frontend', 'public', 'catalog.json'), 'utf8'),
 );
 const ingredientIds = new Set(catalog.ingredients.map((i) => i.id));
-const cocktailIds = new Set(catalog.cocktails.map((c) => c.id));
-// Valid variation keys per cocktail id — an overlay key outside this set is a stale hand-edit.
-const variationKeys = new Map(
-  catalog.cocktails.map((c) => [c.id, new Set((c.variations ?? []).map((v) => v.key))]),
-);
 const check = process.argv.includes('--check');
-const keyErrors = [];
-
-/** Keep only variation overlay entries whose key exists on that cocktail; record the rest as errors. */
-function pickVariations(id, variations) {
-  if (!variations) return undefined;
-  const valid = variationKeys.get(id) ?? new Set();
-  const kept = {};
-  for (const [key, text] of Object.entries(variations)) {
-    if (!valid.has(key)) {
-      keyErrors.push(
-        `cocktail "${id}" has Dutch text for variation key "${key}", which the catalog does not ` +
-          `have (valid: ${[...valid].join(', ') || 'none'})`,
-      );
-      continue;
-    }
-    if (text?.name || text?.description !== undefined) kept[key] = text;
-  }
-  return Object.keys(kept).length ? kept : undefined;
-}
-
-// Dutch for cocktails the curated seed-data.mjs set doesn't cover (id-keyed { name, description?,
-// instructions[], notes?, garnish? }). Optional file — absent is fine.
-let supplement = {};
-try {
-  supplement = JSON.parse(readFileSync(join(here, 'translations-nl-cocktails.json'), 'utf8'));
-} catch {
-  /* no supplement — curated set only */
-}
 
 const ingredients = {};
 for (const [id, name] of Object.entries(NL_INGREDIENTS)) {
@@ -80,49 +46,9 @@ for (const [id, name] of Object.entries(NL_INGREDIENTS)) {
 const missing = [...ingredientIds].filter((id) => !ingredients[id]);
 if (missing.length) console.warn(`  ⚠ no NL name for base id(s): ${missing.join(', ')}`);
 
-const cocktails = {};
-let matched = 0;
-for (const c of nlCocktails) {
-  const id = slugify(c.name);
-  if (!cocktailIds.has(id)) continue;
-  matched++;
-  const curatedVariations = pickVariations(id, c.variations);
-  cocktails[id] = {
-    name: c.name,
-    ...(c.description ? { description: c.description } : {}),
-    ...(c.instructions?.length ? { instructions: c.instructions } : {}),
-    ...(c.notes ? { notes: c.notes } : {}),
-    ...(c.garnish ? { garnish: c.garnish } : {}),
-    ...(curatedVariations ? { variations: curatedVariations } : {}),
-  };
-}
-
-// Fill in cocktails the curated set doesn't cover (curated seed-data.mjs wins on overlap).
-let fromSupplement = 0;
-for (const [id, entry] of Object.entries(supplement)) {
-  if (!cocktailIds.has(id)) continue;
-  const entryVariations = pickVariations(id, entry.variations);
-  const existing = cocktails[id];
-  if (!existing) {
-    cocktails[id] = {
-      ...(entry.name ? { name: entry.name } : {}),
-      ...(entry.description ? { description: entry.description } : {}),
-      ...(entry.instructions?.length ? { instructions: entry.instructions } : {}),
-      ...(entry.notes ? { notes: entry.notes } : {}),
-      ...(entry.garnish ? { garnish: entry.garnish } : {}),
-      ...(entryVariations ? { variations: entryVariations } : {}),
-    };
-    fromSupplement++;
-    continue;
-  }
-  // The curated set already produced this cocktail and wins on overlap — but merge per FIELD, not
-  // per entry, so a supplement can still contribute variations the curated entry doesn't carry.
-  // (Skipping the whole entry here is why moving Dutch variation text into the supplement file
-  // silently dropped it for every cocktail the curated set covers, caipirinha included.)
-  if (entryVariations) {
-    existing.variations = { ...entryVariations, ...(existing.variations ?? {}) };
-  }
-}
+// The merge itself lives in translations-nl-text.mjs, shared with validate-seed.mjs rule 18 — a gate
+// that resolved the text differently from this harvester would gate text that never ships.
+const { entries: cocktails, stats, keyErrors } = resolveDutchCocktails(catalog.cocktails);
 
 if (keyErrors.length) {
   console.error(`✗ build-translations-nl: ${keyErrors.length} stale variation key(s):`);
@@ -154,6 +80,6 @@ writeFileSync(target, rendered, 'utf8');
 console.log('Dutch overlay source → scripts/translations-nl.json:');
 console.log(`  ingredients: ${Object.keys(ingredients).length}/${ingredientIds.size} translated`);
 console.log(
-  `  cocktails:   ${matched + fromSupplement}/${cocktailIds.size} with Dutch text ` +
-    `(${matched} curated + ${fromSupplement} supplement; rest fall back to English)`,
+  `  cocktails:   ${stats.curated + stats.supplement}/${catalog.cocktails.length} with Dutch text ` +
+    `(${stats.curated} curated + ${stats.supplement} supplement; rest fall back to English)`,
 );

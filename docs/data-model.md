@@ -372,18 +372,25 @@ For a cocktail it is only free once the entry carries an authored `id`.
 - **A stale overlay can never corrupt display:** if the overlay `version` ≠ the catalog `version` (or
   the overlay is missing), the canonical English catalog is returned unchanged. The same holds per
   *entry*: an id with no overlay entry keeps its canonical English text.
-- **Version parity is stamped, not earned.** `build-catalog.mjs` writes the current catalog `version`
-  onto whatever `scripts/translations-nl.json` contains, so an **incomplete** overlay still passes the
-  version gate and silently falls back to English for the ids it does not cover — the app looks fine,
-  it just half-speaks the language. For **ingredient names** that hole is now closed by construction:
-  `validate-seed.mjs` rule 17 fails the build when a base has no entry in
-  `scripts/translations-nl-ingredients.mjs`, so the coverage survives the seed growing. It counts
-  entries, never differences — a brand or a loanword (Campari, gin, grenadine) legitimately repeats
-  the English name. **Cocktail text is not yet gated** the same way; the build's `nl overlay:` line
-  prints the real coverage against the catalog totals right above it. To close a gap: add the ids to
-  `scripts/translations-nl-ingredients.mjs` / `scripts/translations-nl-cocktails.json`, then
-  `npm run build:translations && npm run build:catalog` (in that order — the harvester reads the
-  built catalog, so `build:catalog` runs first and again afterwards to re-stamp `catalog.nl.json`).
+- **Version parity is stamped, not earned — so coverage is gated instead.** `build-catalog.mjs`
+  writes the current catalog `version` onto whatever `scripts/translations-nl.json` contains, so an
+  **incomplete** overlay still passes the version gate and falls back to English for what it does not
+  cover. The fallback is per *field*, not per entry: a cocktail with a Dutch name and no Dutch notes
+  renders Dutch everywhere except its "Tips" block. Two rules in `validate-seed.mjs` close that by
+  construction:
+  - **rule 17** — every base needs an entry in `scripts/translations-nl-ingredients.mjs`. It counts
+    entries, never differences: a brand or loanword (Campari, gin, grenadine) legitimately repeats
+    the English name.
+  - **rule 18** — whatever the English catalog carries for a cocktail (description, instructions,
+    notes, garnish, each variation by key), the Dutch overlay carries too. Fields the canonical does
+    not have are never demanded out of nothing. It resolves the text through
+    `scripts/translations-nl-text.mjs`, the **same** merge the harvester emits from, so the gate can
+    neither demand text that would never ship nor pass text that does.
+
+  To close a gap: author in `scripts/translations-nl-ingredients.mjs` / `scripts/seed-data.mjs` /
+  `scripts/translations-nl-cocktails.json`, then `npm run build:catalog && npm run build:translations
+  && npm run build:catalog` — the harvester reads the built catalog, so the build runs first and
+  again afterwards to re-stamp `catalog.nl.json`.
 - **Dutch is never dropped silently.** The harvester merges the curated `scripts/seed-data.mjs` set
   with the `scripts/translations-nl-cocktails.json` supplement **per field**, so a supplement can add
   variations to a cocktail the curated set already covers (skipping the whole entry is what once made

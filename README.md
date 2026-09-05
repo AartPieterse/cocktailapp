@@ -303,7 +303,7 @@ barkast/
 ├─ shared/                  @cocktailapp/shared — domain types, enums, localized labels + UI strings (nl/en), makeable/catalog logic
 ├─ backend/                 NestJS + Mongoose API (catalog CRUD, makeable, catalog, auth, /me sync, analytics, admin)
 ├─ frontend/                Angular PWA — Ontdek (home), Mijn bar, wizard, cocktails, ingredienten
-├─ scripts/                 build-catalog · validate-seed · build-translations-nl (+ -ingredients) · db-ping/count/seed/shell
+├─ scripts/                 build-catalog · validate-seed · build-translations-nl (+ -ingredients/-text) · db-ping/count/seed/shell
 │                           (+ import-mocktails ← mocktails-source.json, rewrites the seed; archived
 │                           one-shots build-iba-seed · fold-seed; seed-data.mjs = Dutch-text source)
 ├─ deploy/                  Docker Compose self-hosting stack (api + mongo + cloudflared), backup/restore/deploy,

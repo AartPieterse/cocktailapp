@@ -20,7 +20,8 @@
  *  14. a base no recipe can reach — orphaned by an edit (warns);
  *  15. a variation without a stable, clean, cocktail-unique `key`;
  *  16. an id that left the shipped catalog without a tombstone in the seed's `retired[]`.
- *  17. a base with no Dutch display name (the overlay must never fall back to English).
+ *  17. a base with no Dutch display name (the overlay must never fall back to English);
+ *  18. a cocktail whose Dutch text doesn't cover what the English catalog actually shows.
  *
  * Usage: node scripts/validate-seed.mjs   (or: npm run validate:seed)
  */
@@ -30,6 +31,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import shared from '@cocktailapp/shared';
 import { NL_INGREDIENTS } from './translations-nl-ingredients.mjs';
+import { resolveDutchCocktails } from './translations-nl-text.mjs';
 
 const {
   buildCatalog,
@@ -367,15 +369,57 @@ for (const c of cocktails) {
 
 // ── 5: every line + alternative resolves (buildCatalog throws on the first unknown ref) ───
 let versionA;
+let builtCocktails = null;
 try {
   const { ingredients: bi, cocktails: bc } = buildCatalog(ingredients, cocktails);
   versionA = hash(bi, bc);
+  builtCocktails = bc;
   // ── 8: determinism — a second build must produce the same version ──
   const { ingredients: bi2, cocktails: bc2 } = buildCatalog(ingredients, cocktails);
   const versionB = hash(bi2, bc2);
   if (versionA !== versionB) fail(`buildCatalog is non-deterministic (${versionA} != ${versionB})`);
 } catch (err) {
   fail(`buildCatalog rejected the seed: ${err.message}`);
+}
+
+// ── 18: Dutch cocktail text — the same gate as rule 17, for the other half of the overlay ────
+// Dutch is the DEFAULT display language, and the overlay falls back per FIELD, not per entry: a
+// cocktail with a Dutch name and no Dutch notes renders Dutch everywhere except the "Tips" block,
+// where the English text appears under a Dutch heading. Four IBA drinks shipped exactly like that.
+//
+// The rule is one sentence: whatever the English catalog carries, the Dutch overlay carries too.
+// Fields the canonical doesn't have are not demanded out of nothing — this gates coverage of what
+// the app actually renders, and never asks anyone to invent a description that has no original.
+//
+// The resolution is imported, not re-implemented: `translations-nl-text.mjs` is the same merge the
+// harvester emits from, so this cannot gate text that never ships or pass text that does.
+if (builtCocktails) {
+  const { entries, keyErrors } = resolveDutchCocktails(builtCocktails);
+  // A variation key the catalog doesn't have — the harvester fails on these too, but failing here
+  // is earlier and cheaper, and a stale key means somebody's Dutch text is going nowhere.
+  for (const e of keyErrors) fail(e);
+
+  const gaps = [];
+  for (const c of builtCocktails) {
+    const t = entries[c.id] ?? {};
+    const need = [];
+    if (!t.name) need.push('name');
+    if (c.description && !t.description) need.push('description');
+    if (c.instructions?.length && !t.instructions?.length) need.push('instructions');
+    if (c.notes && !t.notes) need.push('notes');
+    if (c.garnish && !t.garnish) need.push('garnish');
+    for (const v of c.variations ?? []) {
+      if (!t.variations?.[v.key]) need.push(`variation "${v.key}"`);
+    }
+    if (need.length) gaps.push(`${c.id} (${need.join(', ')})`);
+  }
+  if (gaps.length) {
+    fail(
+      `${gaps.length} cocktail(s) have Dutch text that doesn't cover the English catalog — author ` +
+        `the missing fields in scripts/seed-data.mjs (curated) or ` +
+        `scripts/translations-nl-cocktails.json (everything else): ${gaps.join('; ')}`,
+    );
+  }
 }
 
 function hash(ingredients, cocktails) {
