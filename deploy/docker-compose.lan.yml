@@ -1,0 +1,30 @@
+# LAN preview overlay: serve the built SPA on http://<box-lan-ip>/ with no accounts and no API.
+#
+#   npm run build                     # from the repo root — writes dist/frontend/browser
+#   cd deploy
+#   docker compose -f docker-compose.yml -f docker-compose.lan.yml up -d web
+#
+# Name the service. A bare `up -d` also starts cloudflared, which crash-loops on a placeholder
+# TUNNEL_TOKEN (see bare-metal-runbook.md, Appendix D).
+#
+# Caveat worth knowing before you judge the result: over plain HTTP this is not a secure context, so
+# the service worker silently does not register — no install-to-homescreen, no offline. main.ts
+# swallows that failure. The app itself works fully; only the PWA layer is absent. TLS via the tunnel
+# is what brings it back.
+services:
+  web:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ../dist/frontend/browser:/srv:ro
+      - ./Caddyfile.lan:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - internal
+
+volumes:
+  caddy-data:
+  caddy-config:

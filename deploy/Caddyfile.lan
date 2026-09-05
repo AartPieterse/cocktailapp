@@ -1,0 +1,27 @@
+# LAN preview of the SPA. Static files only — no /api proxy, deliberately.
+#
+# The production Angular build has authEnabled: false and reads its catalog from the bundled
+# catalog.json, so it makes no API calls at all. Serving it needs nothing but a file server, and
+# leaving the API unpublished keeps the LAN surface at zero.
+#
+# When the same-origin deploy lands (docs/plans/next-phase.md step 8) this gains a
+# `handle /api/* { reverse_proxy api:3000 }` block and moves behind the tunnel for TLS.
+:80 {
+	root * /srv
+	encode gzip zstd
+
+	# Angular routes are client-side: anything that is not a real file must return index.html,
+	# or a reload on /ontdek 404s. Mirrors frontend/public/_redirects, which only Netlify reads.
+	try_files {path} /index.html
+	file_server
+
+	# Hashed build assets are immutable; index.html must never be cached or a deploy goes unseen.
+	@hashed path_regexp \.[0-9A-Z]{8,}\.(js|css|woff2?)$
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+	header /index.html Cache-Control "no-cache"
+
+	log {
+		output stderr
+		format console
+	}
+}
