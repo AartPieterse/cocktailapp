@@ -4,7 +4,8 @@
  * Produces scripts/translations-nl.json: an id-keyed Dutch overlay (CatalogTranslations without the
  * version — build-catalog.mjs stamps the current catalog version when it emits catalog.nl.json).
  *
- *   - ingredient names come from the authored NL_INGREDIENTS map below (one line per base id);
+ *   - ingredient names come from scripts/translations-nl-ingredients.mjs (one line per base id,
+ *     100% coverage enforced by validate-seed.mjs rule 17);
  *   - cocktail name/description/instructions/notes/garnish come from two sources, merged: the curated
  *     Dutch set in scripts/seed-data.mjs (matched to catalog ids by slug), plus
  *     scripts/translations-nl-cocktails.json for every other cocktail (seed-data.mjs wins on overlap).
@@ -16,7 +17,8 @@
  *     Every emitted key is checked against the built catalog and an unknown one FAILS the run —
  *     a silent skip here is exactly how a hand-written Dutch variation string went missing before.
  *
- * Re-run after editing NL_INGREDIENTS or seed-data.mjs, then rebuild the catalog. Usage:
+ * Re-run after editing translations-nl-ingredients.mjs or seed-data.mjs, then rebuild the
+ * catalog. Usage:
  *   node scripts/build-translations-nl.mjs            # write scripts/translations-nl.json
  *   node scripts/build-translations-nl.mjs --check    # exit 1 if the file on disk is stale
  */
@@ -25,6 +27,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import shared from '@cocktailapp/shared';
 import { cocktails as nlCocktails } from './seed-data.mjs';
+import { NL_INGREDIENTS } from './translations-nl-ingredients.mjs';
 
 const { slugify } = shared;
 const here = dirname(fileURLToPath(import.meta.url));
@@ -69,65 +72,6 @@ try {
 } catch {
   /* no supplement — curated set only */
 }
-
-/** Dutch display name per base id (canonical English lives in the seed; this only renames display). */
-const NL_INGREDIENTS = {
-  // spirits
-  gin: 'Gin', vodka: 'Wodka', 'white-rum': 'Witte rum', 'dark-rum': 'Donkere rum',
-  tequila: 'Tequila', mezcal: 'Mezcal', bourbon: 'Bourbon whiskey', 'rye-whiskey': 'Rye whiskey',
-  'irish-whiskey': 'Ierse whiskey', scotch: 'Scotch whisky', brandy: 'Brandy', cognac: 'Cognac',
-  calvados: 'Calvados', pisco: 'Pisco', cachaca: 'Cachaça', grappa: 'Grappa', absinthe: 'Absint',
-  pernod: 'Pernod',
-  // liqueurs
-  'triple-sec': 'Triple sec', amaretto: 'Amaretto', amaro: 'Amaro', aperol: 'Aperol',
-  'apricot-brandy': 'Abrikozenlikeur', benedictine: 'Bénédictine', 'cherry-liqueur': 'Kersenlikeur',
-  'coffee-liqueur': 'Koffielikeur', 'creme-de-cacao': 'Crème de cacao',
-  'creme-de-cassis': 'Crème de cassis', 'creme-de-menthe': 'Crème de menthe',
-  'creme-de-mure': 'Crème de mûre', 'creme-de-violette': 'Crème de violette', drambuie: 'Drambuie',
-  'fernet-branca': 'Fernet-Branca', 'green-chartreuse': 'Groene Chartreuse',
-  'yellow-chartreuse': 'Gele Chartreuse', maraschino: 'Maraschinolikeur',
-  'peach-schnapps': 'Perziklikeur', 'raspberry-liqueur': 'Frambozenlikeur', campari: 'Campari',
-  'grand-marnier': 'Grand Marnier', cynar: 'Cynar', frangelico: 'Frangelico',
-  'allspice-liqueur': 'Pimentlikeur', 'passion-fruit-liqueur': 'Passievruchtlikeur',
-  // wine & vermouth
-  'sweet-vermouth': 'Rode vermout', 'dry-vermouth': 'Droge vermout', 'lillet-blanc': 'Lillet Blanc',
-  'sparkling-wine': 'Mousserende wijn', 'white-wine': 'Droge witte wijn', 'red-wine': 'Rode wijn',
-  port: 'Tawny port',
-  // mixers
-  cola: 'Cola', 'soda-water': 'Sodawater', 'ginger-ale': 'Ginger ale', 'ginger-beer': 'Ginger beer',
-  'grapefruit-soda': 'Grapefruitfrisdrank', 'tonic-water': 'Tonic',
-  // juices
-  'lime-juice': 'Vers limoensap', 'lemon-juice': 'Vers citroensap', 'orange-juice': 'Vers sinaasappelsap',
-  'pineapple-juice': 'Ananassap', 'cranberry-juice': 'Cranberrysap', 'grapefruit-juice': 'Grapefruitsap',
-  'tomato-juice': 'Tomatensap', 'sugar-cane-juice': 'Suikerrietsap', 'peach-puree': 'Perzikpuree',
-  'passion-fruit-puree': 'Passievruchtpuree', 'passion-fruit-juice': 'Passievruchtsap',
-  'apple-juice': 'Appelsap',
-  // syrups (passion fruit)
-  'passion-fruit-syrup': 'Passievruchtsiroop',
-  // syrups
-  'simple-syrup': 'Suikersiroop', grenadine: 'Grenadine', orgeat: 'Orgeat (amandelsiroop)',
-  'honey-syrup': 'Honingsiroop', 'agave-syrup': 'Agavesiroop', 'elderflower-cordial': 'Vlierbloesemsiroop',
-  falernum: 'Falernum', 'raspberry-syrup': 'Framboossiroop', 'donns-mix': "Donn's Mix",
-  'chamomile-cordial': 'Kamillesiroop',
-  // bitters
-  'angostura-bitters': 'Angostura bitters', 'orange-bitters': 'Orange bitters',
-  'peychauds-bitters': "Peychaud's bitters",
-  // dairy & egg
-  cream: 'Room', 'coconut-cream': 'Kokosroom', 'egg-white': 'Eiwit', 'egg-yolk': 'Eidooier',
-  // seasoning
-  salt: 'Zout', pepper: 'Peper', 'celery-salt': 'Selderijzout', tabasco: 'Tabasco',
-  'worcestershire-sauce': 'Worcestershiresaus', 'orange-flower-water': 'Oranjebloesemwater',
-  'vanilla-extract': 'Vanille-extract', 'black-pepper': 'Zwarte peper', cardamom: 'Kardemom',
-  cinnamon: 'Kaneel', nutmeg: 'Nootmuskaat', coriander: 'Koriander', vanilla: 'Vanille',
-  // produce
-  mint: 'Munt', ginger: 'Gember', 'chili-pepper': 'Rode peper', basil: 'Basilicum',
-  'maraschino-cherry': 'Cocktailkers', strawberries: 'Aardbeien',
-  pineapple: 'Ananas', orange: 'Sinaasappel', lemon: 'Citroen', cloves: 'Kruidnagel',
-  sherry: 'Sherry',
-  // pantry & other
-  sugar: 'Suiker', water: 'Water', coffee: 'Koffie', espresso: 'Espresso',
-  ice: 'IJs', milk: 'Melk', tea: 'Thee',
-};
 
 const ingredients = {};
 for (const [id, name] of Object.entries(NL_INGREDIENTS)) {

@@ -244,7 +244,7 @@
       "name": "Angostura bitters"
     },
     "orange-bitters": {
-      "name": "Orange bitters"
+      "name": "Sinaasappelbitters"
     },
     "peychauds-bitters": {
       "name": "Peychaud's bitters"
@@ -301,7 +301,7 @@
       "name": "Gember"
     },
     "chili-pepper": {
-      "name": "Rode peper"
+      "name": "Chilipeper"
     },
     "basil": {
       "name": "Basilicum"
@@ -444,6 +444,7 @@
         "Zeef in een rocksglas met vers ijs.",
         "Druppel bitters op het schuim en garneer."
       ],
+      "notes": "Gebruik je eiwit, schud dan iets steviger — dan komt het schuim los en mengt het door de drank.",
       "garnish": "Cocktailkers en schijfje citroen"
     },
     "espresso-martini": {
@@ -499,6 +500,7 @@
         "Schenk in een hurricaneglas.",
         "Garneer met een ananaspunt."
       ],
+      "notes": "Van oudsher gingen er naar smaak een paar druppels vers limoensap bij. In plaats van sap kun je ook vier schijven verse ananas gebruiken.",
       "garnish": "Ananaspunt"
     },
     "caipirinha": {
@@ -525,6 +527,7 @@
         "Vul rustig aan met prosecco.",
         "Roer één keer heel voorzichtig."
       ],
+      "notes": "Ook bekend als Buck's Fizz.",
       "garnish": "Sinaasappelschil"
     },
     "bloody-mary": {
@@ -536,6 +539,7 @@
         "Breng op smaak met peper en zout.",
         "Garneer met selderij en citroen."
       ],
+      "notes": "Wordt er om ijs gevraagd, schenk hem dan in een longdrinkglas.",
       "garnish": "Selderijstengel en citroen"
     },
     "paloma": {

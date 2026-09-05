@@ -95,6 +95,7 @@ export interface UiStrings {
     yourBar: string;
     ingredientCount: (n: number) => string;
     countSubstitutes: string;
+    shareStats: string;
     editBarShort: string;
   };
   /**
@@ -389,6 +390,7 @@ const nl: UiStrings = {
     yourBar: 'Mijn bar',
     ingredientCount: (n) => `${n} ${n === 1 ? 'ingrediënt' : 'ingrediënten'}`,
     countSubstitutes: 'Vervangers meetellen',
+    shareStats: 'Anonieme statistieken delen',
     editBarShort: 'Bewerk bar',
   },
   technique: {
@@ -661,6 +663,7 @@ const en: UiStrings = {
     yourBar: 'Your bar',
     ingredientCount: (n) => `${n} ${n === 1 ? 'ingredient' : 'ingredients'}`,
     countSubstitutes: 'Count substitutes',
+    shareStats: 'Share anonymous statistics',
     editBarShort: 'Edit bar',
   },
   technique: {

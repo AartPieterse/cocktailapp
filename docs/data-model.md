@@ -374,10 +374,16 @@ For a cocktail it is only free once the entry carries an authored `id`.
   *entry*: an id with no overlay entry keeps its canonical English text.
 - **Version parity is stamped, not earned.** `build-catalog.mjs` writes the current catalog `version`
   onto whatever `scripts/translations-nl.json` contains, so an **incomplete** overlay still passes the
-  version gate and silently falls back to English for the ids it does not cover. The overlay lags the
-  seed today — the build's `nl overlay:` line prints the real coverage against the catalog totals
-  right above it. To close a gap: add the ids to `NL_INGREDIENTS` /
-  `scripts/translations-nl-cocktails.json`, then `npm run build:translations && npm run build:catalog`.
+  version gate and silently falls back to English for the ids it does not cover — the app looks fine,
+  it just half-speaks the language. For **ingredient names** that hole is now closed by construction:
+  `validate-seed.mjs` rule 17 fails the build when a base has no entry in
+  `scripts/translations-nl-ingredients.mjs`, so the coverage survives the seed growing. It counts
+  entries, never differences — a brand or a loanword (Campari, gin, grenadine) legitimately repeats
+  the English name. **Cocktail text is not yet gated** the same way; the build's `nl overlay:` line
+  prints the real coverage against the catalog totals right above it. To close a gap: add the ids to
+  `scripts/translations-nl-ingredients.mjs` / `scripts/translations-nl-cocktails.json`, then
+  `npm run build:translations && npm run build:catalog` (in that order — the harvester reads the
+  built catalog, so `build:catalog` runs first and again afterwards to re-stamp `catalog.nl.json`).
 - **Dutch is never dropped silently.** The harvester merges the curated `scripts/seed-data.mjs` set
   with the `scripts/translations-nl-cocktails.json` supplement **per field**, so a supplement can add
   variations to a cocktail the curated set already covers (skipping the whole entry is what once made

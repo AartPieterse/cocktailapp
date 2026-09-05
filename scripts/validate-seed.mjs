@@ -20,6 +20,7 @@
  *  14. a base no recipe can reach — orphaned by an edit (warns);
  *  15. a variation without a stable, clean, cocktail-unique `key`;
  *  16. an id that left the shipped catalog without a tombstone in the seed's `retired[]`.
+ *  17. a base with no Dutch display name (the overlay must never fall back to English).
  *
  * Usage: node scripts/validate-seed.mjs   (or: npm run validate:seed)
  */
@@ -28,6 +29,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import shared from '@cocktailapp/shared';
+import { NL_INGREDIENTS } from './translations-nl-ingredients.mjs';
 
 const {
   buildCatalog,
@@ -267,6 +269,37 @@ for (const c of cocktails) {
       fail(`cocktail "${c.name}" has a duplicate variation key "${v.key}"`);
     }
     keys.add(v.key);
+  }
+}
+
+// ── 17: Dutch coverage — no base may fall back to English ────────────────────
+// An ingredient name is the one string a Dutch user reads in the wizard, in Mijn bar, on every
+// card's "je mist nog" chip and inside `missing[]` itself, so a base with no entry in
+// `translations-nl-ingredients.mjs` shows up as English text between its Dutch neighbours. The
+// overlay is applied per id and falls back silently (`applyCatalogTranslations`), which is precisely
+// why nothing else notices: the app looks fine, it just half-speaks the language. This check is what
+// makes the coverage survive the seed growing — the last gap opened exactly that way.
+//
+// It counts ENTRIES, never differences: Campari, gin, tequila and grenadine are what Dutch calls
+// them, so an entry equal to the English name is a deliberate answer, not a missing one.
+{
+  const untranslated = ingredients
+    .filter((i) => i.id && !NL_INGREDIENTS[i.id])
+    .map((i) => `${i.id} ("${i.name}")`);
+  if (untranslated.length) {
+    fail(
+      `${untranslated.length} base(s) have no Dutch name — add them to ` +
+        `scripts/translations-nl-ingredients.mjs (a brand or loanword may repeat the English name ` +
+        `verbatim, but the entry has to exist): ${untranslated.join(', ')}`,
+    );
+  }
+  const seedIds = new Set(ingredients.map((i) => i.id));
+  const stale = Object.keys(NL_INGREDIENTS).filter((id) => !seedIds.has(id));
+  if (stale.length) {
+    warn(
+      `${stale.length} Dutch name(s) in translations-nl-ingredients.mjs point at a base that no ` +
+        `longer exists: ${stale.join(', ')}`,
+    );
   }
 }
 
