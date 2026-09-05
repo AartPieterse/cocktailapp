@@ -65,12 +65,13 @@ const NL_INGREDIENTS = {
   port: 'Tawny port',
   // mixers
   cola: 'Cola', 'soda-water': 'Sodawater', 'ginger-ale': 'Ginger ale', 'ginger-beer': 'Ginger beer',
-  'grapefruit-soda': 'Grapefruitfrisdrank',
+  'grapefruit-soda': 'Grapefruitfrisdrank', 'tonic-water': 'Tonic',
   // juices
   'lime-juice': 'Vers limoensap', 'lemon-juice': 'Vers citroensap', 'orange-juice': 'Vers sinaasappelsap',
   'pineapple-juice': 'Ananassap', 'cranberry-juice': 'Cranberrysap', 'grapefruit-juice': 'Grapefruitsap',
   'tomato-juice': 'Tomatensap', 'sugar-cane-juice': 'Suikerrietsap', 'peach-puree': 'Perzikpuree',
-  'passion-fruit-puree': 'Passievruchtpuree',
+  'passion-fruit-puree': 'Passievruchtpuree', 'passion-fruit-juice': 'Passievruchtsap',
+  'apple-juice': 'Appelsap',
   // syrups (passion fruit)
   'passion-fruit-syrup': 'Passievruchtsiroop',
   // syrups
@@ -86,13 +87,16 @@ const NL_INGREDIENTS = {
   // seasoning
   salt: 'Zout', pepper: 'Peper', 'celery-salt': 'Selderijzout', tabasco: 'Tabasco',
   'worcestershire-sauce': 'Worcestershiresaus', 'orange-flower-water': 'Oranjebloesemwater',
-  'vanilla-extract': 'Vanille-extract',
+  'vanilla-extract': 'Vanille-extract', 'black-pepper': 'Zwarte peper', cardamom: 'Kardemom',
+  cinnamon: 'Kaneel', nutmeg: 'Nootmuskaat', coriander: 'Koriander', vanilla: 'Vanille',
   // produce
   mint: 'Munt', ginger: 'Gember', 'chili-pepper': 'Rode peper', basil: 'Basilicum',
+  'maraschino-cherry': 'Cocktailkers', strawberries: 'Aardbeien',
   pineapple: 'Ananas', orange: 'Sinaasappel', lemon: 'Citroen', cloves: 'Kruidnagel',
   sherry: 'Sherry',
   // pantry & other
   sugar: 'Suiker', water: 'Water', coffee: 'Koffie', espresso: 'Espresso',
+  ice: 'IJs', milk: 'Melk', tea: 'Thee',
 };
 
 const ingredients = {};
