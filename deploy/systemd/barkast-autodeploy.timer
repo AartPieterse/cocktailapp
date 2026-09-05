@@ -1,12 +1,18 @@
-# Poll GHCR for a new Barkast API image shortly after boot and every 5 minutes thereafter.
-# Change OnUnitActiveSec to tune how quickly a merged PR reaches the box.
+# Poll for a new release shortly after boot, then hourly.
+#
+# Hourly rather than every few minutes on purpose: `main` is the stable branch and merges into it are
+# rare, so a shorter interval buys nothing but wakes the box for no reason. A cycle that finds nothing
+# costs a `git fetch` and a registry digest check — a few kilobytes — so the interval controls only how
+# long a release sits unnoticed, not the running cost. Widen OnUnitActiveSec freely; the deploy path
+# is identical whether it fires hourly or daily.
 [Unit]
-Description=Poll GHCR for new Barkast API images and auto-deploy
+Description=Poll for a new Barkast release (GHCR API image + SPA source) and auto-deploy
 
 [Timer]
 OnBootSec=2min
-OnUnitActiveSec=5min
-# If the box was asleep/offline when a run was due, fire once on wake instead of skipping.
+OnUnitActiveSec=1h
+# If the box was off or asleep when a run was due, fire once on wake instead of skipping it. This box
+# is a laptop on a home connection, so missed windows are normal rather than exceptional.
 Persistent=true
 
 [Install]

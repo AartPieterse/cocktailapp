@@ -20,7 +20,11 @@ if [ -f .env ]; then set -a; . ./.env; set +a; fi
 IMAGE_REPO="${IMAGE_REPO:-ghcr.io/aartpieterse/barkast-api}"
 CURRENT_FILE=".deployed-current"
 PREVIOUS_FILE=".deployed-previous"
+# Include every overlay that is actually present, so a roll-out drives the same stack that is
+# running. With only the base file, `web` (defined in docker-compose.lan.yml) falls outside compose's
+# view and is left behind as an orphan on every deploy.
 COMPOSE=(docker compose -f docker-compose.yml)
+[ -f docker-compose.lan.yml ] && COMPOSE+=(-f docker-compose.lan.yml)
 
 log() { printf '\033[1;36m▸ %s\033[0m\n' "$*"; }
 
