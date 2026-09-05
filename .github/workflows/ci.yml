@@ -58,6 +58,13 @@ jobs:
       - name: Verify the Dutch overlay source is up to date
         run: npm run build:translations -- --check
 
+      # The glass artwork is generated code with real invariants — no two drinks may
+      # render as the same picture, a drink must render byte-identically every time,
+      # and the authored art table must not drift away from the catalog. None of
+      # that is caught by `ng build`, so the specs run here or they run nowhere.
+      - name: Frontend unit tests
+        run: npm test --workspace frontend
+
       - name: Build frontend (production)
         run: npm run build --workspace frontend
 

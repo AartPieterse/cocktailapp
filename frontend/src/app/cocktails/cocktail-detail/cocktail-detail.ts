@@ -653,9 +653,15 @@ export class CocktailDetail {
     return Math.max(0, this.allCocktails().filter((c) => c.family === family).length - 1);
   });
 
+  /**
+   * The glass drawing. `'pour'` is set only here: the recipe you opened builds itself, while the
+   * same artwork on forty cards in a grid only breathes — its bubbles rise and its steam drifts,
+   * but nothing re-pours. `'hero'` buys the detail that is worth paying for at 270px and pure
+   * cost at 96.
+   */
   readonly spec = computed(() => {
     const c = this.cocktail();
-    return c ? glassSpecFor(c) : { glass: 'coupe' as const };
+    return c ? glassSpecFor(c, 'hero', 'pour') : { glass: 'coupe' as const };
   });
   readonly tint = computed(() => {
     const c = this.cocktail();
