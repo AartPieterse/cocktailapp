@@ -1031,7 +1031,8 @@
           "name": "Tintoretto",
           "description": "Made with fresh pomegranate juice instead of peach purée."
         }
-      ]
+      ],
+      "baseSpirit": "other"
     },
     {
       "name": "Black Russian",
@@ -1432,7 +1433,8 @@
           "amount": 20,
           "unit": "ml"
         }
-      ]
+      ],
+      "baseSpirit": "other"
     },
     {
       "name": "Hemingway Special",
@@ -1587,7 +1589,8 @@
             }
           ]
         }
-      ]
+      ],
+      "baseSpirit": "other"
     },
     {
       "name": "Long Island Ice Tea",
@@ -1764,7 +1767,8 @@
           "amount": 75,
           "unit": "ml"
         }
-      ]
+      ],
+      "baseSpirit": "other"
     },
     {
       "name": "Mint Julep",
@@ -2433,7 +2437,8 @@
           "amount": 1,
           "unit": "topup"
         }
-      ]
+      ],
+      "baseSpirit": "other"
     },
     {
       "name": "French Martini",
@@ -3019,7 +3024,8 @@
           "name": "Select Spritz",
           "description": "The Venetian original, made with Select instead of Aperol."
         }
-      ]
+      ],
+      "baseSpirit": "other"
     },
     {
       "name": "Suffering Bastard",
@@ -3297,7 +3303,8 @@
           "amount": 1,
           "unit": "splash"
         }
-      ]
+      ],
+      "baseSpirit": "other"
     },
     {
       "name": "Angel Face",
@@ -4579,7 +4586,8 @@
           "amount": 120,
           "unit": "ml"
         }
-      ]
+      ],
+      "baseSpirit": "other"
     },
     {
       "name": "Rabo de Galo",
@@ -5251,8 +5259,7 @@
         {
           "name": "Ginger",
           "amount": 2,
-          "unit": "teaspoon",
-          "role": "garnish"
+          "unit": "teaspoon"
         },
         {
           "name": "Guava juice",
@@ -5268,8 +5275,7 @@
         {
           "name": "Pineapple",
           "amount": 360,
-          "unit": "ml",
-          "role": "garnish"
+          "unit": "ml"
         },
         {
           "name": "Sugar",
@@ -5604,8 +5610,7 @@
         {
           "name": "Cornstarch",
           "amount": 7,
-          "unit": "teaspoon",
-          "role": "seasoning"
+          "unit": "teaspoon"
         },
         {
           "name": "Water",
@@ -5769,8 +5774,7 @@
         {
           "name": "Almond flavoring",
           "amount": 1,
-          "unit": "tablespoon",
-          "role": "seasoning"
+          "unit": "tablespoon"
         },
         {
           "name": "Ginger Ale",
@@ -5952,8 +5956,7 @@
         {
           "name": "Lemon",
           "amount": 1,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         },
         {
           "name": "Apple",
@@ -6070,14 +6073,12 @@
         {
           "name": "Lemon",
           "amount": 0.25,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         },
         {
           "name": "Pineapple",
           "amount": 0.5,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         }
       ],
       "glass": "highball",
@@ -6260,14 +6261,12 @@
           "name": "Ginger",
           "amount": 1,
           "unit": "piece",
-          "note": "inch",
-          "role": "garnish"
+          "note": "inch"
         },
         {
           "name": "Lemon",
           "amount": 0.25,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         },
         {
           "name": "Water",
@@ -6551,8 +6550,7 @@
           "name": "Ginger",
           "amount": 2,
           "unit": "piece",
-          "note": "pieces",
-          "role": "garnish"
+          "note": "pieces"
         },
         {
           "name": "Water",
@@ -6563,8 +6561,7 @@
           "name": "Lemon",
           "amount": 1,
           "unit": "piece",
-          "note": "lb",
-          "role": "garnish"
+          "note": "lb"
         },
         {
           "name": "Sugar",
@@ -6644,8 +6641,7 @@
         {
           "name": "Orange",
           "amount": 2,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         }
       ],
       "glass": "highball",
@@ -6685,37 +6681,32 @@
           "name": "Ginger",
           "amount": 1,
           "unit": "piece",
-          "note": "chunk dried",
-          "role": "garnish"
+          "note": "chunk dried"
         },
         {
           "name": "Cardamom",
           "amount": 3,
           "amountMax": 4,
           "unit": "piece",
-          "note": "crushed",
-          "role": "seasoning"
+          "note": "crushed"
         },
         {
           "name": "Cloves",
           "amount": 3,
-          "unit": "piece",
-          "role": "seasoning"
+          "unit": "piece"
         },
         {
           "name": "Cinnamon",
           "amount": 1,
           "unit": "piece",
-          "note": "piece",
-          "role": "seasoning"
+          "note": "piece"
         },
         {
           "name": "Black pepper",
           "amount": 1,
           "amountMax": 2,
           "unit": "piece",
-          "note": "whole",
-          "role": "seasoning"
+          "note": "whole"
         },
         {
           "name": "Sugar",
@@ -6940,14 +6931,12 @@
           "name": "Ginger",
           "amount": 0.25,
           "unit": "piece",
-          "note": "inch",
-          "role": "garnish"
+          "note": "inch"
         },
         {
           "name": "Pineapple",
           "amount": 0.5,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         }
       ],
       "glass": "highball",
@@ -7029,8 +7018,7 @@
         {
           "name": "Brown sugar",
           "amount": 120,
-          "unit": "ml",
-          "role": "seasoning"
+          "unit": "ml"
         },
         {
           "name": "Cinnamon",

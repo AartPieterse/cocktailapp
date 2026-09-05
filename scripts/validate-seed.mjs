@@ -29,6 +29,8 @@ const {
   GLASSWARE,
   METHODS,
   DIFFICULTIES,
+  BASE_SPIRITS,
+  isVolumeUnit,
 } = shared;
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -38,6 +40,8 @@ const seed = JSON.parse(
 
 const errors = [];
 const fail = (msg) => errors.push(msg);
+const warnings = [];
+const warn = (msg) => warnings.push(msg);
 
 // Brand tokens that must never become a base name (fold to the generic, keep the brand as `call`).
 const BRAND_BLOCKLIST = [
@@ -107,6 +111,59 @@ for (const c of cocktails) {
   }
 }
 
+// ── 9–12: recipe-role sanity ─────────────────────────────────────────────────
+// A `role` of garnish/seasoning excludes a line from the makeable check, so a mis-stamped role makes
+// a drink claim to be makeable with ingredients you do not have. `scripts/import-mocktails.mjs`
+// stamped roles from the ingredient's CATEGORY rather than its use in the recipe, which is how half a
+// pineapple became a garnish and `pineapple-gingerale-smoothie` became makeable from an empty bar.
+// These four rules exist so that class of error fails loudly instead of shipping green.
+const DECORATIVE = new Set(['garnish', 'seasoning']);
+const SMALL_UNITS = new Set(['dash', 'pinch', 'drop']);
+
+for (const c of cocktails) {
+  const lines = c.ingredients ?? [];
+
+  // 9: at least one line must actually be required, or the drink is makeable out of thin air.
+  const required = lines.filter((l) => !l.optional && !DECORATIVE.has(l.role));
+  if (lines.length > 0 && required.length === 0) {
+    fail(
+      `cocktail "${c.name}" has no required ingredients — every line is optional/garnish/seasoning, ` +
+        `so it reports as makeable with an empty bar`,
+    );
+  }
+
+  for (const line of lines) {
+    if (!DECORATIVE.has(line.role)) continue;
+
+    // 10: a decorative line measured by volume is a contradiction — you do not garnish with 360 ml.
+    if (isVolumeUnit(line.unit) || line.unit === 'tablespoon') {
+      fail(
+        `cocktail "${c.name}" line "${line.name}" is role="${line.role}" but measured in ` +
+          `${line.amount} ${line.unit} — a volume that size is an ingredient, not a decoration`,
+      );
+    }
+
+    // 12: whole units in quantity are suspicious rather than certainly wrong — surface, don't block.
+    if (!SMALL_UNITS.has(line.unit) && !isVolumeUnit(line.unit) && (line.amount ?? 0) >= 1) {
+      warn(
+        `cocktail "${c.name}" line "${line.name}" is role="${line.role}" at ` +
+          `${line.amount} ${line.unit} — check this is really decorative`,
+      );
+    }
+  }
+
+  // 11: baseSpirit is load-bearing for filtering and must be present and valid.
+  if (!c.baseSpirit) {
+    fail(`cocktail "${c.name}" has no baseSpirit (use "other" for alcoholic drinks with no single base)`);
+  } else if (!BASE_SPIRITS.includes(c.baseSpirit)) {
+    fail(`cocktail "${c.name}" has unknown baseSpirit "${c.baseSpirit}"`);
+  }
+
+  // difficulty is still missing on the imported mocktails; warn until that backfill lands, then
+  // promote this to fail() — see docs/plan.md step 10.
+  if (!c.difficulty) warn(`cocktail "${c.name}" has no difficulty`);
+}
+
 // ── 5: every line + alternative resolves (buildCatalog throws on the first unknown ref) ───
 let versionA;
 try {
@@ -125,6 +182,11 @@ function hash(ingredients, cocktails) {
     .update(JSON.stringify({ ingredients, cocktails }))
     .digest('hex')
     .slice(0, 12);
+}
+
+if (warnings.length) {
+  console.warn(`⚠ validate-seed: ${warnings.length} warning(s):`);
+  for (const w of warnings) console.warn(`  - ${w}`);
 }
 
 if (errors.length) {

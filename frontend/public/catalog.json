@@ -1,5 +1,5 @@
 {
-  "version": "4f96b3dc18b4",
+  "version": "0ba983ed8d2b",
   "schemaVersion": 1,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
@@ -1299,8 +1299,7 @@
           "ingredientId": "ginger",
           "name": "Ginger",
           "amount": 2,
-          "unit": "teaspoon",
-          "role": "garnish"
+          "unit": "teaspoon"
         },
         {
           "ingredientId": "guava-juice",
@@ -1319,8 +1318,7 @@
           "ingredientId": "pineapple",
           "name": "Pineapple",
           "amount": 360,
-          "unit": "ml",
-          "role": "garnish"
+          "unit": "ml"
         },
         {
           "ingredientId": "sugar",
@@ -1348,6 +1346,7 @@
       "id": "americano",
       "name": "Americano",
       "category": "The Unforgettables",
+      "baseSpirit": "other",
       "description": "",
       "instructions": [
         "Mix the ingredients directly in an old fashioned glass filled with ice cubes.",
@@ -1793,6 +1792,7 @@
       "id": "bellini",
       "name": "Bellini",
       "category": "Contemporary Classics",
+      "baseSpirit": "other",
       "description": "",
       "instructions": [
         "Pour peach puree into the mixing glass with ice, add the Prosecco wine.",
@@ -2395,8 +2395,7 @@
           "ingredientId": "cornstarch",
           "name": "Cornstarch",
           "amount": 7,
-          "unit": "teaspoon",
-          "role": "seasoning"
+          "unit": "teaspoon"
         },
         {
           "ingredientId": "water",
@@ -2824,8 +2823,7 @@
           "ingredientId": "almond-flavoring",
           "name": "Almond flavoring",
           "amount": 1,
-          "unit": "tablespoon",
-          "role": "seasoning"
+          "unit": "tablespoon"
         },
         {
           "ingredientId": "ginger-ale",
@@ -3196,6 +3194,7 @@
       "id": "fernandito",
       "name": "Fernandito",
       "category": "New Era Drinks",
+      "baseSpirit": "other",
       "description": "",
       "instructions": [
         "Pour the Fernet Branca into a double old fashioned glass with ice, fill the glass up with Cola.",
@@ -3425,8 +3424,7 @@
           "ingredientId": "lemon",
           "name": "Lemon",
           "amount": 1,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         },
         {
           "ingredientId": "apple",
@@ -3542,6 +3540,7 @@
       "id": "garibaldi",
       "name": "Garibaldi",
       "category": "Contemporary Classics",
+      "baseSpirit": "other",
       "description": "",
       "instructions": [
         "Build in a highball glass over ice.",
@@ -3723,15 +3722,13 @@
           "ingredientId": "lemon",
           "name": "Lemon",
           "amount": 0.25,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         },
         {
           "ingredientId": "pineapple",
           "name": "Pineapple",
           "amount": 0.5,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         }
       ],
       "glass": "highball",
@@ -3745,6 +3742,7 @@
       "id": "grasshopper",
       "name": "Grasshopper",
       "category": "Contemporary Classics",
+      "baseSpirit": "other",
       "description": "",
       "instructions": [
         "Pour all ingredients into shaker filled with ice.",
@@ -4404,15 +4402,13 @@
           "name": "Ginger",
           "amount": 1,
           "unit": "piece",
-          "note": "inch",
-          "role": "garnish"
+          "note": "inch"
         },
         {
           "ingredientId": "lemon",
           "name": "Lemon",
           "amount": 0.25,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         },
         {
           "ingredientId": "water",
@@ -4433,6 +4429,7 @@
       "id": "kir",
       "name": "KIR",
       "category": "Contemporary Classics",
+      "baseSpirit": "other",
       "description": "",
       "instructions": [
         "Pour Crème de Cassis into glass, top up with white wine."
@@ -4856,8 +4853,7 @@
           "name": "Ginger",
           "amount": 2,
           "unit": "piece",
-          "note": "pieces",
-          "role": "garnish"
+          "note": "pieces"
         },
         {
           "ingredientId": "water",
@@ -4870,8 +4866,7 @@
           "name": "Lemon",
           "amount": 1,
           "unit": "piece",
-          "note": "lb",
-          "role": "garnish"
+          "note": "lb"
         },
         {
           "ingredientId": "sugar",
@@ -5094,8 +5089,7 @@
           "ingredientId": "orange",
           "name": "Orange",
           "amount": 2,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         }
       ],
       "glass": "highball",
@@ -5313,8 +5307,7 @@
           "name": "Ginger",
           "amount": 1,
           "unit": "piece",
-          "note": "chunk dried",
-          "role": "garnish"
+          "note": "chunk dried"
         },
         {
           "ingredientId": "cardamom",
@@ -5322,23 +5315,20 @@
           "amount": 3,
           "amountMax": 4,
           "unit": "piece",
-          "note": "crushed",
-          "role": "seasoning"
+          "note": "crushed"
         },
         {
           "ingredientId": "cloves",
           "name": "Cloves",
           "amount": 3,
-          "unit": "piece",
-          "role": "seasoning"
+          "unit": "piece"
         },
         {
           "ingredientId": "cinnamon",
           "name": "Cinnamon",
           "amount": 1,
           "unit": "piece",
-          "note": "piece",
-          "role": "seasoning"
+          "note": "piece"
         },
         {
           "ingredientId": "black-pepper",
@@ -5346,8 +5336,7 @@
           "amount": 1,
           "amountMax": 2,
           "unit": "piece",
-          "note": "whole",
-          "role": "seasoning"
+          "note": "whole"
         },
         {
           "ingredientId": "sugar",
@@ -5475,6 +5464,7 @@
       "id": "mimosa",
       "name": "Mimosa",
       "category": "Contemporary Classics",
+      "baseSpirit": "other",
       "description": "",
       "instructions": [
         "Pour orange juice into a flute glass and gently pour the sparkling wine.",
@@ -6366,15 +6356,13 @@
           "name": "Ginger",
           "amount": 0.25,
           "unit": "piece",
-          "note": "inch",
-          "role": "garnish"
+          "note": "inch"
         },
         {
           "ingredientId": "pineapple",
           "name": "Pineapple",
           "amount": 0.5,
-          "unit": "piece",
-          "role": "garnish"
+          "unit": "piece"
         }
       ],
       "glass": "highball",
@@ -7311,8 +7299,7 @@
           "ingredientId": "brown-sugar",
           "name": "Brown sugar",
           "amount": 120,
-          "unit": "ml",
-          "role": "seasoning"
+          "unit": "ml"
         },
         {
           "ingredientId": "cinnamon",
@@ -7432,6 +7419,7 @@
       "id": "spritz",
       "name": "Spritz",
       "category": "New Era Drinks",
+      "baseSpirit": "other",
       "description": "",
       "instructions": [
         "Build all ingredients into a wine glass filled with ice.",
