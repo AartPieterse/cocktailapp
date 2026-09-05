@@ -1,10 +1,10 @@
 {
-  "version": "0d0156fca76b",
+  "version": "f64d127dfe83",
   "schemaVersion": 2,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
   "counts": {
-    "ingredients": 118,
+    "ingredients": 115,
     "cocktails": 126
   },
   "ingredients": [
@@ -237,12 +237,6 @@
         "Coca Cola",
         "Coca-Cola"
       ]
-    },
-    {
-      "id": "coriander",
-      "name": "Coriander",
-      "category": "seasoning",
-      "isStaple": true
     },
     {
       "id": "cranberry-juice",
@@ -580,12 +574,6 @@
       "abv": 45
     },
     {
-      "id": "milk",
-      "name": "Milk",
-      "category": "dairy",
-      "isStaple": true
-    },
-    {
       "id": "mint",
       "name": "Mint",
       "category": "garnish",
@@ -910,12 +898,6 @@
         "Orange Curaçao"
       ],
       "abv": 30
-    },
-    {
-      "id": "vanilla",
-      "name": "Vanilla",
-      "category": "seasoning",
-      "isStaple": true
     },
     {
       "id": "vanilla-extract",

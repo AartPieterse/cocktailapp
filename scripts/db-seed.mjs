@@ -82,6 +82,7 @@ try {
     servings: c.servings ?? 1,
     tags: c.tags ?? [],
     ...(c.variations?.length ? { variations: c.variations } : {}), // resolved (swap fromId/toId + makesCocktailId)
+    ...(c.family ? { family: c.family } : {}),
     ...(c.color ? { color: c.color } : {}),
     ...(c.alcoholFreeCounterpartId ? { alcoholFreeCounterpartId: c.alcoholFreeCounterpartId } : {}),
     ...(c.alcoholFreeOfId ? { alcoholFreeOfId: c.alcoholFreeOfId } : {}),

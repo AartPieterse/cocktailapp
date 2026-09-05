@@ -795,12 +795,6 @@
       "category": "garnish"
     },
     {
-      "id": "milk",
-      "name": "Milk",
-      "category": "dairy",
-      "isStaple": true
-    },
-    {
       "id": "strawberries",
       "name": "Strawberries",
       "category": "other"
@@ -813,12 +807,6 @@
     {
       "id": "cinnamon",
       "name": "Cinnamon",
-      "category": "seasoning",
-      "isStaple": true
-    },
-    {
-      "id": "vanilla",
-      "name": "Vanilla",
       "category": "seasoning",
       "isStaple": true
     },
@@ -847,12 +835,6 @@
     {
       "id": "nutmeg",
       "name": "Nutmeg",
-      "category": "seasoning",
-      "isStaple": true
-    },
-    {
-      "id": "coriander",
-      "name": "Coriander",
       "category": "seasoning",
       "isStaple": true
     },
@@ -6278,5 +6260,24 @@
       "family": "tiki"
     }
   ],
-  "retired": []
+  "retired": [
+    {
+      "id": "milk",
+      "kind": "ingredient",
+      "since": "2026-09-05",
+      "why": "no recipe has called for it since the alcohol-free set was rewritten (a5f591c); cream and coconut-cream carry the dairy calls"
+    },
+    {
+      "id": "vanilla",
+      "kind": "ingredient",
+      "since": "2026-09-05",
+      "why": "redundant beside vanilla-extract (used by Ramos Fizz); no recipe ever called for plain vanilla"
+    },
+    {
+      "id": "coriander",
+      "kind": "ingredient",
+      "since": "2026-09-05",
+      "why": "no recipe has called for it since the alcohol-free set was rewritten (a5f591c)"
+    }
+  ]
 }

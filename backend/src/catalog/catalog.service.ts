@@ -87,6 +87,7 @@ export class CatalogService {
           ? cocktailNameById.get(v.makesCocktailId)
           : undefined,
       })),
+      family: d.family,
       color: d.color,
       // Authored on the alcoholic parent as a NAME; buildCatalog re-resolves it and re-stamps the
       // inverse `alcoholFreeOfId` itself, so only the authored side is reverse-mapped here.

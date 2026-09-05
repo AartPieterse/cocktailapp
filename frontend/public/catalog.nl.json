@@ -1,5 +1,5 @@
 {
-  "version": "0d0156fca76b",
+  "version": "f64d127dfe83",
   "ingredients": {
     "gin": {
       "name": "Gin"
@@ -295,12 +295,6 @@
     "nutmeg": {
       "name": "Nootmuskaat"
     },
-    "coriander": {
-      "name": "Koriander"
-    },
-    "vanilla": {
-      "name": "Vanille"
-    },
     "mint": {
       "name": "Munt"
     },
@@ -348,9 +342,6 @@
     },
     "ice": {
       "name": "IJs"
-    },
-    "milk": {
-      "name": "Melk"
     },
     "tea": {
       "name": "Thee"
