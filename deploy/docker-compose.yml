@@ -6,6 +6,10 @@
 # TLS terminates at Cloudflare's edge; the tunnel dials OUTBOUND, so NO inbound ports are opened
 # and the home IP stays hidden. Nothing here publishes a host port — Mongo is unreachable from the
 # host/LAN, and the API is reachable only inside this network and via the tunnel.
+# Pin the project name. Compose otherwise derives it from the directory, which is `deploy` — generic
+# enough to collide with any other stack on the same host, and it prefixes the volume and network too.
+name: barkast
+
 services:
   api:
     build:
