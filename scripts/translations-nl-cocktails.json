@@ -16,14 +16,16 @@
       "Doe alle ingrediënten in een shaker gevuld met ijsblokjes.",
       "Shake en zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Bestrooi met versgeraspte nootmuskaat."
+    "garnish": "Bestrooi met versgeraspte nootmuskaat.",
+    "description": "Dessert in een coupe: room en cacao afgerond met cognac, waarbij de geraspte nootmuskaat meer doet dan je zou denken."
   },
   "angel-face": {
     "name": "Angel Face",
     "instructions": [
       "Doe alle ingrediënten in een shaker gevuld met ijsblokjes.",
       "Shake en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Drie sterke dranken in gelijke delen en geen druppel citrus, en juist daarom drinkt hij zachter en zwaarder dan hij leest."
   },
   "apple-and-ginger": {
     "name": "Appel en gember",
@@ -53,7 +55,8 @@
       "Doe alle ingrediënten in een shaker.",
       "Shake met gebroken ijs en zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Optioneel een maraschinokers."
+    "garnish": "Optioneel een maraschinokers.",
+    "description": "Maraschino en viooltjes maken van een gin-sour iets bleekgrijs-blauws. Terughoudendheid telt — te veel violette smaakt naar zeep."
   },
   "basil-lemonade": {
     "name": "Basilicumlimonade",
@@ -72,7 +75,8 @@
       "Roer de honing door het citroen- en sinaasappelsap tot ze oplost, voeg de gin toe en shake met ijs.",
       "Zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Garneer eventueel met een schilletje citroen of sinaasappel."
+    "garnish": "Garneer eventueel met een schilletje citroen of sinaasappel.",
+    "description": "Een drankje uit de drooglegging, bedoeld om ruwe gin achter honing te verstoppen. Verdun de honing eerst tot siroop, anders klontert hij in de shaker."
   },
   "bellini": {
     "name": "Bellini",
@@ -80,14 +84,16 @@
       "Doe de perzikpuree met ijs in het mengglas en voeg de prosecco toe.",
       "Roer voorzichtig en schenk in een gekoeld flûteglas."
     ],
-    "notes": "PUCCINI - vers mandarijnensap; ROSSINI - verse aardbeienpuree; TINTORETTO - vers granaatappelsap."
+    "notes": "PUCCINI - vers mandarijnensap; ROSSINI - verse aardbeienpuree; TINTORETTO - vers granaatappelsap.",
+    "description": "Venetië, 1948, genoemd naar het roze van een schilder. Alleen witte perzik: gele perzik maakt hem mierzoet."
   },
   "between-the-sheets": {
     "name": "Between the Sheets",
     "instructions": [
       "Doe alle ingrediënten in een shaker.",
       "Shake met ijs en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Een Sidecar met rum erbij, wat te veel klinkt en het niet is. Droger en scherper dan beide drankjes apart."
   },
   "black-russian": {
     "name": "Black Russian",
@@ -95,7 +101,8 @@
       "Doe de ingrediënten in een old-fashionedglas gevuld met ijsblokjes.",
       "Roer voorzichtig."
     ],
-    "notes": "WHITE RUSSIAN - laat verse room bovenop drijven en roer langzaam door."
+    "notes": "WHITE RUSSIAN - laat verse room bovenop drijven en roer langzaam door.",
+    "description": "Twee ingrediënten op ijs. Alles hangt af van de koffielikeur, want er is niets om achter te schuilen."
   },
   "boulevardier": {
     "name": "Boulevardier",
@@ -104,14 +111,16 @@
       "Roer goed.",
       "Zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Garneer met een schilletje sinaasappel, eventueel een schilletje citroen."
+    "garnish": "Garneer met een schilletje sinaasappel, eventueel een schilletje citroen.",
+    "description": "Een Negroni die gin inruilt voor whiskey. Warmer, ronder en beter op zijn plaats op een koude avond dan het origineel."
   },
   "brandy-crusta": {
     "name": "Brandy Crusta",
     "instructions": [
       "Meng alle ingrediënten met ijsblokjes in een mengglas en zeef in een voorbereid smal cocktailglas."
     ],
-    "garnish": "Wrijf een schijfje sinaasappel (of citroen) langs de rand van het glas en doop de rand in fijne witte suiker, zodat de suiker aan de glasrand blijft plakken. Krul de sinaasappel- of citroenschil voorzichtig langs de binnenkant van het glas."
+    "garnish": "Wrijf een schijfje sinaasappel (of citroen) langs de rand van het glas en doop de rand in fijne witte suiker, zodat de suiker aan de glasrand blijft plakken. Krul de sinaasappel- of citroenschil voorzichtig langs de binnenkant van het glas.",
+    "description": "De voorvader van de Sidecar, en het drankje dat de suikerrand introduceerde. De citroenschil bekleedt het hele glas."
   },
   "canchanchara": {
     "name": "Canchanchara",
@@ -120,7 +129,8 @@
       "Voeg gebroken ijs toe en daarna de rum.",
       "Roer tot slot krachtig van onder naar boven."
     ],
-    "garnish": "Partje limoen."
+    "garnish": "Partje limoen.",
+    "description": "Cubaans, en ouder dan de Daiquiri. Honing en limoen over aguardiente, aangelengd met water in plaats van geshaket."
   },
   "cardamom-coffee": {
     "name": "Kardemomkoffie",
@@ -138,14 +148,16 @@
       "Roer alle ingrediënten met ijs.",
       "Zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Schilletje citroen"
+    "garnish": "Schilletje citroen",
+    "description": "Een drogere Negroni: droge vermout in plaats van rode. Scherper en bitterder, zonder de rondheid van het origineel."
   },
   "casino": {
     "name": "Casino",
     "instructions": [
       "Doe alle ingrediënten in de shaker, shake goed met ijs en zeef in een gekoeld rocks glas met ijs."
     ],
-    "garnish": "Garneer met een schilletje citroen en een maraschinokers."
+    "garnish": "Garneer met een schilletje citroen en een maraschinokers.",
+    "description": "Een gin-sour van vóór de drooglegging, droog en licht nootachtig door de maraschino, met orange bitters die de finish optillen."
   },
   "chamomile-and-honey": {
     "name": "Kamille en honing",
@@ -163,7 +175,8 @@
       "Leg het suikerklontje met 2 scheutjes bitters in een groot champagneglas en voeg de cognac toe.",
       "Schenk er voorzichtig gekoelde champagne bij."
     ],
-    "garnish": "Garneer met een schilletje sinaasappel en een maraschinokers."
+    "garnish": "Garneer met een schilletje sinaasappel en een maraschinokers.",
+    "description": "Een suikerklontje doordrenkt met bitters, in de champagne gelegd. Het blijft de hele tijd bubbels loslaten vanaf de bodem."
   },
   "chartreuse-swizzle": {
     "name": "Chartreuse Swizzle",
@@ -172,7 +185,8 @@
       "Swizzle krachtig met een swizzlestick.",
       "Vul aan met meer pebble ijs."
     ],
-    "garnish": "Munttakje en geraspte nootmuskaat"
+    "garnish": "Munttakje en geraspte nootmuskaat",
+    "description": "Geswizzeld tot het glas beijst. Chartreuse draagt 130 kruiden, en ananas is een van de weinige dingen die daartegen op kan."
   },
   "cinnamon-orange": {
     "name": "Kaneel en sinaasappel",
@@ -190,7 +204,8 @@
     "instructions": [
       "Doe alle ingrediënten in de shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Verse frambozen."
+    "garnish": "Verse frambozen.",
+    "description": "Een frambozen-gin-sour met een eiwitkraag. Eerst zonder ijs shaken, anders zet het schuim nooit goed op."
   },
   "corpse-reviver-2": {
     "name": "Corpse Reviver #2",
@@ -198,7 +213,8 @@
       "Doe alle ingrediënten met ijs in de shaker.",
       "Shake goed en zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Garneer met een schilletje sinaasappel"
+    "garnish": "Garneer met een schilletje sinaasappel",
+    "description": "Een katerdrankje uit de jaren dertig, en werkelijk opwekkend. De absint is een spoeling, geen maat."
   },
   "cranberry-breeze": {
     "name": "Cranberrybreeze",
@@ -217,7 +233,8 @@
       "Blend kort (flash-blend) met crushed ice.",
       "Schenk in een glas op voet en vul aan met crushed ice."
     ],
-    "garnish": "Een halve passievrucht"
+    "garnish": "Een halve passievrucht",
+    "description": "Een tiki-blend van Don the Beachcomber, rijker en dikker dan een Daiquiri, met passievrucht die het optilt."
   },
   "espresso-tonic": {
     "name": "Espresso tonic",
@@ -235,21 +252,24 @@
     "instructions": [
       "Schenk de Fernet-Branca in een dubbel old fashioned glas met ijs en vul het glas aan met cola.",
       "Roer voorzichtig."
-    ]
+    ],
+    "description": "Argentinië drinkt meer Fernet dan waar ook, meestal zo. Bitter, medicinaal en verrassend verfrissend op ijs."
   },
   "french-connection": {
     "name": "French Connection",
     "instructions": [
       "Schenk alle ingrediënten rechtstreeks in een old fashioned glas gevuld met ijsblokjes.",
       "Roer voorzichtig."
-    ]
+    ],
+    "description": "Twee ingrediënten, geen verdunning behalve het ijs. Amaretto rondt de cognac af zonder hem te bedekken."
   },
   "french-martini": {
     "name": "French Martini",
     "instructions": [
       "Doe alle ingrediënten in de shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Knijp de olie uit een schilletje citroen boven de drank."
+    "garnish": "Knijp de olie uit een schilletje citroen boven de drank.",
+    "description": "Helemaal geen Martini. Stevig geshaket ananassap geeft het schuim waardoor hij er wel op lijkt."
   },
   "garibaldi": {
     "name": "Garibaldi",
@@ -257,14 +277,16 @@
       "Bouw op in een highballglas met ijs.",
       "Gebruik bij voorkeur luchtig opgeschuimd (aerated) sinaasappelsap."
     ],
-    "garnish": "Partje sinaasappel"
+    "garnish": "Partje sinaasappel",
+    "description": "Campari en sinaasappelsap, maar het sap moet luchtig zijn — geklopt, niet geschonken — anders is het gewoon bitter en vlak."
   },
   "gin-basil-smash": {
     "name": "Gin Basil Smash",
     "instructions": [
       "Shake alle ingrediënten met ijs.",
       "Dubbel zeven in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Een Hamburgse vondst uit 2008 en nu al een moderne klassieker. Sla de basilicum één keer hard aan; versnipperen maakt hem bitter."
   },
   "gin-fizz": {
     "name": "Gin Fizz",
@@ -273,7 +295,8 @@
       "Schenk in een hoog, smal tumblerglas en vul aan met een scheutje sodawater."
     ],
     "notes": "Serveer zonder ijs.",
-    "garnish": "Garneer met een schijfje citroen, eventueel een schilletje citroen."
+    "garnish": "Garneer met een schijfje citroen, eventueel een schilletje citroen.",
+    "description": "Een sour verlengd met soda. Serveer zonder ijs in het glas, zodat de kraag heel blijft."
   },
   "ginger-mule": {
     "name": "Gembermule",
@@ -292,7 +315,8 @@
       "Maak een zoutrandje op een rocksglas.",
       "Shake met ijs en zeef over vers ijs."
     ],
-    "garnish": "Schijfje limoen"
+    "garnish": "Schijfje limoen",
+    "description": "Een Margarita die rijker is gemaakt met Grand Marnier in plaats van triple sec. Ronder, meer sinaasappel en minder bite."
   },
   "grasshopper": {
     "name": "Grasshopper",
@@ -301,7 +325,8 @@
       "Shake een paar seconden stevig.",
       "Zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Geen, eventueel een muntblaadje."
+    "garnish": "Geen, eventueel een muntblaadje.",
+    "description": "Munt en chocolade in room, en zonder schaamte een dessert. Past beter na het eten dan tijdens."
   },
   "hanky-panky": {
     "name": "Hanky Panky",
@@ -310,14 +335,16 @@
       "Roer goed.",
       "Zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Schilletje sinaasappel."
+    "garnish": "Schilletje sinaasappel.",
+    "description": "Bedacht door Ada Coleman in het Savoy, voor een acteur die iets met een schop wilde. De Fernet is het hele punt."
   },
   "hemingway-special": {
     "name": "Hemingway Special",
     "instructions": [
       "Doe alle ingrediënten met ijs in een shaker.",
       "Shake goed en zeef in een groot cocktailglas."
-    ]
+    ],
+    "description": "Grapefruit en maraschino, en helemaal geen suiker — Hemingway vroeg om dubbele rum en geen suiker. Droog en opwekkend."
   },
   "honey-and-lemon": {
     "name": "Honing en citroen",
@@ -337,7 +364,8 @@
       "Roer voorzichtig.",
       "Voeg naar wens een paar scheutjes Angostura bitters toe."
     ],
-    "garnish": "Garneer met een spiraal van citroenschil."
+    "garnish": "Garneer met een spiraal van citroenschil.",
+    "description": "De garnering is de naam: één ononderbroken spiraal citroenschil over de rand, die de hele hoogte van het glas beslaat."
   },
   "iba-tiki": {
     "name": "IBA Tiki",
@@ -346,7 +374,8 @@
       "Voeg de overige ingrediënten toe en shake met ijs.",
       "Zeef in een tikiglas gevuld met pebble-ijs."
     ],
-    "garnish": "Citrus en een schijfje gedroogde ananas"
+    "garnish": "Citrus en een schijfje gedroogde ananas",
+    "description": "Een moderne tiki-opbouw met twee rums en een notenlikeur. Complex, zoet, en veel sterker dan hij zich voordoet."
   },
   "illegal": {
     "name": "Illegal",
@@ -354,7 +383,8 @@
       "Doe alle ingrediënten in de shaker.",
       "Shake stevig met ijs.",
       "Zeef in een gekoeld cocktailglas, of serveer met ijs in een traditionele klei- of terracottamok."
-    ]
+    ],
+    "description": "Mezcal en overproof rum, rokerig en scherp tegelijk. De falernum houdt die twee uit elkaars vaarwater."
   },
   "irish-coffee": {
     "name": "Irish Coffee",
@@ -364,7 +394,8 @@
       "Schenk verse, dikke gekoelde room voorzichtig over de bolle kant van een lepel die je net boven het koffieoppervlak houdt.",
       "De laag room blijft zonder te mengen op de koffie drijven.",
       "Gewone suiker kan worden vervangen door suikersiroop."
-    ]
+    ],
+    "description": "Hete koffie onder koude room, en nooit geroerd — je drinkt de een door de ander. Klop de room net tot hij schenkbaar dik is."
   },
   "john-collins": {
     "name": "John Collins",
@@ -373,7 +404,8 @@
       "Roer voorzichtig."
     ],
     "notes": "Gebruik 'Old Tom'-gin voor een Tom Collins.",
-    "garnish": "Garneer met een schijfje citroen en een maraschinokers."
+    "garnish": "Garneer met een schijfje citroen en een maraschinokers.",
+    "description": "Een Tom Collins met droge gin. In het glas opgebouwd in plaats van geshaket, zodat hij helder en licht koolzuurhoudend blijft."
   },
   "jungle-bird": {
     "name": "Jungle Bird",
@@ -381,28 +413,32 @@
       "Shake met ijs.",
       "Zeef in een rocksglas over ijs."
     ],
-    "garnish": "Partje ananas"
+    "garnish": "Partje ananas",
+    "description": "Campari in een tikidrankje, wat niet zou moeten werken. Ananas en blackstrap rum vangen de bitterheid op, en het werkt wel."
   },
   "kir": {
     "name": "KIR",
     "instructions": [
       "Schenk crème de cassis in het glas en vul aan met droge witte wijn."
     ],
-    "notes": "KIR ROYAL - Gebruik champagne in plaats van witte wijn."
+    "notes": "KIR ROYAL - Gebruik champagne in plaats van witte wijn.",
+    "description": "Het aperitief van de Bourgogne: een scheut cassis in droge witte wijn. Genoemd naar een burgemeester van Dijon die het onophoudelijk schonk."
   },
   "last-word": {
     "name": "Last word",
     "instructions": [
       "Doe alle ingrediënten in een shaker.",
       "Shake met ijs en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Gelijke delen, alle vier uitgesproken, en toch in balans. Decennialang vergeten en in de jaren 2000 in Seattle herontdekt."
   },
   "lemon-drop-martini": {
     "name": "Lemon drop Martini",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Garneer met een suikerrand rond het glas."
+    "garnish": "Garneer met een suikerrand rond het glas.",
+    "description": "Een suikerrand met daaronder een citroensour. Scherper dan hij eruitziet, als de citroen vers is."
   },
   "lemon-fizz": {
     "name": "Citroenfizz",
@@ -421,7 +457,8 @@
       "Doe alle ingrediënten in een met ijs gevuld highballglas.",
       "Roer voorzichtig."
     ],
-    "garnish": "Schijfje citroen (optioneel)"
+    "garnish": "Schijfje citroen (optioneel)",
+    "description": "Vijf sterke dranken en een scheut cola waardoor het op ijsthee lijkt. Je proeft er geen enkele apart, en dat is precies de truc."
   },
   "martinez": {
     "name": "Martinez",
@@ -430,13 +467,15 @@
       "Roer goed.",
       "Zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Schilletje citroen."
+    "garnish": "Schilletje citroen.",
+    "description": "De schakel tussen de Dry Martini en de Manhattan, en ouder dan allebei. Zoeter, donkerder en de moeite van het kennen waard."
   },
   "mary-pickford": {
     "name": "Mary Pickford",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Havana in de jaren twintig, genoemd naar de stomme-filmactrice. Ananas en grenadine houden hem roze en zacht."
   },
   "missionary-s-downfall": {
     "name": "Missionary's Downfall",
@@ -444,19 +483,22 @@
       "Blend alle ingrediënten met een half kopje gemalen ijs.",
       "Serveer in een grote coupe."
     ],
-    "garnish": "Munttakje en schijfje ananas"
+    "garnish": "Munttakje en schijfje ananas",
+    "description": "Een geblend tikidrankje gebouwd op munt en perzik. Lichter en frisser dan de meeste uit die categorie."
   },
   "monkey-gland": {
     "name": "Monkey Gland",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Parijs, jaren twintig, genoemd naar een inmiddels ontkrachte chirurgische rage. Absint en grenadine over gin en sinaasappel — beter dan het verhaal."
   },
   "naked-and-famous": {
     "name": "Naked and Famous",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Gelijke delen, rokerig en bitter tegelijk. Een moderne nazaat van de Last Word, gebouwd op mezcal in plaats van gin."
   },
   "new-york-sour": {
     "name": "New York Sour",
@@ -466,7 +508,8 @@
       "Zeef in een gekoeld rocksglas gevuld met ijs.",
       "Laat de wijn er bovenop drijven."
     ],
-    "garnish": "Garneer met een schilletje citroen of sinaasappel en een kers."
+    "garnish": "Garneer met een schilletje citroen of sinaasappel en een kers.",
+    "description": "Een whiskeysour met rode wijn erop gedreven. De wijn blijft als band liggen en mengt zich al drinkend, waardoor hij halverwege verandert."
   },
   "old-cuban": {
     "name": "Old Cuban",
@@ -474,19 +517,22 @@
       "Doe alle ingrediënten behalve de wijn in een shaker, shake goed met ijs en zeef in een gekoeld, elegant cocktailglas.",
       "Vul aan met de mousserende wijn."
     ],
-    "garnish": "Garneer met munttakjes."
+    "garnish": "Garneer met munttakjes.",
+    "description": "Een Mojito in avondkleding: gerijpte rum, bitters en champagne. Bedacht in de New Yorkse Pegu Club in de jaren 2000."
   },
   "paper-plane": {
     "name": "Paper Plane",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Gelijke delen, bedacht in 2008 en inmiddels overal. Twee bittere amari tegen bourbon en citroen, en geen van drieën wint."
   },
   "paradise": {
     "name": "Paradise",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Een abrikozen-gin-sour uit de jaren twintig, zachter dan de meeste. Het sinaasappelsap rondt de randen af in plaats van ze aan te scherpen."
   },
   "passion-fruit-cooler": {
     "name": "Passievruchtcooler",
@@ -507,7 +553,8 @@
       "Dubbel zeven in een gekoeld old fashioned glas met ijs.",
       "Laat de single malt whisky bovenop drijven."
     ],
-    "garnish": "Garneer met gekonfijte gember."
+    "garnish": "Garneer met gekonfijte gember.",
+    "description": "Honing, gember en citroen over blended Scotch, met een rokerige Islay-float erop zodat de turf eerst de neus raakt."
   },
   "pineapple-swizzle": {
     "name": "Ananasswizzle",
@@ -527,7 +574,8 @@
       "Voeg alles toe behalve de wijn en shake met ijs.",
       "Dubbel zeven in een bokaal.",
       "Laat de wijn bovenop drijven."
-    ]
+    ],
+    "description": "Het drankje van de Californische goldrush, en ooit streng geheim. Ananas geweekt in siroop maakte hem beroemd."
   },
   "pisco-sour": {
     "name": "Pisco Sour",
@@ -535,7 +583,8 @@
       "Doe alle ingrediënten met ijs in een shaker.",
       "Shake en zeef in een gekoelde bokaal."
     ],
-    "garnish": "Een paar scheutjes Amargo bitters erover als aromatische garnering."
+    "garnish": "Een paar scheutjes Amargo bitters erover als aromatische garnering.",
+    "description": "Het nationale drankje van Peru, en het eiwit is niet optioneel — dat maakt van een scherpe sour iets zijdezachts."
   },
   "planter-s-punch": {
     "name": "Planter's Punch",
@@ -543,7 +592,8 @@
       "Schenk alle ingrediënten rechtstreeks in een kleine tumbler of een typisch terracotta glas."
     ],
     "notes": "Voeg naar smaak verdunning toe met water, ijs of vers sap.",
-    "garnish": "Garneer met een schilletje sinaasappel."
+    "garnish": "Garneer met een schilletje sinaasappel.",
+    "description": "Eén deel zuur, twee zoet, drie sterk, vier slap. Het rijmpje is een eeuw ouder dan het recept."
   },
   "porn-star-martini": {
     "name": "Porn Star Martini",
@@ -552,14 +602,16 @@
       "Dubbel zeven in een gekoeld glas.",
       "Serveer met een shotje Champagne ernaast."
     ],
-    "garnish": "Halve passievrucht met suiker."
+    "garnish": "Halve passievrucht met suiker.",
+    "description": "Londen, 2002, en geserveerd met een glaasje champagne ernaast in plaats van erin. Om en om nippen; zo is hij bedoeld."
   },
   "porto-flip": {
     "name": "Porto Flip",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Bestrooi met versgemalen nootmuskaat."
+    "garnish": "Bestrooi met versgemalen nootmuskaat.",
+    "description": "Een flip is elk drankje met een heel ei of dooier erin geshaket. Deze is verwarmend, dik en beter in de winter."
   },
   "rabo-de-galo": {
     "name": "Rabo de Galo",
@@ -567,7 +619,8 @@
       "Doe alle ingrediënten samen in een rocks glas.",
       "Voeg ijs toe en roer kort."
     ],
-    "garnish": "Schilletje sinaasappel."
+    "garnish": "Schilletje sinaasappel.",
+    "description": "Braziliaans, en de naam betekent hanenstaart. Cachaça met vermout en Cynar — bitter, kruidig en weinig zoet."
   },
   "ramos-fizz": {
     "name": "Ramos Fizz",
@@ -575,7 +628,8 @@
       "Doe alle ingrediënten behalve het sodawater met ijs in een shaker, shake twee minuten, dubbel zeven in een glas, schenk de drank terug in de shaker en shake een minuut stevig zonder ijs.",
       "Zeef in een highball glas en vul aan met sodawater."
     ],
-    "notes": "De cocktail werd in 1888 uitgevonden door Henry Ramos in zijn bar Meyer's Table d'Hôtel Internationale in New Orleans. De Ramos Fizz werd oorspronkelijk twaalf minuten geshaket door een ploeg van 30 barmannen die de shaker aan elkaar doorgaven."
+    "notes": "De cocktail werd in 1888 uitgevonden door Henry Ramos in zijn bar Meyer's Table d'Hôtel Internationale in New Orleans. De Ramos Fizz werd oorspronkelijk twaalf minuten geshaket door een ploeg van 30 barmannen die de shaker aan elkaar doorgaven.",
+    "description": "New Orleans, en in de oorspronkelijke bar berucht om twaalf minuten shaken. Twee minuten brengt je een heel eind."
   },
   "raspberry-sour": {
     "name": "Frambozensour",
@@ -595,7 +649,8 @@
       "Roer de overige ingrediënten met ijs.",
       "Zeef in het gespoelde glas."
     ],
-    "garnish": "Schilletje citroen."
+    "garnish": "Schilletje citroen.",
+    "description": "Een Manhattan met kersenbrandewijn en een absintspoeling, genoemd naar het slagschip uit 1898. Rijk en licht medicinaal."
   },
   "roy-rogers": {
     "name": "Roy Rogers",
@@ -613,7 +668,8 @@
     "instructions": [
       "Doe alle ingrediënten behalve de mousserende wijn in een shaker, schud goed met ijs, zeef in een gekoeld hoog tumblerglas gevuld met ijs en vul aan met mousserende wijn."
     ],
-    "garnish": "Garneer met bramen en eventueel een schijfje citroen."
+    "garnish": "Garneer met bramen en eventueel een schijfje citroen.",
+    "description": "Opnieuw Dick Bradsell: cassis en citroen onder mousserende wijn, lang en makkelijk weg voor zijn sterkte."
   },
   "rusty-nail": {
     "name": "Rusty Nail",
@@ -621,7 +677,8 @@
       "Doe alle ingrediënten rechtstreeks in een old-fashionedglas gevuld met ijs.",
       "Roer voorzichtig."
     ],
-    "garnish": "Garneer met een schilletje citroen."
+    "garnish": "Garneer met een schilletje citroen.",
+    "description": "Whisky gezoet met whisky — Drambuie is whisky, honing en kruiden. Twee ingrediënten, geen citrus, geen verdunning."
   },
   "sazerac": {
     "name": "Sazerac",
@@ -631,21 +688,24 @@
       "Gooi het ijs en de overtollige absint uit het voorbereide glas en zeef de drank in het glas."
     ],
     "notes": "Het originele recept veranderde na de Amerikaanse Burgeroorlog: rye whiskey verving cognac, dat moeilijk verkrijgbaar werd.",
-    "garnish": "Garneer met een schilletje citroen."
+    "garnish": "Garneer met een schilletje citroen.",
+    "description": "Van New Orleans zelf, en de absint is een spoeling die je weggooit. Traditioneel zonder enig ijs geserveerd."
   },
   "sea-breeze": {
     "name": "Sea Breeze",
     "instructions": [
       "Bouw alle ingrediënten op in een highballglas gevuld met ijs."
     ],
-    "garnish": "Garneer met een schilletje sinaasappel en een kers."
+    "garnish": "Garneer met een schilletje sinaasappel en een kers.",
+    "description": "Cranberry en grapefruit zijn bitter in verschillende richtingen, en de wodka draagt ze alleen maar. Lang en droog."
   },
   "sex-on-the-beach": {
     "name": "Sex on the Beach",
     "instructions": [
       "Bouw alle ingrediënten op in een highballglas gevuld met ijs."
     ],
-    "garnish": "Garneer met een half schijfje sinaasappel."
+    "garnish": "Garneer met een half schijfje sinaasappel.",
+    "description": "Perzik en cranberry over wodka, en zoeter dan de meeste uit deze lijst. In het glas opgebouwd, nooit geshaket."
   },
   "sherry-cobbler": {
     "name": "Sherry Cobbler",
@@ -653,7 +713,8 @@
       "Schud met de citrusschijfjes en ijs.",
       "Zeef in een julepbeker gevuld met gemalen ijs."
     ],
-    "garnish": "Verse bessen en citrusschijfjes; serveer met rietjes."
+    "garnish": "Verse bessen en citrusschijfjes; serveer met rietjes.",
+    "description": "Het drankje dat het rietje populair maakte, in de jaren dertig van de negentiende eeuw. Geshaket met fruit en geserveerd op een berg gemalen ijs."
   },
   "shirley-temple": {
     "name": "Shirley Temple",
@@ -673,7 +734,8 @@
       "Schud goed.",
       "Zeef in een hurricaneglas."
     ],
-    "garnish": "Garneer met ananas en een maraschinokers."
+    "garnish": "Garneer met ananas en een maraschinokers.",
+    "description": "Het Raffles Hotel, rond 1915, en over het recept wordt sindsdien geruzied. Acht ingrediënten die op een of andere manier tot rust komen."
   },
   "southside": {
     "name": "Southside",
@@ -681,14 +743,16 @@
       "Doe alle ingrediënten in een shaker, schud goed met ijs en zeef dubbel in een gekoeld cocktailglas."
     ],
     "notes": "Als je eiwit gebruikt, schud dan krachtig.",
-    "garnish": "Garneer met takjes munt."
+    "garnish": "Garneer met takjes munt.",
+    "description": "Een gin-sour met munt, naar verluidt het drankje van de South Side van Chicago tijdens de drooglegging. Schoon en scherp."
   },
   "spicy-fifty": {
     "name": "Spicy Fifty",
     "instructions": [
       "Doe alle ingrediënten in een shaker, schud goed met ijs en zeef dubbel in een gekoeld cocktailglas."
     ],
-    "garnish": "Garneer met een rode peper."
+    "garnish": "Garneer met een rode peper.",
+    "description": "De peper trekt tijdens het shaken en niet in de fles, waardoor de hitte langzaam opbouwt. Vlierbloesem houdt het eronder bloemig."
   },
   "spritz": {
     "name": "Spritz",
@@ -697,7 +761,8 @@
       "Roer voorzichtig."
     ],
     "notes": "Er zijn andere versies van de Spritz die Campari, Cynar of Select gebruiken in plaats van Aperol.",
-    "garnish": "Garneer met een schijfje sinaasappel."
+    "garnish": "Garneer met een schijfje sinaasappel.",
+    "description": "Venetië, en de verhouding ligt vast: drie prosecco, twee Aperol, één soda. Laag in alcohol en gemaakt voor de middag."
   },
   "stinger": {
     "name": "Stinger",
@@ -706,7 +771,8 @@
       "Roer goed.",
       "Zeef in een gekoeld martiniglas."
     ],
-    "garnish": "Eventueel een muntblaadje."
+    "garnish": "Eventueel een muntblaadje.",
+    "description": "Cognac en munt, verder niets. Ooit het drankje dat je als laatste bestelde, om je mond schoon te maken voor je ging."
   },
   "strawberry-lemonade": {
     "name": "Aardbeienlimonade",
@@ -725,7 +791,8 @@
       "Doe alle ingrediënten behalve de ginger beer in een shaker, shake goed met ijs en schenk ongezeefd in een Collins-glas of in de originele S.",
       "Bastard-mok, en vul aan met ginger beer."
     ],
-    "garnish": "Garneer met munttakjes en eventueel ook een schijfje sinaasappel."
+    "garnish": "Garneer met munttakjes en eventueel ook een schijfje sinaasappel.",
+    "description": "Caïro, 1942, bedacht als katerremedie voor soldaten. Gemberbier over gin en cognac, wat erger klinkt dan het drinkt."
   },
   "sunrise": {
     "name": "Sunrise",
@@ -744,7 +811,8 @@
       "Blend kort (flash-blend) met crushed ice.",
       "Schenk in een glas op voet en vul aan met meer crushed ice."
     ],
-    "garnish": "Drie kersen en een stuk ananas."
+    "garnish": "Drie kersen en een stuk ananas.",
+    "description": "Morse voor de V van victorie, en de garnering spelt het uit. Een dichte tiki-blend uit Chicago in de jaren veertig."
   },
   "tipperary": {
     "name": "Tipperary",
@@ -753,20 +821,23 @@
       "Roer goed.",
       "Zeef in een gekoeld martiniglas."
     ],
-    "garnish": "Garneer met een schijfje sinaasappel."
+    "garnish": "Garneer met een schijfje sinaasappel.",
+    "description": "Ierse whiskey met Chartreuse, een vreemde combinatie tot je hem proeft. Kruidig, zoet en behoorlijk sterk."
   },
   "tommy-s-margarita": {
     "name": "Tommy's Margarita",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld rocksglas gevuld met ijs."
     ],
-    "garnish": "Garneer met een schijfje limoen."
+    "garnish": "Garneer met een schijfje limoen.",
+    "description": "De versie uit San Francisco: agavesiroop in plaats van sinaasappellikeur. Schoner, en je proeft de tequila beter."
   },
   "trinidad-sour": {
     "name": "Trinidad Sour",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Gebouwd op vier centiliter bitters, wat ondrinkbaar zou moeten zijn en het niet is. De orgeat redt hem."
   },
   "tuxedo": {
     "name": "Tuxedo",
@@ -775,7 +846,8 @@
       "Roer goed.",
       "Zeef in een gekoeld martiniglas."
     ],
-    "garnish": "Garneer met een kers en een schilletje citroen."
+    "garnish": "Garneer met een kers en een schilletje citroen.",
+    "description": "Een Martini met maraschino en een absintspoeling. Ouder, zoeter en aromatischer dan het drankje waar hij toe uitgroeide."
   },
   "ve-n-to": {
     "name": "VE.N.TO",
@@ -785,7 +857,8 @@
       "Zeef in een gekoeld klein tumblerglas gevuld met ijs."
     ],
     "notes": "Desgewenst kan het water in de honingmix worden vervangen door een kamille-infusie.",
-    "garnish": "Garneer met een schilletje citroen en witte druiven."
+    "garnish": "Garneer met een schilletje citroen en witte druiven.",
+    "description": "Een IBA-toevoeging gebouwd op grappa, met kamille en honing die een voor velen scherpe drank verzachten."
   },
   "vesper": {
     "name": "Vesper",
@@ -793,7 +866,8 @@
       "Doe alle ingrediënten in een shaker gevuld met ijsblokjes.",
       "Shake en zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Schilletje citroen."
+    "garnish": "Schilletje citroen.",
+    "description": "Op papier bedacht, in Casino Royale, voordat iemand er een maakte. Geshaket, zoals voorgeschreven, al drinkt hij beter geroerd."
   },
   "vienna-coffee": {
     "name": "Weense koffie",
@@ -814,7 +888,8 @@
       "Roer goed.",
       "Zeef in een gekoeld cocktailglas."
     ],
-    "garnish": "Garneer met een schilletje sinaasappel en een maraschinokers."
+    "garnish": "Garneer met een schilletje sinaasappel en een maraschinokers.",
+    "description": "Het Franse Kwartier van New Orleans in een glas, en ernaar genoemd. Twee sterke dranken, twee bitters, en nergens iets scherps."
   },
   "virgin-colada": {
     "name": "Virgin Colada",
@@ -865,7 +940,8 @@
     "name": "White Lady",
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
-    ]
+    ],
+    "description": "Een Sidecar gebouwd op gin in plaats van cognac. Scherper en droger, en hij heeft de suiker nodig die de Sidecar kan missen."
   },
   "zombie": {
     "name": "Zombie",
@@ -875,6 +951,7 @@
       "Serveer in een hoog tumblerglas."
     ],
     "notes": "Donn's Mix: 2 delen verse gele grapefruit en 1 deel kaneelsiroop.",
-    "garnish": "Garneer met muntblaadjes."
+    "garnish": "Garneer met muntblaadjes.",
+    "description": "Don the Beachcomber, 1934, en berucht om de limiet van twee per gast. Drie rums, en het recept bleef decennia geheim."
   }
 }
