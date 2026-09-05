@@ -59,6 +59,7 @@ try {
     ...(ing.parentId ? { parentId: ing.parentId } : {}),
     ...(ing.substitutes?.length ? { substitutes: ing.substitutes } : {}),
     ...(ing.aliases?.length ? { aliases: ing.aliases } : {}),
+    ...(ing.abv !== undefined ? { abv: ing.abv } : {}),
     createdAt: now,
     updatedAt: now,
   }));
@@ -81,6 +82,9 @@ try {
     servings: c.servings ?? 1,
     tags: c.tags ?? [],
     ...(c.variations?.length ? { variations: c.variations } : {}), // resolved (swap fromId/toId + makesCocktailId)
+    ...(c.color ? { color: c.color } : {}),
+    ...(c.alcoholFreeCounterpartId ? { alcoholFreeCounterpartId: c.alcoholFreeCounterpartId } : {}),
+    ...(c.alcoholFreeOfId ? { alcoholFreeOfId: c.alcoholFreeOfId } : {}),
     ...(c.imageUrl ? { imageUrl: c.imageUrl } : {}),
     createdAt: now,
     updatedAt: now,

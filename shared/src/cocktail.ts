@@ -97,7 +97,8 @@ export type CocktailTag =
   | 'creamy'
   | 'sparkling'
   | 'strong'
-  | 'hot';
+  | 'hot'
+  | 'mocktail';
 
 export const COCKTAIL_TAGS: readonly CocktailTag[] = [
   'iba-official',
@@ -110,6 +111,7 @@ export const COCKTAIL_TAGS: readonly CocktailTag[] = [
   'sparkling',
   'strong',
   'hot',
+  'mocktail',
 ];
 
 /** A bundled cocktail image (offline-safe). Replaces the remote `imageUrl` over time. */
@@ -121,7 +123,12 @@ export interface CocktailImage {
 /**
  * A structured ingredient swap inside a variation ("use Vodka instead of Cachaça"). Both sides are
  * *base* ids (resolved from names by `buildCatalog`, mirroring `CocktailIngredient.alternativeIds`).
- * Informational only — swaps never affect `computeMakeable`.
+ *
+ * Informational only — swaps never affect `computeMakeable`, and that is deliberate: a swap makes a
+ * DIFFERENT drink. Counting one would tell someone holding only vodka that they can make a
+ * Caipirinha, which is the same failure class as the mis-stamped roles fixed in `e8ba593`/`1c1b0ed`.
+ * To make a variation genuinely makeable, promote it to its own cocktail entry and link it with
+ * `makesCocktailId` — see the variation ladder in docs/data-model.md.
  */
 export interface CocktailVariationSwap {
   fromId: string;
@@ -136,6 +143,14 @@ export interface CocktailVariationSwap {
  * `Ingredient.substitutes`/`parentId` (cabinet makeability) — a variation is a different drink.
  */
 export interface CocktailVariation {
+  /**
+   * Stable, cocktail-scoped identity. **Immutable once shipped** — the Dutch overlay is keyed on it
+   * (`CatalogTranslations.cocktails[].variations`), so the display `name` can be edited and the
+   * array reordered, inserted into or trimmed without translated text landing on the wrong
+   * variation. `buildCatalog` derives it from `slugify(name)` when the seed omits it; once a
+   * variation ships, change the `name` freely but never the `key`.
+   */
+  key: string;
   /** Display name of the variation (required, translatable). */
   name: string;
   /** Free-form prose describing the variation (translatable). */
@@ -168,6 +183,20 @@ export interface Cocktail {
   tags?: string[];
   /** Named variations of this drink (swaps + prose), resolved to base ids by `buildCatalog`. */
   variations?: CocktailVariation[];
+  /**
+   * Authored liquid colour (`#RRGGBB`) for the generated glass art. Without it the renderer guesses
+   * from ingredient ids, which yields only ~20 distinct colours across the catalog — so Negroni,
+   * Americano and Boulevardier come out identical. Authoring this per recipe is the fix.
+   */
+  color?: string;
+  /**
+   * The alcohol-free counterpart of this drink (Mojito → Virgin Mojito). Hand-curated, and the
+   * inverse of {@link alcoholFreeOfId}. Distinct from `variations` — a counterpart is its own recipe
+   * with its own balance, not an ingredient swap.
+   */
+  alcoholFreeCounterpartId?: string;
+  /** Set on the counterpart itself, pointing back at the drink it is the alcohol-free version of. */
+  alcoholFreeOfId?: string;
   /** Bundled, offline-safe image. Preferred over the legacy remote `imageUrl`. */
   image?: CocktailImage;
   imageUrl?: string;

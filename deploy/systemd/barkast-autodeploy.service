@@ -1,25 +1,31 @@
 # Barkast automatic pull-deploy — one-shot, fired by barkast-autodeploy.timer.
 #
-# Install (adjust User + paths to your checkout):
+# The box has no inbound ports, so a release cannot be pushed to it: it must be PULLED. This unit is
+# that pull. It checks the GHCR API image and the release branch's SPA source independently, and
+# deploys whichever moved.
+#
+# Install (paths below match the reference host: user `aart`, checkout at ~/cocktailapp):
 #   sudo cp deploy/systemd/barkast-autodeploy.{service,timer} /etc/systemd/system/
 #   sudo systemctl daemon-reload
 #   sudo systemctl enable --now barkast-autodeploy.timer
 # Inspect:
 #   systemctl list-timers barkast-autodeploy.timer
 #   journalctl -u barkast-autodeploy.service -f
+#   sudo systemctl start barkast-autodeploy.service   # force a cycle now
 [Unit]
-Description=Barkast auto-deploy (pull new API image from GHCR and roll out via deploy.sh)
+Description=Barkast auto-deploy (pull the new API image from GHCR, rebuild the SPA, roll out)
 Wants=network-online.target
 After=network-online.target docker.service
 Requires=docker.service
 
 [Service]
 Type=oneshot
-# The user must be in the `docker` group (or use rootless docker). Point these at your checkout.
-User=barkast
-WorkingDirectory=/opt/barkast/deploy
+# Must be in the `docker` group (or use rootless docker). Adjust both paths if your checkout differs.
+User=aart
+WorkingDirectory=/home/aart/cocktailapp/deploy
 # Invoked via bash so it runs regardless of the file's exec bit (the script is authored on a
 # platform that doesn't track the +x mode). auto-deploy.sh reads the shebang either way.
-ExecStart=/bin/bash /opt/barkast/deploy/auto-deploy.sh
-# Don't let one long roll-out (backup + migrate) get killed prematurely.
-TimeoutStartSec=1800
+ExecStart=/bin/bash /home/aart/cocktailapp/deploy/auto-deploy.sh
+# npm ci plus an Angular production build is minutes, and a roll-out adds an encrypted backup and
+# migrations on top. Don't let systemd kill a release half-way.
+TimeoutStartSec=3600

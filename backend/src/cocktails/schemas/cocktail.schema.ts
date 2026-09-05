@@ -82,6 +82,13 @@ const CocktailVariationSwapSchema =
 
 @Schema({ _id: false })
 export class CocktailVariation {
+  /**
+   * Stable, cocktail-scoped identity the Dutch overlay is keyed on. Stored (and reverse-mapped in
+   * CatalogService) so a key that deliberately diverges from `slugify(name)` survives the round-trip.
+   */
+  @Prop({ required: true, trim: true })
+  key: string;
+
   @Prop({ required: true, trim: true })
   name: string;
 
@@ -157,6 +164,22 @@ export class Cocktail {
   /** Named variations (swaps + prose), resolved to base ids. */
   @Prop({ type: [CocktailVariationSchema], default: undefined })
   variations?: CocktailVariation[];
+
+  /** Authored liquid colour (`#RRGGBB`) for the generated glass art. */
+  @Prop({ trim: true })
+  color?: string;
+
+  /**
+   * The alcohol-free counterpart of this drink, resolved to an id. Authored once on the alcoholic
+   * parent as a NAME; `buildCatalog` resolves it and stamps the inverse `alcoholFreeOfId` on the
+   * counterpart. Both are stored so the API round-trip reproduces the bundle's content hash.
+   */
+  @Prop({ type: String, required: false })
+  alcoholFreeCounterpartId?: string;
+
+  /** Set on the counterpart itself, pointing back at the drink it is the alcohol-free version of. */
+  @Prop({ type: String, required: false })
+  alcoholFreeOfId?: string;
 
   @Prop()
   imageUrl?: string;

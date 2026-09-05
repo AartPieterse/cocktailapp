@@ -79,11 +79,11 @@ export interface UiStrings {
     buildBar: string;
     browseFirst: string;
     eyebrow: string;
-    /** Words before the big, styled makeable count in the hero. */
-    countPre: string;
-    /** Words after the big count (carries pluralization). */
-    countPost: (n: number) => string;
-    makeableLede: (now: number, almost: number) => string;
+    /**
+     * One quiet line of fact where a counting-up hero number used to be. It reports a filter
+     * result, never a score that rises as the user acquires more.
+     */
+    fitLine: (n: number) => string;
     editBar: string;
     wizardAgain: string;
     makeNow: string;
@@ -91,7 +91,6 @@ export interface UiStrings {
     emptyTitle: string;
     emptyBody: string;
     refillBar: string;
-    almostHeader: string;
     yourBar: string;
     ingredientCount: (n: number) => string;
     countSubstitutes: string;
@@ -241,6 +240,15 @@ export interface UiStrings {
     cancel: string;
     confirm: string;
   };
+  /**
+   * Flat confirmations after a cabinet change. Deliberately plain: the app states what changed and
+   * never celebrates an acquisition, so there is no "+N unlocked" string here by design.
+   */
+  toast: {
+    added: (name: string) => string;
+    addedMany: (n: number) => string;
+    removed: (name: string) => string;
+  };
   /** API / data errors and the snackbar dismiss action. */
   errors: {
     network: string;
@@ -309,20 +317,19 @@ const nl: UiStrings = {
     buildBar: 'Stel je bar samen',
     browseFirst: 'Blader eerst rond',
     eyebrow: 'Ontdek',
-    countPre: 'Je kunt',
-    countPost: (n) => `${n === 1 ? 'cocktail' : 'cocktails'} maken`,
-    makeableLede: (now, almost) =>
-      `Op basis van wat er nu in jouw bar staat. ${now} klaar om te shaken, ${almost} liggen binnen handbereik.`,
+    fitLine: (n) =>
+      n === 1
+        ? '1 recept past bij wat je in huis hebt.'
+        : `${n} recepten passen bij wat je in huis hebt.`,
     editBar: 'Bewerk mijn bar',
     wizardAgain: 'Wizard opnieuw',
     makeNow: 'Nu te maken',
     cocktailsCount: (n) => `${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
     emptyTitle: 'Nog niks helemaal compleet.',
     emptyBody:
-      'Voeg een sterke drank of mixer toe en je bent er zo. Kijk hiernaast wat je bijna kunt maken.',
+      'Zet in je bar wat je in huis hebt, dan zie je hier wat je ermee kunt maken. Of begin bij een techniek.',
     refillBar: 'Bar aanvullen',
-    almostHeader: 'Bijna — je mist er één',
-    yourBar: 'Jouw bar',
+    yourBar: 'Mijn bar',
     ingredientCount: (n) => `${n} ${n === 1 ? 'ingrediënt' : 'ingrediënten'}`,
     countSubstitutes: 'Vervangers meetellen',
     editBarShort: 'Bewerk bar',
@@ -464,6 +471,11 @@ const nl: UiStrings = {
     cancel: 'Annuleren',
     confirm: 'Verwijderen',
   },
+  toast: {
+    added: (name) => `${name} staat nu in je bar`,
+    addedMany: (n) => `${n} ingrediënten toegevoegd`,
+    removed: (name) => `${name} staat niet meer in je bar`,
+  },
   errors: {
     network: 'Geen verbinding met de server. Draait de backend?',
     invalid: 'Ongeldige invoer.',
@@ -530,19 +542,16 @@ const en: UiStrings = {
     buildBar: 'Build your bar',
     browseFirst: 'Browse first',
     eyebrow: 'Discover',
-    countPre: 'You can make',
-    countPost: (n) => `${n === 1 ? 'cocktail' : 'cocktails'}`,
-    makeableLede: (now, almost) =>
-      `Based on what's in your bar right now. ${now} ready to shake, ${almost} within easy reach.`,
+    fitLine: (n) =>
+      n === 1 ? '1 recipe matches what you have at home.' : `${n} recipes match what you have at home.`,
     editBar: 'Edit my bar',
     wizardAgain: 'Restart wizard',
     makeNow: 'Make now',
     cocktailsCount: (n) => `${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
     emptyTitle: 'Nothing quite complete yet.',
     emptyBody:
-      "Add a spirit or a mixer and you're nearly there. See what you're almost able to make on the right.",
+      'Put what you have at home in your bar and you will see what it makes. Or start with a technique.',
     refillBar: 'Stock up your bar',
-    almostHeader: 'Almost — one to go',
     yourBar: 'Your bar',
     ingredientCount: (n) => `${n} ${n === 1 ? 'ingredient' : 'ingredients'}`,
     countSubstitutes: 'Count substitutes',
@@ -684,6 +693,11 @@ const en: UiStrings = {
     title: 'Confirm',
     cancel: 'Cancel',
     confirm: 'Delete',
+  },
+  toast: {
+    added: (name) => `${name} is now in your bar`,
+    addedMany: (n) => `${n} ingredients added`,
+    removed: (name) => `${name} is no longer in your bar`,
   },
   errors: {
     network: 'No connection to the server. Is the backend running?',

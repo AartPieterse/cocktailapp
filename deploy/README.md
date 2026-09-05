@@ -159,10 +159,29 @@ CI builds + tests every push to `main` and pushes a version-tagged image to GHCR
 (`ghcr.io/<owner>/barkast-api:<git-sha>` + `:latest`, with the git SHA stamped as the
 `org.opencontainers.image.revision` label). The box **pulls** by tag — no inbound access needed.
 
-- **Automatic (recommended):** a systemd timer polls GHCR and rolls out new images with **no manual
-  step**. It hands off to `deploy.sh`, so an automatic roll-out still does the pre-deploy encrypted
-  backup, migrations, and rollback history — unlike plain Watchtower, which would pull-and-restart
-  with none of that.
+**A release is two artifacts, and only one of them is an image.** The API ships as that GHCR image;
+the SPA does not — CI publishes it to Netlify, and the box builds it from source. `auto-deploy.sh`
+therefore watches both, independently: the image digest, and `origin/main`'s HEAD. A commit that
+touches only the frontend produces no new image, and one that touches only the backend needs no
+rebuild, so each side records its own state and a failure on one retries without redoing the other.
+
+The SPA path does `git reset --hard` onto the release branch, deliberately: the box is a deploy
+target, never a place work is authored, so a dirty tree there is drift to discard rather than a merge
+to resolve at three in the morning. It then runs `npm ci` (the lockfile *is* the release) and reloads
+Caddy rather than restarting it, so the app keeps serving throughout. A failed build leaves the
+previous bundle in place and retries next cycle.
+
+**Why the trigger lives on the box and not in CI.** With no inbound ports, a release cannot be pushed
+here — it has to be pulled. A self-hosted GitHub Actions runner would invert that without opening a
+port, but this repository is **public**, and a self-hosted runner on a public repo lets a fork's pull
+request execute code on your hardware. Polling is the cheap, boring answer.
+
+- **Automatic (recommended):** a systemd timer polls **hourly** and rolls out with **no manual step**.
+  It hands off to `deploy.sh`, so an automatic roll-out still does the pre-deploy encrypted backup,
+  migrations, and rollback history — unlike plain Watchtower, which would pull-and-restart with none
+  of that. Hourly rather than every few minutes because `main` is the stable branch and merges into
+  it are rare; a cycle that finds nothing costs a fetch and a digest check, so the interval governs
+  only how long a release sits unnoticed. `OnUnitActiveSec` in the timer is the one line to change.
   > **Finish §6 before you enable this.** `deploy.sh` runs `backup.sh` whenever `AGE_RECIPIENT` is
   > **non-empty** — a placeholder counts — and aborts the whole deploy if that backup fails, which
   > it does when `age` isn't installed. Until §6 is done, leave `AGE_RECIPIENT` **empty** so the
@@ -171,7 +190,8 @@ CI builds + tests every push to `main` and pushes a version-tagged image to GHCR
   ```bash
   cd deploy
   sudo cp systemd/barkast-autodeploy.{service,timer} /etc/systemd/system/
-  # edit the User + WorkingDirectory/ExecStart paths in the .service to match your checkout
+  # The unit ships with the reference host's paths (user `aart`, checkout at ~/cocktailapp).
+  # Edit User + WorkingDirectory/ExecStart only if yours differ.
   sudo systemctl daemon-reload
   sudo systemctl enable --now barkast-autodeploy.timer
   systemctl list-timers barkast-autodeploy.timer     # confirm it's scheduled

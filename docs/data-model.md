@@ -197,6 +197,72 @@ Today's seed authors this machinery sparsely: **1** ingredient has a `parentId` 
 `substitutes`, so flipping the toggle changes almost nothing on current data. A substitution that
 "doesn't work" is usually one that was never written.
 
+## Variations, and the five things that look like one
+
+Five separate mechanisms in this model describe "almost the same drink". They are deliberately
+distinct, and the difference that matters is **whether it changes a makeability answer**:
+
+| Mechanism | Where | Affects makeable? | Means |
+| --- | --- | --- | --- |
+| `Cocktail.variations` | on the cocktail | **No** | a *different drink* you can make from this one |
+| `CocktailIngredient.alternativeIds` | on a recipe line | **Yes** | an "X or Y" line — either satisfies *this* recipe |
+| `Ingredient.parentId` | on a base | via `expandCabinet` | a specific base standing in for a broader call |
+| `Ingredient.substitutes` | on a base | via `expandCabinet` | an explicit acceptable swap |
+| `Ingredient.aliases` | on a base | No | folded spellings and brands, for the search box |
+
+Reach for `alternativeIds` when the recipe itself says "or". Reach for `variations` when the result
+has a different name. Nothing else belongs in either.
+
+### The variation ladder
+
+A variation is stored **embedded in its parent cocktail**, and that is the right home permanently —
+not a stepping stone. The reason is asymmetry, not taste: a variation is the only catalog object with
+**no id**, so it is the only one you can delete without stranding stored user data. A cabinet is
+ingredient ids and favourites are cocktail ids, both in `localStorage`; `missingLines` never reads
+`variations`. Promoting a variation to its own object mints a permanent id in a space that has no
+runtime remapping.
+
+Climb only as far as the drink needs:
+
+| Rung | Author | When |
+| --- | --- | --- |
+| 1 | `key` + `name` + `description` | the swapped-in ingredient is not a stockable base |
+| 2 | + `swaps: [{ from, to }]` (names) | both sides are catalog bases **and** `from` is a line of this recipe |
+| 3 | + `makesCocktail` → its own `cocktails[]` entry | all three criteria below |
+
+Promote to rung 3 only when **all three** hold:
+
+1. every ingredient of the variant is *already* a base — see the prose-only doctrine below;
+2. it needs its own `instructions`, `glass`, `method` or `baseSpirit`, i.e. it is genuinely another
+   drink rather than an annotation;
+3. someone holding only the variant's bases can make **nothing** today — the hero feature is
+   under-delivering for them.
+
+When promoting, copy **every field** of every unchanged line — `note`, `optional`, `role`,
+`amountMax`, `alternatives` included, not just name/amount/unit. `optional` and `role` are precisely
+what decide whether a line is required, so dropping one yields a child that demands what its parent
+does not.
+
+Embedding stops being the right answer at roughly **25 variations**, or the first time a parent recipe
+must change in a way its variant must not inherit. Below that, authoring data beats writing code.
+
+### The prose-only doctrine
+
+Author a `swap` only when both sides are already catalog bases. **Never add a base solely to make a
+swap structural.** A swap is informational — it never reaches `computeMakeable` — while every base is
+a permanent tile in the first-run wizard and in Mijn bar. A variation whose ingredient has no base
+stays prose, permanently and correctly. `validate-seed` enforces the boundary: swap sanity is a hard
+failure, and a base nothing can reach is surfaced as a warning.
+
+### `key` is the identity; `name` is display
+
+Each variation carries a `key` — a cocktail-scoped slug, **immutable once shipped**. The Dutch overlay
+is keyed on it, so the display `name` can be rewritten and the array reordered, inserted into or
+trimmed without translated text landing on the wrong variation. `buildCatalog` derives it from
+`slugify(name)` when the seed omits it, but `validate-seed` requires it to be authored: a derived key
+changes silently when the name is edited, which is exactly how a hand-written Dutch string goes
+missing. Rename freely; never change a `key`.
+
 ## Catalog build & versioning
 
 `buildCatalog(rawIngredients, rawCocktails)` (`shared/src/catalog.ts`) shapes raw seed data into the
@@ -208,9 +274,11 @@ function feeds both `scripts/build-catalog.mjs` (the committed offline bundle) a
   collision handling. Both lists are sorted by name **before** ids are assigned, so id derivation is
   order-independent (seed-file order or Mongo query order resolve identically).
 - **Fails loud:** a duplicate authored id (ingredient *or* cocktail), an unknown line ingredient name,
-  an unknown alternative name, an unknown variation swap ingredient, or a variation `makesCocktail`
-  naming no catalog cocktail all throw — a seed typo breaks the build instead of shipping a broken
-  catalog.
+  an unknown alternative name, an unknown variation swap ingredient, two variations sharing a `key`
+  within one cocktail, or a variation `makesCocktail` naming no catalog cocktail all throw — a seed
+  typo breaks the build instead of shipping a broken catalog. `scripts/validate-seed.mjs` adds the
+  checks `buildCatalog` cannot make on its own: role sanity, swap sanity (a swap must actually
+  describe *this* recipe), variation-key hygiene, orphan bases, and id tombstones.
 - **`version`** is a `sha256` of `JSON.stringify({ ingredients, cocktails })` sliced to 12 hex chars.
   It doubles as the `GET /api/catalog` **ETag**. The recipe is duplicated in `build-catalog.mjs`,
   `validate-seed.mjs`, and the backend `CatalogService` and **must stay byte-identical** so the offline
@@ -229,10 +297,10 @@ totals — ingredients, staples, cocktails and NL overlay coverage — on every 
 (`scripts/build-catalog.mjs`). See the root [`README.md`](../README.md#build--catalog-pipeline) for
 the build pipeline.
 
-What the seed actually authors is thinner than the model allows: **4** recipe lines carry
-`alternativeIds`, **4** cocktails carry `variations`, line roles are **19** `seasoning` and **5**
-`garnish` with **14** lines marked `optional`, and `baseSpirit` is now set on **every** cocktail. Worth knowing before debugging a
-feature that may simply have no data behind it.
+What the seed authors is thinner than the model allows — a handful of lines carry `alternativeIds`,
+a handful of cocktails carry `variations`, and line roles are rare. Worth knowing before debugging a
+feature that may simply have no data behind it. **Do not copy counts into prose:** `npm run
+validate:seed` prints the live totals and is the authority.
 
 ### Changing the data
 
@@ -241,10 +309,54 @@ npm run build:translations   # scripts/build-translations-nl.mjs → scripts/tra
 npm run build:catalog        # build:shared + validate:seed + scripts/build-catalog.mjs
 ```
 
-`build:catalog` regenerates `frontend/public/catalog.json` **and** `catalog.nl.json`, and both must be
-committed: the CI step *"Regenerate catalog and verify both bundles are committed"*
-(`.github/workflows/ci.yml`) re-runs the build, stages the two bundles and fails on any diff — including
-an untracked one. Editing the seed without regenerating is a red build.
+`build:catalog` regenerates **three** committed artifacts — `frontend/public/catalog.json`,
+`frontend/public/catalog.nl.json` and `catalog-ids.lock.json` — and `build:translations` a fourth,
+`scripts/translations-nl.json`. All four are gated: CI re-runs the build, stages the three and fails on
+any diff (including an untracked one), then runs `build:translations -- --check`. Editing the seed
+without regenerating is a red build. `build:catalog` must run **before** `build:translations`: the
+harvester reads the freshly built `catalog.json` to learn which ids and variation keys exist
+(`scripts/build-translations-nl.mjs`).
+
+### Adding and removing entries
+
+**Add a cocktail.** Append the object to the seed. It needs a `name`, a `baseSpirit`, at least one
+line that is neither `optional` nor decorative, a `unit`/`glass`/`method`/`difficulty` from its
+vocabulary, and every line `name` matching an ingredient `name` case-insensitively — otherwise
+`buildCatalog` throws. Author an explicit `"id"` if you want it stable against a later rename.
+Then `npm run build:catalog` and commit the seed plus the generated artifacts.
+*Two landmines:* a new `isStaple` base never reaches an **existing** cabinet (the wizard pre-ticks
+staples only on first run), and a cocktail with no authored `id` silently changes id when renamed,
+orphaning every stored favourite.
+
+**Add a variation.** Append `{ key, name, description }` to the parent's `variations[]`, plus `swaps`
+where the ladder allows. Insert at any position — the overlay is keyed, not positional.
+
+**Remove a variation.** Delete the object and rebuild. **Nothing breaks**: no id ever existed and
+nothing in `localStorage` can reference it. This is the whole argument for keeping variations embedded.
+
+**Remove a cocktail or an ingredient.** Delete the object **and** add a tombstone to the seed's
+top-level `retired[]`:
+
+```jsonc
+"retired": [
+  { "id": "some-drink", "kind": "cocktail", "since": "2026-09-05", "why": "merged into other-drink" }
+]
+```
+
+`validate-seed` compares the live id set against `catalog-ids.lock.json` — the id set the **last**
+build shipped, committed and CI-diffed for exactly this purpose — and fails on any id that left
+without a tombstone. It also fails on a tombstone for something still present. (The lock is the
+baseline rather than `git show HEAD:catalog.json`, because CI's own regenerate-and-diff step already
+guarantees HEAD's bundle equals the fresh build, which would make that comparison vacuous.)
+
+The tombstone stops a **silent** break; it does not undo the break. Favourites and cabinets store raw
+ids with no runtime remapping, so a removed drink simply disappears for whoever saved it and a
+bookmarked `/cocktails/:id` degrades to not-found. **Prefer merging to deleting**, and treat removing
+an *ingredient* as the expensive one: drinks drop out of "wat kan ik maken" with no explanation for
+anyone who stocked it.
+
+**Rename.** Free for a variation (`key` is the identity). Free for an ingredient (ids are authored).
+For a cocktail it is only free once the entry carries an authored `id`.
 
 ## Localization
 
@@ -253,7 +365,8 @@ an untracked one. Editing the seed without regenerating is a red build.
   cocktails }`, keyed by id) is applied at display time by `applyCatalogTranslations`, which overlays
   names/descriptions/instructions/notes/garnish and rewrites each line's denormalized `name` to the
   translated base name (so `missing[]` reads in Dutch) — leaving ids, `call`, matching, and the version
-  untouched.
+  untouched. A cocktail's `variations` are overlaid too, **keyed by `CocktailVariation.key`**; this was
+  index-aligned once, which meant inserting a variation moved translated text onto its neighbour.
 - **A stale overlay can never corrupt display:** if the overlay `version` ≠ the catalog `version` (or
   the overlay is missing), the canonical English catalog is returned unchanged. The same holds per
   *entry*: an id with no overlay entry keeps its canonical English text.
@@ -263,6 +376,13 @@ an untracked one. Editing the seed without regenerating is a red build.
   seed today — the build's `nl overlay:` line prints the real coverage against the catalog totals
   right above it. To close a gap: add the ids to `NL_INGREDIENTS` /
   `scripts/translations-nl-cocktails.json`, then `npm run build:translations && npm run build:catalog`.
+- **Dutch is never dropped silently.** The harvester merges the curated `scripts/seed-data.mjs` set
+  with the `scripts/translations-nl-cocktails.json` supplement **per field**, so a supplement can add
+  variations to a cocktail the curated set already covers (skipping the whole entry is what once made
+  moving text into the supplement a no-op). A variation key the catalog does not have **fails** the
+  run rather than being quietly discarded, and `--check` in CI keeps `scripts/translations-nl.json`
+  from going stale. Never hand-edit `scripts/translations-nl.json` or `frontend/public/catalog.nl.json`
+  — both are generated; author in `seed-data.mjs` or the supplement.
 
 ---
 
@@ -276,7 +396,9 @@ broke matching. Today the frontend, the offline bundle, and the backend all shar
 and **one** `computeMakeable` engine (the backend `$aggregate` was deleted), asserted by a cross-sink
 CI check.
 
-**Open (post-launch):** id tombstones for renamed/removed ingredients, **bundled cocktail images**
+**Open (post-launch):** **runtime** id remapping (a `replacedBy` tombstone that prunes or rewrites a
+stale id already sitting in someone's `barkast.cabinet`/`barkast.favorites` — the build-time gate
+below exists, the runtime half does not), **bundled cocktail images**
 (the `image` field type exists but no images are bundled yet — pending licensing), abv/dietary flags,
 and narrowing `Cocktail.tags` from `string[]` to the typed `CocktailTag[]` — which first needs
 `mocktail` added to `CocktailTag`/`COCKTAIL_TAGS`: the seed tags 54 cocktails with it and it is not a

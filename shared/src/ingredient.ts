@@ -29,6 +29,12 @@ export interface Ingredient {
   substitutes?: string[];
   /** Folded spellings & brand names, kept for the search box ("Sugar Syrup", "Smirnoff Vodka"). */
   aliases?: string[];
+  /**
+   * Alcohol by volume as a percentage (40 = 40% ABV). Authored only for ingredients that contain
+   * alcohol; absent means "no alcohol" for the purposes of {@link standardDrinks}. Drives the neutral
+   * strength line on a recipe — never a sort key, never a badge.
+   */
+  abv?: number;
   createdAt?: string;
   updatedAt?: string;
 }

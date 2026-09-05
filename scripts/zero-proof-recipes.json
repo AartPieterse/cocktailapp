@@ -1,0 +1,616 @@
+{
+  "_comment": "The 24 alcohol-free recipes that replace the scraped import. 14 are counterparts of a classic and are linked from the parent via `alcoholFreeCounterpart`; 10 stand on their own. Each is rebalanced rather than merely stripped of its spirit — removing alcohol removes body and length, so these lean harder on acid, salt, aromatics and dilution. Written to the same standard as the IBA set: a description, 3-6 single-action steps, a garnish, a difficulty and an authored colour.",
+
+  "newIngredients": [
+    { "id": "tonic-water", "name": "Tonic Water", "category": "mixer", "aliases": ["Indian Tonic", "Tonic"] }
+  ],
+
+  "counterparts": {
+    "Mojito": "Virgin Mojito",
+    "Bloody Mary": "Virgin Mary",
+    "Moscow Mule": "Ginger Mule",
+    "Pina Colada": "Virgin Colada",
+    "Paloma": "Virgin Paloma",
+    "Gin Fizz": "Lemon Fizz",
+    "Clover Club": "Raspberry Sour",
+    "Bee's Knees": "Honey and Lemon",
+    "Irish Coffee": "Vienna Coffee",
+    "Sea Breeze": "Cranberry Breeze",
+    "Tequila Sunrise": "Sunrise",
+    "Chartreuse Swizzle": "Pineapple Swizzle",
+    "Tommy's Margarita": "Agave and Lime",
+    "VE.N.TO": "Chamomile and Honey"
+  },
+
+  "cocktails": [
+    {
+      "id": "virgin-mojito",
+      "name": "Virgin Mojito",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Without rum the body drops out, so this leans on twice the mint, more lime and a pinch of salt to carry the length.",
+      "instructions": [
+        "Muddle the mint gently with the sugar and lime juice in a highball glass.",
+        "Add the salt and fill the glass with crushed ice.",
+        "Stir until the outside of the glass frosts.",
+        "Top with soda water and garnish with a mint sprig."
+      ],
+      "ingredients": [
+        { "name": "Fresh Lime Juice", "amount": 25, "unit": "ml" },
+        { "name": "Mint", "call": "Mint Sprigs", "amount": 12, "unit": "piece" },
+        { "name": "Sugar", "call": "White Cane Sugar", "amount": 2, "unit": "teaspoon" },
+        { "name": "Salt", "amount": 1, "unit": "pinch", "role": "seasoning" },
+        { "name": "Soda Water", "amount": 1, "unit": "topup" }
+      ],
+      "glass": "highball",
+      "method": "muddled",
+      "difficulty": "easy",
+      "garnish": "Mint sprig and a lime wheel",
+      "color": "#DDE9C8",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "virgin-mary",
+      "name": "Virgin Mary",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Savoury rather than sweet: tomato sharpened with lemon and heat, and seasoned like a dish instead of a drink.",
+      "instructions": [
+        "Fill a rocks glass with ice.",
+        "Add the tomato juice, lemon juice, Worcestershire sauce and Tabasco.",
+        "Season with celery salt and black pepper.",
+        "Roll gently between two glasses rather than shaking, so the juice stays thick.",
+        "Garnish with a celery stick and a lemon wedge."
+      ],
+      "ingredients": [
+        { "name": "Tomato Juice", "amount": 120, "unit": "ml" },
+        { "name": "Fresh Lemon Juice", "amount": 20, "unit": "ml" },
+        { "name": "Worcestershire Sauce", "amount": 3, "unit": "dash", "role": "seasoning" },
+        { "name": "Tabasco", "amount": 2, "unit": "dash", "role": "seasoning" },
+        { "name": "Celery Salt", "amount": 1, "unit": "pinch", "role": "seasoning" },
+        { "name": "Black pepper", "amount": 1, "unit": "pinch", "role": "seasoning" }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Celery stick and a lemon wedge",
+      "color": "#C23A22",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "ginger-mule",
+      "name": "Ginger Mule",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Fresh ginger muddled into the drink puts back the bite the vodka used to carry. Sharper than a mule, and longer.",
+      "instructions": [
+        "Muddle the ginger slices with the lime juice in a rocks glass.",
+        "Fill with ice.",
+        "Top with ginger beer and stir once.",
+        "Garnish with a lime wedge."
+      ],
+      "ingredients": [
+        { "name": "Ginger", "amount": 3, "unit": "slice" },
+        { "name": "Fresh Lime Juice", "amount": 20, "unit": "ml" },
+        { "name": "Ginger Beer", "amount": 150, "unit": "ml" }
+      ],
+      "glass": "rocks",
+      "method": "muddled",
+      "difficulty": "easy",
+      "garnish": "Lime wedge",
+      "color": "#D8A44E",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "virgin-colada",
+      "name": "Virgin Colada",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Coconut and pineapple are already the whole flavour here; a squeeze of lime keeps it from turning into dessert.",
+      "instructions": [
+        "Blend the coconut cream, pineapple juice and lime juice with a cup of crushed ice.",
+        "Blend until smooth and thick.",
+        "Pour into a hurricane glass.",
+        "Garnish with a pineapple wedge."
+      ],
+      "ingredients": [
+        { "name": "Coconut Cream", "amount": 40, "unit": "ml" },
+        { "name": "Pineapple Juice", "amount": 90, "unit": "ml" },
+        { "name": "Fresh Lime Juice", "amount": 10, "unit": "ml" }
+      ],
+      "glass": "hurricane",
+      "method": "blended",
+      "difficulty": "easy",
+      "garnish": "Pineapple wedge",
+      "color": "#F3E6C3",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "virgin-paloma",
+      "name": "Virgin Paloma",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Grapefruit two ways, juice and soda, with enough salt to make the bitterness read as refreshing instead of sour.",
+      "instructions": [
+        "Rub a lime wedge around the rim of a highball glass and dip it in salt.",
+        "Fill the glass with ice.",
+        "Add the grapefruit juice and lime juice.",
+        "Top with grapefruit soda and stir once."
+      ],
+      "ingredients": [
+        { "name": "Grapefruit Juice", "amount": 40, "unit": "ml" },
+        { "name": "Fresh Lime Juice", "amount": 10, "unit": "ml" },
+        { "name": "Salt", "amount": 1, "unit": "pinch", "role": "seasoning" },
+        { "name": "Grapefruit Soda", "amount": 100, "unit": "ml" }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Salt rim and a grapefruit wedge",
+      "color": "#E9A08C",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "lemon-fizz",
+      "name": "Lemon Fizz",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Egg white does the work the gin used to: it gives the drink a soft head and a weight that plain lemonade never has.",
+      "instructions": [
+        "Shake the lemon juice, syrup and egg white hard without ice for ten seconds.",
+        "Add ice and shake again for twelve seconds, until the tin frosts.",
+        "Strain into a chilled highball glass.",
+        "Top slowly with soda water so the head rises above the rim."
+      ],
+      "ingredients": [
+        { "name": "Fresh Lemon Juice", "amount": 35, "unit": "ml" },
+        { "name": "Simple Syrup", "amount": 20, "unit": "ml" },
+        { "name": "Egg White", "amount": 1, "unit": "piece" },
+        { "name": "Soda Water", "amount": 1, "unit": "topup" }
+      ],
+      "glass": "highball",
+      "method": "shaken",
+      "difficulty": "medium",
+      "garnish": "Lemon twist",
+      "color": "#F2E9C0",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "raspberry-sour",
+      "name": "Raspberry Sour",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "The Clover Club without its gin: raspberry and lemon held together by egg-white foam, tart rather than sweet.",
+      "instructions": [
+        "Shake the raspberry syrup, lemon juice and egg white without ice for ten seconds.",
+        "Add ice and shake hard for twelve seconds.",
+        "Double-strain into a chilled coupe.",
+        "Garnish with two fresh raspberries."
+      ],
+      "ingredients": [
+        { "name": "Raspberry Syrup", "amount": 25, "unit": "ml" },
+        { "name": "Fresh Lemon Juice", "amount": 25, "unit": "ml" },
+        { "name": "Egg White", "amount": 1, "unit": "piece" }
+      ],
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "medium",
+      "garnish": "Two fresh raspberries",
+      "color": "#C0243A",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "honey-and-lemon",
+      "name": "Honey and Lemon",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Honey brings the roundness the gin gave the Bee's Knees; orange juice keeps the citrus from cutting too hard.",
+      "instructions": [
+        "Stir the honey syrup into the lemon and orange juice until it dissolves.",
+        "Shake with ice for twelve seconds.",
+        "Double-strain into a chilled coupe.",
+        "Garnish with a lemon twist."
+      ],
+      "ingredients": [
+        { "name": "Honey Syrup", "amount": 25, "unit": "ml" },
+        { "name": "Fresh Lemon Juice", "amount": 25, "unit": "ml" },
+        { "name": "Fresh Orange Juice", "amount": 20, "unit": "ml" }
+      ],
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Lemon twist",
+      "color": "#EBC96A",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "vienna-coffee",
+      "name": "Vienna Coffee",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "The Irish Coffee build without the whiskey, and it survives it: hot sweetened coffee under a collar of cold cream.",
+      "instructions": [
+        "Warm a mug with hot water, then empty it.",
+        "Stir the sugar into the hot coffee until it dissolves.",
+        "Whip the cream lightly, until it just thickens but still pours.",
+        "Float the cream over the back of a spoon so it sits on top.",
+        "Do not stir — drink the coffee through the cream."
+      ],
+      "ingredients": [
+        { "name": "Coffee", "call": "Hot Coffee", "amount": 120, "unit": "ml" },
+        { "name": "Sugar", "amount": 2, "unit": "teaspoon" },
+        { "name": "Cream", "amount": 50, "unit": "ml" }
+      ],
+      "glass": "mug",
+      "method": "layered",
+      "difficulty": "medium",
+      "garnish": "Grated nutmeg",
+      "color": "#3A241A",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "cranberry-breeze",
+      "name": "Cranberry Breeze",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Cranberry and grapefruit are both bitter in different directions; lime pulls them into one line.",
+      "instructions": [
+        "Fill a highball glass with ice.",
+        "Add the cranberry juice and grapefruit juice.",
+        "Add the lime juice and stir once.",
+        "Garnish with a grapefruit slice."
+      ],
+      "ingredients": [
+        { "name": "Cranberry Juice", "amount": 120, "unit": "ml" },
+        { "name": "Grapefruit Juice", "amount": 60, "unit": "ml" },
+        { "name": "Fresh Lime Juice", "amount": 10, "unit": "ml" }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Grapefruit slice",
+      "color": "#B83A5E",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "sunrise",
+      "name": "Sunrise",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Poured, not stirred: the grenadine sinks and the drink keeps the gradient the Tequila Sunrise is named for.",
+      "instructions": [
+        "Fill a highball glass with ice.",
+        "Pour in the orange juice.",
+        "Pour the grenadine slowly down the inside of the glass so it settles at the bottom.",
+        "Serve without stirring."
+      ],
+      "ingredients": [
+        { "name": "Fresh Orange Juice", "amount": 150, "unit": "ml" },
+        { "name": "Grenadine", "amount": 20, "unit": "ml" }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Orange slice",
+      "color": "#EE8A2A",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "pineapple-swizzle",
+      "name": "Pineapple Swizzle",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Falernum carries clove, ginger and almond, which is most of what the Chartreuse contributed. Swizzled until the glass ices over.",
+      "instructions": [
+        "Fill a highball glass with crushed ice.",
+        "Add the pineapple juice, lime juice and falernum.",
+        "Swizzle with a bar spoon until the outside of the glass frosts.",
+        "Top with more crushed ice and garnish with a mint sprig."
+      ],
+      "ingredients": [
+        { "name": "Pineapple Juice", "amount": 60, "unit": "ml" },
+        { "name": "Fresh Lime Juice", "amount": 25, "unit": "ml" },
+        { "name": "Falernum", "amount": 20, "unit": "ml" },
+        { "name": "Mint", "amount": 1, "unit": "sprig", "role": "garnish" }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "medium",
+      "garnish": "Mint sprig",
+      "color": "#E6C24A",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "agave-and-lime",
+      "name": "Agave and Lime",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Two ingredients and a salt rim. Agave syrup is rounder than sugar, which is what keeps this from tasting like limeade.",
+      "instructions": [
+        "Rub a lime wedge around the rim of a rocks glass and dip it in salt.",
+        "Shake the lime juice and agave syrup with ice for twelve seconds.",
+        "Strain over a large ice cube.",
+        "Garnish with a lime wheel."
+      ],
+      "ingredients": [
+        { "name": "Fresh Lime Juice", "amount": 35, "unit": "ml" },
+        { "name": "Agave Syrup", "amount": 30, "unit": "ml" },
+        { "name": "Salt", "amount": 1, "unit": "pinch", "role": "seasoning" },
+        { "name": "Water", "amount": 20, "unit": "ml" }
+      ],
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Salt rim and a lime wheel",
+      "color": "#ECE7CF",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "chamomile-and-honey",
+      "name": "Chamomile and Honey",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Chamomile is soft and slightly bitter, honey rounds it, lemon stops it going flat. Warmer in character than most alcohol-free drinks.",
+      "instructions": [
+        "Shake the lemon juice, honey syrup and chamomile cordial with ice for twelve seconds.",
+        "Strain over a large ice cube in a rocks glass.",
+        "Express an orange peel over the surface and drop it in."
+      ],
+      "ingredients": [
+        { "name": "Fresh Lemon Juice", "amount": 25, "unit": "ml" },
+        { "name": "Honey Syrup", "amount": 20, "unit": "ml" },
+        { "name": "Chamomile Cordial", "amount": 25, "unit": "ml" },
+        { "name": "Water", "amount": 15, "unit": "ml" }
+      ],
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Orange peel",
+      "color": "#EBC96A",
+      "tags": ["mocktail"]
+    },
+
+    {
+      "id": "shirley-temple",
+      "name": "Shirley Temple",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Named for the child actress in the 1930s and served to her ever since. Ginger ale with grenadine, and a cherry that is the whole point.",
+      "instructions": [
+        "Fill a collins glass with ice.",
+        "Pour in the ginger ale.",
+        "Add the grenadine and let it settle.",
+        "Garnish with a maraschino cherry."
+      ],
+      "ingredients": [
+        { "name": "Ginger Ale", "amount": 150, "unit": "ml" },
+        { "name": "Grenadine", "amount": 15, "unit": "ml" },
+        { "name": "Maraschino cherry", "amount": 1, "unit": "piece", "role": "garnish" }
+      ],
+      "glass": "collins",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Maraschino cherry",
+      "color": "#D9455E",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "roy-rogers",
+      "name": "Roy Rogers",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "The Shirley Temple's counterpart, built on cola instead of ginger ale. Darker and less sweet, with the same cherry.",
+      "instructions": [
+        "Fill a collins glass with ice.",
+        "Pour in the cola.",
+        "Add the grenadine and stir once.",
+        "Garnish with a maraschino cherry."
+      ],
+      "ingredients": [
+        { "name": "Cola", "amount": 150, "unit": "ml" },
+        { "name": "Grenadine", "amount": 15, "unit": "ml" },
+        { "name": "Maraschino cherry", "amount": 1, "unit": "piece", "role": "garnish" }
+      ],
+      "glass": "collins",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Maraschino cherry",
+      "color": "#3A2016",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "arnold-palmer",
+      "name": "Arnold Palmer",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Half iced tea, half lemonade, named after the golfer who ordered it that way. Tannin and acid, almost no sugar.",
+      "instructions": [
+        "Brew the tea strong and let it cool completely.",
+        "Stir the syrup into the lemon juice until it dissolves.",
+        "Fill a collins glass with ice and add the lemon mixture.",
+        "Top with the cold tea and stir once."
+      ],
+      "ingredients": [
+        { "name": "Tea", "call": "Strong Black Tea, cooled", "amount": 120, "unit": "ml" },
+        { "name": "Fresh Lemon Juice", "amount": 25, "unit": "ml" },
+        { "name": "Simple Syrup", "amount": 15, "unit": "ml" },
+        { "name": "Water", "amount": 30, "unit": "ml" }
+      ],
+      "glass": "collins",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Lemon wheel",
+      "color": "#C08A3E",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "espresso-tonic",
+      "name": "Espresso Tonic",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Bitter over bitter: quinine under coffee. Pour the espresso last so it sits in a layer before you stir it in.",
+      "instructions": [
+        "Fill a highball glass with ice and pour in the tonic water.",
+        "Pull a fresh espresso.",
+        "Pour the espresso slowly over the back of a spoon so it floats.",
+        "Serve with the spoon and let the drinker stir it."
+      ],
+      "ingredients": [
+        { "name": "Tonic Water", "amount": 120, "unit": "ml" },
+        { "name": "Coffee", "call": "Fresh Espresso", "amount": 30, "unit": "ml" }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Orange peel",
+      "color": "#8A6A48",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "apple-and-ginger",
+      "name": "Apple and Ginger",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Cloudy apple juice is sweet and flat on its own; ginger beer gives it heat and bubbles, lime gives it an edge.",
+      "instructions": [
+        "Fill a highball glass with ice.",
+        "Add the apple juice and lime juice.",
+        "Top with ginger beer and stir once.",
+        "Garnish with a thin apple slice."
+      ],
+      "ingredients": [
+        { "name": "Apple juice", "call": "Cloudy Apple Juice", "amount": 120, "unit": "ml" },
+        { "name": "Fresh Lime Juice", "amount": 10, "unit": "ml" },
+        { "name": "Ginger Beer", "amount": 60, "unit": "ml" }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Apple slice",
+      "color": "#D9A441",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "strawberry-lemonade",
+      "name": "Strawberry Lemonade",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Muddled rather than blended, so it stays a drink rather than a smoothie. The soda keeps the fruit from sitting heavy.",
+      "instructions": [
+        "Muddle the strawberries with the sugar in the base of a shaker.",
+        "Add the lemon juice and shake with ice for twelve seconds.",
+        "Double-strain into a collins glass filled with ice.",
+        "Top with soda water and garnish with a strawberry."
+      ],
+      "ingredients": [
+        { "name": "Strawberries", "amount": 4, "unit": "piece" },
+        { "name": "Fresh Lemon Juice", "amount": 30, "unit": "ml" },
+        { "name": "Sugar", "amount": 2, "unit": "teaspoon" },
+        { "name": "Soda Water", "amount": 1, "unit": "topup" }
+      ],
+      "glass": "collins",
+      "method": "muddled",
+      "difficulty": "easy",
+      "garnish": "Strawberry on the rim",
+      "color": "#D9455E",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "passion-fruit-cooler",
+      "name": "Passion Fruit Cooler",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Passion fruit is sharp enough to carry a drink alone. Lime keeps it from turning syrupy and the soda stretches it.",
+      "instructions": [
+        "Fill a highball glass with ice.",
+        "Add the passion fruit juice, lime juice and syrup.",
+        "Stir until the glass is cold.",
+        "Top with soda water."
+      ],
+      "ingredients": [
+        { "name": "Passion fruit juice", "amount": 60, "unit": "ml" },
+        { "name": "Fresh Lime Juice", "amount": 15, "unit": "ml" },
+        { "name": "Simple Syrup", "amount": 10, "unit": "ml" },
+        { "name": "Soda Water", "amount": 1, "unit": "topup" }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Half a passion fruit",
+      "color": "#E8A62A",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "cardamom-coffee",
+      "name": "Cardamom Coffee",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Cardamom ground into the coffee before brewing, the way it is served across the Levant. Aromatic rather than sweet.",
+      "instructions": [
+        "Crush the cardamom pods and add them to the ground coffee before brewing.",
+        "Brew the coffee and stir in the sugar while it is still hot.",
+        "Pour into a warmed mug and let it stand for a minute so the grounds settle."
+      ],
+      "ingredients": [
+        { "name": "Coffee", "call": "Hot Coffee", "amount": 120, "unit": "ml" },
+        { "name": "Cardamom", "amount": 3, "unit": "piece", "role": "seasoning" },
+        { "name": "Sugar", "amount": 1, "unit": "teaspoon" }
+      ],
+      "glass": "mug",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "A cardamom pod",
+      "color": "#2E1C14",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "cinnamon-orange",
+      "name": "Cinnamon Orange",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Warmed, not boiled — orange juice turns bitter above a simmer. Cinnamon and honey do the rest.",
+      "instructions": [
+        "Warm the orange juice with the cinnamon in a pan, without letting it boil.",
+        "Stir in the honey syrup until it dissolves.",
+        "Pour into a warmed mug.",
+        "Garnish with a cinnamon stick and an orange peel."
+      ],
+      "ingredients": [
+        { "name": "Fresh Orange Juice", "amount": 150, "unit": "ml" },
+        { "name": "Cinnamon", "amount": 1, "unit": "piece", "role": "seasoning" },
+        { "name": "Honey Syrup", "amount": 20, "unit": "ml" }
+      ],
+      "glass": "mug",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Cinnamon stick and an orange peel",
+      "color": "#E8862B",
+      "tags": ["mocktail"]
+    },
+    {
+      "id": "basil-lemonade",
+      "name": "Basil Lemonade",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Basil smashed rather than muddled soft, so you get the oil and not the bruised leaf. Herbal and dry for a lemonade.",
+      "instructions": [
+        "Smash the basil leaves once in the shaker — hard enough to release the oil, not to shred them.",
+        "Add the lemon juice and syrup, then shake with ice for twelve seconds.",
+        "Double-strain into a collins glass filled with ice.",
+        "Top with soda water and garnish with a basil leaf."
+      ],
+      "ingredients": [
+        { "name": "Basil", "amount": 8, "unit": "piece" },
+        { "name": "Fresh Lemon Juice", "amount": 30, "unit": "ml" },
+        { "name": "Simple Syrup", "amount": 20, "unit": "ml" },
+        { "name": "Soda Water", "amount": 1, "unit": "topup" }
+      ],
+      "glass": "collins",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Basil leaf",
+      "color": "#DDE9C8",
+      "tags": ["mocktail"]
+    }
+  ]
+}

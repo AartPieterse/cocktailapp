@@ -149,7 +149,7 @@ import { environment } from '../../../environments/environment';
             @if (c.variations?.length) {
               <div class="sec-label">{{ lang.t().detail.variations }}</div>
               <div class="variations">
-                @for (v of c.variations; track v.name) {
+                @for (v of c.variations; track v.key) {
                   <div class="variation">
                     <div class="v-head">
                       <span class="v-name">{{ v.name }}</span>

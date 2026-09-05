@@ -2,6 +2,24 @@
 
 Research-only subsystem design. No changes made to the system.
 
+> **Partly superseded — read [`private-cloud.md`](private-cloud.md) first.** This document was written
+> before the library was measured and before EU jurisdiction became a stated goal. Three things in it
+> are out of date; the verified version numbers, the restic mechanics and the engine comparison all
+> still stand.
+>
+> 1. **The capacity arithmetic assumes a library up to ~290 GB.** The measured reality is **~30 GB**,
+>    one user, Android only. Nothing here is capacity-constrained.
+> 2. **"External disk is MANDATORY" was concluded from that arithmetic.** An external disk is still
+>    bought — but as the second *medium* in 3-2-1, not for space.
+> 3. **Backblaze B2 EU Central as offsite tier 2 is dropped.** Partly jurisdiction (a Delaware company,
+>    so the CLOUD Act follows it into Amsterdam), but mainly technical: restic works poorly with S3
+>    Object Lock, while Hetzner Storage Box's read-only ZFS snapshots under `/home/.zfs/snapshot` give
+>    immutability that stolen SFTP credentials cannot destroy. See
+>    [`private-cloud-sovereignty.md`](private-cloud-sovereignty.md).
+>
+> Also note this plan still treats Nextcloud as a given. It is not — it is a deliberate gate in
+> `private-cloud.md` phase 9, taken only after two weeks of Immich running alone.
+
 ## Verified facts (2026)
 
 | Thing | Version / price | Source seen |

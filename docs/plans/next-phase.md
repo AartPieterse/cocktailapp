@@ -24,6 +24,23 @@ that gives something back (it hides the home IP and absorbs abuse) and it stays 
 at the home IP and Cloudflare is out of the path. The line has a public routable IP and no CGNAT, so
 running without any tunnel is technically possible; it was declined to keep the home address private.
 
+> **Amended 2026-09-05 — the tunnel rationale above is now contested, on a ground it did not consider.**
+> [`private-cloud-sovereignty.md`](private-cloud-sovereignty.md) found that a Cloudflare Tunnel
+> **terminates TLS at the edge** — inherent to how WAF, Access and caching work. A Barkast login
+> therefore sends the e-mail address *and the password itself* (POST body, not the hash) through a US
+> company. That is the only place in either plan where **other people's** personal data is processed by
+> a third party in plaintext, which makes it a GDPR responsibility rather than a preference. Two further
+> points: the tunnel is *less* reversible than assumed — it cannot coexist with moving DNS off
+> Cloudflare, because a tunnel hostname needs a CNAME to `<UUID>.cfargotunnel.com` that only proxies
+> inside the same Cloudflare account — and the "hides the home IP" benefit disappears anyway the moment
+> a WireGuard port is forwarded, which the private-cloud plan now does.
+>
+> This does not settle it; it adds a cost that was not on the scale. The two exits are in
+> [`private-cloud.md`](private-cloud.md) phase 4: publish `api.<domain>` straight from Caddy (free, home
+> IP becomes public), or put an EU VPS in front as a pure TCP/SNI forwarder that never terminates TLS
+> (~€60/yr, strictly better than the tunnel on both privacy and jurisdiction). Decide once, because
+> `admin.guard.ts` and the header hygiene below assume Cloudflare is in the path.
+
 What that changes here:
 
 - **Decision 1 ("Netlify's fate") is settled** — it is retired, not kept as a shop window. The plan's
@@ -129,7 +146,7 @@ Nothing watches this box; `MetricsService` is in-process and resets on restart, 
 Sets the size of all remaining NL work, so it comes before translating. All 54 have empty `description` and no `difficulty`; 9 batch recipes claim `servings: 1` for up to 3785 ml, which the detail page's `glasses(n)` scaler happily multiplies; 7 near-duplicate pairs by Jaccard; and 4 ingredients (`fruit`, `fruit-juice`, `berries`, `carbonated-soft-drink`) are unstockable abstractions making their cocktails permanently unmakeable. Drop/merge duplicates, resolve the abstractions to concrete bases or mark them optional, set `servings` truthfully, backfill `difficulty` (rule 11 forces it). Record every deleted id in `docs/data-model.md` — favourites are stored by id, and tombstones are already listed there as an open item.
 
 ### 11. Stop `build:translations` from eating hand-written Dutch — before writing any more of it
-Verified by running it: a clean regeneration today **deletes** caipirinha's hand-authored Dutch variation description, because the generator has no `variations` support and CI never runs the script. Add `...(entry.variations ? { variations: entry.variations } : {})` to both merge loops in `scripts/build-translations-nl.mjs`, move the Dutch text into `scripts/translations-nl-cocktails.json`, add a `--check` flag, and add a CI step after "Validate the frozen seed": `npm run build:catalog && npm run build:translations && git diff --exit-code -- scripts/translations-nl.json`. The pipeline is genuinely circular, so `build:catalog` must run first — exactly as `README.md:215` documents.
+Verified by running it: a clean regeneration used to **delete** caipirinha's hand-authored Dutch variation description, because the generator had no `variations` support and CI never ran the script. **Done** — but not the way this step prescribed, and the prescription was wrong: moving the text into `scripts/translations-nl-cocktails.json` would have *deleted the very string it was meant to save*, because `caipirinha` is in the curated `scripts/seed-data.mjs` set and the supplement loop skipped the whole entry for any id the curated loop already produced. What shipped instead: variation overlays are keyed by `CocktailVariation.key` (never by array index), both merge loops carry `variations`, the supplement loop merges per FIELD so it can still contribute variations to a curated cocktail, the Dutch text lives in `seed-data.mjs`, an unknown variation key now FAILS the run instead of being silently dropped, and `--check` runs in CI as its own step. The pipeline is genuinely circular, so `build:catalog` must run first — see `scripts/build-translations-nl.mjs:27-32` (the earlier `README.md:215` citation was wrong; that line is the MONGODB_URI password warning).
 
 ### 12. Translate the 52 missing ingredient names
 Confirmed: overlay covers 104/156 and 102/156 against a matching version hash. Ingredient names are the one string that appears in the wizard, Mijn bar, every card's `missName` chip and the `missing[]` array itself, so a Dutch user currently reads "Whipping cream" next to "Suikersiroop". 52 dictionary entries in `NL_INGREDIENTS`; the exact list comes from the script's own `⚠ no NL name for base id(s)` warning. Then add a coverage assertion to `validate-seed.mjs` that fails below 100% NL coverage — that omission is precisely how this gap opened when the seed grew.

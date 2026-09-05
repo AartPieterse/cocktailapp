@@ -11,7 +11,15 @@
  *   5. a cocktail line whose `base`/`name` or any `alternatives` doesn't resolve (via buildCatalog);
  *   6. a unit/glass/method/difficulty outside its enum;
  *   7. a `parentId`/`substitutes` id that points at no base;
- *   8. build-twice non-determinism (the version hash must be stable).
+ *   8. build-twice non-determinism (the version hash must be stable);
+ *   9. a cocktail with no required line at all (makeable from an empty bar);
+ *  10. a decorative line measured by volume (you do not garnish with 360 ml);
+ *  11. a missing or invalid `baseSpirit`;
+ *  12. a decorative line carrying a whole-unit quantity (warns);
+ *  13. a variation swap that doesn't describe this recipe (from/to sanity);
+ *  14. a base no recipe can reach — orphaned by an edit (warns);
+ *  15. a variation without a stable, clean, cocktail-unique `key`;
+ *  16. an id that left the shipped catalog without a tombstone in the seed's `retired[]`.
  *
  * Usage: node scripts/validate-seed.mjs   (or: npm run validate:seed)
  */
@@ -162,6 +170,166 @@ for (const c of cocktails) {
   // difficulty is still missing on the imported mocktails; warn until that backfill lands, then
   // promote this to fail() — see docs/plans/next-phase.md step 10.
   if (!c.difficulty) warn(`cocktail "${c.name}" has no difficulty`);
+}
+
+// ── 13: variation swap sanity ────────────────────────────────────────────────
+// `buildCatalog` only checks that a swap's base EXISTS in the catalog, never that it has anything to
+// do with this recipe. So `{"from":"Gin","to":"Vodka"}` on a Bellini validates green today and the
+// detail page renders a literal "Gin → Vodka" arrow — the app stating a falsehood about a recipe.
+// A swap is informational (it never reaches `computeMakeable`), which is exactly why nothing else
+// catches it.
+for (const c of cocktails) {
+  const lineNames = new Set(
+    (c.ingredients ?? []).map((l) => l.name?.trim().toLowerCase()).filter(Boolean),
+  );
+  for (const v of c.variations ?? []) {
+    for (const swap of v.swaps ?? []) {
+      const from = swap.from?.trim().toLowerCase();
+      const to = swap.to?.trim().toLowerCase();
+      if (from && !lineNames.has(from)) {
+        fail(
+          `cocktail "${c.name}" variation "${v.name}" swaps from "${swap.from}", which is not an ` +
+            `ingredient line of this recipe`,
+        );
+      }
+      if (from && to && from === to) {
+        fail(`cocktail "${c.name}" variation "${v.name}" swaps "${swap.from}" to itself`);
+      }
+      if (to && lineNames.has(to)) {
+        fail(
+          `cocktail "${c.name}" variation "${v.name}" swaps to "${swap.to}", which this recipe ` +
+            `already calls for`,
+        );
+      }
+    }
+  }
+}
+
+// ── 14: no orphan bases ──────────────────────────────────────────────────────
+// Every base is a tile in the first-run wizard and in Mijn bar, so one that no recipe can reach is
+// dead weight the user still has to scroll past. Reachability deliberately includes `parentId` and
+// `substitutes`: `expandCabinet` matches through those, so a base reachable only that way DOES
+// change a makeable answer (docs/plans/next-phase.md's substitutes-family work depends on it).
+// A variation swap deliberately does NOT count — that is the case this rule exists to discourage
+// ("just add Select as a base so the swap is structural"), since swaps never affect makeability.
+//
+// warn(), not fail(): an orphan is usually the residue of deleting a cocktail, and the compliant
+// fixes are re-reference it or delete the base — and deleting a base silently drops drinks out of
+// "wat kan ik maken" for anyone who stocked it. Promote to fail() for bases that are NEW in this
+// build once ids.lock gives us a baseline to tell new from long-shipped.
+{
+  const idByName = new Map(
+    ingredients.filter((i) => i.name).map((i) => [i.name.trim().toLowerCase(), i.id]),
+  );
+  const reachable = new Set();
+  const reach = (name) => {
+    const id = idByName.get(name?.trim().toLowerCase());
+    if (id) reachable.add(id);
+  };
+  for (const c of cocktails) {
+    for (const line of c.ingredients ?? []) {
+      reach(line.name);
+      for (const alt of line.alternatives ?? []) reach(alt);
+    }
+  }
+  for (const ing of ingredients) {
+    if (ing.parentId) reachable.add(ing.parentId);
+    for (const s of ing.substitutes ?? []) reachable.add(s);
+  }
+  const orphans = ingredients.filter((i) => i.id && !reachable.has(i.id)).map((i) => i.id);
+  if (orphans.length) {
+    warn(
+      `${orphans.length} base(s) are referenced by no recipe line, alternative, parentId or ` +
+        `substitute — stocking them changes no makeable answer: ${orphans.join(', ')}`,
+    );
+  }
+}
+
+// ── 15: variation key hygiene ────────────────────────────────────────────────
+// A variation has no id, so `key` IS its identity — and the Dutch overlay is keyed on it. Require it
+// to be authored rather than letting `buildCatalog` derive it from the name: a derived key silently
+// changes when the name is edited, which is precisely how translated text goes missing. Keys are
+// immutable once shipped; rename the `name` freely, never the `key`.
+for (const c of cocktails) {
+  const keys = new Set();
+  for (const v of c.variations ?? []) {
+    if (!v.key) {
+      fail(
+        `cocktail "${c.name}" variation "${v.name}" has no authored key — add a stable slug ` +
+          `(e.g. "${slugify(v.name ?? '')}"); the Dutch overlay is keyed on it`,
+      );
+      continue;
+    }
+    if (v.key !== slugify(v.key)) {
+      fail(`cocktail "${c.name}" variation key "${v.key}" is not a clean slug`);
+    }
+    if (keys.has(v.key)) {
+      fail(`cocktail "${c.name}" has a duplicate variation key "${v.key}"`);
+    }
+    keys.add(v.key);
+  }
+}
+
+// ── 16: id tombstones — nothing leaves the catalog silently ──────────────────
+// A cabinet is a list of ingredient ids in localStorage and favourites are cocktail ids
+// (frontend/src/app/core/{cabinet,favorites}.service.ts), with no server copy and no migration hook:
+// a service-worker update leaves them intact, so a removed id lingers forever and the drink it
+// pointed at just disappears. `catalog-ids.lock.json` (written by build-catalog.mjs, committed, and
+// diffed by CI) is the previous shipped id set — the baseline that makes an intentional removal
+// distinguishable from an accident. Record the removal in the seed's top-level `retired[]` as
+// { id, kind: 'ingredient' | 'cocktail', since: 'YYYY-MM-DD', why }.
+{
+  const retired = seed.retired ?? [];
+  const retiredIds = new Map();
+  for (const t of retired) {
+    if (!t?.id) fail(`retired[] entry with no id: ${JSON.stringify(t)}`);
+    else {
+      if (retiredIds.has(t.id)) fail(`retired[] lists "${t.id}" twice`);
+      retiredIds.set(t.id, t);
+      if (!t.since) fail(`retired id "${t.id}" has no "since" date`);
+      if (t.kind !== 'ingredient' && t.kind !== 'cocktail') {
+        fail(`retired id "${t.id}" needs kind "ingredient" or "cocktail" (got ${JSON.stringify(t.kind)})`);
+      }
+    }
+  }
+
+  let lock;
+  try {
+    lock = JSON.parse(readFileSync(join(here, '..', 'catalog-ids.lock.json'), 'utf8'));
+  } catch {
+    warn('catalog-ids.lock.json is missing — run build:catalog and commit it to arm the tombstone check');
+  }
+
+  if (lock) {
+    // Live ids as THIS seed would resolve them (authored id, else slugify(name)) — cheap and exact
+    // enough for a set comparison; buildCatalog below is the authority on everything else.
+    const liveIngredients = new Set(ingredients.map((i) => i.id ?? slugify(i.name ?? '')));
+    const liveCocktails = new Set(cocktails.map((c) => c.id ?? slugify(c.name ?? '')));
+    const surfaces = {
+      ingredient: 'frontend/src/app/core/cabinet.service.ts (barkast.cabinet)',
+      cocktail: 'frontend/src/app/core/favorites.service.ts (barkast.favorites)',
+    };
+    const gone = [
+      ...(lock.ingredients ?? []).filter((id) => !liveIngredients.has(id)).map((id) => ['ingredient', id]),
+      ...(lock.cocktails ?? []).filter((id) => !liveCocktails.has(id)).map((id) => ['cocktail', id]),
+    ];
+    for (const [kind, id] of gone) {
+      if (!retiredIds.has(id)) {
+        fail(
+          `${kind} id "${id}" shipped in the last catalog and is gone from the seed, but has no ` +
+            `retired[] tombstone — it is stored by id in ${surfaces[kind]} with no migration. ` +
+            `Add { "id": "${id}", "kind": "${kind}", "since": "…", "why": "…" } to retired[], or ` +
+            `restore the entry (prefer merging over deleting).`,
+        );
+      }
+    }
+    // A tombstone for something still present is a contradiction — usually a restored entry whose
+    // tombstone was never cleaned up, which would mask a later real removal.
+    for (const [id, t] of retiredIds) {
+      const live = t.kind === 'ingredient' ? liveIngredients.has(id) : liveCocktails.has(id);
+      if (live) fail(`retired ${t.kind} id "${id}" is still live in the seed — drop the tombstone`);
+    }
+  }
 }
 
 // ── 5: every line + alternative resolves (buildCatalog throws on the first unknown ref) ───

@@ -96,12 +96,45 @@ describe('buildCatalog', () => {
     const caipirinha = cocktails.find((c) => c.id === 'caipirinha')!;
     expect(caipirinha.variations).toEqual([
       {
+        key: 'caipiroska',
         name: 'Caipiroska',
         description: 'Met wodka.',
         swaps: [{ fromId: 'cachaca', toId: 'vodka' }],
         makesCocktailId: 'caipiroska',
       },
     ]);
+  });
+
+  it('derives a variation key from its name, and keeps an authored key verbatim', () => {
+    const { cocktails } = buildCatalog(
+      [{ id: 'gin', name: 'Gin' }],
+      [
+        {
+          name: 'X',
+          ingredients: [{ name: 'Gin', amount: 1, unit: 'ml' }],
+          variations: [
+            { name: 'Kir Royal' },
+            { key: 'legacy-name', name: 'Renamed Since' },
+          ],
+        },
+      ],
+    );
+    expect(cocktails[0].variations!.map((v) => v.key)).toEqual(['kir-royal', 'legacy-name']);
+  });
+
+  it('throws on two variations sharing a key within one cocktail', () => {
+    expect(() =>
+      buildCatalog(
+        [{ id: 'gin', name: 'Gin' }],
+        [
+          {
+            name: 'X',
+            ingredients: [{ name: 'Gin', amount: 1, unit: 'ml' }],
+            variations: [{ name: 'Kir Royal' }, { key: 'kir-royal', name: 'Something Else' }],
+          },
+        ],
+      ),
+    ).toThrow(/two variations with the key "kir-royal"/i);
   });
 
   it('throws on a variation swap that references an unknown ingredient', () => {
@@ -155,7 +188,7 @@ describe('applyCatalogTranslations', () => {
     expect(applyCatalogTranslations(cat, null)).toBe(cat);
   });
 
-  it('overlays variation name/description by index, leaving swaps/ids intact', () => {
+  it('overlays variation name/description by key, leaving swaps/ids intact', () => {
     const content = buildCatalog(
       [
         { id: 'cachaca', name: 'Cachaça', category: 'spirit' },
@@ -174,10 +207,131 @@ describe('applyCatalogTranslations', () => {
     const out = applyCatalogTranslations(cat, {
       version: 'v1',
       ingredients: {},
-      cocktails: { caipirinha: { variations: [{ name: 'Caipiroska', description: 'Met wodka.' }] } },
+      cocktails: {
+        caipirinha: { variations: { caipiroska: { name: 'Caipiroska', description: 'Met wodka.' } } },
+      },
     });
     const v = out.cocktails.find((c) => c.id === 'caipirinha')!.variations![0];
     expect(v.description).toBe('Met wodka.');
     expect(v.swaps).toEqual([{ fromId: 'cachaca', toId: 'vodka' }]);
+  });
+
+  // Regression: the overlay used to be index-aligned, so inserting a variation above a translated
+  // one silently moved its Dutch text onto the wrong drink. Keys make that impossible.
+  it('keeps each variation its own Dutch text when the array is reordered', () => {
+    const build = (names: string[]) =>
+      buildCatalog(
+        [{ id: 'gin', name: 'Gin' }],
+        [
+          {
+            id: 'spritz',
+            name: 'Spritz',
+            ingredients: [{ name: 'Gin', amount: 1, unit: 'ml' }],
+            variations: names.map((name) => ({ name })),
+          },
+        ],
+      );
+    const overlay: CatalogTranslations = {
+      version: 'v1',
+      ingredients: {},
+      cocktails: {
+        spritz: {
+          variations: {
+            'campari-spritz': { description: 'Met Campari.' },
+            'cynar-spritz': { description: 'Met Cynar.' },
+          },
+        },
+      },
+    };
+    const translate = (names: string[]) => {
+      const content = build(names);
+      const cat: Catalog = { version: 'v1', schemaVersion: 1, generatedFrom: 't', locale: 'en', ...content };
+      const out = applyCatalogTranslations(cat, overlay);
+      return new Map(
+        out.cocktails[0].variations!.map((v) => [v.key, v.description]),
+      );
+    };
+    const asAuthored = translate(['Campari Spritz', 'Cynar Spritz']);
+    const reordered = translate(['Select Spritz', 'Cynar Spritz', 'Campari Spritz']);
+    expect(asAuthored.get('campari-spritz')).toBe('Met Campari.');
+    expect(reordered.get('campari-spritz')).toBe('Met Campari.');
+    expect(reordered.get('cynar-spritz')).toBe('Met Cynar.');
+    expect(reordered.get('select-spritz')).toBeUndefined();
+  });
+});
+
+describe('buildCatalog — alcohol-free counterparts', () => {
+  const ingredients = [
+    { id: 'white-rum', name: 'White Rum', category: 'spirit' as const, abv: 40 },
+    { id: 'lime-juice', name: 'Fresh Lime Juice', category: 'juice' as const },
+  ];
+
+  it('resolves the counterpart by name and stamps the inverse on it', () => {
+    const { cocktails } = buildCatalog(ingredients, [
+      {
+        id: 'mojito',
+        name: 'Mojito',
+        alcoholFreeCounterpart: 'Virgin Mojito',
+        ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+      },
+      {
+        id: 'virgin-mojito',
+        name: 'Virgin Mojito',
+        ingredients: [{ name: 'Fresh Lime Juice', amount: 30, unit: 'ml' }],
+      },
+    ]);
+    const mojito = cocktails.find((c) => c.id === 'mojito');
+    const virgin = cocktails.find((c) => c.id === 'virgin-mojito');
+    expect(mojito?.alcoholFreeCounterpartId).toBe('virgin-mojito');
+    // Authored once on the parent; the inverse is derived so the pair cannot drift.
+    expect(virgin?.alcoholFreeOfId).toBe('mojito');
+    expect(virgin?.alcoholFreeCounterpartId).toBeUndefined();
+  });
+
+  it('carries abv and color through to the built catalog', () => {
+    const { ingredients: out, cocktails } = buildCatalog(ingredients, [
+      {
+        id: 'daiquiri',
+        name: 'Daiquiri',
+        color: '#ECE7CF',
+        ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+      },
+    ]);
+    expect(out.find((i) => i.id === 'white-rum')?.abv).toBe(40);
+    expect(out.find((i) => i.id === 'lime-juice')?.abv).toBeUndefined();
+    expect(cocktails[0].color).toBe('#ECE7CF');
+  });
+
+  it('fails loud on an unknown counterpart name', () => {
+    expect(() =>
+      buildCatalog(ingredients, [
+        {
+          id: 'mojito',
+          name: 'Mojito',
+          alcoholFreeCounterpart: 'Nojito',
+          ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+        },
+      ]),
+    ).toThrow(/unknown alcohol-free counterpart "Nojito"/);
+  });
+
+  it('refuses two drinks claiming the same counterpart', () => {
+    expect(() =>
+      buildCatalog(ingredients, [
+        {
+          id: 'mojito',
+          name: 'Mojito',
+          alcoholFreeCounterpart: 'Limeade',
+          ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+        },
+        {
+          id: 'daiquiri',
+          name: 'Daiquiri',
+          alcoholFreeCounterpart: 'Limeade',
+          ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+        },
+        { id: 'limeade', name: 'Limeade', ingredients: [{ name: 'Fresh Lime Juice', amount: 30, unit: 'ml' }] },
+      ]),
+    ).toThrow(/claimed as the alcohol-free counterpart of both/);
   });
 });

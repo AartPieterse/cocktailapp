@@ -417,6 +417,10 @@ export const cocktails = [
       'Schenk de cachaça erover.',
       'Roer goed door.',
     ],
+    // Keyed by CocktailVariation.key, never by position — see build-translations-nl.mjs.
+    variations: {
+      caipiroska: { description: 'Gebruik wodka in plaats van cachaça.' },
+    },
   },
   {
     name: 'Tom Collins',

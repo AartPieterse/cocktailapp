@@ -10,9 +10,14 @@
   <meta id="theme-color-meta" name="theme-color" content="#f4ebd8">
 
   <!-- Start the catalog fetch during HTML parse so it overlaps JS download/parse — it's the data the
-       first screen needs. Same-origin (no crossorigin); HttpClient reuses it via withFetch(). -->
-  <link rel="preload" href="catalog.json" as="fetch">
-  <link rel="preload" href="catalog.nl.json" as="fetch">
+       first screen needs, and HttpClient (withFetch(), see app.config.ts) then reuses the preloaded
+       response instead of fetching it again.
+       `crossorigin` is required even though this is same-origin: for as="fetch" the attribute is what
+       puts the preload in cors mode, and fetch() defaults to cors + credentials:"same-origin". Drop it
+       and the modes disagree, so the browser discards the preload and the catalog is fetched twice —
+       which is exactly what it did until 5 Sep 2026. -->
+  <link rel="preload" href="catalog.json" as="fetch" crossorigin>
+  <link rel="preload" href="catalog.nl.json" as="fetch" crossorigin>
 
   <!-- Progressive Web App: installable + offline-capable -->
   <link rel="manifest" href="manifest.webmanifest">
