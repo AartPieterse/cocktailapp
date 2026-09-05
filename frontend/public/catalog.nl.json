@@ -1,5 +1,5 @@
 {
-  "version": "f6bdfe22f5a3",
+  "version": "e8fb80fcbfac",
   "ingredients": {
     "gin": {
       "name": "Gin"
@@ -520,7 +520,12 @@
         "Schenk de cachaça erover.",
         "Roer goed door."
       ],
-      "garnish": "Partje limoen"
+      "garnish": "Partje limoen",
+      "variations": {
+        "caipiroska": {
+          "description": "Gebruik wodka in plaats van cachaça."
+        }
+      }
     },
     "mimosa": {
       "name": "Mimosa",

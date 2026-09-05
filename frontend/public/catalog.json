@@ -1,6 +1,6 @@
 {
-  "version": "f6bdfe22f5a3",
-  "schemaVersion": 1,
+  "version": "e8fb80fcbfac",
+  "schemaVersion": 2,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
   "counts": {
@@ -12,7 +12,8 @@
       "id": "absinthe",
       "name": "Absinthe",
       "category": "spirit",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 68
     },
     {
       "id": "agave-syrup",
@@ -27,13 +28,15 @@
       "isStaple": false,
       "aliases": [
         "Pimento Dram"
-      ]
+      ],
+      "abv": 22
     },
     {
       "id": "amaretto",
       "name": "Amaretto",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 28
     },
     {
       "id": "amaro",
@@ -42,7 +45,8 @@
       "isStaple": false,
       "aliases": [
         "Amaro Nonino"
-      ]
+      ],
+      "abv": 30
     },
     {
       "id": "angostura-bitters",
@@ -51,13 +55,15 @@
       "isStaple": false,
       "aliases": [
         "Aromatic Bitters"
-      ]
+      ],
+      "abv": 44.7
     },
     {
       "id": "aperol",
       "name": "Aperol",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 11
     },
     {
       "id": "apple-juice",
@@ -69,7 +75,8 @@
       "id": "apricot-brandy",
       "name": "Apricot Brandy",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 24
     },
     {
       "id": "basil",
@@ -87,7 +94,8 @@
       "isStaple": false,
       "aliases": [
         "DOM Bénédictine"
-      ]
+      ],
+      "abv": 40
     },
     {
       "id": "black-pepper",
@@ -103,25 +111,29 @@
       "aliases": [
         "Bourbon or Rye Whiskey",
         "Bourbon Whiskey"
-      ]
+      ],
+      "abv": 40
     },
     {
       "id": "brandy",
       "name": "Brandy",
       "category": "spirit",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 40
     },
     {
       "id": "cachaca",
       "name": "Cachaça",
       "category": "spirit",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 40
     },
     {
       "id": "calvados",
       "name": "Calvados",
       "category": "spirit",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 40
     },
     {
       "id": "campari",
@@ -130,7 +142,8 @@
       "isStaple": false,
       "aliases": [
         "Bitter Campari"
-      ]
+      ],
+      "abv": 25
     },
     {
       "id": "cardamom",
@@ -154,7 +167,8 @@
       "id": "cherry-liqueur",
       "name": "Cherry Liqueur",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 24
     },
     {
       "id": "chili-pepper",
@@ -200,7 +214,8 @@
       "isStaple": false,
       "aliases": [
         "Kahlúa"
-      ]
+      ],
+      "abv": 20
     },
     {
       "id": "cognac",
@@ -210,7 +225,8 @@
       "parentId": "brandy",
       "aliases": [
         "Cognac or Brandy"
-      ]
+      ],
+      "abv": 40
     },
     {
       "id": "cola",
@@ -247,13 +263,15 @@
       "id": "creme-de-cacao",
       "name": "Crème de Cacao",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 24
     },
     {
       "id": "creme-de-cassis",
       "name": "Crème de Cassis",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 20
     },
     {
       "id": "creme-de-menthe",
@@ -262,25 +280,29 @@
       "isStaple": false,
       "aliases": [
         "White Crème de Menthe"
-      ]
+      ],
+      "abv": 24
     },
     {
       "id": "creme-de-mure",
       "name": "Crème de Mûre",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 20
     },
     {
       "id": "creme-de-violette",
       "name": "Crème de Violette",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 20
     },
     {
       "id": "cynar",
       "name": "Cynar",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 16.5
     },
     {
       "id": "dark-rum",
@@ -301,7 +323,8 @@
         "Jamaican Dark Rum",
         "Jamaican Rum",
         "Martinique Molasses Rhum"
-      ]
+      ],
+      "abv": 40
     },
     {
       "id": "donns-mix",
@@ -313,19 +336,22 @@
       "id": "drambuie",
       "name": "Drambuie",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 40
     },
     {
       "id": "dry-vermouth",
       "name": "Dry Vermouth",
       "category": "wine",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 18
     },
     {
       "id": "white-wine",
       "name": "Dry White Wine",
       "category": "wine",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 12
     },
     {
       "id": "egg-white",
@@ -367,13 +393,15 @@
       "id": "fernet-branca",
       "name": "Fernet Branca",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 39
     },
     {
       "id": "frangelico",
       "name": "Frangelico",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 20
     },
     {
       "id": "lemon-juice",
@@ -412,7 +440,8 @@
         "Dry Gin",
         "London Dry Gin",
         "Old Tom Gin"
-      ]
+      ],
+      "abv": 40
     },
     {
       "id": "ginger",
@@ -440,7 +469,8 @@
       "id": "grand-marnier",
       "name": "Grand Marnier",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 40
     },
     {
       "id": "grapefruit-juice",
@@ -465,13 +495,15 @@
       "aliases": [
         "White Grappa",
         "White Smooth Grappa"
-      ]
+      ],
+      "abv": 40
     },
     {
       "id": "green-chartreuse",
       "name": "Green Chartreuse",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 55
     },
     {
       "id": "grenadine",
@@ -503,7 +535,8 @@
       "id": "irish-whiskey",
       "name": "Irish Whiskey",
       "category": "spirit",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 40
     },
     {
       "id": "lemon",
@@ -515,7 +548,8 @@
       "id": "lillet-blanc",
       "name": "Lillet Blanc",
       "category": "wine",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 17
     },
     {
       "id": "maraschino-cherry",
@@ -531,7 +565,8 @@
       "aliases": [
         "Luxardo Maraschino",
         "Maraschino Luxardo"
-      ]
+      ],
+      "abv": 32
     },
     {
       "id": "mezcal",
@@ -541,7 +576,8 @@
       "aliases": [
         "Espadin Mezcal",
         "Espadín Mezcal"
-      ]
+      ],
+      "abv": 45
     },
     {
       "id": "milk",
@@ -576,7 +612,8 @@
       "id": "orange-bitters",
       "name": "Orange Bitters",
       "category": "bitters",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 28
     },
     {
       "id": "orange-flower-water",
@@ -604,7 +641,8 @@
       "id": "passion-fruit-liqueur",
       "name": "Passion Fruit Liqueur",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 20
     },
     {
       "id": "passion-fruit-puree",
@@ -635,7 +673,8 @@
       "isStaple": false,
       "aliases": [
         "Peach Brandy"
-      ]
+      ],
+      "abv": 20
     },
     {
       "id": "pepper",
@@ -647,13 +686,15 @@
       "id": "pernod",
       "name": "Pernod",
       "category": "spirit",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 40
     },
     {
       "id": "peychauds-bitters",
       "name": "Peychaud's Bitters",
       "category": "bitters",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 35
     },
     {
       "id": "pineapple",
@@ -677,7 +718,8 @@
       "id": "pisco",
       "name": "Pisco",
       "category": "spirit",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 42
     },
     {
       "id": "raspberry-liqueur",
@@ -686,7 +728,8 @@
       "isStaple": false,
       "aliases": [
         "Raspberry Liqueur (Chambord)"
-      ]
+      ],
+      "abv": 20
     },
     {
       "id": "raspberry-syrup",
@@ -698,7 +741,8 @@
       "id": "red-wine",
       "name": "Red Wine",
       "category": "wine",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 13
     },
     {
       "id": "rye-whiskey",
@@ -707,7 +751,8 @@
       "isStaple": false,
       "aliases": [
         "Rye Whiskey or Bourbon"
-      ]
+      ],
+      "abv": 45
     },
     {
       "id": "salt",
@@ -724,7 +769,8 @@
         "Blended Scotch Whisky",
         "Islay Single Malt (Lagavulin 16)",
         "Lagavulin 16 y Whisky"
-      ]
+      ],
+      "abv": 40
     },
     {
       "id": "sherry",
@@ -734,7 +780,8 @@
       "aliases": [
         "Amontillado Sherry",
         "Palo Cortado Sherry"
-      ]
+      ],
+      "abv": 17
     },
     {
       "id": "simple-syrup",
@@ -761,7 +808,8 @@
         "Champagne",
         "Chilled Champagne",
         "Prosecco"
-      ]
+      ],
+      "abv": 12
     },
     {
       "id": "strawberries",
@@ -795,7 +843,8 @@
       "isStaple": false,
       "aliases": [
         "Sweet Red Vermouth"
-      ]
+      ],
+      "abv": 16
     },
     {
       "id": "tabasco",
@@ -810,7 +859,8 @@
       "isStaple": false,
       "aliases": [
         "Red Tawny Port Wine"
-      ]
+      ],
+      "abv": 20
     },
     {
       "id": "tea",
@@ -828,7 +878,8 @@
         "Reposado Tequila (100% Agave)",
         "Tequila 100% Agave",
         "Tequila Agave 100% Reposado"
-      ]
+      ],
+      "abv": 38
     },
     {
       "id": "tomato-juice",
@@ -857,7 +908,8 @@
         "Curaçao",
         "Orange Curacao",
         "Orange Curaçao"
-      ]
+      ],
+      "abv": 30
     },
     {
       "id": "vanilla",
@@ -882,7 +934,8 @@
         "Vanillewodka",
         "Vodka Citron",
         "Vodka Vanilla"
-      ]
+      ],
+      "abv": 40
     },
     {
       "id": "water",
@@ -908,7 +961,8 @@
         "Rum",
         "White Cuban Ron",
         "White Cuban Rum"
-      ]
+      ],
+      "abv": 37.5
     },
     {
       "id": "worcestershire-sauce",
@@ -920,7 +974,8 @@
       "id": "yellow-chartreuse",
       "name": "Yellow Chartreuse",
       "category": "liqueur",
-      "isStaple": false
+      "isStaple": false,
+      "abv": 40
     }
   ],
   "cocktails": [
@@ -1363,14 +1418,17 @@
       ],
       "variations": [
         {
+          "key": "puccini",
           "name": "Puccini",
           "description": "Made with fresh mandarin orange juice instead of peach purée."
         },
         {
+          "key": "rossini",
           "name": "Rossini",
           "description": "Made with fresh strawberry purée instead of peach purée."
         },
         {
+          "key": "tintoretto",
           "name": "Tintoretto",
           "description": "Made with fresh pomegranate juice instead of peach purée."
         }
@@ -1715,6 +1773,7 @@
       ],
       "variations": [
         {
+          "key": "caipiroska",
           "name": "Caipiroska",
           "description": "Use vodka instead of cachaça.",
           "swaps": [
@@ -3473,6 +3532,7 @@
       ],
       "variations": [
         {
+          "key": "kir-royal",
           "name": "Kir Royal",
           "description": "Use champagne (sparkling wine) instead of dry white wine.",
           "swaps": [
@@ -5866,6 +5926,7 @@
       ],
       "variations": [
         {
+          "key": "campari-spritz",
           "name": "Campari Spritz",
           "description": "Swap the Aperol for Campari for a more bitter profile.",
           "swaps": [
@@ -5876,6 +5937,7 @@
           ]
         },
         {
+          "key": "cynar-spritz",
           "name": "Cynar Spritz",
           "description": "Swap the Aperol for Cynar (artichoke amaro).",
           "swaps": [
@@ -5886,6 +5948,7 @@
           ]
         },
         {
+          "key": "select-spritz",
           "name": "Select Spritz",
           "description": "The Venetian original, made with Select instead of Aperol."
         }
