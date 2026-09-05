@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal, untracked } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,13 +36,7 @@ import { glassSpecFor } from '../shared/cocktail-visual';
         <div class="hero">
           <div class="hero-copy">
             <p class="eyebrow">{{ lang.t().home.eyebrow }}</p>
-            <h1 class="count">
-              {{ lang.t().home.countPre }} <span class="big">{{ displayCount() }}</span><br />
-              {{ lang.t().home.countPost(displayCount()) }}
-            </h1>
-            <p class="lede">
-              {{ lang.t().home.makeableLede(makeableNow().length, almost1().length) }}
-            </p>
+            <p class="fitline">{{ lang.t().home.fitLine(makeableNow().length) }}</p>
             <div class="cta">
               <a class="btn btn-primary" routerLink="/bar">{{ lang.t().home.editBar }}</a>
               <a class="btn btn-ghost" routerLink="/bar/wizard">{{ lang.t().home.wizardAgain }}</a>
@@ -91,23 +85,6 @@ import { glassSpecFor } from '../shared/cocktail-visual';
           </div>
 
           <aside class="side">
-            @if (almost1().length) {
-              <div class="card side-card">
-                <div class="side-eyebrow">{{ lang.t().home.almostHeader }}</div>
-                <div class="almost">
-                  @for (r of almost1(); track r.cocktail.id) {
-                    <div class="almost-row">
-                      <a class="almost-name" [routerLink]="['/cocktails', r.cocktail.id]">
-                        {{ r.cocktail.name }}
-                      </a>
-                      <button class="add-chip" (click)="addMissing(r)">
-                        + {{ missName(r) }}
-                      </button>
-                    </div>
-                  }
-                </div>
-              </div>
-            }
             <app-fact-card />
             <div class="card night">
               <div class="side-eyebrow dim">{{ lang.t().home.yourBar }}</div>
@@ -168,16 +145,11 @@ import { glassSpecFor } from '../shared/cocktail-visual';
       align-items: center;
       padding: 56px 0 40px;
     }
-    .count {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: clamp(3rem, 7vw, 4.75rem);
-      line-height: 0.98;
-      letter-spacing: -0.035em;
-      margin: 14px 0 0;
-    }
-    .count .big {
-      color: var(--accent);
+            .fitline {
+      font: 500 1.0625rem var(--font-body);
+      color: var(--muted);
+      margin: 18px 0 0;
+      max-width: 46ch;
     }
     .hero-copy .lede {
       margin-top: 22px;
@@ -290,42 +262,7 @@ import { glassSpecFor } from '../shared/cocktail-visual';
       color: var(--dim);
       text-transform: uppercase;
     }
-    .almost {
-      margin-top: 8px;
-    }
-    .almost-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--hairline-soft);
-    }
-    .almost-row:last-child {
-      border-bottom: none;
-    }
-    .almost-name {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 1rem;
-      min-width: 0;
-      cursor: pointer;
-    }
-    .almost-name:hover {
-      color: var(--accent);
-    }
-    .add-chip {
-      background: var(--accent-soft);
-      border: 1.5px solid var(--accent);
-      color: var(--accent);
-      border-radius: var(--radius-pill);
-      padding: 7px 12px;
-      font: 600 0.75rem var(--font-body);
-      cursor: pointer;
-      white-space: nowrap;
-      flex: none;
-    }
-    .night {
+                            .night {
       background: var(--night);
       color: var(--night-ink);
       border: none;
@@ -403,12 +340,7 @@ export class Bar {
   readonly showOnboarding = computed(() => this.cabinet.isEmpty() && !this.cabinet.wizardDone());
 
   readonly makeableNow = computed(() => this.results().filter((r) => r.missingCount === 0));
-  readonly almost1 = computed(() => this.results().filter((r) => r.missingCount === 1));
-  /** Eased, animated mirror of makeableNow().length so the hero number counts up when the cabinet changes. */
-  readonly displayCount = signal(0);
   readonly heroGlasses = computed(() => this.makeableNow().slice(0, 3));
-
-  private countRaf = 0;
 
   constructor() {
     this.ingredientService.getAll().subscribe((list) => this.ingredients.set(list));
@@ -423,7 +355,7 @@ export class Bar {
         switchMap(([ids, substitutes, ingredients]) => {
           if (!ids.length) return of<MakeableResult[]>([]);
           const query = expandCabinet(ids, ingredients, { substitutes });
-          return this.cocktailService.makeable(query, 2).pipe(catchError(() => of<MakeableResult[]>([])));
+          return this.cocktailService.makeable(query, 0).pipe(catchError(() => of<MakeableResult[]>([])));
         }),
         takeUntilDestroyed(),
       )
@@ -431,42 +363,10 @@ export class Bar {
         this.results.set(res);
         this.loading.set(false);
       });
-
-    // Tween the hero count toward the live makeable total whenever it changes.
-    effect(() => {
-      const target = this.makeableNow().length;
-      untracked(() => this.animateCount(target));
-    });
-  }
-
-  private animateCount(target: number): void {
-    const start = untracked(this.displayCount);
-    if (start === target) return;
-    cancelAnimationFrame(this.countRaf);
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
-      this.displayCount.set(target);
-      return;
-    }
-    const t0 = performance.now();
-    const dur = 450;
-    const step = (now: number) => {
-      const p = Math.min(1, (now - t0) / dur);
-      const eased = 1 - Math.pow(1 - p, 3);
-      this.displayCount.set(Math.round(start + (target - start) * eased));
-      if (p < 1) this.countRaf = requestAnimationFrame(step);
-    };
-    this.countRaf = requestAnimationFrame(step);
   }
 
   spec(r: MakeableResult) {
     return glassSpecFor(r.cocktail);
   }
 
-  missName(r: MakeableResult): string {
-    return r.missing[0]?.name ?? '';
-  }
-
-  addMissing(r: MakeableResult): void {
-    for (const m of r.missing) this.cabinet.toggle(m.ingredientId, true);
-  }
 }

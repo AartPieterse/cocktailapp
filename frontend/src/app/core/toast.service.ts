@@ -1,31 +1,24 @@
 import { Injectable, signal } from '@angular/core';
 
-export type ToastTone = 'unlock' | 'info';
-
 export interface ToastData {
-  tone: ToastTone;
   title: string;
   sub?: string;
 }
 
 /**
- * A single, self-dismissing toast used for the "reward" moments in the cabinet → cocktails
- * loop: a celebratory "+N ontgrendeld" when adding an ingredient unlocks new drinks, and a
- * lighter "X toegevoegd" confirmation otherwise. Only one toast is visible at a time — a new
- * one replaces the current. This is intentionally separate from MatSnackBar, which is reserved
- * for errors and admin CRUD confirmations.
+ * A single, self-dismissing confirmation of something the user just did — currently only a cabinet
+ * change ("limoensap staat nu in je bar"). Deliberately toneless: there used to be a celebratory
+ * "+N ontgrendeld" variant here, and it was removed because rewarding an acquisition is exactly the
+ * mechanic this product does not want. Only one toast is visible at a time.
+ * Separate from MatSnackBar, which is reserved for errors and admin CRUD confirmations.
  */
 @Injectable({ providedIn: 'root' })
 export class ToastService {
   readonly current = signal<ToastData | null>(null);
   private timer: ReturnType<typeof setTimeout> | undefined;
 
-  unlock(names: string[]): void {
-    this.show({ tone: 'unlock', title: `+${names.length} ontgrendeld`, sub: names.join(' · ') }, 3800);
-  }
-
   info(message: string): void {
-    this.show({ tone: 'info', title: message }, 2200);
+    this.show({ title: message }, 2600);
   }
 
   show(data: ToastData, ms: number): void {

@@ -13,9 +13,6 @@ import { ToastService } from '../toast.service';
     @if (toast.current(); as t) {
       <div class="wrap">
         <button class="toast" type="button" (click)="toast.dismiss()" aria-live="polite">
-          @if (t.tone === 'unlock') {
-            <span class="badge"><mat-icon>check</mat-icon></span>
-          }
           <span class="body">
             <span class="title">{{ t.title }}</span>
             @if (t.sub) {

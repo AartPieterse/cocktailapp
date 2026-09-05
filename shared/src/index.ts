@@ -1,6 +1,7 @@
 export * from './i18n';
 export * from './measure-unit';
 export * from './measure-convert';
+export * from './standard-drinks';
 export * from './ingredient-category';
 export * from './glassware';
 export * from './method';

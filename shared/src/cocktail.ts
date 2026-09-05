@@ -97,7 +97,8 @@ export type CocktailTag =
   | 'creamy'
   | 'sparkling'
   | 'strong'
-  | 'hot';
+  | 'hot'
+  | 'mocktail';
 
 export const COCKTAIL_TAGS: readonly CocktailTag[] = [
   'iba-official',
@@ -110,6 +111,7 @@ export const COCKTAIL_TAGS: readonly CocktailTag[] = [
   'sparkling',
   'strong',
   'hot',
+  'mocktail',
 ];
 
 /** A bundled cocktail image (offline-safe). Replaces the remote `imageUrl` over time. */
@@ -168,6 +170,20 @@ export interface Cocktail {
   tags?: string[];
   /** Named variations of this drink (swaps + prose), resolved to base ids by `buildCatalog`. */
   variations?: CocktailVariation[];
+  /**
+   * Authored liquid colour (`#RRGGBB`) for the generated glass art. Without it the renderer guesses
+   * from ingredient ids, which yields only ~20 distinct colours across the catalog — so Negroni,
+   * Americano and Boulevardier come out identical. Authoring this per recipe is the fix.
+   */
+  color?: string;
+  /**
+   * The alcohol-free counterpart of this drink (Mojito → Virgin Mojito). Hand-curated, and the
+   * inverse of {@link alcoholFreeOfId}. Distinct from `variations` — a counterpart is its own recipe
+   * with its own balance, not an ingredient swap.
+   */
+  alcoholFreeCounterpartId?: string;
+  /** Set on the counterpart itself, pointing back at the drink it is the alcohol-free version of. */
+  alcoholFreeOfId?: string;
   /** Bundled, offline-safe image. Preferred over the legacy remote `imageUrl`. */
   image?: CocktailImage;
   imageUrl?: string;
