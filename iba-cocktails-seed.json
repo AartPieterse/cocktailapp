@@ -909,7 +909,8 @@
       "color": "#ECE7CF",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "sour"
     },
     {
       "name": "Alexander",
@@ -945,7 +946,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Dessert in a coupe: cream and cacao rounded off by brandy, with grated nutmeg doing more work than it looks."
+      "description": "Dessert in a coupe: cream and cacao rounded off by brandy, with grated nutmeg doing more work than it looks.",
+      "family": "creamy"
     },
     {
       "name": "Americano",
@@ -982,7 +984,8 @@
         }
       ],
       "baseSpirit": "other",
-      "description": "The Negroni's lighter ancestor. Soda stretches the Campari and vermouth into something you can drink before dinner rather than after."
+      "description": "The Negroni's lighter ancestor. Soda stretches the Campari and vermouth into something you can drink before dinner rather than after.",
+      "family": "highball"
     },
     {
       "name": "Angel Face",
@@ -1015,7 +1018,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Three spirits in equal measure and no citrus at all, which is why it drinks softer and heavier than it reads."
+      "description": "Three spirits in equal measure and no citrus at all, which is why it drinks softer and heavier than it reads.",
+      "family": "spirit-forward"
     },
     {
       "id": "apple-and-ginger",
@@ -1054,7 +1058,8 @@
       "color": "#D9A441",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "highball"
     },
     {
       "id": "arnold-palmer",
@@ -1098,7 +1103,8 @@
       "color": "#C08A3E",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "highball"
     },
     {
       "name": "Aviation",
@@ -1138,7 +1144,8 @@
           "unit": "barspoon"
         }
       ],
-      "description": "Maraschino and violet turn a gin sour pale blue-grey. Restraint matters — a heavy hand on the violette makes it taste of soap."
+      "description": "Maraschino and violet turn a gin sour pale blue-grey. Restraint matters — a heavy hand on the violette makes it taste of soap.",
+      "family": "sour"
     },
     {
       "id": "basil-lemonade",
@@ -1181,7 +1188,8 @@
       "color": "#DDE9C8",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "fizz"
     },
     {
       "name": "Bee's Knees",
@@ -1222,7 +1230,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Honey and Lemon",
-      "description": "A Prohibition drink built to hide rough gin behind honey. The honey has to be thinned to syrup first or it seizes in the shaker."
+      "description": "A Prohibition drink built to hide rough gin behind honey. The honey has to be thinned to syrup first or it seizes in the shaker.",
+      "family": "sour"
     },
     {
       "name": "Bellini",
@@ -1269,7 +1278,8 @@
         }
       ],
       "baseSpirit": "other",
-      "description": "Venice, 1948, and named after a painter's pink. White peach only: yellow peach turns it cloying."
+      "description": "Venice, 1948, and named after a painter's pink. White peach only: yellow peach turns it cloying.",
+      "family": "sparkling"
     },
     {
       "name": "Between the Sheets",
@@ -1307,7 +1317,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A Sidecar with rum added, which sounds like too much and is not. Drier and sharper than either drink alone."
+      "description": "A Sidecar with rum added, which sounds like too much and is not. Drier and sharper than either drink alone.",
+      "family": "sour"
     },
     {
       "name": "Black Russian",
@@ -1336,7 +1347,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Two ingredients over ice. Everything depends on the coffee liqueur, since there is nothing to hide behind."
+      "description": "Two ingredients over ice. Everything depends on the coffee liqueur, since there is nothing to hide behind.",
+      "family": "spirit-forward"
     },
     {
       "name": "Bloody Mary",
@@ -1396,7 +1408,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Virgin Mary",
-      "description": "The savoury cocktail. Roll it between two glasses rather than shaking, or the tomato juice goes thin and frothy."
+      "description": "The savoury cocktail. Roll it between two glasses rather than shaking, or the tomato juice goes thin and frothy.",
+      "family": "savoury"
     },
     {
       "name": "Boulevardier",
@@ -1437,7 +1450,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A Negroni that swaps gin for whiskey. Warmer, rounder, and better suited to a cold evening than the original."
+      "description": "A Negroni that swaps gin for whiskey. Warmer, rounder, and better suited to a cold evening than the original.",
+      "family": "spirit-forward"
     },
     {
       "name": "Bramble",
@@ -1476,7 +1490,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A gin sour with blackberry liqueur trailed through it after building, so the drink bleeds red from the bottom up."
+      "description": "A gin sour with blackberry liqueur trailed through it after building, so the drink bleeds red from the bottom up.",
+      "family": "sour"
     },
     {
       "name": "Brandy Crusta",
@@ -1527,7 +1542,8 @@
           "unit": "dash"
         }
       ],
-      "description": "The ancestor of the Sidecar, and the drink that introduced the sugared rim. The lemon peel lines the whole glass."
+      "description": "The ancestor of the Sidecar, and the drink that introduced the sugared rim. The lemon peel lines the whole glass.",
+      "family": "sour"
     },
     {
       "name": "Caipirinha",
@@ -1577,7 +1593,8 @@
           ]
         }
       ],
-      "description": "Brazil's national drink. Muddle the lime skin-down so the oil comes out of the peel and not just the juice."
+      "description": "Brazil's national drink. Muddle the lime skin-down so the oil comes out of the peel and not just the juice.",
+      "family": "sour"
     },
     {
       "name": "Canchanchara",
@@ -1619,7 +1636,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Cuban, and older than the Daiquiri. Honey and lime over aguardiente, cut with water rather than shaken."
+      "description": "Cuban, and older than the Daiquiri. Honey and lime over aguardiente, cut with water rather than shaken.",
+      "family": "sour"
     },
     {
       "id": "cardamom-coffee",
@@ -1658,7 +1676,8 @@
       "color": "#2E1C14",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "hot"
     },
     {
       "name": "Cardinale",
@@ -1692,7 +1711,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A drier Negroni: dry vermouth instead of sweet. Sharper and more bitter, with none of the original's roundness."
+      "description": "A drier Negroni: dry vermouth instead of sweet. Sharper and more bitter, with none of the original's roundness.",
+      "family": "spirit-forward"
     },
     {
       "name": "Casino",
@@ -1732,7 +1752,8 @@
           "unit": "dash"
         }
       ],
-      "description": "A pre-Prohibition gin sour, dry and slightly nutty from the maraschino, with orange bitters lifting the finish."
+      "description": "A pre-Prohibition gin sour, dry and slightly nutty from the maraschino, with orange bitters lifting the finish.",
+      "family": "sour"
     },
     {
       "id": "chamomile-and-honey",
@@ -1774,7 +1795,8 @@
       "color": "#EBC96A",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "sour"
     },
     {
       "name": "Champagne Cocktail",
@@ -1821,7 +1843,8 @@
           "unit": "piece"
         }
       ],
-      "description": "A sugar cube soaked in bitters, dropped into champagne. It keeps releasing bubbles from the bottom the whole way down."
+      "description": "A sugar cube soaked in bitters, dropped into champagne. It keeps releasing bubbles from the bottom the whole way down.",
+      "family": "sparkling"
     },
     {
       "name": "Chartreuse Swizzle",
@@ -1863,7 +1886,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Pineapple Swizzle",
-      "description": "Swizzled until the glass frosts. Chartreuse carries 130 herbs, and pineapple is one of the few things that can stand up to it."
+      "description": "Swizzled until the glass frosts. Chartreuse carries 130 herbs, and pineapple is one of the few things that can stand up to it.",
+      "family": "tiki"
     },
     {
       "id": "cinnamon-orange",
@@ -1902,7 +1926,8 @@
       "color": "#E8862B",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "hot"
     },
     {
       "name": "Clover Club",
@@ -1942,7 +1967,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Raspberry Sour",
-      "description": "A raspberry gin sour with an egg-white head. Dry-shake first or the foam never sets properly."
+      "description": "A raspberry gin sour with an egg-white head. Dry-shake first or the foam never sets properly.",
+      "family": "sour"
     },
     {
       "name": "Corpse Reviver #2",
@@ -1987,7 +2013,8 @@
           "unit": "dash"
         }
       ],
-      "description": "A morning-after drink from the 1930s, and genuinely bracing. The absinthe is a rinse, not a measure."
+      "description": "A morning-after drink from the 1930s, and genuinely bracing. The absinthe is a rinse, not a measure.",
+      "family": "sour"
     },
     {
       "name": "Cosmopolitan",
@@ -2028,7 +2055,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Tarter than its reputation. The cranberry is there for colour and edge, not sweetness — this is a citrus drink."
+      "description": "Tarter than its reputation. The cranberry is there for colour and edge, not sweetness — this is a citrus drink.",
+      "family": "sour"
     },
     {
       "id": "cranberry-breeze",
@@ -2066,7 +2094,8 @@
       "color": "#B83A5E",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "highball"
     },
     {
       "name": "Cuba Libre",
@@ -2100,7 +2129,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Rum and cola only becomes this when the lime goes in. Squeeze it in and drop the shell in the glass."
+      "description": "Rum and cola only becomes this when the lime goes in. Squeeze it in and drop the shell in the glass.",
+      "family": "fizz"
     },
     {
       "name": "Daiquiri",
@@ -2137,7 +2167,8 @@
           "unit": "barspoon"
         }
       ],
-      "description": "Three ingredients and nowhere to hide. Get the balance of lime and sugar right and it is the best test of a bar there is."
+      "description": "Three ingredients and nowhere to hide. Get the balance of lime and sugar right and it is the best test of a bar there is.",
+      "family": "sour"
     },
     {
       "name": "Dark ‘n' stormy",
@@ -2166,7 +2197,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Poured, not stirred, so the dark rum sits as a layer on the ginger beer. The name is trademarked in Bermuda."
+      "description": "Poured, not stirred, so the dark rum sits as a layer on the ginger beer. The name is trademarked in Bermuda.",
+      "family": "highball"
     },
     {
       "name": "Don's Special Daiquiri",
@@ -2212,7 +2244,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A tiki blend from Don the Beachcomber, richer than a Daiquiri and thicker, with passion fruit doing the lifting."
+      "description": "A tiki blend from Don the Beachcomber, richer than a Daiquiri and thicker, with passion fruit doing the lifting.",
+      "family": "tiki"
     },
     {
       "name": "Dry Martini",
@@ -2242,7 +2275,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Two ingredients, endlessly argued about. Stirred, never shaken — shaking clouds it and bruises the vermouth."
+      "description": "Two ingredients, endlessly argued about. Stirred, never shaken — shaking clouds it and bruises the vermouth.",
+      "family": "spirit-forward"
     },
     {
       "name": "Espresso Martini",
@@ -2282,7 +2316,8 @@
           "unit": "piece"
         }
       ],
-      "description": "Invented in 1980s London for a guest who wanted something to wake her up. Only fresh espresso gives it the crema."
+      "description": "Invented in 1980s London for a guest who wanted something to wake her up. Only fresh espresso gives it the crema.",
+      "family": "spirit-forward"
     },
     {
       "id": "espresso-tonic",
@@ -2316,7 +2351,8 @@
       "color": "#8A6A48",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "highball"
     },
     {
       "name": "Fernandito",
@@ -2344,7 +2380,8 @@
         }
       ],
       "baseSpirit": "other",
-      "description": "Argentina drinks more Fernet than anywhere else, mostly like this. Bitter, medicinal, and oddly refreshing over ice."
+      "description": "Argentina drinks more Fernet than anywhere else, mostly like this. Bitter, medicinal, and oddly refreshing over ice.",
+      "family": "highball"
     },
     {
       "name": "French 75",
@@ -2386,7 +2423,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Named after a field gun for the kick. Gin and lemon under champagne, and it hits harder than it tastes."
+      "description": "Named after a field gun for the kick. Gin and lemon under champagne, and it hits harder than it tastes.",
+      "family": "sparkling"
     },
     {
       "name": "French Connection",
@@ -2414,7 +2452,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Two ingredients, no dilution beyond the ice. Amaretto rounds the cognac without covering it."
+      "description": "Two ingredients, no dilution beyond the ice. Amaretto rounds the cognac without covering it.",
+      "family": "spirit-forward"
     },
     {
       "name": "French Martini",
@@ -2448,7 +2487,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Not a Martini at all. Pineapple juice shaken hard gives it the foam that makes it look like one."
+      "description": "Not a Martini at all. Pineapple juice shaken hard gives it the foam that makes it look like one.",
+      "family": "sour"
     },
     {
       "name": "Garibaldi",
@@ -2477,7 +2517,8 @@
         }
       ],
       "baseSpirit": "other",
-      "description": "Campari and orange juice, but the juice must be fluffy — whipped, not poured — or it is just bitter and flat."
+      "description": "Campari and orange juice, but the juice must be fluffy — whipped, not poured — or it is just bitter and flat.",
+      "family": "highball"
     },
     {
       "name": "Gin Basil Smash",
@@ -2518,7 +2559,8 @@
           "note": "leaves"
         }
       ],
-      "description": "A Hamburg invention from 2008 and already a modern standard. Smash the basil once, hard; shredding it turns the drink bitter."
+      "description": "A Hamburg invention from 2008 and already a modern standard. Smash the basil once, hard; shredding it turns the drink bitter.",
+      "family": "sour"
     },
     {
       "name": "Gin Fizz",
@@ -2559,7 +2601,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Lemon Fizz",
-      "description": "A sour lengthened with soda. Serve it without ice in the glass so the head stays intact."
+      "description": "A sour lengthened with soda. Serve it without ice in the glass so the head stays intact.",
+      "family": "fizz"
     },
     {
       "id": "ginger-mule",
@@ -2597,7 +2640,8 @@
       "color": "#D8A44E",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "highball"
     },
     {
       "name": "Grand Margarita",
@@ -2632,7 +2676,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A Margarita made richer with Grand Marnier in place of triple sec. Rounder, with more orange and less bite."
+      "description": "A Margarita made richer with Grand Marnier in place of triple sec. Rounder, with more orange and less bite.",
+      "family": "sour"
     },
     {
       "name": "Grasshopper",
@@ -2670,7 +2715,8 @@
         }
       ],
       "baseSpirit": "other",
-      "description": "Mint and chocolate in cream, and unapologetically a dessert. Serves better after a meal than during one."
+      "description": "Mint and chocolate in cream, and unapologetically a dessert. Serves better after a meal than during one.",
+      "family": "creamy"
     },
     {
       "name": "Hanky Panky",
@@ -2707,7 +2753,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Created by Ada Coleman at the Savoy for an actor who wanted something with a kick. Fernet is the whole point."
+      "description": "Created by Ada Coleman at the Savoy for an actor who wanted something with a kick. Fernet is the whole point.",
+      "family": "spirit-forward"
     },
     {
       "name": "Hemingway Special",
@@ -2748,7 +2795,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Grapefruit and maraschino, and no sugar at all — Hemingway asked for double rum and none. Dry and bracing."
+      "description": "Grapefruit and maraschino, and no sugar at all — Hemingway asked for double rum and none. Dry and bracing.",
+      "family": "sour"
     },
     {
       "id": "honey-and-lemon",
@@ -2786,7 +2834,8 @@
       "color": "#EBC96A",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "sour"
     },
     {
       "name": "Horse's Neck",
@@ -2822,7 +2871,8 @@
           "optional": true
         }
       ],
-      "description": "The garnish is the drink's name: one unbroken spiral of lemon peel hung over the rim, running the length of the glass."
+      "description": "The garnish is the drink's name: one unbroken spiral of lemon peel hung over the rim, running the length of the glass.",
+      "family": "highball"
     },
     {
       "name": "IBA Tiki",
@@ -2891,7 +2941,8 @@
           "unit": "slice"
         }
       ],
-      "description": "A modern tiki build with two rums and a nut liqueur. Complex, sweet, and much stronger than it presents."
+      "description": "A modern tiki build with two rums and a nut liqueur. Complex, sweet, and much stronger than it presents.",
+      "family": "tiki"
     },
     {
       "name": "Illegal",
@@ -2949,7 +3000,8 @@
           "optional": true
         }
       ],
-      "description": "Mezcal and overproof rum, smoky and sharp at once. The falernum keeps the two from fighting each other."
+      "description": "Mezcal and overproof rum, smoky and sharp at once. The falernum keeps the two from fighting each other.",
+      "family": "sour"
     },
     {
       "name": "Irish Coffee",
@@ -2994,7 +3046,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Vienna Coffee",
-      "description": "Hot coffee under cold cream, and never stirred — you drink one through the other. Whip the cream just to the point it pours."
+      "description": "Hot coffee under cold cream, and never stirred — you drink one through the other. Whip the cream just to the point it pours.",
+      "family": "hot"
     },
     {
       "name": "John Collins",
@@ -3034,7 +3087,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A Tom Collins made with dry gin. Built in the glass rather than shaken, so it stays clear and lightly carbonated."
+      "description": "A Tom Collins made with dry gin. Built in the glass rather than shaken, so it stays clear and lightly carbonated.",
+      "family": "fizz"
     },
     {
       "name": "Jungle Bird",
@@ -3080,7 +3134,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Campari in a tiki drink, which should not work. Pineapple and blackstrap rum absorb the bitterness and it does."
+      "description": "Campari in a tiki drink, which should not work. Pineapple and blackstrap rum absorb the bitterness and it does.",
+      "family": "tiki"
     },
     {
       "name": "KIR",
@@ -3120,7 +3175,8 @@
         }
       ],
       "baseSpirit": "other",
-      "description": "Burgundy's aperitif: a splash of blackcurrant in dry white wine. Named after a mayor of Dijon who served it constantly."
+      "description": "Burgundy's aperitif: a splash of blackcurrant in dry white wine. Named after a mayor of Dijon who served it constantly.",
+      "family": "sparkling"
     },
     {
       "name": "Last word",
@@ -3159,7 +3215,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Equal parts, all four assertive, and somehow balanced. Lost for decades and revived in Seattle in the 2000s."
+      "description": "Equal parts, all four assertive, and somehow balanced. Lost for decades and revived in Seattle in the 2000s.",
+      "family": "sour"
     },
     {
       "name": "Lemon drop Martini",
@@ -3193,7 +3250,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A sugared rim and a lemon sour underneath. Sharper than it looks if the lemon is fresh."
+      "description": "A sugared rim and a lemon sour underneath. Sharper than it looks if the lemon is fresh.",
+      "family": "sour"
     },
     {
       "id": "lemon-fizz",
@@ -3236,7 +3294,8 @@
       "color": "#F2E9C0",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "fizz"
     },
     {
       "name": "Long Island Ice Tea",
@@ -3296,7 +3355,8 @@
           "unit": "topup"
         }
       ],
-      "description": "Five spirits and a splash of cola that makes it look like iced tea. Tastes of none of them individually, which is the trick."
+      "description": "Five spirits and a splash of cola that makes it look like iced tea. Tastes of none of them individually, which is the trick.",
+      "family": "tiki"
     },
     {
       "name": "Mai-Tai",
@@ -3351,7 +3411,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Trader Vic's, 1944, and nothing to do with pineapple juice. Orgeat and lime over good rum, with a mint sprig for the nose."
+      "description": "Trader Vic's, 1944, and nothing to do with pineapple juice. Orgeat and lime over good rum, with a mint sprig for the nose.",
+      "family": "tiki"
     },
     {
       "name": "Manhattan",
@@ -3387,7 +3448,8 @@
           "unit": "dash"
         }
       ],
-      "description": "The drink that made vermouth respectable. Stirred until properly cold, and better with rye than with bourbon."
+      "description": "The drink that made vermouth respectable. Stirred until properly cold, and better with rye than with bourbon.",
+      "family": "spirit-forward"
     },
     {
       "name": "Margarita",
@@ -3423,7 +3485,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Lime and orange over tequila, salted on one half of the rim so the drinker chooses. Fresh lime or nothing."
+      "description": "Lime and orange over tequila, salted on one half of the rim so the drinker chooses. Fresh lime or nothing.",
+      "family": "sour"
     },
     {
       "name": "Martinez",
@@ -3465,7 +3528,8 @@
           "unit": "dash"
         }
       ],
-      "description": "The link between the Dry Martini and the Manhattan, and older than both. Sweeter, darker, and worth knowing."
+      "description": "The link between the Dry Martini and the Manhattan, and older than both. Sweeter, darker, and worth knowing.",
+      "family": "spirit-forward"
     },
     {
       "name": "Mary Pickford",
@@ -3503,7 +3567,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Havana in the 1920s, named for the silent-film actress. Pineapple and grenadine keep it pink and soft."
+      "description": "Havana in the 1920s, named for the silent-film actress. Pineapple and grenadine keep it pink and soft.",
+      "family": "sour"
     },
     {
       "name": "Mimosa",
@@ -3534,7 +3599,8 @@
         }
       ],
       "baseSpirit": "other",
-      "description": "Half orange juice, half sparkling, and the temperature matters more than the ratio. Both ingredients must be properly cold."
+      "description": "Half orange juice, half sparkling, and the temperature matters more than the ratio. Both ingredients must be properly cold.",
+      "family": "sparkling"
     },
     {
       "name": "Mint Julep",
@@ -3575,7 +3641,8 @@
           "unit": "teaspoon"
         }
       ],
-      "description": "The Kentucky Derby's drink. Packed with crushed ice until the cup frosts on the outside — hold it by the rim."
+      "description": "The Kentucky Derby's drink. Packed with crushed ice until the cup frosts on the outside — hold it by the rim.",
+      "family": "spirit-forward"
     },
     {
       "name": "Missionary's Downfall",
@@ -3629,7 +3696,8 @@
           "unit": "piece"
         }
       ],
-      "description": "A blended tiki drink built on mint and peach. Lighter and fresher than most of the category."
+      "description": "A blended tiki drink built on mint and peach. Lighter and fresher than most of the category.",
+      "family": "tiki"
     },
     {
       "name": "Mojito",
@@ -3679,7 +3747,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Virgin Mojito",
-      "description": "Muddle the mint gently — you want the oil, not shredded leaf, which turns bitter and leaves black flecks in the glass."
+      "description": "Muddle the mint gently — you want the oil, not shredded leaf, which turns bitter and leaves black flecks in the glass.",
+      "family": "fizz"
     },
     {
       "name": "Monkey Gland",
@@ -3717,7 +3786,8 @@
           "unit": "tablespoon"
         }
       ],
-      "description": "Paris, 1920s, named after a discredited surgical fad. Absinthe and grenadine over gin and orange, and better than the story."
+      "description": "Paris, 1920s, named after a discredited surgical fad. Absinthe and grenadine over gin and orange, and better than the story.",
+      "family": "sour"
     },
     {
       "name": "Moscow Mule",
@@ -3753,7 +3823,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Ginger Mule",
-      "description": "Invented to sell vodka and copper mugs in equal measure. Ginger beer, not ginger ale — the heat is the point."
+      "description": "Invented to sell vodka and copper mugs in equal measure. Ginger beer, not ginger ale — the heat is the point.",
+      "family": "fizz"
     },
     {
       "name": "Naked and Famous",
@@ -3790,7 +3861,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Equal parts, smoky and bitter at once. A modern descendant of the Last Word, built on mezcal instead of gin."
+      "description": "Equal parts, smoky and bitter at once. A modern descendant of the Last Word, built on mezcal instead of gin.",
+      "family": "sour"
     },
     {
       "name": "Negroni",
@@ -3825,7 +3897,8 @@
           "unit": "ml"
         }
       ],
-      "description": "The aperitivo that taught bitterness to be charming. Stirred, never shaken — twenty seconds is the whole recipe."
+      "description": "The aperitivo that taught bitterness to be charming. Stirred, never shaken — twenty seconds is the whole recipe.",
+      "family": "spirit-forward"
     },
     {
       "name": "New York Sour",
@@ -3877,7 +3950,8 @@
           "note": "Shiraz or Malbech"
         }
       ],
-      "description": "A whiskey sour with red wine floated on top. The wine sits in a band and mixes as you drink, changing it halfway."
+      "description": "A whiskey sour with red wine floated on top. The wine sits in a band and mixes as you drink, changing it halfway.",
+      "family": "sour"
     },
     {
       "name": "Old Cuban",
@@ -3930,7 +4004,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A Mojito dressed for the evening: aged rum, bitters and champagne. Created at New York's Pegu Club in the 2000s."
+      "description": "A Mojito dressed for the evening: aged rum, bitters and champagne. Created at New York's Pegu Club in the 2000s.",
+      "family": "sparkling"
     },
     {
       "name": "Old Fashioned",
@@ -3979,7 +4054,8 @@
           "optional": true
         }
       ],
-      "description": "The original definition of a cocktail — spirit, sugar, bitters, water. Everything since is a variation on it."
+      "description": "The original definition of a cocktail — spirit, sugar, bitters, water. Everything since is a variation on it.",
+      "family": "spirit-forward"
     },
     {
       "name": "Paloma",
@@ -4024,7 +4100,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Virgin Paloma",
-      "description": "Mexico drinks far more of these than Margaritas. Grapefruit soda and salt, and it works because it is not sweet."
+      "description": "Mexico drinks far more of these than Margaritas. Grapefruit soda and salt, and it works because it is not sweet.",
+      "family": "fizz"
     },
     {
       "name": "Paper Plane",
@@ -4062,7 +4139,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Equal parts, created in 2008 and now everywhere. Two bitter amari against bourbon and lemon, and none of them wins."
+      "description": "Equal parts, created in 2008 and now everywhere. Two bitter amari against bourbon and lemon, and none of them wins.",
+      "family": "sour"
     },
     {
       "name": "Paradise",
@@ -4094,7 +4172,8 @@
           "unit": "ml"
         }
       ],
-      "description": "An apricot gin sour from the 1920s, softer than most. The orange juice rounds the edges rather than sharpening them."
+      "description": "An apricot gin sour from the 1920s, softer than most. The orange juice rounds the edges rather than sharpening them.",
+      "family": "sour"
     },
     {
       "id": "passion-fruit-cooler",
@@ -4137,7 +4216,8 @@
       "color": "#E8A62A",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "fizz"
     },
     {
       "name": "Penicillin",
@@ -4187,7 +4267,8 @@
           "note": "in dunne plakjes, gemuddeld"
         }
       ],
-      "description": "Honey, ginger and lemon over blended Scotch, with a smoky Islay float on top so the peat hits the nose first."
+      "description": "Honey, ginger and lemon over blended Scotch, with a smoky Islay float on top so the peat hits the nose first.",
+      "family": "sour"
     },
     {
       "name": "Pina Colada",
@@ -4222,7 +4303,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Virgin Colada",
-      "description": "Puerto Rico's national drink. Coconut cream, not coconut milk — the difference is the whole texture."
+      "description": "Puerto Rico's national drink. Coconut cream, not coconut milk — the difference is the whole texture.",
+      "family": "creamy"
     },
     {
       "id": "pineapple-swizzle",
@@ -4266,7 +4348,8 @@
       "color": "#E6C24A",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "tiki"
     },
     {
       "name": "Pisco Punch",
@@ -4317,7 +4400,8 @@
           "unit": "piece"
         }
       ],
-      "description": "San Francisco's Gold Rush drink, and once a closely guarded secret. Pineapple steeped in syrup is what made it famous."
+      "description": "San Francisco's Gold Rush drink, and once a closely guarded secret. Pineapple steeped in syrup is what made it famous.",
+      "family": "sour"
     },
     {
       "name": "Pisco Sour",
@@ -4357,7 +4441,8 @@
           "unit": "piece"
         }
       ],
-      "description": "Peru's national drink, and the egg white is not optional — it is what turns a sharp sour into something silky."
+      "description": "Peru's national drink, and the egg white is not optional — it is what turns a sharp sour into something silky.",
+      "family": "sour"
     },
     {
       "name": "Planter's Punch",
@@ -4392,7 +4477,8 @@
           "unit": "ml"
         }
       ],
-      "description": "One of sour, two of sweet, three of strong, four of weak. The rhyme predates the recipe by a century."
+      "description": "One of sour, two of sweet, three of strong, four of weak. The rhyme predates the recipe by a century.",
+      "family": "tiki"
     },
     {
       "name": "Porn Star Martini",
@@ -4440,7 +4526,8 @@
           "unit": "ml"
         }
       ],
-      "description": "London, 2002, and served with a shot of champagne on the side rather than in it. Alternate sips; that is the design."
+      "description": "London, 2002, and served with a shot of champagne on the side rather than in it. Alternate sips; that is the design.",
+      "family": "sparkling"
     },
     {
       "name": "Porto Flip",
@@ -4474,7 +4561,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A flip is any drink with a whole egg or yolk shaken in. This one is warming, thick, and better in winter."
+      "description": "A flip is any drink with a whole egg or yolk shaken in. This one is warming, thick, and better in winter.",
+      "family": "creamy"
     },
     {
       "name": "Rabo de Galo",
@@ -4516,7 +4604,8 @@
           "optional": true
         }
       ],
-      "description": "Brazilian, and the name means rooster's tail. Cachaça with vermouth and Cynar — bitter, herbal and low on sugar."
+      "description": "Brazilian, and the name means rooster's tail. Cachaça with vermouth and Cynar — bitter, herbal and low on sugar.",
+      "family": "spirit-forward"
     },
     {
       "name": "Ramos Fizz",
@@ -4583,7 +4672,8 @@
           "unit": "topup"
         }
       ],
-      "description": "New Orleans, and famously shaken for twelve minutes in the original bar. Two minutes gets you most of the way there."
+      "description": "New Orleans, and famously shaken for twelve minutes in the original bar. Two minutes gets you most of the way there.",
+      "family": "creamy"
     },
     {
       "id": "raspberry-sour",
@@ -4621,7 +4711,8 @@
       "color": "#C0243A",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "sour"
     },
     {
       "name": "Remember the Maine",
@@ -4662,7 +4753,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A Manhattan with cherry brandy and an absinthe rinse, named after the 1898 battleship. Rich and faintly medicinal."
+      "description": "A Manhattan with cherry brandy and an absinthe rinse, named after the 1898 battleship. Rich and faintly medicinal.",
+      "family": "spirit-forward"
     },
     {
       "id": "roy-rogers",
@@ -4701,7 +4793,8 @@
       "color": "#3A2016",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "highball"
     },
     {
       "name": "Russian Spring Punch",
@@ -4745,7 +4838,8 @@
           "unit": "topup"
         }
       ],
-      "description": "Dick Bradsell again: blackcurrant and lemon under sparkling wine, long and easy to drink for its strength."
+      "description": "Dick Bradsell again: blackcurrant and lemon under sparkling wine, long and easy to drink for its strength.",
+      "family": "sparkling"
     },
     {
       "name": "Rusty Nail",
@@ -4774,7 +4868,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Scotch sweetened with Scotch — Drambuie is whisky, honey and herbs. Two ingredients, no citrus, no dilution."
+      "description": "Scotch sweetened with Scotch — Drambuie is whisky, honey and herbs. Two ingredients, no citrus, no dilution.",
+      "family": "spirit-forward"
     },
     {
       "name": "Sazerac",
@@ -4816,7 +4911,8 @@
           "unit": "dash"
         }
       ],
-      "description": "New Orleans' own, and the absinthe is a rinse you discard. Traditionally served with no ice at all."
+      "description": "New Orleans' own, and the absinthe is a rinse you discard. Traditionally served with no ice at all.",
+      "family": "spirit-forward"
     },
     {
       "name": "Sea Breeze",
@@ -4850,7 +4946,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Cranberry Breeze",
-      "description": "Cranberry and grapefruit are bitter in different directions, and the vodka simply carries them. Long and dry."
+      "description": "Cranberry and grapefruit are bitter in different directions, and the vodka simply carries them. Long and dry.",
+      "family": "highball"
     },
     {
       "name": "Sex on the Beach",
@@ -4888,7 +4985,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Peach and cranberry over vodka, and sweeter than most of this list. Built in the glass, never shaken."
+      "description": "Peach and cranberry over vodka, and sweeter than most of this list. Built in the glass, never shaken.",
+      "family": "highball"
     },
     {
       "name": "Sherry Cobbler",
@@ -4937,7 +5035,8 @@
           "note": "wheel"
         }
       ],
-      "description": "The drink that popularised the drinking straw in the 1830s. Shaken with fruit and served over a mound of crushed ice."
+      "description": "The drink that popularised the drinking straw in the 1830s. Shaken with fruit and served over a mound of crushed ice.",
+      "family": "sour"
     },
     {
       "id": "shirley-temple",
@@ -4976,7 +5075,8 @@
       "color": "#D9455E",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "highball"
     },
     {
       "name": "Sidecar",
@@ -5008,7 +5108,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Paris after the First World War. Cognac, orange and lemon in near-equal measure, with a sugared rim if you like."
+      "description": "Paris after the First World War. Cognac, orange and lemon in near-equal measure, with a sugared rim if you like.",
+      "family": "sour"
     },
     {
       "name": "Singapore Sling",
@@ -5070,7 +5171,8 @@
           "unit": "dash"
         }
       ],
-      "description": "The Raffles Hotel, around 1915, and the recipe has been argued over ever since. Eight ingredients that somehow settle."
+      "description": "The Raffles Hotel, around 1915, and the recipe has been argued over ever since. Eight ingredients that somehow settle.",
+      "family": "tiki"
     },
     {
       "name": "Southside",
@@ -5118,7 +5220,8 @@
           "optional": true
         }
       ],
-      "description": "A gin sour with mint, said to have been the drink of Chicago's South Side during Prohibition. Clean and sharp."
+      "description": "A gin sour with mint, said to have been the drink of Chicago's South Side during Prohibition. Clean and sharp.",
+      "family": "sour"
     },
     {
       "name": "Spicy Fifty",
@@ -5165,7 +5268,8 @@
           "note": "in dunne plakjes"
         }
       ],
-      "description": "Chilli infused into the shake rather than the bottle, so the heat builds slowly. Elderflower keeps it floral underneath."
+      "description": "Chilli infused into the shake rather than the bottle, so the heat builds slowly. Elderflower keeps it floral underneath.",
+      "family": "sour"
     },
     {
       "name": "Spritz",
@@ -5229,7 +5333,8 @@
         }
       ],
       "baseSpirit": "other",
-      "description": "Venice, and the ratio is fixed: three prosecco, two Aperol, one soda. Low in alcohol and built for the afternoon."
+      "description": "Venice, and the ratio is fixed: three prosecco, two Aperol, one soda. Low in alcohol and built for the afternoon.",
+      "family": "sparkling"
     },
     {
       "name": "Stinger",
@@ -5260,7 +5365,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Cognac and mint, and nothing else. Once the drink you ordered last, to clear the palate before leaving."
+      "description": "Cognac and mint, and nothing else. Once the drink you ordered last, to clear the palate before leaving.",
+      "family": "spirit-forward"
     },
     {
       "id": "strawberry-lemonade",
@@ -5303,7 +5409,8 @@
       "color": "#D9455E",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "fizz"
     },
     {
       "name": "Suffering Bastard",
@@ -5351,7 +5458,8 @@
           "unit": "topup"
         }
       ],
-      "description": "Cairo, 1942, invented as a hangover cure for soldiers. Ginger beer over gin and cognac, which reads worse than it drinks."
+      "description": "Cairo, 1942, invented as a hangover cure for soldiers. Ginger beer over gin and cognac, which reads worse than it drinks.",
+      "family": "fizz"
     },
     {
       "id": "sunrise",
@@ -5384,7 +5492,8 @@
       "color": "#EE8A2A",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "highball"
     },
     {
       "name": "Tequila Sunrise",
@@ -5419,7 +5528,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Sunrise",
-      "description": "Poured and left alone — the grenadine sinks and stays there. Stirring it destroys the only reason it has that name."
+      "description": "Poured and left alone — the grenadine sinks and stays there. Stirring it destroys the only reason it has that name.",
+      "family": "highball"
     },
     {
       "name": "Three Dots and a Dash",
@@ -5480,7 +5590,8 @@
           "unit": "dash"
         }
       ],
-      "description": "Morse code for V, for victory, and the garnish spells it out. A dense tiki blend from 1940s Chicago."
+      "description": "Morse code for V, for victory, and the garnish spells it out. A dense tiki blend from 1940s Chicago.",
+      "family": "tiki"
     },
     {
       "name": "Tipperary",
@@ -5521,7 +5632,8 @@
           "unit": "dash"
         }
       ],
-      "description": "Irish whiskey with Chartreuse, which is a strange pairing until you taste it. Herbal, sweet and quite strong."
+      "description": "Irish whiskey with Chartreuse, which is a strange pairing until you taste it. Herbal, sweet and quite strong.",
+      "family": "spirit-forward"
     },
     {
       "name": "Tommy's Margarita",
@@ -5558,7 +5670,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Agave and Lime",
-      "description": "San Francisco's version: agave syrup instead of orange liqueur. Cleaner, and it tastes more of the tequila."
+      "description": "San Francisco's version: agave syrup instead of orange liqueur. Cleaner, and it tastes more of the tequila.",
+      "family": "sour"
     },
     {
       "name": "Trinidad Sour",
@@ -5596,7 +5709,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Built on a full ounce and a half of bitters, which should be undrinkable and is not. Orgeat is what saves it."
+      "description": "Built on a full ounce and a half of bitters, which should be undrinkable and is not. Orgeat is what saves it.",
+      "family": "sour"
     },
     {
       "name": "Tuxedo",
@@ -5643,7 +5757,8 @@
           "unit": "dash"
         }
       ],
-      "description": "A Martini with maraschino and an absinthe rinse. Older, sweeter and more aromatic than the drink it became."
+      "description": "A Martini with maraschino and an absinthe rinse. Older, sweeter and more aromatic than the drink it became.",
+      "family": "spirit-forward"
     },
     {
       "name": "VE.N.TO",
@@ -5694,7 +5809,8 @@
         }
       ],
       "alcoholFreeCounterpart": "Chamomile and Honey",
-      "description": "An IBA addition built on grappa, with chamomile and honey softening a spirit most people find sharp."
+      "description": "An IBA addition built on grappa, with chamomile and honey softening a spirit most people find sharp.",
+      "family": "sour"
     },
     {
       "name": "Vesper",
@@ -5728,7 +5844,8 @@
           "unit": "ml"
         }
       ],
-      "description": "Invented in print, in Casino Royale, before anyone made one. Shaken, as specified, though it drinks better stirred."
+      "description": "Invented in print, in Casino Royale, before anyone made one. Shaken, as specified, though it drinks better stirred.",
+      "family": "spirit-forward"
     },
     {
       "id": "vienna-coffee",
@@ -5768,7 +5885,8 @@
       "color": "#3A241A",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "hot"
     },
     {
       "name": "Vieux Carrè",
@@ -5813,7 +5931,8 @@
           "unit": "dash"
         }
       ],
-      "description": "New Orleans' French Quarter in a glass, and named after it. Two spirits, two bitters, and nothing sharp anywhere."
+      "description": "New Orleans' French Quarter in a glass, and named after it. Two spirits, two bitters, and nothing sharp anywhere.",
+      "family": "spirit-forward"
     },
     {
       "id": "virgin-colada",
@@ -5851,7 +5970,8 @@
       "color": "#F3E6C3",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "creamy"
     },
     {
       "id": "virgin-mary",
@@ -5909,7 +6029,8 @@
       "color": "#C23A22",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "savoury"
     },
     {
       "id": "virgin-mojito",
@@ -5960,7 +6081,8 @@
       "color": "#DDE9C8",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "fizz"
     },
     {
       "id": "virgin-paloma",
@@ -6004,7 +6126,8 @@
       "color": "#E9A08C",
       "tags": [
         "mocktail"
-      ]
+      ],
+      "family": "highball"
     },
     {
       "name": "Whiskey Sour",
@@ -6048,7 +6171,8 @@
           "optional": true
         }
       ],
-      "description": "Get the foam right and it is a different drink — an egg white is optional but transforms the texture."
+      "description": "Get the foam right and it is a different drink — an egg white is optional but transforms the texture.",
+      "family": "sour"
     },
     {
       "name": "White Lady",
@@ -6080,7 +6204,8 @@
           "unit": "ml"
         }
       ],
-      "description": "A Sidecar built on gin instead of cognac. Sharper and drier, and it needs the sugar the Sidecar can do without."
+      "description": "A Sidecar built on gin instead of cognac. Sharper and drier, and it needs the sugar the Sidecar can do without.",
+      "family": "sour"
     },
     {
       "name": "Zombie",
@@ -6149,7 +6274,8 @@
           "unit": "drop"
         }
       ],
-      "description": "Don the Beachcomber, 1934, and famously limited to two per customer. Three rums, and the recipe was secret for decades."
+      "description": "Don the Beachcomber, 1934, and famously limited to two per customer. Three rums, and the recipe was secret for decades.",
+      "family": "tiki"
     }
   ],
   "retired": []

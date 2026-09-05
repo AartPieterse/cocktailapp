@@ -1,4 +1,5 @@
 import { Difficulty } from './difficulty';
+import type { DrinkFamily } from './drink-family';
 import { Glassware } from './glassware';
 import type { Locale } from './i18n';
 import { MeasureUnit } from './measure-unit';
@@ -183,6 +184,11 @@ export interface Cocktail {
   tags?: string[];
   /** Named variations of this drink (swaps + prose), resolved to base ids by `buildCatalog`. */
   variations?: CocktailVariation[];
+  /**
+   * The structural template underneath the drink — sour, highball, spirit-forward… Deliberately
+   * independent of whether the recipe contains alcohol: a Virgin Mojito is a fizz.
+   */
+  family?: DrinkFamily;
   /**
    * Authored liquid colour (`#RRGGBB`) for the generated glass art. Without it the renderer guesses
    * from ingredient ids, which yields only ~20 distinct colours across the catalog — so Negroni,
