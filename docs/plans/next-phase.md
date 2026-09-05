@@ -24,6 +24,23 @@ that gives something back (it hides the home IP and absorbs abuse) and it stays 
 at the home IP and Cloudflare is out of the path. The line has a public routable IP and no CGNAT, so
 running without any tunnel is technically possible; it was declined to keep the home address private.
 
+> **Amended 2026-09-05 — the tunnel rationale above is now contested, on a ground it did not consider.**
+> [`private-cloud-sovereignty.md`](private-cloud-sovereignty.md) found that a Cloudflare Tunnel
+> **terminates TLS at the edge** — inherent to how WAF, Access and caching work. A Barkast login
+> therefore sends the e-mail address *and the password itself* (POST body, not the hash) through a US
+> company. That is the only place in either plan where **other people's** personal data is processed by
+> a third party in plaintext, which makes it a GDPR responsibility rather than a preference. Two further
+> points: the tunnel is *less* reversible than assumed — it cannot coexist with moving DNS off
+> Cloudflare, because a tunnel hostname needs a CNAME to `<UUID>.cfargotunnel.com` that only proxies
+> inside the same Cloudflare account — and the "hides the home IP" benefit disappears anyway the moment
+> a WireGuard port is forwarded, which the private-cloud plan now does.
+>
+> This does not settle it; it adds a cost that was not on the scale. The two exits are in
+> [`private-cloud.md`](private-cloud.md) phase 4: publish `api.<domain>` straight from Caddy (free, home
+> IP becomes public), or put an EU VPS in front as a pure TCP/SNI forwarder that never terminates TLS
+> (~€60/yr, strictly better than the tunnel on both privacy and jurisdiction). Decide once, because
+> `admin.guard.ts` and the header hygiene below assume Cloudflare is in the path.
+
 What that changes here:
 
 - **Decision 1 ("Netlify's fate") is settled** — it is retired, not kept as a shop window. The plan's
