@@ -43,6 +43,7 @@ export class CatalogService {
       parentId: d.parentId,
       substitutes: d.substitutes,
       aliases: d.aliases,
+      abv: d.abv,
     }));
     const rawCocktails = cktDocs.map((d) => ({
       id: d.id,
@@ -74,6 +75,7 @@ export class CatalogService {
       // Reverse-map variations to their raw (name-based) form so buildCatalog re-resolves to the
       // identical ids — same treatment as line `alternativeIds` above (keeps version parity).
       variations: d.variations?.map((v) => ({
+        key: v.key,
         name: v.name,
         description: v.description,
         swaps: v.swaps?.map((s) => ({
@@ -85,6 +87,12 @@ export class CatalogService {
           ? cocktailNameById.get(v.makesCocktailId)
           : undefined,
       })),
+      color: d.color,
+      // Authored on the alcoholic parent as a NAME; buildCatalog re-resolves it and re-stamps the
+      // inverse `alcoholFreeOfId` itself, so only the authored side is reverse-mapped here.
+      alcoholFreeCounterpart: d.alcoholFreeCounterpartId
+        ? cocktailNameById.get(d.alcoholFreeCounterpartId)
+        : undefined,
       imageUrl: d.imageUrl,
     }));
 

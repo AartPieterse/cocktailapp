@@ -62,6 +62,11 @@ export interface RawCatalogLine {
  * (or its authored id). Resolved into {@link CocktailVariation} (id-based) by `buildCatalog`.
  */
 export interface RawCatalogVariation {
+  /**
+   * Stable, cocktail-scoped key. Optional in the seed: `buildCatalog` falls back to
+   * `slugify(name)`, so a document authored before keys existed re-derives the identical key.
+   */
+  key?: string;
   name: string;
   description?: string;
   swaps?: { from: string; to: string }[];
@@ -124,7 +129,7 @@ export interface Catalog extends CatalogMeta {
 }
 
 /** Current catalog schema version — bump on a breaking shape change (see docs/data-model-refinement.md). */
-export const CATALOG_SCHEMA_VERSION = 1;
+export const CATALOG_SCHEMA_VERSION = 2;
 
 /**
  * An id-keyed translation overlay (e.g. `catalog.nl.json`) applied on top of the canonical
@@ -142,8 +147,11 @@ export interface CatalogTranslations {
       instructions?: string[];
       notes?: string;
       garnish?: string;
-      /** Index-aligned with the cocktail's `variations`; each overlays that variation's strings. */
-      variations?: { name?: string; description?: string }[];
+      /**
+       * Keyed by `CocktailVariation.key` — never by array index, so reordering, inserting or
+       * removing a variation can no longer move Dutch text onto the wrong one.
+       */
+      variations?: Record<string, { name?: string; description?: string }>;
     }
   >;
 }
@@ -179,9 +187,9 @@ export function applyCatalogTranslations(
         ? { ...line, name: translated }
         : line;
     });
-    // Overlay each variation's name/description by index; anything untranslated stays canonical.
-    const variations = ck.variations?.map((v, i) => {
-      const tv = t?.variations?.[i];
+    // Overlay each variation's name/description by key; anything untranslated stays canonical.
+    const variations = ck.variations?.map((v) => {
+      const tv = t?.variations?.[v.key];
       if (!tv) return v;
       return {
         ...v,
@@ -327,7 +335,23 @@ export function buildCatalog(
       });
 
       // Resolve variations: swap names → base ids (like alternatives) and makesCocktail name → id.
+      // Each variation also gets a stable, cocktail-scoped `key` (authored, else slugify(name)) —
+      // the identity the Dutch overlay is keyed on, so reordering can't move translated text.
+      const usedVariationKeys = new Set<string>();
       const variations: CocktailVariation[] = (c.variations ?? []).map((v) => {
+        const key = v.key?.trim() || slugify(v.name);
+        if (!key) {
+          throw new Error(
+            `Cocktail "${c.name}" has a variation whose name yields no key — author an explicit "key".`,
+          );
+        }
+        if (usedVariationKeys.has(key)) {
+          throw new Error(
+            `Cocktail "${c.name}" has two variations with the key "${key}" — keys must be unique ` +
+              `within a cocktail (the Dutch overlay is keyed on them).`,
+          );
+        }
+        usedVariationKeys.add(key);
         const swaps = (v.swaps ?? []).map((swap) => {
           const from = byName.get(swap.from.trim().toLowerCase());
           const to = byName.get(swap.to.trim().toLowerCase());
@@ -354,6 +378,7 @@ export function buildCatalog(
           }
         }
         return {
+          key,
           name: v.name.trim(),
           ...(v.description ? { description: v.description } : {}),
           ...(swaps.length ? { swaps } : {}),

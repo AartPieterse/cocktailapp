@@ -45,6 +45,13 @@ export class Ingredient {
   /** Folded spellings & brand names, kept for the search box. */
   @Prop({ type: [String], default: undefined })
   aliases?: string[];
+
+  /**
+   * Alcohol by volume, percent. Authored only where the ingredient contains alcohol; absent means
+   * "no alcohol". Carried here so the API round-trip reproduces the bundle's content hash.
+   */
+  @Prop({ type: Number, required: false })
+  abv?: number;
 }
 
 export const IngredientSchema = SchemaFactory.createForClass(Ingredient);

@@ -32,6 +32,8 @@ const OUTPUTS = [join(root, 'frontend', 'public', 'catalog.json')];
 // The Dutch overlay ships alongside the catalog, carrying the SAME version so a stale overlay is
 // ignored by applyCatalogTranslations (which falls back to canonical English).
 const NL_OUTPUTS = [join(root, 'frontend', 'public', 'catalog.nl.json')];
+// The shipped id set, committed so a removal can be told from a rename (see validate-seed rule 16).
+const LOCK = join(root, 'catalog-ids.lock.json');
 
 const raw = JSON.parse(readFileSync(SRC, 'utf8'));
 const { counts, ingredients, cocktails } = buildCatalog(
@@ -70,6 +72,18 @@ for (const out of NL_OUTPUTS) {
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, nlJson, 'utf8');
 }
+
+// The id lock: the sorted set of ids this build ships. Committed alongside the bundles and diffed
+// by CI, it is the ONLY baseline that behaves identically in CI, on a shallow clone and offline —
+// `git show HEAD:catalog.json` cannot serve as one, because CI's own regenerate-and-diff step
+// guarantees HEAD's bundle already equals the fresh build. validate-seed reads this to tell an
+// intentional removal (tombstoned in the seed's `retired[]`) from a silent one that would strand
+// every cabinet and favourite still holding the id.
+const lock = {
+  ingredients: ingredients.map((i) => i.id).sort(),
+  cocktails: cocktails.map((c) => c.id).sort(),
+};
+writeFileSync(LOCK, JSON.stringify(lock, null, 2) + '\n', 'utf8');
 
 const staples = ingredients.filter((i) => i.isStaple).length;
 console.log(`Catalog v${version} written to ${OUTPUTS.length} sinks (+ nl overlay):`);

@@ -41,6 +41,46 @@ describe('CatalogService cross-sink parity (real seed)', () => {
     expect(payload.counts).toEqual(bundle.counts);
   });
 
+  /**
+   * A separate fixture, deliberately NOT the real seed: every seed key is authored as
+   * `slugify(name)`, so a dropped `key` in CatalogService's reverse map would still be re-derived
+   * identically and the parity test above could never catch it. A key that diverges from its name
+   * (a variation renamed after shipping) is the case that makes carrying it load-bearing.
+   */
+  it('round-trips a variation key that diverges from slugify(name)', async () => {
+    const { ingredients, cocktails } = buildCatalog(
+      [
+        { id: 'cachaca', name: 'Cachaça', category: 'spirit' },
+        { id: 'vodka', name: 'Vodka', category: 'spirit' },
+      ],
+      [
+        {
+          id: 'caipirinha',
+          name: 'Caipirinha',
+          baseSpirit: 'rum',
+          ingredients: [{ name: 'Cachaça', amount: 60, unit: 'ml' }],
+          variations: [
+            {
+              key: 'caipiroska',
+              name: 'Caipiroska (met wodka)',
+              swaps: [{ from: 'Cachaça', to: 'Vodka' }],
+            },
+          ],
+        },
+      ],
+    );
+    const service = new CatalogService(
+      { findAll: jest.fn().mockResolvedValue(ingredients.map((i) => ({ ...i }))) } as any,
+      { findAll: jest.fn().mockResolvedValue(cocktails.map((c) => ({ ...c }))) } as any,
+    );
+
+    const payload = await service.getCatalog();
+    const variation = payload.cocktails[0].variations![0];
+    // slugify('Caipiroska (met wodka)') would be 'caipiroska-met-wodka' — the authored key must win.
+    expect(variation.key).toBe('caipiroska');
+    expect(variation.swaps).toEqual([{ fromId: 'cachaca', toId: 'vodka' }]);
+  });
+
   it('preserves authored slug ids through the round-trip (no re-slugging of names)', async () => {
     const { ingDocs, cktDocs } = toMongoDocs();
     const service = new CatalogService(

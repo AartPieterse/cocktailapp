@@ -38,15 +38,25 @@ jobs:
       - name: Validate the frozen seed (ids, enums, refs, determinism)
         run: npm run validate:seed
 
-      - name: Regenerate catalog and verify both bundles are committed
+      - name: Regenerate catalog and verify the generated artifacts are committed
         run: |
           npm run build:catalog
           # Stage first so the check also catches an UNTRACKED bundle (a forgotten `git add`),
           # not just modifications to already-tracked files (`git diff` alone ignores untracked).
-          bundles="frontend/public/catalog.json frontend/public/catalog.nl.json"
+          # catalog-ids.lock.json rides along: it is the baseline validate-seed uses to tell an
+          # intentional (tombstoned) removal from one that silently strands stored cabinets.
+          bundles="frontend/public/catalog.json frontend/public/catalog.nl.json catalog-ids.lock.json"
           git add -A -- $bundles
           git diff --cached --exit-code -- $bundles \
-            || { echo "::error::catalog bundles are out of date or uncommitted — run 'npm run build:catalog' and commit the catalog.json + catalog.nl.json in frontend/public."; exit 1; }
+            || { echo "::error::catalog bundles are out of date or uncommitted — run 'npm run build:catalog' and commit frontend/public/catalog.json, frontend/public/catalog.nl.json and catalog-ids.lock.json."; exit 1; }
+
+      # The Dutch overlay source is a FOURTH generated artifact. It must run after build:catalog:
+      # the harvester reads the freshly built catalog.json to learn which ids and variation keys
+      # exist (scripts/build-translations-nl.mjs). Without this gate, hand-written Dutch text
+      # survives only until someone regenerates — which is how the caipirinha variation string
+      # sat one `npm run build:translations` away from disappearing.
+      - name: Verify the Dutch overlay source is up to date
+        run: npm run build:translations -- --check
 
       - name: Build frontend (production)
         run: npm run build --workspace frontend

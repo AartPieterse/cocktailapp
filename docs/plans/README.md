@@ -6,7 +6,8 @@ the plan tells you what someone intended and why.
 
 | Plan | About | Status |
 |---|---|---|
-| [next-phase.md](next-phase.md) | What to build next in CocktailApp, ordered by dependency | Step 1 done; step 2 onward not started |
+| [next-phase.md](next-phase.md) | What to build next in CocktailApp, ordered by dependency | Steps 1 and 11 done; step 2 onward not started |
+| [variations.md](variations.md) | How variations are stored, and the contract for adding or removing catalog entries | Built, except the four promotions and runtime id remapping |
 | [private-cloud.md](private-cloud.md) | Turning the same box into a private cloud — Immich and possibly Nextcloud, replacing Google Photos and Drive | Decided, nothing built |
 | [private-cloud-backups.md](private-cloud-backups.md) | Backup subsystem for everything on the box, Barkast included | Research only |
 | [private-cloud-coexistence.md](private-cloud-coexistence.md) | Reverse-proxy and day-2 host ops for running both stacks side by side | Stub — see the note below |
