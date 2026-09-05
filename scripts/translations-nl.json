@@ -244,7 +244,7 @@
       "name": "Angostura bitters"
     },
     "orange-bitters": {
-      "name": "Orange bitters"
+      "name": "Sinaasappelbitters"
     },
     "peychauds-bitters": {
       "name": "Peychaud's bitters"
@@ -301,7 +301,7 @@
       "name": "Gember"
     },
     "chili-pepper": {
-      "name": "Rode peper"
+      "name": "Chilipeper"
     },
     "basil": {
       "name": "Basilicum"
@@ -444,6 +444,7 @@
         "Zeef in een rocksglas met vers ijs.",
         "Druppel bitters op het schuim en garneer."
       ],
+      "notes": "Gebruik je eiwit, schud dan iets steviger — dan komt het schuim los en mengt het door de drank.",
       "garnish": "Cocktailkers en schijfje citroen"
     },
     "espresso-martini": {
@@ -499,6 +500,7 @@
         "Schenk in een hurricaneglas.",
         "Garneer met een ananaspunt."
       ],
+      "notes": "Van oudsher gingen er naar smaak een paar druppels vers limoensap bij. In plaats van sap kun je ook vier schijven verse ananas gebruiken.",
       "garnish": "Ananaspunt"
     },
     "caipirinha": {
@@ -525,6 +527,7 @@
         "Vul rustig aan met prosecco.",
         "Roer één keer heel voorzichtig."
       ],
+      "notes": "Ook bekend als Buck's Fizz.",
       "garnish": "Sinaasappelschil"
     },
     "bloody-mary": {
@@ -536,6 +539,7 @@
         "Breng op smaak met peper en zout.",
         "Garneer met selderij en citroen."
       ],
+      "notes": "Wordt er om ijs gevraagd, schenk hem dan in een longdrinkglas.",
       "garnish": "Selderijstengel en citroen"
     },
     "paloma": {
@@ -712,7 +716,21 @@
         "Doe de perzikpuree met ijs in het mengglas en voeg de prosecco toe.",
         "Roer voorzichtig en schenk in een gekoeld flûteglas."
       ],
-      "notes": "PUCCINI - vers mandarijnensap; ROSSINI - verse aardbeienpuree; TINTORETTO - vers granaatappelsap."
+      "notes": "PUCCINI - vers mandarijnensap; ROSSINI - verse aardbeienpuree; TINTORETTO - vers granaatappelsap.",
+      "variations": {
+        "puccini": {
+          "name": "Puccini",
+          "description": "Met vers mandarijnsap in plaats van perzikpuree."
+        },
+        "rossini": {
+          "name": "Rossini",
+          "description": "Met verse aardbeienpuree in plaats van perzikpuree."
+        },
+        "tintoretto": {
+          "name": "Tintoretto",
+          "description": "Met vers granaatappelsap in plaats van perzikpuree."
+        }
+      }
     },
     "between-the-sheets": {
       "name": "Between the Sheets",
@@ -1049,7 +1067,13 @@
       "instructions": [
         "Schenk crème de cassis in het glas en vul aan met droge witte wijn."
       ],
-      "notes": "KIR ROYAL - Gebruik champagne in plaats van witte wijn."
+      "notes": "KIR ROYAL - Gebruik champagne in plaats van witte wijn.",
+      "variations": {
+        "kir-royal": {
+          "name": "Kir Royal",
+          "description": "Met champagne (of mousserende wijn) in plaats van droge witte wijn."
+        }
+      }
     },
     "last-word": {
       "name": "Last word",
@@ -1389,7 +1413,21 @@
         "Roer voorzichtig."
       ],
       "notes": "Er zijn andere versies van de Spritz die Campari, Cynar of Select gebruiken in plaats van Aperol.",
-      "garnish": "Garneer met een schijfje sinaasappel."
+      "garnish": "Garneer met een schijfje sinaasappel.",
+      "variations": {
+        "campari-spritz": {
+          "name": "Campari Spritz",
+          "description": "Ruil de Aperol voor Campari — bitterder van karakter."
+        },
+        "cynar-spritz": {
+          "name": "Cynar Spritz",
+          "description": "Ruil de Aperol voor Cynar, een amaro van artisjok."
+        },
+        "select-spritz": {
+          "name": "Select Spritz",
+          "description": "Het Venetiaanse origineel, met Select in plaats van Aperol."
+        }
+      }
     },
     "stinger": {
       "name": "Stinger",

@@ -149,7 +149,15 @@ Sets the size of all remaining NL work, so it comes before translating. All 54 h
 Verified by running it: a clean regeneration used to **delete** caipirinha's hand-authored Dutch variation description, because the generator had no `variations` support and CI never ran the script. **Done** — but not the way this step prescribed, and the prescription was wrong: moving the text into `scripts/translations-nl-cocktails.json` would have *deleted the very string it was meant to save*, because `caipirinha` is in the curated `scripts/seed-data.mjs` set and the supplement loop skipped the whole entry for any id the curated loop already produced. What shipped instead: variation overlays are keyed by `CocktailVariation.key` (never by array index), both merge loops carry `variations`, the supplement loop merges per FIELD so it can still contribute variations to a curated cocktail, the Dutch text lives in `seed-data.mjs`, an unknown variation key now FAILS the run instead of being silently dropped, and `--check` runs in CI as its own step. The pipeline is genuinely circular, so `build:catalog` must run first — see `scripts/build-translations-nl.mjs:27-32` (the earlier `README.md:215` citation was wrong; that line is the MONGODB_URI password warning).
 
 ### 12. Translate the 52 missing ingredient names
-Confirmed: overlay covers 104/156 and 102/156 against a matching version hash. Ingredient names are the one string that appears in the wizard, Mijn bar, every card's `missName` chip and the `missing[]` array itself, so a Dutch user currently reads "Whipping cream" next to "Suikersiroop". 52 dictionary entries in `NL_INGREDIENTS`; the exact list comes from the script's own `⚠ no NL name for base id(s)` warning. Then add a coverage assertion to `validate-seed.mjs` that fails below 100% NL coverage — that omission is precisely how this gap opened when the seed grew.
+**Done — and the count was already stale when this was written.** The 104/156 and 102/156 figures were measured against the 156-entry catalog; the curated seed this branch builds from is 115 bases / 126 cocktails, and the overlay covered **115/115 and 126/126** before any name was typed. What was genuinely missing is now in:
+
+- **The assertion this step asked for** — `validate-seed.mjs` rule 17 fails the build when a base has no Dutch name (verified both ways: removing one entry exits 1, restoring it exits 0). It counts *entries*, never differences, because a brand or loanword (Campari, gin, grenadine, falernum) legitimately repeats the English name.
+- The map moved out of the harvester into `scripts/translations-nl-ingredients.mjs` so both scripts can read it, and three dead entries (`coriander`, `vanilla`, `milk` — bases the seed no longer has) were dropped; the same rule warns about those.
+- Two genuine mistranslations fixed: `chili-pepper` read "Rode peper" (which is also a bell pepper) → "Chilipeper", and `orange-bitters` read "Orange bitters" while every other generic type was translated → "Sinaasappelbitters".
+- Four IBA cocktails (`bloody-mary`, `mimosa`, `pina-colada`, `whiskey-sour`) showed their English `notes` under the Dutch "Tips" heading, because the curated `seed-data.mjs` entry wins per entry and carried none. Dutch notes authored.
+- One hard-coded Dutch string in `bar/bar.ts` ("Anonieme statistieken delen") shipped to English users too; it is an i18n key now.
+
+**Also done — the cocktail-text gate.** `validate-seed.mjs` rule 18: whatever the English catalog carries for a cocktail (description, instructions, notes, garnish, and each variation by key), the Dutch overlay has to carry too; fields the canonical doesn't have are never demanded out of nothing. Writing it found the last real gap — **7 variations across `bellini`, `kir` and `spritz`** whose Dutch text did not exist, so the detail page rendered English variation names and descriptions under Dutch headings. Authored. To keep the gate honest it resolves the text through the new `scripts/translations-nl-text.mjs`, the same merge `build-translations-nl.mjs` emits from, so the two cannot drift. Negative-tested three ways (a dropped description, a dropped variation, an invented variation key): each exits 1, and the restored tree exits 0.
 
 ### 13. Two-device acceptance test with real accounts (Aart only until step 5 is green)
 Anonymous cabinet → register (exercises the fresh-adopt union in `sync.service.ts reconcile()`); change on A, reload B (adopt-server branch, keyed on `lastServerUpdatedAt` in the `barkast.sync` localStorage key); logout/login keeps local data; `DELETE /api/me` wipes data and a lingering access token can't resurrect the doc (`me.controller.ts putData` guards this — verify it); 11 wrong passwords → 429. Watch `docker compose logs -f api` throughout.
@@ -175,13 +183,14 @@ This is the file you rebuild from when the NVMe dies, so wrong steps cost you th
 
 ---
 
-- **New staples never reach an existing cabinet.** `wizard.ts:252` pre-ticks staples only when
-  `!wizardDone()`, so the seven spices promoted to staples on 5 Sep 2026 (Salt, Cinnamon, Vanilla,
-  Cardamom, Coriander, Cloves, Nutmeg) are invisible to anyone who already built a bar — they will see
-  drinks drop off instead of appear. Accepted deliberately for now because Aart is the only user with a
-  cabinet. Fix before anyone else registers: either a one-off migration that unions new staples into
-  stored cabinets on load, or a "new basics since your last visit" prompt. The prompt respects the
-  user's choices; the migration does not come back the next time a staple changes.
+- ~~**New staples never reach an existing cabinet.**~~ **Done** — the migration option, not the
+  prompt. `frontend/src/app/core/staple-top-up.service.ts` records the staple set it last applied
+  (`barkast.staplesApplied`) and unions anything added since into a *non-empty* cabinet on load; an
+  empty one is left to the wizard's own pre-tick. A cabinet with no marker (every cabinet built before
+  this shipped, Aart's included) is back-filled once with every staple it lacks. It writes through the
+  silent `setAll`, so a catalog change never lands in the anonymous most-added-ingredient tally. The
+  accepted cost is the one the prompt would have avoided: a staple deliberately unticked comes back on
+  the single run after that staple joins the catalog — and never again.
 
 ## The one thing most likely to bite
 
