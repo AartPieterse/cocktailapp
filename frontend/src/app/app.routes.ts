@@ -25,6 +25,10 @@ export const routes: Routes = [
       // Back-compat: the stock editor used to live at /kast.
       { path: 'kast', pathMatch: 'full', redirectTo: 'bar' },
       {
+        path: 'techniek',
+        loadChildren: () => import('./techniek/techniek.routes').then((m) => m.TECHNIQUE_ROUTES),
+      },
+      {
         path: 'cocktails',
         loadChildren: () => import('./cocktails/cocktails.routes').then((m) => m.COCKTAIL_ROUTES),
       },

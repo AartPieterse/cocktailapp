@@ -32,6 +32,7 @@ import { environment } from '../../../environments/environment';
         <nav class="links" [class.open]="menuOpen()" (click)="menuOpen.set(false)">
           <a routerLink="/ontdek" routerLinkActive="active">{{ lang.t().nav.discover }}</a>
           <a routerLink="/cocktails" routerLinkActive="active">{{ lang.t().nav.cocktails }}</a>
+          <a routerLink="/techniek" routerLinkActive="active">{{ lang.t().nav.technique }}</a>
           <a routerLink="/bar" routerLinkActive="active">{{ lang.t().nav.myBar }}</a>
         </nav>
 
