@@ -1,5 +1,5 @@
 {
-  "version": "0ba983ed8d2b",
+  "version": "d2b13fe856db",
   "schemaVersion": 1,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
@@ -190,7 +190,7 @@
       "id": "cardamom",
       "name": "Cardamom",
       "category": "seasoning",
-      "isStaple": false
+      "isStaple": true
     },
     {
       "id": "carrot",
@@ -248,13 +248,13 @@
       "id": "cinnamon",
       "name": "Cinnamon",
       "category": "seasoning",
-      "isStaple": false
+      "isStaple": true
     },
     {
       "id": "cloves",
       "name": "Cloves",
       "category": "seasoning",
-      "isStaple": false
+      "isStaple": true
     },
     {
       "id": "cocoa-powder",
@@ -316,7 +316,7 @@
       "id": "coriander",
       "name": "Coriander",
       "category": "seasoning",
-      "isStaple": false
+      "isStaple": true
     },
     {
       "id": "cornstarch",
@@ -756,7 +756,7 @@
       "id": "nutmeg",
       "name": "Nutmeg",
       "category": "seasoning",
-      "isStaple": false
+      "isStaple": true
     },
     {
       "id": "orange",
@@ -923,7 +923,7 @@
       "id": "salt",
       "name": "Salt",
       "category": "seasoning",
-      "isStaple": false
+      "isStaple": true
     },
     {
       "id": "scotch",
@@ -1069,7 +1069,7 @@
       "id": "vanilla",
       "name": "Vanilla",
       "category": "seasoning",
-      "isStaple": false
+      "isStaple": true
     },
     {
       "id": "vanilla-extract",
@@ -2551,8 +2551,7 @@
           "name": "Cinnamon",
           "amount": 1,
           "unit": "teaspoon",
-          "note": "powdered",
-          "role": "seasoning"
+          "note": "powdered"
         },
         {
           "ingredientId": "egg",
@@ -3040,15 +3039,13 @@
           "ingredientId": "cinnamon",
           "name": "Cinnamon",
           "amount": 1,
-          "unit": "piece",
-          "role": "seasoning"
+          "unit": "piece"
         },
         {
           "ingredientId": "vanilla",
           "name": "Vanilla",
           "amount": 1,
-          "unit": "piece",
-          "role": "seasoning"
+          "unit": "piece"
         },
         {
           "ingredientId": "chocolate",
@@ -4679,8 +4676,7 @@
           "ingredientId": "salt",
           "name": "Salt",
           "amount": 1,
-          "unit": "teaspoon",
-          "role": "seasoning"
+          "unit": "teaspoon"
         },
         {
           "ingredientId": "asafoetida",
@@ -4878,8 +4874,7 @@
           "ingredientId": "cayenne-pepper",
           "name": "Cayenne pepper",
           "unit": "piece",
-          "note": "ground",
-          "role": "seasoning"
+          "note": "ground"
         }
       ],
       "glass": "highball",
@@ -6088,8 +6083,7 @@
           "name": "Orange peel",
           "amount": 3,
           "unit": "piece",
-          "note": "inch strips",
-          "role": "garnish"
+          "note": "inch strips"
         },
         {
           "ingredientId": "espresso",
@@ -6103,8 +6097,7 @@
           "name": "Nutmeg",
           "amount": 0.13,
           "unit": "teaspoon",
-          "note": "ground",
-          "role": "seasoning"
+          "note": "ground"
         }
       ],
       "glass": "mug",
@@ -7306,15 +7299,13 @@
           "name": "Cinnamon",
           "amount": 3,
           "unit": "piece",
-          "note": "inch",
-          "role": "seasoning"
+          "note": "inch"
         },
         {
           "ingredientId": "cloves",
           "name": "Cloves",
           "amount": 0.5,
-          "unit": "teaspoon",
-          "role": "seasoning"
+          "unit": "teaspoon"
         },
         {
           "ingredientId": "lime-juice",
@@ -7531,8 +7522,7 @@
           "ingredientId": "lemon",
           "name": "Lemon",
           "unit": "piece",
-          "note": "Juice of 1",
-          "role": "garnish"
+          "note": "Juice of 1"
         },
         {
           "ingredientId": "sugar",
@@ -7757,7 +7747,7 @@
           "name": "Coriander",
           "amount": 0.25,
           "unit": "teaspoon",
-          "role": "seasoning"
+          "optional": true
         },
         {
           "ingredientId": "cardamom",
@@ -7766,7 +7756,7 @@
           "amountMax": 5,
           "unit": "piece",
           "note": "whole green",
-          "role": "seasoning"
+          "optional": true
         },
         {
           "ingredientId": "sugar",
@@ -7825,8 +7815,7 @@
         {
           "ingredientId": "cardamom",
           "name": "Cardamom",
-          "unit": "piece",
-          "role": "seasoning"
+          "unit": "piece"
         }
       ],
       "glass": "highball",

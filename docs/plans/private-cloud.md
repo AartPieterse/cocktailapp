@@ -19,13 +19,17 @@ Vastgelegd op 2026-09-05, na meting van de machine. Dit zijn keuzes, geen opties
 | # | Besluit | Grond |
 |---|---|---|
 | 1 | **Immich** voor foto's, gepind op `v3.1.0` | Enige met een Android-app die écht op de achtergrond backupt |
-| 2 | **Tailscale** als enige remote-access-pad; geen enkele poort open | Werkt overal, geen thuis-IP in DNS, en foto's door een gratis Cloudflare Tunnel botst met hun voorwaarden |
+| 2 | **Kale WireGuard**, twee peers, UDP 51820 geforward | *Herzien 2026-09-05 na de EU-audit.* Tailscale loste NAT-traversal op — een probleem dat hij niet heeft (publiek IP, geen CGNAT) — en betaalde daarvoor met een control plane onder Amerikaanse jurisdictie die zijn thuis-IP, device-namen en verbindingstijden bewaart. WireGuard is hier soevereiner **én simpeler**: geen daemon, geen account, geen derde partij |
+| 2b | **Geen foto's of video door een Cloudflare Tunnel** | Cloudflare's Free/Pro/Business-voorwaarden beperken non-HTML-content op public hostnames |
 | 3 | **2 TB SATA-SSD in de vrije bay, LUKS met TPM2-unlock, gemount op `/srv`** | TPM 2.0 + Secure Boot aanwezig → versleuteling zonder herinstallatie en zonder handwerk bij boot |
 | 4 | **Geen NAS, geen extra RAM, geen NVIDIA-driver** | Vrije SATA-bay maakt een NAS overbodig; 5 van 16 GB in gebruik; de iGPU doet de transcoding |
 | 5 | **Immich eerst, twee weken alleen** | Eén variabele tegelijk. Bij een probleem weet je waar het vandaan komt |
 | 6 | **Nextcloud is een beslismoment ná die twee weken**, geen voldongen feit | Bij één gebruiker en 30 GB is het enige onderdeel met upgrade-pijn misschien niet nodig |
 | 7 | **Backups + geslaagde restore-drill vóór er iets bij Google weg mag** | Google One blijft tot die tijd je verzekering |
 | 8 | **restic** als backup-engine, **Caddy** als reverse proxy, **Diun** notify-only | Zie de softwaretabel |
+| 9 | **DNS naar deSEC** (Berlijn, non-profit, gratis), ACME-token gescoped op `_acme-challenge` TXT | Cloudflare ziet anders elke hostnaam en elke query. Het gescopete token is de echte winst: een gecompromitteerde Caddy kan de zone niet omleiden |
+| 10 | **Offsite backup naar Hetzner Storage Box BX11 (Helsinki)**, niet Backblaze B2 | Niet primair om de vlag — restic versleutelt client-side — maar omdat ZFS-snapshots onder `/home/.zfs/snapshot` over SFTP **niet schrijfbaar** zijn, wat echte immutability geeft die restic met S3 Object Lock niet betrouwbaar haalt |
+| 11 | **Cloudflare Tunnel voor Barkast wordt vervangen** | Dit is de enige plek waar een niet-EU partij **plaintext persoonsgegevens van derden** ziet: de tunnel termineert TLS aan de edge, dus een Barkast-login passeert met e-mailadres én wachtwoord. Bovendien kan de tunnel niet blijven bestaan naast een DNS-verhuizing — zie de soevereiniteitsparagraaf |
 
 ---
 
@@ -85,7 +89,8 @@ gebruiker · ethernet wordt aangesloten.
 | Foto-migratie | **immich-go** | `v0.32.0` | Lost het Takeout JSON-sidecar-probleem op (datums, albums). Handmatig importeren verliest je metadata |
 | Bestanden | **beslismoment in fase 9** | — | Nextcloud is de complete Drive-vervanger (deellinks, on-demand files, CalDAV/CardDAV) maar ook het enige onderdeel met upgrade-pijn. Syncthing + SMB is een fractie van het onderhoud maar levert geen web-UI en geen deellinks |
 | Reverse proxy | **Caddy** | pinnen | Automatische certificaten met twee regels config. Traefik is krachtiger dan je nodig hebt; nginx-proxy-manager voegt een database en een UI toe die kunnen breken |
-| Toegang | **Tailscale** | apt-repo | Geen poortforwarding, geen dynamisch DNS, werkt achter CGNAT. Free Personal-plan is ruim voldoende |
+| Toegang | **WireGuard** (kaal, 2 peers) | in-kernel | Geen control plane, geen account, geen derde partij. NAT-traversal is niet nodig: publiek IP zonder CGNAT. NetBird (Berlijn) is het EU-alternatief als hij toch een gehoste control plane wil; Headscale is hier overkill voor twee peers |
+| DNS | **deSEC** | — | Duitse non-profit, gratis, officiële Caddy-module `caddy-dns/desec`, en token policies die je op één recordnaam kunt vastzetten |
 | Backup | **restic** | `0.19.1` upstream binary | Eén statische Go-binary, client-side AES-256, dedup. **Let op**: Ubuntu noble levert 0.16.4 met `self-update` eruit gepatcht — pak de upstream binary |
 | Update-signalering | **Diun** | `4.33.0` | Notify-only. **Nooit Watchtower** op Immich: die draait breaking migrations terwijl je slaapt |
 | Dead-man's switch | **healthchecks.io** | free tier | Moet extern staan. Een monitor op dezelfde box merkt niet dat de box dood is |
@@ -104,9 +109,11 @@ Verdedigbaar bij drie gebruikers en 2 TB; nu niet.
 - **Geen NVIDIA-driver.** De iGPU doet je transcoding; de GTX 1050 blijft slapen en scheelt stroom.
 - **Geen Watchtower** of andere auto-updater op Immich.
 - **Geen foto's of video door een gratis Cloudflare Tunnel.** Cloudflare's beperking op
-  non-HTML-content geldt voor Free/Pro/Business en raakt public-hostname-verkeer; private network
-  routes zijn expliciet uitgezonderd. Barkast's tunnel blijft dus zoals hij is: alleen JSON op
-  `api.<domein>`.
+  non-HTML-content geldt voor Free/Pro/Business en raakt public-hostname-verkeer.
+- **Geen Headscale.** Een eigen control plane op een VPS om twee peers te verbinden is puristisch,
+  niet verstandig.
+- **Geen ntfy.sh.** Self-hosted ntfy wel; de publieke instantie draait bij een privépersoon in
+  Connecticut.
 - **Geen LV-split op de bestaande NVMe.** `VFree = 0` en ext4 kan niet online krimpen.
 
 ---
@@ -179,9 +186,9 @@ sudo resize2fs /dev/ubuntu-vg/ubuntu-lv      # ext4 groeit wel online
 
 | Host-poort | Proces | Bereikbaar vanaf |
 |---|---|---|
-| 22/tcp | `sshd` | LAN + tailnet |
-| 80/tcp, 443/tcp+udp | `caddy` | LAN + tailnet |
-| 41641/udp | `tailscaled` | inkomend voor directe peers (niet forwarden op de router) |
+| 22/tcp | `sshd` | LAN + wg-tunnel |
+| 80/tcp, 443/tcp+udp | `caddy` | LAN + wg-tunnel |
+| 51820/udp | `wg-quick@wg0` | **de enige poort die je op de router forwardt**. WireGuard antwoordt niet op ongeauthenticeerde pakketten, dus voor een scanner bestaat hij niet |
 
 Verder **niets**. Alle services praten onderling over Docker-netwerken; databases komen nooit op het
 edge-netwerk. Barkast's `:8080` gaat eraf — het admin-dashboard bereik je via Caddy over het tailnet.
@@ -193,7 +200,7 @@ edge-netwerk. Barkast's `:8080` gaat eraf — het admin-dashboard bereik je via 
 
 | Component | Idle RAM |
 |---|---|
-| Host + Docker + Tailscale | ~900 MB |
+| Host + Docker + WireGuard | ~850 MB |
 | Barkast (api + mongo, met `mem_limit`) | ~700 MB |
 | Immich server + ML + Postgres + Valkey | ~2,5 GB (piek ~4 GB tijdens ML-sweep) |
 | Caddy + Diun | ~60 MB |
@@ -220,7 +227,7 @@ vervalt Caddy.
 
 **Checkpoint:** je kent je uplink, je weet of de bay er is, en de domeinkeuze staat vast.
 
-### Fase 1 — Ethernet + Tailscale + de 4G-test *(vanavond, gratis, ~30 min)*
+### Fase 1 — Ethernet + WireGuard + de 4G-test *(vanavond, gratis, ~30 min)*
 
 Dit is de enige stap die het hele project kan laten sneuvelen, en hij kost niets. Doe hem vóór je ook
 maar één applicatie installeert.
@@ -230,14 +237,41 @@ maar één applicatie installeert.
 ip -br link                     # eno2 moet UP zijn
 # DHCP-reservering op de router voor BEIDE MACs: eno2 04:d4:c4:78:d3:5b, wlo1 a0:51:0b:d1:c4:91
 
-curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale up --advertise-routes=192.168.1.0/24 --accept-dns=false
+sudo apt install -y wireguard
+umask 077; wg genkey | tee server.key | wg pubkey > server.pub
+wg genkey | tee phone.key | wg pubkey > phone.pub
+wg genpsk > phone.psk
 ```
 
-Keur de subnet-route goed in de Tailscale-admin. Installeer de app op je Android en je Windows-laptop,
-en zet op Android **Instellingen → Netwerk → VPN → Always-on VPN** aan.
+```ini
+# /etc/wireguard/wg0.conf
+[Interface]
+Address    = 10.10.0.1/24
+ListenPort = 51820
+PrivateKey = <server.key>
 
-**Checkpoint:** telefoon op 4G, wifi uit, `http://192.168.1.100:8080/api/catalog` geeft JSON. Werkt dit
+[Peer]                            # telefoon
+PublicKey    = <phone.pub>
+PresharedKey = <phone.psk>        # gratis extra laag op de key-exchange
+AllowedIPs   = 10.10.0.2/32
+```
+
+```bash
+sudo systemctl enable --now wg-quick@wg0
+sudo ufw allow 51820/udp comment 'wireguard'
+```
+
+Op de router alleen **UDP 51820** forwarden. Geen `ip_forward` en geen MASQUERADE nodig zolang
+Immich, Caddy en Barkast op deze box zelf draaien — routing naar het hele LAN is er niet voor nodig.
+In de Android-peer `PersistentKeepalive = 25` (anders valt de NAT-mapping van je provider weg) en
+always-on via Android's eigen VPN-instelling.
+
+> **Test dit vóór je iets anders weggooit, en controleer eerst dat je SSH over LAN hebt.** Jezelf
+> buitensluiten is de enige echte faalmodus hier. Android's "verbindingen blokkeren zonder VPN"
+> gedraagt zich wisselend in combinatie met smalle `AllowedIPs`; werkt het niet, kies dan of
+> lockdown uit met alleen always-on, of full tunnel (`AllowedIPs = 0.0.0.0/0, ::/0`).
+
+**Checkpoint:** telefoon op 4G, wifi uit, `http://10.10.0.1:8080/api/catalog` geeft JSON. Werkt dit
 niet, ga dan niet verder — los dit eerst op.
 
 ### Fase 2 — Host-basis
@@ -262,7 +296,7 @@ sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh
 sudo systemctl restart ssh
 sudo ufw default deny incoming && sudo ufw default allow outgoing
 sudo ufw allow from 192.168.1.0/24 to any port 22 proto tcp comment 'ssh lan'
-sudo ufw allow in on tailscale0
+sudo ufw allow in on wg0
 sudo ufw --force enable
 ```
 

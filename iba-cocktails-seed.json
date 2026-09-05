@@ -556,7 +556,8 @@
     {
       "id": "salt",
       "name": "Salt",
-      "category": "seasoning"
+      "category": "seasoning",
+      "isStaple": true
     },
     {
       "id": "pepper",
@@ -725,7 +726,8 @@
     {
       "id": "cloves",
       "name": "Cloves",
-      "category": "seasoning"
+      "category": "seasoning",
+      "isStaple": true
     },
     {
       "id": "guava-juice",
@@ -811,7 +813,8 @@
     {
       "id": "cinnamon",
       "name": "Cinnamon",
-      "category": "seasoning"
+      "category": "seasoning",
+      "isStaple": true
     },
     {
       "id": "egg",
@@ -831,7 +834,8 @@
     {
       "id": "vanilla",
       "name": "Vanilla",
-      "category": "seasoning"
+      "category": "seasoning",
+      "isStaple": true
     },
     {
       "id": "whipped-cream",
@@ -947,7 +951,8 @@
     {
       "id": "cardamom",
       "name": "Cardamom",
-      "category": "seasoning"
+      "category": "seasoning",
+      "isStaple": true
     },
     {
       "id": "black-pepper",
@@ -962,7 +967,8 @@
     {
       "id": "nutmeg",
       "name": "Nutmeg",
-      "category": "seasoning"
+      "category": "seasoning",
+      "isStaple": true
     },
     {
       "id": "peach-nectar",
@@ -977,7 +983,8 @@
     {
       "id": "coriander",
       "name": "Coriander",
-      "category": "seasoning"
+      "category": "seasoning",
+      "isStaple": true
     },
     {
       "id": "whipping-cream",
@@ -5659,8 +5666,7 @@
           "name": "Cinnamon",
           "amount": 1,
           "unit": "teaspoon",
-          "note": "powdered",
-          "role": "seasoning"
+          "note": "powdered"
         },
         {
           "name": "Egg",
@@ -5819,14 +5825,12 @@
         {
           "name": "Cinnamon",
           "amount": 1,
-          "unit": "piece",
-          "role": "seasoning"
+          "unit": "piece"
         },
         {
           "name": "Vanilla",
           "amount": 1,
-          "unit": "piece",
-          "role": "seasoning"
+          "unit": "piece"
         },
         {
           "name": "Chocolate",
@@ -6469,8 +6473,7 @@
         {
           "name": "Salt",
           "amount": 1,
-          "unit": "teaspoon",
-          "role": "seasoning"
+          "unit": "teaspoon"
         },
         {
           "name": "Asafoetida",
@@ -6571,8 +6574,7 @@
         {
           "name": "Cayenne pepper",
           "unit": "piece",
-          "note": "ground",
-          "role": "seasoning"
+          "note": "ground"
         }
       ],
       "glass": "highball",
@@ -6894,8 +6896,7 @@
           "name": "Orange peel",
           "amount": 3,
           "unit": "piece",
-          "note": "inch strips",
-          "role": "garnish"
+          "note": "inch strips"
         },
         {
           "name": "Espresso",
@@ -6907,8 +6908,7 @@
           "name": "Nutmeg",
           "amount": 0.13,
           "unit": "teaspoon",
-          "note": "ground",
-          "role": "seasoning"
+          "note": "ground"
         }
       ],
       "glass": "mug",
@@ -7024,14 +7024,12 @@
           "name": "Cinnamon",
           "amount": 3,
           "unit": "piece",
-          "note": "inch",
-          "role": "seasoning"
+          "note": "inch"
         },
         {
           "name": "Cloves",
           "amount": 0.5,
-          "unit": "teaspoon",
-          "role": "seasoning"
+          "unit": "teaspoon"
         },
         {
           "name": "Fresh Lime Juice",
@@ -7087,8 +7085,7 @@
         {
           "name": "Lemon",
           "unit": "piece",
-          "note": "Juice of 1",
-          "role": "garnish"
+          "note": "Juice of 1"
         },
         {
           "name": "Sugar",
@@ -7205,7 +7202,7 @@
           "name": "Coriander",
           "amount": 0.25,
           "unit": "teaspoon",
-          "role": "seasoning"
+          "optional": true
         },
         {
           "name": "Cardamom",
@@ -7213,7 +7210,7 @@
           "amountMax": 5,
           "unit": "piece",
           "note": "whole green",
-          "role": "seasoning"
+          "optional": true
         },
         {
           "name": "Sugar",
@@ -7264,8 +7261,7 @@
         },
         {
           "name": "Cardamom",
-          "unit": "piece",
-          "role": "seasoning"
+          "unit": "piece"
         }
       ],
       "glass": "highball",

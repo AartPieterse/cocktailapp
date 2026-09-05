@@ -158,6 +158,14 @@ This is the file you rebuild from when the NVMe dies, so wrong steps cost you th
 
 ---
 
+- **New staples never reach an existing cabinet.** `wizard.ts:252` pre-ticks staples only when
+  `!wizardDone()`, so the seven spices promoted to staples on 5 Sep 2026 (Salt, Cinnamon, Vanilla,
+  Cardamom, Coriander, Cloves, Nutmeg) are invisible to anyone who already built a bar — they will see
+  drinks drop off instead of appear. Accepted deliberately for now because Aart is the only user with a
+  cabinet. Fix before anyone else registers: either a one-off migration that unions new staples into
+  stored cabinets on load, or a "new basics since your last visit" prompt. The prompt respects the
+  user's choices; the migration does not come back the next time a staple changes.
+
 ## The one thing most likely to bite
 
 **There is no backup of any kind, and `deploy/restore.sh` restores over the live database — so the first time you need it will also be the first time it has ever run.** Today that costs a re-seed. The moment anyone other than you registers an account, it becomes unrecoverable loss of other people's data on a single NVMe with a 30-minute battery and an unproven power-on path. Steps 4 and 5 are an hour and a half combined. Do not let step 8 tempt you past them.

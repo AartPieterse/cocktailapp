@@ -121,6 +121,54 @@ pure, non-mutating function returning `MakeableResult[]` (`{ cocktail, missing[]
 - Cocktails with **zero** ingredient lines are excluded.
 - Results with `missingCount > maxMissing` are dropped; results are sorted by `missingCount` then name.
 
+
+### When may a line carry a `role`? — the vessel rule
+
+`role` is doing more work than its name suggests. It reads as *descriptive* ("what is this doing
+here?") but `makeable.ts` treats it as *modal* ("must the user own this?"). Setting it is therefore an
+assertion: **you can make this drink without this item in your cabinet.** Get it wrong and the app
+tells someone they can make a drink they cannot.
+
+Apply this test, in order:
+
+1. **Position.** Look at every mention of the item in `instructions`. If all of them fall in a
+   finishing clause applied to the already-built drink — *garnish, top with, float, rim, sprinkle
+   over, express over, serve with* — it may carry a role. If it appears in **any** build verb —
+   *combine, add, mix, heat, simmer, steep, brew, tie in, place in, blend, muddle* — it went into the
+   vessel and it is **required**.
+2. **Later removal is not exclusion.** A cinnamon stick pulled out of the milk, a cheesecloth sachet
+   lifted from the pot, cardamom left behind in the filter cone, a peel discarded — all still
+   required. You cannot make the drink without owning them. The IBA settles this: the Sazerac's
+   absinthe is used to rinse the glass and the excess is explicitly discarded, and it is still listed
+   as a quantity-bearing `10 ml Absinthe` **ingredient**, not a garnish.
+3. **Identity.** Even if step 1 passes, the line is required when the item is the sole source of a
+   flavour named in the drink's own name — *Khara* (salted) lassi, *Orange Scented* Hot Chocolate,
+   *Spiced* Peach Punch, *Lemon*ade.
+4. **Silence means undetermined**, not required. A line the instructions never mention (marshmallows
+   on a hot chocolate) is a judgement call — leave it alone rather than promoting it.
+
+Two things this rule deliberately does **not** do:
+
+- **It does not ask "would requiring this be annoying?"** That question is answered on the *ingredient*
+  via `isStaple`, never on the line — because a staple is pre-ticked and the user can untick it,
+  whereas a role silently overrules them. This mirrors Difford's "Key Pantry Ingredients" and Cocktail
+  Party App's "Pantry" category.
+- **It does not introduce a category for infused-then-removed aromatics.** The distinction is real in
+  cooking (*sachet d'épices*) and even in EU/Codex food law (*processing aid*), but no recipe data
+  standard models it — not schema.org/Recipe, Cooklang, RecipeML, Open Recipe Format, h-recipe, FoodOn,
+  TheCocktailDB or Bar Assistant. And it would change zero makeability answers, since every such line
+  is required either way. If the UI wants to say "infused, then removed", put it in `note`.
+
+Where a line is genuinely dispensable but not decorative, use **`optional: true`** — it is excluded
+from the makeable check without misdescribing what the item does. Thai Coffee's cardamom is the worked
+example: the vessel rule makes it required, but Thai oliang is traditionally made without it at all.
+
+> Note that "garnish" in the source domain does not mean dispensable. The IBA's Pisco Sour garnish is
+> "a few dashes of Amargo bitters **as an aromatic garnish**", and the IBA tags true optionality
+> separately and explicitly. We borrowed the vocabulary without its semantics; `optional` is what
+> carries the modal meaning here.
+
+
 So: **"makeable now"** = `maxMissing 0` (0 missing); **"bijna — je mist er één"** = query with
 `maxMissing 1`. `computeMakeable` does **not** itself apply staples or substitutes — its 3-arg
 signature is deliberately locked.
@@ -182,8 +230,8 @@ totals — ingredients, staples, cocktails and NL overlay coverage — on every 
 the build pipeline.
 
 What the seed actually authors is thinner than the model allows: **4** recipe lines carry
-`alternativeIds`, **4** cocktails carry `variations`, line roles are **37** `seasoning` and **20**
-`garnish`, and `baseSpirit` is set on all but **8** cocktails. Worth knowing before debugging a
+`alternativeIds`, **4** cocktails carry `variations`, line roles are **19** `seasoning` and **5**
+`garnish` with **14** lines marked `optional`, and `baseSpirit` is now set on **every** cocktail. Worth knowing before debugging a
 feature that may simply have no data behind it.
 
 ### Changing the data
