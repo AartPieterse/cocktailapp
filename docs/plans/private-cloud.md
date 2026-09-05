@@ -44,14 +44,23 @@ ervoor, backups via **restic**. Niets automatisch laten bijwerken.
 met alles erbij op ~5 GB van 16 GB. Eén ding moet wijzigen: de `:8080`-overlay van Barkast trek je in,
 zodat de reverse proxy de enige toegangsweg wordt.
 
-**3. Altijd bereikbaar vanaf mobiel.** **Tailscale**, zonder ook maar één poort open te zetten. Box +
-telefoon + laptop in één tailnet, op Android "always-on VPN" aan. Thuis, op 4G en in het buitenland
-gelijk bereikbaar, met WireGuard-encryptie en zonder je thuis-IP in publieke DNS.
+**3. Altijd bereikbaar vanaf mobiel.** **Kale WireGuard** met één geforwarde UDP-poort. Box +
+telefoon en laptop als peers, op Android "always-on VPN" aan. Thuis, op 4G en in het buitenland gelijk
+bereikbaar, en er is geen enkele derde partij bij betrokken. (Dit was Tailscale; zie
+[de soevereiniteitsparagraaf](private-cloud-sovereignty.md) voor waarom dat is gewijzigd — kort:
+Tailscale lost NAT-traversal op, en dat probleem heb je niet.)
 
 **4. Backups.** 3-2-1 met **restic**: kopie 1 is de live data, kopie 2 een lokale externe USB-schijf,
-kopie 3 een versleutelde offsite-repo. Op 30 GB kost offsite een paar euro per maand. Het echte werk zit
+kopie 3 een versleutelde offsite-repo bij **Hetzner Storage Box** (Helsinki). Op 30 GB kost dat een paar
+euro per maand. Het echte werk zit
 niet in het maken maar in het **bewijzen** dat het werkt: een geteste restore, een guard tegen lege
 backups, en een externe dead-man's switch die klaagt als de backup níét draaide.
+
+**En het vijfde punt dat je er zelf bij gaf:** je data binnen Europa houden. Je *inhoud* staat sowieso op
+je eigen box en gaat client-side versleuteld de deur uit — de vraag is bij wie je welke **metadata**
+achterlaat. Dat is apart uitgezocht in [`private-cloud-sovereignty.md`](private-cloud-sovereignty.md) en
+heeft vier besluiten in dit plan gewijzigd: DNS, remote access, de offsite-bestemming, en de Cloudflare
+Tunnel van Barkast.
 
 ---
 
@@ -191,7 +200,8 @@ sudo resize2fs /dev/ubuntu-vg/ubuntu-lv      # ext4 groeit wel online
 | 51820/udp | `wg-quick@wg0` | **de enige poort die je op de router forwardt**. WireGuard antwoordt niet op ongeauthenticeerde pakketten, dus voor een scanner bestaat hij niet |
 
 Verder **niets**. Alle services praten onderling over Docker-netwerken; databases komen nooit op het
-edge-netwerk. Barkast's `:8080` gaat eraf — het admin-dashboard bereik je via Caddy over het tailnet.
+edge-netwerk. Barkast's `:8080` gaat eraf — het admin-dashboard bereik je via Caddy door de
+WireGuard-tunnel.
 
 > **Val waar je in gaat lopen:** Docker DNAT't gepubliceerde poorten in `nat/PREROUTING`, *vóór* UFW's
 > `INPUT`-chain. UFW filtert door Docker gepubliceerde poorten dus **niet**. Wil je 80/443 echt
@@ -219,11 +229,16 @@ CPU is een non-issue: 12 threads, >95% idle zodra de eerste ML-sweep klaar is.
 sudo apt install -y speedtest-cli && speedtest-cli   # uplink → duur van de eerste offsite-seed
 ```
 
-Verder: **bodemplaat eraf** om de 2,5"-bay te bevestigen, en beslis of je een **domein** gebruikt.
-Caddy met echte certificaten wil er een; je hebt er voor Barkast toch al een nodig. Publieke A-records
-`photos.jouwdomein.nl` → `192.168.1.100`. Dat privé-IP in publieke DNS is prima: overal resolvebaar,
-alleen bereikbaar via LAN of tailnet. Geen domein? Dan `tailscale serve` met `*.ts.net`-certificaten en
-vervalt Caddy.
+Verder: **bodemplaat eraf** om de 2,5"-bay te bevestigen, en `whois` op je domein om te zien bij welke
+registrar het staat (dat bepaalt of fase 5 een NS-wijziging is of een transfer).
+
+Caddy met echte certificaten wil een domeinnaam. Heb je er geen, dan is er een gratis EU-route die
+alles intact laat: **deSEC geeft gratis namen onder `dedyn.io` uit**, met dezelfde API, dezelfde
+Caddy-module en gewoon Let's Encrypt-certificaten via DNS-01. Je hoeft dus geen domein te kopen en
+hoeft ook niet terug te vallen op zelfondertekende certificaten.
+
+Publieke A-records heb je in geen van beide gevallen nodig — DNS-01 gebruikt alleen een TXT-record, en
+je bereikt de box door de WireGuard-tunnel. Zie fase 5.
 
 **Checkpoint:** je kent je uplink, je weet of de bay er is, en de domeinkeuze staat vast.
 
@@ -331,21 +346,84 @@ Vier wijzigingen in `deploy/docker-compose.yml`:
 - `cloudflare/cloudflared:latest` → een vaste tag
 - de `:8080`-overlay laten vallen; de api krijgt in plaats daarvan een alias op het `edge`-netwerk
 
+**En de tunnel moet weg.** Dit is de scherpste bevinding uit de soevereiniteitsaudit en hij raakt
+Barkast, niet de fotostack. Een Cloudflare Tunnel **termineert TLS aan de edge** — dat is inherent aan
+hoe WAF, Access en caching werken. Bij een Barkast-login passeert daardoor het e-mailadres én het
+wachtwoord zelf (POST-body, niet de hash) door een Amerikaans bedrijf. Dat is de enige plek in dit hele
+ontwerp waar je persoonsgegevens van **anderen** verwerkt, en dus geen voorkeur maar een
+AVG-verantwoordelijkheid.
+
+Bovendien kan de tunnel niet blijven bestaan naast de DNS-verhuizing in fase 5: een tunnel-hostname
+vereist een CNAME naar `<UUID>.cfargotunnel.com`, en dat subdomein proxyt alleen voor records in
+hetzelfde Cloudflare-account. Externe nameservers behouden vereist partial setup (Business, $200/mnd);
+een los subdomein als eigen zone vereist Enterprise. Beide vallen af.
+
+Twee uitwegen:
+
+- **(a) `api.<domein>` rechtstreeks vanaf Caddy publiceren.** Nul derde partijen, nul kosten. Je thuis-IP
+  wordt dan publiek — maar zie hieronder: met WireGuard forward je toch al een poort, dus die eis heb je
+  dan al losgelaten.
+- **(b) EU-VPS als pure TCP-forwarder** (Hetzner CX22 of Scaleway, ~€60/jaar): WireGuard van de box naar
+  de VPS, en op de VPS **geen** TLS-terminatie maar nginx `stream` met `ssl_preread` of HAProxy in
+  TCP-mode. De VPS ziet dan alleen versleutelde bytes, de SNI-hostname en client-IP's. Strikt beter dan
+  Cloudflare Tunnel, en het verbergt het thuis-IP even goed.
+
+> **Beslis dit één keer, expliciet**, want de twee audits spraken elkaar hier tegen. Kies je WireGuard met
+> een geforwarde poort, dan is de eis "thuis-IP moet privé blijven" al vervallen en is (a) coherent én
+> €60/jaar goedkoper. Houd je die eis overeind, dan neem je de VPS èn laat je het WireGuard-endpoint via
+> die VPS lopen — anders bewaak je een deur die al openstaat.
+
 **Checkpoint:** `docker compose ps` toont `barkast-api-1` en `barkast-mongo-1` up, `ss -tulpn` toont
 `:8080` niet meer, en de autodeploy-timer wijst naar het nieuwe pad.
 
-### Fase 5 — Caddy
+### Fase 5 — DNS naar deSEC + Caddy
+
+Eerst `whois` op je domein: staat het bij **Cloudflare Registrar**, dan is dit een registrar-transfer met
+locks en geen simpele NS-wijziging.
+
+NS-records omzetten naar deSEC en DNSSEC laten bootstrappen via CDS/CDNSKEY (deSEC doet
+ECDSAP256SHA256 automatisch). Maak een token met een policy die alleen dit mag: `domain = <domein>`,
+`subname = "_acme-challenge"`, `type = "TXT"`, `perm_write = true`, plus een default-policy die de rest
+weigert. Dat is de eigenlijke winst — je huidige Cloudflare "Edit zone DNS"-token mag ook je A-, MX- en
+NS-records herschrijven.
+
+```bash
+xcaddy build --with github.com/caddy-dns/desec
+```
 
 ```
-photos.jouwdomein.nl {
-    reverse_proxy immich-server:2283
+*.jouwdomein.nl {
+    tls {
+        dns desec { token {env.DESEC_TOKEN} }
+    }
+    @photos host photos.jouwdomein.nl
+    handle @photos { reverse_proxy immich-server:2283 }
 }
 ```
 
-Certificaten via Let's Encrypt **DNS-01** met een Cloudflare API-token — je hebt geen open poort 80
-nodig en zet die ook niet open.
+Token via een systemd `EnvironmentFile` met mode 0600, niet inline in de Caddyfile.
 
-**Checkpoint:** geldig certificaat, bereikbaar vanaf je telefoon op 4G.
+**Een wildcard, en geen A-records.** Certificate Transparency publiceert elke hostnaam die je laat
+uitgeven; met `*.jouwdomein.nl` staat er straks één regel op crt.sh in plaats van `photos.`, `immich.` en
+`api.`. DNS-01 is de enige methode die wildcards toestaat en die gebruik je toch al. Schrap tegelijk de
+publieke A-records naar `192.168.1.100`: DNS-01 heeft alleen het TXT-record nodig, en publieke DNS die
+naar RFC1918 wijst is een kant-en-klaar DNS-rebinding-primitief dat veel resolvers bovendien wegfilteren.
+
+> **Volgorde-val:** doe dit pas als naamresolutie door de WireGuard-tunnel werkt (`DNS = 10.10.0.1` in de
+> peer-config, met een resolver op de box). Schrap je de A-records eerder, dan is Immich vanaf je telefoon
+> onbereikbaar en heb je geen weg terug.
+
+Zet tot slot een CAA-record. Dat is de echte mitigatie tegen mis-issuance, en het sluit meteen Caddy's
+stille ZeroSSL-fallback uit (ZeroSSL is sinds 2024 eigendom van HID Global, VS):
+
+```
+jouwdomein.nl. 3600 IN CAA 0 issue     "letsencrypt.org"
+jouwdomein.nl. 3600 IN CAA 0 issuewild "letsencrypt.org"
+jouwdomein.nl. 3600 IN CAA 0 iodef     "mailto:<jouw adres>"
+```
+
+**Checkpoint:** geldig wildcard-certificaat, bereikbaar vanaf je telefoon op 4G door de tunnel, en
+`crt.sh` toont alleen nog de wildcard.
 
 ### Fase 6 — Immich, met een testsubset
 
@@ -366,6 +444,25 @@ In `.env`: `IMMICH_VERSION=v3.1.0`, `UPLOAD_LOCATION=/srv/media/immich`,
 QuickSync aanzetten: neem `hwaccel.transcoding.yml` met het `quicksync`-profiel mee en geef `/dev/dri`
 door. ML op CPU laten staan.
 
+**Drie dingen die Immich naar buiten laten praten, en die je meteen dichtzet:**
+
+- **Kaartlaag.** Dit is de enige plek in het ontwerp waar afgeleide inhoud — de *locaties uit je
+  privéfoto's* — bij een derde partij belandt. Standaard haalt Immich zijn tegels bij
+  `tiles.immich.cloud`, met Cloudflare ervoor. Administration → Settings → Map & GPS: plak de
+  OpenFreeMap style-URL in Light Style en Dark Style (EU, geen API-key). Helemaal dicht kan ook: een
+  Europa-extract als `.pmtiles` van Protomaps, door Caddy geserveerd (`file_server` doet range requests
+  native) met een eigen MapLibre-style. Kies **geen** MapTiler of Geoapify — die zetten een persoonlijke
+  API-key in de style-URL en zijn qua metadata sléchter dan het anonieme origineel. De Android-app haalt
+  de style-URL bij je server op, dus deze serverwijziging repareert web én mobiel in één keer.
+- **Versiecheck uit**: `newVersionCheck.enabled: false`. Diun doet dat werk al.
+- **ML offline**: na de eerste ML-run `HF_HUB_OFFLINE=1` op de `immich-machine-learning`-container.
+  Daarna belt hij Hugging Face nooit meer. Er is nooit een foto heen gegaan — alleen modelgewichten
+  kwamen binnen.
+
+Haal de **Android-app uit GitHub Releases**, niet uit de Play Store: door het project getekend en altijd
+in pas met je server. F-Droid loopt achter, en Immich eist versie-afstemming tussen app en server — een
+achterlopende build kan je backup stil breken.
+
 Begin met **5 GB testmateriaal**, niet met je hele archief. Installeer de Android-app, zet
 camera-roll-backup aan, sta de **foreground service** toe en schakel batterij-optimalisatie voor de app
 uit. Laat dit **twee weken** draaien voordat je verder gaat.
@@ -379,12 +476,31 @@ eigenschap van deze hele opzet.
 **Kopie 1** live op `/srv` · **Kopie 2** externe USB-schijf op `/mnt/backup` (fstab met `nofail`) ·
 **Kopie 3** offsite in een versleutelde restic-repo.
 
+```
+# ~/.ssh/config -- poort 23, niet 22: poort 22 eist RFC4716-keys, 23 accepteert OpenSSH.
+Host storagebox
+  Hostname uXXXXXX-subY.your-storagebox.de
+  Port     23
+  User     uXXXXXX-subY
+  IdentityFile /root/.ssh/storagebox_ed25519
+```
+
 ```bash
 # Offsite-repo initialiseren MET de chunker-params van de lokale repo.
 # Dit kan ALLEEN bij init. Doe je het niet, dan werkt `restic copy` nooit meer.
-restic -r sftp:u123456@u123456.your-storagebox.de:/restic init \
+restic -r sftp:storagebox:/restic init \
        --from-repo /mnt/backup/restic --copy-chunker-params
 ```
+
+Gebruik een **subaccount** met toegang tot één directory, nooit het hoofdaccount, en zet dagelijkse
+snapshots aan in de Hetzner Console. Die snapshots staan onder `/home/.zfs/snapshot` en zijn over SFTP
+**niet schrijfbaar** — een aanvaller met gestolen credentials kan ze dus niet wissen. Dat is de reden
+voor Hetzner boven Backblaze B2, meer nog dan de jurisdictie: restic werkt slecht samen met S3 Object
+Lock, en Storage Box lost immutability op opslagniveau op. Kies **Helsinki** in plaats van Falkenstein
+voor gratis geografische scheiding.
+
+Repo-wachtwoord met `openssl rand -base64 48`, en **buiten de box bewaren** — een verloren
+restic-wachtwoord is een groter reîel risico dan welke buitenlandse wet ook.
 
 App-consistente dumps — een live database wegkopiëren levert een onbruikbare backup op:
 
@@ -412,7 +528,7 @@ Monitoring, licht gehouden:
 
 | Check | Hoe | Waarom |
 |---|---|---|
-| Backup gedraaid | **healthchecks.io** ping aan het eind van de job | Moet extern: een monitor op de box merkt niet dat de box dood is |
+| Backup gedraaid | **healthchecks.io** ping aan het eind van de job — `curl -fsS -m 10 --retry 5 https://hc-ping.com/<uuid>`, **zonder** `--data-binary` | Moet extern: een monitor op de box merkt niet dat de box dood is. Riga (Letland, EU), draait op Hetzner. Geen body meesturen, anders reizen je restic-paden mee. Alertkanaal op e-mail, niet SMS |
 | **Zijn er foto's binnengekomen?** | wekelijkse timer op `/api/server/statistics`; alarm bij 7 dagen 0 | Zo faalt dit soort opzet in de praktijk. Niemand bouwt deze check, iedereen heeft hem nodig |
 | Schijfruimte | alarm op 80% | |
 | NVMe-slijtage | `nvme smart-log` → `percentage_used` | QLC met constante schrijfbelasting |
@@ -479,11 +595,25 @@ Tot die tijd is Google je backup. Dat is de goedkoopste verzekering die je koopt
 | | |
 |---|---|
 | Eenmalig | 2 TB SATA-SSD ≈ €100 · externe USB-schijf 2 TB ≈ €65–80 · ethernetkabel ≈ €5 · domein ≈ €10/jaar (had je toch al nodig) |
-| Per maand | Offsite ≈ €0,20 (B2) tot €4 (Hetzner Storage Box, EU) · stroom ≈ €4–5 (20 W continu bij ~€0,30/kWh) |
+| Per maand | Hetzner Storage Box BX11 ≈ €3,87 incl. btw · stroom ≈ €4–5 (20 W continu bij ~€0,30/kWh) · deSEC €0 · WireGuard €0 · healthchecks.io €0 |
+| Optioneel | EU-VPS als vervanger van de Cloudflare Tunnel ≈ €60/jaar |
 | Uren | 8–12 uur opbouw, daarna 1–2 uur per maand |
 
+**De prijs van soevereiniteit, apart uitgerekend.** De backupwissel van Backblaze B2 naar Hetzner kost
+ongeveer **€32 per jaar** — B2 zou bij deze omvang rond €0,54/mnd liggen. Vanaf circa 460 GB draait dat
+om en is Hetzner absoluut goedkoper, met onbeperkte egress zodat een volledige restore niets kost. De
+DNS-wissel naar deSEC kost **niets**. De VPN-wissel kost **niets en bespaart complexiteit**: er verdwijnt
+een daemon, een account en een subnet-routeringslaag. Kaartlaag, Nextcloud-config en Ubuntu-phone-homes
+kosten samen **€0**. De enige structurele post is de eventuele VPS. Totaal kom je op ongeveer **€46 per
+jaar** extra als je `api.<domein>` zelf publiceert, of **€90–108 per jaar** met de VPS erbij.
+
+Eén functionele regressie is echt: op netwerken die uitgaand UDP blokkeren (sommige bedrijfs- en
+hotelnetwerken) komt kale WireGuard er niet in, waar Tailscale's DERP-fallback over 443/TCP stil
+doorkwam. Zeldzaam bij normaal 4G- en thuisgebruik, maar niet nul.
+
 **Eerlijk:** Google One 100 GB kost €1,99 per maand. Je bent met stroom alleen al duurder uit. De reden
-om dit te doen is zeggenschap over je eigen data en betere functionaliteit — niet geld.
+om dit te doen is zeggenschap over je eigen data, EU-jurisdictie en betere functionaliteit — niet geld.
+Dat is een prima reden, maar reken jezelf niet rijk.
 
 **Wat er kapot gaat:** Immich breaking changes (het project beweegt hard — lees élke release note),
 Nextcloud major-upgrades als je daarvoor kiest (nooit een versie overslaan, altijd snapshot vooraf), de
@@ -496,9 +626,12 @@ QLC-NVMe die slijt, en de laptopaccu die opzwelt als je geen laadlimiet zet.
 | Vraag | Wat het antwoord verandert |
 |---|---|
 | Zit er fysiek een 2,5"-bay in? | Zo nee: terugvaloptie A (geen versleuteling, mappen op root) of een tweede M.2 |
-| Heb je al een domein + Cloudflare-account? | Zo nee: Caddy vervalt en je doet `tailscale serve` met `*.ts.net`. Simpeler, lelijkere URL's |
+| Heb je al een eigen domein? | Zo nee: gratis `<naam>.dedyn.io` bij deSEC, met dezelfde Caddy-module en gewoon Let's Encrypt. Kost niets en blijft binnen de EU |
 | Wil je ook weg bij Google Agenda en Contacten? | Zo ja, dan is de keuze in fase 9 al gemaakt: Nextcloud |
 | TPM-unlock met of zonder pincode? | Zonder = geen handwerk bij reboot, maar een gestolen wérkende laptop is open. Met = pincode bij elke reboot |
+| **Moet je thuis-IP privé blijven, ja of nee?** | Beslis dit één keer. Nee → WireGuard met geforwarde poort en `api.<domein>` direct publiceren; scheelt €60/jaar. Ja → EU-VPS als forwarder èn het WireGuard-endpoint daarlangs |
+| Bij welke registrar staat het domein? | `whois` draaien vóór fase 5. Cloudflare Registrar betekent een transfer met locks, geen NS-wijziging |
+| Wil je de bestaande Tailscale-metadata laten wissen? | Opzeggen stopt de aanwas; wat er ligt blijft. Tailnet verwijderen in de admin console, eventueel een AVG art. 17-verzoek |
 
 ---
 

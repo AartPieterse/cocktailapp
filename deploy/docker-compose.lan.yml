@@ -18,7 +18,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ../dist/frontend/browser:/srv:ro
+      - ../frontend/dist/frontend/browser:/srv:ro
       - ./Caddyfile.lan:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
       - caddy-config:/config

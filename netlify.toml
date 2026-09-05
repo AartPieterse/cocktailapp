@@ -9,7 +9,11 @@
   # Build the shared types, generate the static catalog, then build the Angular app.
   command = "npm run build:shared && npm run build:catalog && npm run build --workspace frontend"
   # The Angular application builder emits the browser bundle here.
-  publish = "dist/frontend/browser"
+  # The Angular builder writes under the workspace, so this is frontend/dist/frontend/browser from
+  # the repo root — not dist/frontend/browser, which does not exist. Latent rather than live: this
+  # file is only read if Netlify's own git-triggered builds are re-enabled, and today CI publishes
+  # with `netlify deploy --dir` from a temp copy (.github/workflows/ci.yml).
+  publish = "frontend/dist/frontend/browser"
 
 [build.environment]
   # Angular 21 CLI requires Node >= 24.
