@@ -116,6 +116,28 @@ export interface UiStrings {
     notFound: string;
     allLessons: string;
   };
+  /**
+   * Structural families — the template underneath a drink (sour, highball, spirit-forward…). One
+   * line on every recipe, plus a small section of its own so that line has somewhere to lead.
+   */
+  family: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    ratio: string;
+    about: string;
+    othersInFamily: (n: number) => string;
+    inFamily: (n: number) => string;
+    recipesIn: string;
+    allFamilies: string;
+    notFound: string;
+  };
+  /** "Did you know?" trivia — on the home card, and on the recipe or ingredient it belongs to. */
+  facts: {
+    eyebrow: string;
+    next: string;
+    readMore: (name: string) => string;
+  };
   /** First-run wizard. */
   wizard: {
     step: (n: number, total: number) => string;
@@ -291,6 +313,7 @@ export interface UiStrings {
     editCocktail: string;
     cocktails: string;
     technique: string;
+    families: string;
   };
 }
 
@@ -371,6 +394,24 @@ const nl: UiStrings = {
     noMethod: 'Geldt voor elk recept',
     notFound: 'Deze les bestaat niet.',
     allLessons: 'Alle lessen',
+  },
+  family: {
+    eyebrow: 'De vorm',
+    title: 'Families',
+    intro:
+      'Bijna elke klassieker is één van negen vormen. Ken je de vorm, dan kun je erbinnen improviseren zonder recept.',
+    ratio: 'Verhouding',
+    about: 'Wat het is',
+    othersInFamily: (n) => (n === 1 ? 'Nog 1 in deze familie ›' : `Nog ${n} in deze familie ›`),
+    inFamily: (n) => `${n} ${n === 1 ? 'recept' : 'recepten'}`,
+    recipesIn: 'Recepten in deze familie',
+    allFamilies: 'Alle families',
+    notFound: 'Deze familie bestaat niet.',
+  },
+  facts: {
+    eyebrow: 'Wist je dat?',
+    next: 'Nog een weetje →',
+    readMore: (name) => `Bekijk ${name} ›`,
   },
   wizard: {
     step: (n, total) => `Stap ${n} van ${total}`,
@@ -534,6 +575,7 @@ const nl: UiStrings = {
     editCocktail: 'Cocktail bewerken — Barkast',
     cocktails: 'Cocktails — Barkast',
     technique: 'Techniek — Barkast',
+    families: 'Families — Barkast',
   },
 };
 
@@ -612,6 +654,24 @@ const en: UiStrings = {
     noMethod: 'Applies to every recipe',
     notFound: 'No such lesson.',
     allLessons: 'All lessons',
+  },
+  family: {
+    eyebrow: 'The shape',
+    title: 'Families',
+    intro:
+      'Almost every classic is one of nine shapes. Know the shape and you can improvise inside it without a recipe.',
+    ratio: 'Ratio',
+    about: 'What it is',
+    othersInFamily: (n) => (n === 1 ? '1 more in this family ›' : `${n} more in this family ›`),
+    inFamily: (n) => `${n} ${n === 1 ? 'recipe' : 'recipes'}`,
+    recipesIn: 'Recipes in this family',
+    allFamilies: 'All families',
+    notFound: 'That family does not exist.',
+  },
+  facts: {
+    eyebrow: 'Did you know?',
+    next: 'Another one →',
+    readMore: (name) => `See ${name} ›`,
   },
   wizard: {
     step: (n, total) => `Step ${n} of ${total}`,
@@ -775,6 +835,7 @@ const en: UiStrings = {
     editCocktail: 'Edit cocktail — Barkast',
     cocktails: 'Cocktails — Barkast',
     technique: 'Technique — Barkast',
+    families: 'Families — Barkast',
   },
 };
 

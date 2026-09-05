@@ -29,6 +29,10 @@ export const routes: Routes = [
         loadChildren: () => import('./techniek/techniek.routes').then((m) => m.TECHNIQUE_ROUTES),
       },
       {
+        path: 'families',
+        loadChildren: () => import('./families/families.routes').then((m) => m.FAMILY_ROUTES),
+      },
+      {
         path: 'cocktails',
         loadChildren: () => import('./cocktails/cocktails.routes').then((m) => m.COCKTAIL_ROUTES),
       },

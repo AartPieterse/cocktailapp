@@ -115,3 +115,35 @@ export const DRINK_FAMILY_ABOUT: Record<Locale, Record<DrinkFamily, string>> = {
     savoury: 'No sugar, but salt, acid and seasoning. The exception on a cocktail list, and proof that balance is not the same as sweetness.',
   },
 };
+
+/**
+ * The "this is a …" sentence opener, per family and per language.
+ *
+ * Written out per family rather than assembled from {@link DRINK_FAMILY_LABELS} because the label
+ * alone does not survive an article: "een sour" is Dutch, "een puur en geroerd" is not. One authored
+ * sentence per family is the only way both languages read like a bartender wrote them.
+ */
+export const DRINK_FAMILY_INTRO: Record<Locale, Record<DrinkFamily, string>> = {
+  nl: {
+    sour: 'Dit is een sour',
+    'spirit-forward': 'Dit is puur en geroerd',
+    highball: 'Dit is een highball',
+    fizz: 'Dit is een fizz',
+    sparkling: 'Dit is een mousserende cocktail',
+    creamy: 'Dit is een romige cocktail',
+    tiki: 'Dit is een tiki',
+    hot: 'Dit is een warme cocktail',
+    savoury: 'Dit is een hartige cocktail',
+  },
+  en: {
+    sour: 'This is a sour',
+    'spirit-forward': 'This one is spirit-forward',
+    highball: 'This is a highball',
+    fizz: 'This is a fizz',
+    sparkling: 'This is a sparkling cocktail',
+    creamy: 'This is a creamy cocktail',
+    tiki: 'This is a tiki drink',
+    hot: 'This is a hot cocktail',
+    savoury: 'This is a savoury cocktail',
+  },
+};

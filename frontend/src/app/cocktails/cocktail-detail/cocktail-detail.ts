@@ -1,5 +1,5 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,6 +12,9 @@ import {
   type VolumeUnit,
   convertMeasure,
   DIFFICULTY_LABELS,
+  type DrinkFamily,
+  DRINK_FAMILY_INTRO,
+  DRINK_FAMILY_RATIO,
   expandCabinet,
   GLASSWARE_LABELS,
   isVolumeUnit,
@@ -23,6 +26,7 @@ import {
 import { catchError, of, switchMap, tap } from 'rxjs';
 import { AnalyticsService } from '../../core/analytics.service';
 import { CabinetService } from '../../core/cabinet.service';
+import { factForCocktail } from '../../core/facts';
 import { LanguageService } from '../../core/language.service';
 import { FavoritesService } from '../../core/favorites.service';
 import { UnitPreferenceService } from '../../core/unit-preference.service';
@@ -79,6 +83,15 @@ import { environment } from '../../../environments/environment';
           <div class="detail">
             <h1>{{ c.name }}</h1>
             @if (c.description) { <p class="lede">{{ c.description }}</p> }
+
+            @if (c.family; as fam) {
+              <a class="family" [routerLink]="['/families', fam]">
+                <span class="fam-line">{{ familyIntro(fam) }} · {{ familyRatio(fam) }}</span>
+                @if (familyOthers() > 0) {
+                  <span class="fam-more no-print">{{ lang.t().family.othersInFamily(familyOthers()) }}</span>
+                }
+              </a>
+            }
 
             @if (makeable()) {
               <div class="banner ok">{{ lang.t().detail.haveAll }}</div>
@@ -144,6 +157,11 @@ import { environment } from '../../../environments/environment';
             @if (c.notes) {
               <div class="sec-label">{{ lang.t().detail.tips }}</div>
               <p class="notes">{{ c.notes }}</p>
+            }
+
+            @if (fact(); as f) {
+              <div class="sec-label">{{ lang.t().facts.eyebrow }}</div>
+              <p class="trivia">{{ f.text[lang.locale()] }}</p>
             }
 
             @if (c.variations?.length) {
@@ -311,6 +329,32 @@ import { environment } from '../../../environments/environment';
       padding: 12px 12px 12px 20px;
       color: var(--warn);
     }
+    .family {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+      margin-top: 18px;
+      max-width: 520px;
+      padding: 12px 16px;
+      border: 1px solid var(--hairline);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      background: var(--surface-2);
+    }
+    .family:hover {
+      border-color: var(--accent);
+    }
+    .fam-line {
+      font: 600 0.906rem var(--font-body);
+      color: var(--ink);
+    }
+    .fam-more {
+      font: 600 0.813rem var(--font-body);
+      color: var(--accent);
+      white-space: nowrap;
+    }
     .add-btn {
       background: var(--accent);
       border: none;
@@ -374,6 +418,15 @@ import { environment } from '../../../environments/environment';
       font: 500 0.938rem/1.6 var(--font-body);
       color: var(--muted);
       background: var(--surface-2);
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+    .trivia {
+      margin-top: 12px;
+      max-width: 520px;
+      font: 500 0.938rem/1.6 var(--font-body);
+      color: var(--muted);
+      background: var(--accent-soft);
       border-radius: 14px;
       padding: 16px 18px;
     }
@@ -584,6 +637,22 @@ export class CocktailDetail {
   /** Whether the recipe has any volume line worth offering a ml/cl/oz toggle for. */
   readonly hasVolume = computed(() => (this.cocktail()?.ingredients ?? []).some((i) => isVolumeUnit(i.unit)));
 
+  /**
+   * The whole catalog, only so the family line can say how many other recipes share this shape.
+   * Free in production (the static catalog is fetched once and replayed) and one request in dev.
+   */
+  private readonly allCocktails = toSignal(
+    this.cocktailService.getAll().pipe(catchError(() => of<Cocktail[]>([]))),
+    { initialValue: [] as Cocktail[] },
+  );
+
+  /** Recipes in this drink's family, minus this one. 0 while the catalog is still loading. */
+  readonly familyOthers = computed(() => {
+    const family = this.cocktail()?.family;
+    if (!family) return 0;
+    return Math.max(0, this.allCocktails().filter((c) => c.family === family).length - 1);
+  });
+
   readonly spec = computed(() => {
     const c = this.cocktail();
     return c ? glassSpecFor(c) : { glass: 'coupe' as const };
@@ -617,6 +686,16 @@ export class CocktailDetail {
       .join(', '),
   );
 
+  /**
+   * The one piece of trivia that belongs on this recipe: about the drink itself if there is one,
+   * otherwise about one of its bottles. Null for most recipes, and that is fine — a fact invented
+   * to fill the slot is worth less than an empty slot.
+   */
+  readonly fact = computed(() => {
+    const c = this.cocktail();
+    return c ? factForCocktail(c.id, c.ingredients.map((i) => i.ingredientId)) : null;
+  });
+
   constructor() {
     this.ingredientService.getAll().subscribe((list) => {
       this.ingredients.set(list);
@@ -637,6 +716,12 @@ export class CocktailDetail {
       });
   }
 
+  familyIntro(family: DrinkFamily): string {
+    return DRINK_FAMILY_INTRO[this.lang.locale()][family];
+  }
+  familyRatio(family: DrinkFamily): string {
+    return DRINK_FAMILY_RATIO[this.lang.locale()][family];
+  }
   methodLabel(c: Cocktail): string {
     return c.method ? METHOD_LABELS[this.lang.locale()][c.method] : '';
   }
