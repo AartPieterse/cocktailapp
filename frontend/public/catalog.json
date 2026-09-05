@@ -1,5 +1,5 @@
 {
-  "version": "e8fb80fcbfac",
+  "version": "ad3d203ed265",
   "schemaVersion": 2,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
@@ -1034,7 +1034,7 @@
       "name": "Alexander",
       "category": "The Unforgettables",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "Dessert in a coupe: cream and cacao rounded off by brandy, with grated nutmeg doing more work than it looks.",
       "instructions": [
         "Pour all ingredients into cocktail shaker filled with ice cubes.",
         "Shake and strain into a chilled cocktail glass."
@@ -1075,7 +1075,7 @@
       "name": "Americano",
       "category": "The Unforgettables",
       "baseSpirit": "other",
-      "description": "",
+      "description": "The Negroni's lighter ancestor. Soda stretches the Campari and vermouth into something you can drink before dinner rather than after.",
       "instructions": [
         "Mix the ingredients directly in an old fashioned glass filled with ice cubes.",
         "Add a splash of Soda Water.",
@@ -1117,7 +1117,7 @@
       "name": "Angel Face",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "Three spirits in equal measure and no citrus at all, which is why it drinks softer and heavier than it reads.",
       "instructions": [
         "Pour all ingredients into cocktail shaker filled with ice cubes.",
         "Shake and strain into a chilled cocktail glass."
@@ -1247,7 +1247,7 @@
       "name": "Aviation",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "Maraschino and violet turn a gin sour pale blue-grey. Restraint matters — a heavy hand on the violette makes it taste of soap.",
       "instructions": [
         "Add all ingredients into a cocktail shaker.",
         "Shake with cracked ice and strain into a chilled cocktail glass."
@@ -1341,7 +1341,7 @@
       "name": "Bee's Knees",
       "category": "New Era Drinks",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A Prohibition drink built to hide rough gin behind honey. The honey has to be thinned to syrup first or it seizes in the shaker.",
       "instructions": [
         "Stir honey with lemon and orange juices until it dissolves, add gin and shake with ice.",
         "Strain into a chilled cocktail glass."
@@ -1388,7 +1388,7 @@
       "name": "Bellini",
       "category": "Contemporary Classics",
       "baseSpirit": "other",
-      "description": "",
+      "description": "Venice, 1948, and named after a painter's pink. White peach only: yellow peach turns it cloying.",
       "instructions": [
         "Pour peach puree into the mixing glass with ice, add the Prosecco wine.",
         "Stir gently and pour in a chilled flute glass."
@@ -1439,7 +1439,7 @@
       "name": "Between the Sheets",
       "category": "The Unforgettables",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "A Sidecar with rum added, which sounds like too much and is not. Drier and sharper than either drink alone.",
       "instructions": [
         "Add all ingredients into a cocktail shaker.",
         "Shake with ice and strain into a chilled cocktail glass."
@@ -1483,7 +1483,7 @@
       "name": "Black Russian",
       "category": "Contemporary Classics",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Two ingredients over ice. Everything depends on the coffee liqueur, since there is nothing to hide behind.",
       "instructions": [
         "Pour the ingredients into the old fashioned glass filled with ice cubes.",
         "Stir gently."
@@ -1516,7 +1516,7 @@
       "name": "Bloody Mary",
       "category": "Contemporary Classics",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "The savoury cocktail. Roll it between two glasses rather than shaking, or the tomato juice goes thin and frothy.",
       "instructions": [
         "Stir gently all the ingredients in a mixing glass with ice, pour into rocks glass."
       ],
@@ -1585,7 +1585,7 @@
       "name": "Boulevardier",
       "category": "The Unforgettables",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "A Negroni that swaps gin for whiskey. Warmer, rounder, and better suited to a cold evening than the original.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
@@ -1631,7 +1631,7 @@
       "name": "Bramble",
       "category": "New Era Drinks",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A gin sour with blackberry liqueur trailed through it after building, so the drink bleeds red from the bottom up.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker except the Crème de Mûre, shake well with ice, strain into chilled old fashioned glass filled with crushed ice, then pour the blackberry liqueur (Crème de Mûre) over the top of the drink, in a circular motion."
       ],
@@ -1676,7 +1676,7 @@
       "name": "Brandy Crusta",
       "category": "The Unforgettables",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "The ancestor of the Sidecar, and the drink that introduced the sugared rim. The lemon peel lines the whole glass.",
       "instructions": [
         "Mix together all ingredients with ice cubes in a mixing glass and strain into prepared slim cocktail glass."
       ],
@@ -1735,7 +1735,7 @@
       "name": "Caipirinha",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Brazil's national drink. Muddle the lime skin-down so the oil comes out of the peel and not just the juice.",
       "instructions": [
         "Place lime and sugar into a double old fashioned glass and muddle gently.",
         "Fill the glass with cracked ice and add Cachaça.",
@@ -1790,7 +1790,7 @@
       "name": "Canchanchara",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Cuban, and older than the Daiquiri. Honey and lime over aguardiente, cut with water rather than shaken.",
       "instructions": [
         "Mix honey with water and lime juice and spread the mixture on the bottom and sides of the glass.",
         "Add cracked ice, and then the rum.",
@@ -1881,7 +1881,7 @@
       "name": "Cardinale",
       "category": "Contemporary Classics",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A drier Negroni: dry vermouth instead of sweet. Sharper and more bitter, with none of the original's roundness.",
       "instructions": [
         "Stir all ingredients with ice.",
         "Strain into a chilled cocktail glass."
@@ -1920,7 +1920,7 @@
       "name": "Casino",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A pre-Prohibition gin sour, dry and slightly nutty from the maraschino, with orange bitters lifting the finish.",
       "instructions": [
         "Pour all ingredients into cocktails shaker, shake well with ice, strain into chilled rocks glass with ice."
       ],
@@ -2014,7 +2014,7 @@
       "name": "Champagne Cocktail",
       "category": "Contemporary Classics",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "A sugar cube soaked in bitters, dropped into champagne. It keeps releasing bubbles from the bottom the whole way down.",
       "instructions": [
         "Place the sugar cube with 2 dashes of bitters in a large Champagne glass, add the cognac.",
         "Pour gently chilled Champagne."
@@ -2068,7 +2068,7 @@
       "name": "Chartreuse Swizzle",
       "category": "New Era Drinks",
       "baseSpirit": "other",
-      "description": "",
+      "description": "Swizzled until the glass frosts. Chartreuse carries 130 herbs, and pineapple is one of the few things that can stand up to it.",
       "instructions": [
         "Add all ingredients to a tall glass with pebble ice.",
         "Swizzle vigorously.",
@@ -2159,7 +2159,7 @@
       "name": "Clover Club",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A raspberry gin sour with an egg-white head. Dry-shake first or the foam never sets properly.",
       "instructions": [
         "Pour all ingredients into cocktails shaker, shake well with ice, strain into chilled cocktail glass."
       ],
@@ -2205,7 +2205,7 @@
       "name": "Corpse Reviver #2",
       "category": "Contemporary Classics",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A morning-after drink from the 1930s, and genuinely bracing. The absinthe is a rinse, not a measure.",
       "instructions": [
         "Pour all ingredients into shaker with ice.",
         "Shake well and strain in chilled cocktail glass."
@@ -2257,7 +2257,7 @@
       "name": "Cosmopolitan",
       "category": "Contemporary Classics",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Tarter than its reputation. The cranberry is there for colour and edge, not sweetness — this is a citrus drink.",
       "instructions": [
         "Add all ingredients into a cocktail shaker filled with ice.",
         "Shake well and strain into a large cocktail glass."
@@ -2266,7 +2266,7 @@
         {
           "ingredientId": "vodka",
           "name": "Vodka",
-          "call": "Citroenwodka",
+          "call": "Citron Vodka",
           "amount": 40,
           "unit": "ml"
         },
@@ -2347,7 +2347,7 @@
       "name": "Cuba Libre",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Rum and cola only becomes this when the lime goes in. Squeeze it in and drop the shell in the glass.",
       "instructions": [
         "Build all ingredients in a highball glass filled with ice."
       ],
@@ -2386,7 +2386,7 @@
       "name": "Daiquiri",
       "category": "The Unforgettables",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Three ingredients and nowhere to hide. Get the balance of lime and sugar right and it is the best test of a bar there is.",
       "instructions": [
         "In a cocktail shaker add all ingredients.",
         "Stir well to dissolve the sugar.",
@@ -2428,7 +2428,7 @@
       "name": "Dark ‘n' stormy",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Poured, not stirred, so the dark rum sits as a layer on the ginger beer. The name is trademarked in Bermuda.",
       "instructions": [
         "In a highball glass filled with ice pour the ginger beer and top floating with the Rum."
       ],
@@ -2461,7 +2461,7 @@
       "name": "Don's Special Daiquiri",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "A tiki blend from Don the Beachcomber, richer than a Daiquiri and thicker, with passion fruit doing the lifting.",
       "instructions": [
         "Flash-blend briefly with crushed ice.",
         "Pour into a footed glass and top with crushed ice."
@@ -2514,7 +2514,7 @@
       "name": "Dry Martini",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "Two ingredients, endlessly argued about. Stirred, never shaken — shaking clouds it and bruises the vermouth.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
@@ -2548,7 +2548,7 @@
       "name": "Espresso Martini",
       "category": "New Era Drinks",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Invented in 1980s London for a guest who wanted something to wake her up. Only fresh espresso gives it the crema.",
       "instructions": [
         "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
@@ -2631,7 +2631,7 @@
       "name": "Fernandito",
       "category": "New Era Drinks",
       "baseSpirit": "other",
-      "description": "",
+      "description": "Argentina drinks more Fernet than anywhere else, mostly like this. Bitter, medicinal, and oddly refreshing over ice.",
       "instructions": [
         "Pour the Fernet Branca into a double old fashioned glass with ice, fill the glass up with Cola.",
         "Gently stir."
@@ -2663,7 +2663,7 @@
       "name": "French 75",
       "category": "Contemporary Classics",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "Named after a field gun for the kick. Gin and lemon under champagne, and it hits harder than it tastes.",
       "instructions": [
         "Pour all the ingredients, except Champagne, into a shaker.",
         "Shake well and strain into a Champagne flute.",
@@ -2711,7 +2711,7 @@
       "name": "French Connection",
       "category": "Contemporary Classics",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "Two ingredients, no dilution beyond the ice. Amaretto rounds the cognac without covering it.",
       "instructions": [
         "Pour all ingredients directly into an old fashioned glass filled with ice cubes.",
         "Stir gently."
@@ -2743,7 +2743,7 @@
       "name": "French Martini",
       "category": "New Era Drinks",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Not a Martini at all. Pineapple juice shaken hard gives it the foam that makes it look like one.",
       "instructions": [
         "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
@@ -2782,7 +2782,7 @@
       "name": "Garibaldi",
       "category": "Contemporary Classics",
       "baseSpirit": "other",
-      "description": "",
+      "description": "Campari and orange juice, but the juice must be fluffy — whipped, not poured — or it is just bitter and flat.",
       "instructions": [
         "Build in a highball glass over ice.",
         "Ideally use aerated (fluffed) orange juice."
@@ -2815,7 +2815,7 @@
       "name": "Gin Basil Smash",
       "category": "New Era Drinks",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A Hamburg invention from 2008 and already a modern standard. Smash the basil once, hard; shredding it turns the drink bitter.",
       "instructions": [
         "Shake all ingredients with ice.",
         "Double-strain into a chilled cocktail glass."
@@ -2862,7 +2862,7 @@
       "name": "Gin Fizz",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A sour lengthened with soda. Serve it without ice in the glass so the head stays intact.",
       "instructions": [
         "Shake all ingredients with ice except soda water.",
         "Pour into thin tall Tumbler glass , top with a splash soda water."
@@ -2952,7 +2952,7 @@
       "name": "Grand Margarita",
       "category": "New Era Drinks",
       "baseSpirit": "tequila",
-      "description": "",
+      "description": "A Margarita made richer with Grand Marnier in place of triple sec. Rounder, with more orange and less bite.",
       "instructions": [
         "Salt the rim of a rocks glass.",
         "Shake with ice and strain over fresh ice."
@@ -2992,7 +2992,7 @@
       "name": "Grasshopper",
       "category": "Contemporary Classics",
       "baseSpirit": "other",
-      "description": "",
+      "description": "Mint and chocolate in cream, and unapologetically a dessert. Serves better after a meal than during one.",
       "instructions": [
         "Pour all ingredients into shaker filled with ice.",
         "Shake briskly for few seconds.",
@@ -3035,7 +3035,7 @@
       "name": "Hanky Panky",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "Created by Ada Coleman at the Savoy for an actor who wanted something with a kick. Fernet is the whole point.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
@@ -3077,7 +3077,7 @@
       "name": "Hemingway Special",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Grapefruit and maraschino, and no sugar at all — Hemingway asked for double rum and none. Dry and bracing.",
       "instructions": [
         "Pour all ingredients into a shaker with ice.",
         "Shake well and strain into a large cocktail glass."
@@ -3167,7 +3167,7 @@
       "name": "Horse's Neck",
       "category": "Contemporary Classics",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "The garnish is the drink's name: one unbroken spiral of lemon peel hung over the rim, running the length of the glass.",
       "instructions": [
         "Pour Cognac and ginger ale directly into a highball glass with ice cubes.",
         "Stir gently.",
@@ -3208,7 +3208,7 @@
       "name": "IBA Tiki",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "A modern tiki build with two rums and a nut liqueur. Complex, sweet, and much stronger than it presents.",
       "instructions": [
         "Muddle the ginger.",
         "Add the remaining ingredients and shake with ice.",
@@ -3288,7 +3288,7 @@
       "name": "Illegal",
       "category": "New Era Drinks",
       "baseSpirit": "tequila",
-      "description": "",
+      "description": "Mezcal and overproof rum, smoky and sharp at once. The falernum keeps the two from fighting each other.",
       "instructions": [
         "Pour all ingredients into the shaker.",
         "Shake vigorously with ice.",
@@ -3355,7 +3355,7 @@
       "name": "Irish Coffee",
       "category": "Contemporary Classics",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "Hot coffee under cold cream, and never stirred — you drink one through the other. Whip the cream just to the point it pours.",
       "instructions": [
         "Warm black coffee is poured into a pre-heated Irish coffee glass.",
         "Whiskey and at least one teaspoon of sugar is added and stirred until dissolved.",
@@ -3406,7 +3406,7 @@
       "name": "John Collins",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A Tom Collins made with dry gin. Built in the glass rather than shaken, so it stays clear and lightly carbonated.",
       "instructions": [
         "Pour all ingredients directly into a highball filled with ice.",
         "Stir gently."
@@ -3452,7 +3452,7 @@
       "name": "Jungle Bird",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Campari in a tiki drink, which should not work. Pineapple and blackstrap rum absorb the bitterness and it does.",
       "instructions": [
         "Shake with ice.",
         "Strain into a rocks glass over ice."
@@ -3505,7 +3505,7 @@
       "name": "KIR",
       "category": "Contemporary Classics",
       "baseSpirit": "other",
-      "description": "",
+      "description": "Burgundy's aperitif: a splash of blackcurrant in dry white wine. Named after a mayor of Dijon who served it constantly.",
       "instructions": [
         "Pour Crème de Cassis into glass, top up with white wine."
       ],
@@ -3549,7 +3549,7 @@
       "name": "Last word",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "Equal parts, all four assertive, and somehow balanced. Lost for decades and revived in Seattle in the 2000s.",
       "instructions": [
         "Add all ingredients into a cocktail shaker.",
         "Shake with ice and strain into a chilled cocktail glass."
@@ -3594,7 +3594,7 @@
       "name": "Lemon drop Martini",
       "category": "New Era Drinks",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "A sugared rim and a lemon sour underneath. Sharper than it looks if the lemon is fresh.",
       "instructions": [
         "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
@@ -3602,7 +3602,7 @@
         {
           "ingredientId": "vodka",
           "name": "Vodka",
-          "call": "Citroenwodka",
+          "call": "Citron Vodka",
           "amount": 30,
           "unit": "ml"
         },
@@ -3682,7 +3682,7 @@
       "name": "Long Island Ice Tea",
       "category": "Contemporary Classics",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Five spirits and a splash of cola that makes it look like iced tea. Tastes of none of them individually, which is the trick.",
       "instructions": [
         "Add all ingredients into a highball glass filled with ice.",
         "Stir gently."
@@ -3752,7 +3752,7 @@
       "name": "Mai-Tai",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Trader Vic's, 1944, and nothing to do with pineapple juice. Orgeat and lime over good rum, with a mint sprig for the nose.",
       "instructions": [
         "Add all ingredients into a shaker with ice.",
         "Shake and pour into a double rocks glass or a highball glass.",
@@ -3815,7 +3815,7 @@
       "name": "Manhattan",
       "category": "The Unforgettables",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "The drink that made vermouth respectable. Stirred until properly cold, and better with rye than with bourbon.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
@@ -3856,7 +3856,7 @@
       "name": "Margarita",
       "category": "Contemporary Classics",
       "baseSpirit": "tequila",
-      "description": "",
+      "description": "Lime and orange over tequila, salted on one half of the rim so the drinker chooses. Fresh lime or nothing.",
       "instructions": [
         "Add all ingredients into a shaker with ice.",
         "Shake and strain into a chilled cocktail glass"
@@ -3897,7 +3897,7 @@
       "name": "Martinez",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "The link between the Dry Martini and the Manhattan, and older than both. Sweeter, darker, and worth knowing.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
@@ -3945,7 +3945,7 @@
       "name": "Mary Pickford",
       "category": "The Unforgettables",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Havana in the 1920s, named for the silent-film actress. Pineapple and grenadine keep it pink and soft.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
@@ -3989,7 +3989,7 @@
       "name": "Mimosa",
       "category": "Contemporary Classics",
       "baseSpirit": "other",
-      "description": "",
+      "description": "Half orange juice, half sparkling, and the temperature matters more than the ratio. Both ingredients must be properly cold.",
       "instructions": [
         "Pour orange juice into a flute glass and gently pour the sparkling wine.",
         "Stir gently."
@@ -4024,7 +4024,7 @@
       "name": "Mint Julep",
       "category": "Contemporary Classics",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "The Kentucky Derby's drink. Packed with crushed ice until the cup frosts on the outside — hold it by the rim.",
       "instructions": [
         "In Julep Stainless Steel Cup gently muddle the mint with sugar and water.",
         "Fill the glass with cracked ice, add the Bourbon and stir well until the cup frosts."
@@ -4071,7 +4071,7 @@
       "name": "Missionary's Downfall",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "A blended tiki drink built on mint and peach. Lighter and fresher than most of the category.",
       "instructions": [
         "Blend all ingredients with half a cup of crushed ice.",
         "Serve in a large coupe."
@@ -4133,7 +4133,7 @@
       "name": "Mojito",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Muddle the mint gently — you want the oil, not shredded leaf, which turns bitter and leaves black flecks in the glass.",
       "instructions": [
         "Mix mint springs with sugar and lime juice.",
         "Add splash of soda water and fill the glass with ice.",
@@ -4190,7 +4190,7 @@
       "name": "Monkey Gland",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "Paris, 1920s, named after a discredited surgical fad. Absinthe and grenadine over gin and orange, and better than the story.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
@@ -4234,7 +4234,7 @@
       "name": "Moscow Mule",
       "category": "Contemporary Classics",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Invented to sell vodka and copper mugs in equal measure. Ginger beer, not ginger ale — the heat is the point.",
       "instructions": [
         "In a Mule Cup or rocks glass, combine the vodka and ginger beer.",
         "Add lime juice and gently stir to involve all ingredients."
@@ -4275,7 +4275,7 @@
       "name": "Naked and Famous",
       "category": "New Era Drinks",
       "baseSpirit": "tequila",
-      "description": "",
+      "description": "Equal parts, smoky and bitter at once. A modern descendant of the Last Word, built on mezcal instead of gin.",
       "instructions": [
         "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
@@ -4318,7 +4318,7 @@
       "name": "Negroni",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "The aperitivo that taught bitterness to be charming. Stirred, never shaken — twenty seconds is the whole recipe.",
       "instructions": [
         "Pour all ingredients directly into a chilled old fashioned glass filled with ice, Stir gently."
       ],
@@ -4358,7 +4358,7 @@
       "name": "New York Sour",
       "category": "New Era Drinks",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "A whiskey sour with red wine floated on top. The wine sits in a band and mixes as you drink, changing it halfway.",
       "instructions": [
         "Pour all ingredients into the shaker.",
         "Shake vigorously with ice.",
@@ -4417,7 +4417,7 @@
       "name": "Old Cuban",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "A Mojito dressed for the evening: aged rum, bitters and champagne. Created at New York's Pegu Club in the 2000s.",
       "instructions": [
         "Pour all ingredients into cocktail shaker except the wine, shake well with ice, strain into chilled elegant cocktail glass.",
         "Top up with the sparkling wine."
@@ -4478,7 +4478,7 @@
       "name": "Old Fashioned",
       "category": "The Unforgettables",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "The original definition of a cocktail — spirit, sugar, bitters, water. Everything since is a variation on it.",
       "instructions": [
         "Place sugar cube in old fashioned glass and saturate with bitter, add few dashes of plain water.",
         "Muddle until dissolved.",
@@ -4533,7 +4533,7 @@
       "name": "Paloma",
       "category": "New Era Drinks",
       "baseSpirit": "tequila",
-      "description": "",
+      "description": "Mexico drinks far more of these than Margaritas. Grapefruit soda and salt, and it works because it is not sweet.",
       "instructions": [
         "Poor the tequila into a highball glass, squeeze the lime juice.",
         "Add ice and salt, fill up pink grapefruit soda.",
@@ -4584,7 +4584,7 @@
       "name": "Paper Plane",
       "category": "New Era Drinks",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "Equal parts, created in 2008 and now everywhere. Two bitter amari against bourbon and lemon, and none of them wins.",
       "instructions": [
         "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
@@ -4628,7 +4628,7 @@
       "name": "Paradise",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "An apricot gin sour from the 1920s, softer than most. The orange juice rounds the edges rather than sharpening them.",
       "instructions": [
         "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass."
       ],
@@ -4713,7 +4713,7 @@
       "name": "Penicillin",
       "category": "New Era Drinks",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "Honey, ginger and lemon over blended Scotch, with a smoky Islay float on top so the peat hits the nose first.",
       "instructions": [
         "Muddle fresh ginger in a shaker and add the remaining ingredients, except for the Islay single malt whiskey.",
         "Fill the shaker with ice and shake.",
@@ -4770,7 +4770,7 @@
       "name": "Pina Colada",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Puerto Rico's national drink. Coconut cream, not coconut milk — the difference is the whole texture.",
       "instructions": [
         "Blend all the ingredients with ice in an electric blender, pour into a large glass, and serve with straws."
       ],
@@ -4860,7 +4860,7 @@
       "name": "Pisco Punch",
       "category": "New Era Drinks",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "San Francisco's Gold Rush drink, and once a closely guarded secret. Pineapple steeped in syrup is what made it famous.",
       "instructions": [
         "Gently mash the cloves with the syrup.",
         "Add everything except the wine and shake with ice.",
@@ -4919,7 +4919,7 @@
       "name": "Pisco Sour",
       "category": "Contemporary Classics",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "Peru's national drink, and the egg white is not optional — it is what turns a sharp sour into something silky.",
       "instructions": [
         "Add all ingredients into a shaker with ice.",
         "Shake and strain into a chilled goblet glass."
@@ -4965,7 +4965,7 @@
       "name": "Planter's Punch",
       "category": "The Unforgettables",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "One of sour, two of sweet, three of strong, four of weak. The rhyme predates the recipe by a century.",
       "instructions": [
         "Pour all ingredients directly in a small tumbler or a typical terracotta glass."
       ],
@@ -5005,7 +5005,7 @@
       "name": "Porn Star Martini",
       "category": "New Era Drinks",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "London, 2002, and served with a shot of champagne on the side rather than in it. Alternate sips; that is the design.",
       "instructions": [
         "Shake with ice.",
         "Double-strain into a chilled glass.",
@@ -5060,7 +5060,7 @@
       "name": "Porto Flip",
       "category": "The Unforgettables",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "A flip is any drink with a whole egg or yolk shaken in. This one is warming, thick, and better in winter.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
@@ -5099,7 +5099,7 @@
       "name": "Rabo de Galo",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Brazilian, and the name means rooster's tail. Cachaça with vermouth and Cynar — bitter, herbal and low on sugar.",
       "instructions": [
         "Combine all ingredients in a rocks glass.",
         "Add ice and stir briefly."
@@ -5147,7 +5147,7 @@
       "name": "Ramos Fizz",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "New Orleans, and famously shaken for twelve minutes in the original bar. Two minutes gets you most of the way there.",
       "instructions": [
         "Pour all ingredients except soda water in a cocktail shaker with ice, Shake for two minutes, double strain in a glass, pour the drink back in the shaker, and hard shake without ice for one minute.",
         "Strain into a highball glass, top up with soda."
@@ -5268,7 +5268,7 @@
       "name": "Remember the Maine",
       "category": "The Unforgettables",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "A Manhattan with cherry brandy and an absinthe rinse, named after the 1898 battleship. Rich and faintly medicinal.",
       "instructions": [
         "Rinse a coupe glass with the absinthe and discard.",
         "Stir the remaining ingredients with ice.",
@@ -5358,7 +5358,7 @@
       "name": "Russian Spring Punch",
       "category": "New Era Drinks",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Dick Bradsell again: blackcurrant and lemon under sparkling wine, long and easy to drink for its strength.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker except the sparkling wine, shake well with ice, strain into a chilled tall tumbler glass filled with ice, and top up with sparkling wine."
       ],
@@ -5409,7 +5409,7 @@
       "name": "Rusty Nail",
       "category": "The Unforgettables",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "Scotch sweetened with Scotch — Drambuie is whisky, honey and herbs. Two ingredients, no citrus, no dilution.",
       "instructions": [
         "Pour all ingredients directly into an old fashioned glass filled with ice.",
         "Stir gently."
@@ -5442,7 +5442,7 @@
       "name": "Sazerac",
       "category": "The Unforgettables",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "New Orleans' own, and the absinthe is a rinse you discard. Traditionally served with no ice at all.",
       "instructions": [
         "Rinse a chilled old-fashioned glass with the absinthe, add crushed ice and set it aside.",
         "Stir the remaining ingredients over ice in a mixing glass.",
@@ -5490,7 +5490,7 @@
       "name": "Sea Breeze",
       "category": "Contemporary Classics",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Cranberry and grapefruit are bitter in different directions, and the vodka simply carries them. Long and dry.",
       "instructions": [
         "Build all ingredients in a highball glass filled with ice."
       ],
@@ -5529,7 +5529,7 @@
       "name": "Sex on the Beach",
       "category": "Contemporary Classics",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Peach and cranberry over vodka, and sweeter than most of this list. Built in the glass, never shaken.",
       "instructions": [
         "Build all ingredients in a highball glass filled with ice."
       ],
@@ -5573,7 +5573,7 @@
       "name": "Sherry Cobbler",
       "category": "New Era Drinks",
       "baseSpirit": "other",
-      "description": "",
+      "description": "The drink that popularised the drinking straw in the 1830s. Shaken with fruit and served over a mound of crushed ice.",
       "instructions": [
         "Shake with the citrus wheels and ice.",
         "Strain into a julep cup packed with crushed ice."
@@ -5672,7 +5672,7 @@
       "name": "Sidecar",
       "category": "The Unforgettables",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "Paris after the First World War. Cognac, orange and lemon in near-equal measure, with a sugared rim if you like.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
@@ -5709,7 +5709,7 @@
       "name": "Singapore Sling",
       "category": "Contemporary Classics",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "The Raffles Hotel, around 1915, and the recipe has been argued over ever since. Eight ingredients that somehow settle.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker filled with ice cubes.",
         "Shake well.",
@@ -5781,7 +5781,7 @@
       "name": "Southside",
       "category": "New Era Drinks",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A gin sour with mint, said to have been the drink of Chicago's South Side during Prohibition. Clean and sharp.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker, shake well with ice, double-strain into chilled cocktail glass."
       ],
@@ -5836,7 +5836,7 @@
       "name": "Spicy Fifty",
       "category": "New Era Drinks",
       "baseSpirit": "vodka",
-      "description": "",
+      "description": "Chilli infused into the shake rather than the bottle, so the heat builds slowly. Elderflower keeps it floral underneath.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker, shake well with ice, double-strain into chilled cocktail glass."
       ],
@@ -5844,7 +5844,7 @@
         {
           "ingredientId": "vodka",
           "name": "Vodka",
-          "call": "Vanillewodka",
+          "call": "Vanilla Vodka",
           "amount": 50,
           "unit": "ml"
         },
@@ -5890,7 +5890,7 @@
       "name": "Spritz",
       "category": "New Era Drinks",
       "baseSpirit": "other",
-      "description": "",
+      "description": "Venice, and the ratio is fixed: three prosecco, two Aperol, one soda. Low in alcohol and built for the afternoon.",
       "instructions": [
         "Build all ingredients into a wine glass filled with ice.",
         "Stir gently."
@@ -5959,7 +5959,7 @@
       "name": "Stinger",
       "category": "The Unforgettables",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "Cognac and mint, and nothing else. Once the drink you ordered last, to clear the palate before leaving.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
@@ -6042,7 +6042,7 @@
       "name": "Suffering Bastard",
       "category": "New Era Drinks",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "Cairo, 1942, invented as a hangover cure for soldiers. Ginger beer over gin and cognac, which reads worse than it drinks.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker except the ginger beer, shake well with ice, Pour unstrained into a Collins glass or in the original S.",
         "Bastard mug and top up with ginger beer."
@@ -6134,7 +6134,7 @@
       "name": "Tequila Sunrise",
       "category": "Contemporary Classics",
       "baseSpirit": "tequila",
-      "description": "",
+      "description": "Poured and left alone — the grenadine sinks and stays there. Stirring it destroys the only reason it has that name.",
       "instructions": [
         "Pour tequila and orange juice directly into highball glass filled with ice cubes.",
         "Add the grenadine syrup to create chromatic effect (sunrise), do not stir."
@@ -6174,7 +6174,7 @@
       "name": "Three Dots and a Dash",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Morse code for V, for victory, and the garnish spells it out. A dense tiki blend from 1940s Chicago.",
       "instructions": [
         "Flash-blend with crushed ice.",
         "Pour into a footed glass and top with more crushed ice."
@@ -6245,7 +6245,7 @@
       "name": "Tipperary",
       "category": "New Era Drinks",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "Irish whiskey with Chartreuse, which is a strange pairing until you taste it. Herbal, sweet and quite strong.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
@@ -6292,7 +6292,7 @@
       "name": "Tommy's Margarita",
       "category": "New Era Drinks",
       "baseSpirit": "tequila",
-      "description": "",
+      "description": "San Francisco's version: agave syrup instead of orange liqueur. Cleaner, and it tastes more of the tequila.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled rocks glass filled with ice."
       ],
@@ -6334,7 +6334,7 @@
       "name": "Trinidad Sour",
       "category": "New Era Drinks",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "Built on a full ounce and a half of bitters, which should be undrinkable and is not. Orgeat is what saves it.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
@@ -6378,7 +6378,7 @@
       "name": "Tuxedo",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A Martini with maraschino and an absinthe rinse. Older, sweeter and more aromatic than the drink it became.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
@@ -6432,7 +6432,7 @@
       "name": "VE.N.TO",
       "category": "New Era Drinks",
       "baseSpirit": "brandy",
-      "description": "",
+      "description": "An IBA addition built on grappa, with chamomile and honey softening a spirit most people find sharp.",
       "instructions": [
         "Pour all ingredients into the shaker.",
         "Shake vigorously with ice.",
@@ -6490,7 +6490,7 @@
       "name": "Vesper",
       "category": "Contemporary Classics",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "Invented in print, in Casino Royale, before anyone made one. Shaken, as specified, though it drinks better stirred.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker filled with ice cubes.",
         "Shake and strain into a chilled cocktail glass."
@@ -6574,7 +6574,7 @@
       "name": "Vieux Carrè",
       "category": "The Unforgettables",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "New Orleans' French Quarter in a glass, and named after it. Two spirits, two bitters, and nothing sharp anywhere.",
       "instructions": [
         "Pour all ingredients into mixing glass with ice cubes.",
         "Stir well.",
@@ -6843,7 +6843,7 @@
       "name": "Whiskey Sour",
       "category": "The Unforgettables",
       "baseSpirit": "whisky",
-      "description": "",
+      "description": "Get the foam right and it is a different drink — an egg white is optional but transforms the texture.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker filled with ice.",
         "Shake well.",
@@ -6893,7 +6893,7 @@
       "name": "White Lady",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
-      "description": "",
+      "description": "A Sidecar built on gin instead of cognac. Sharper and drier, and it needs the sugar the Sidecar can do without.",
       "instructions": [
         "Pour all ingredients into a cocktail shaker, shake well with ice, strain into a chilled cocktail glass."
       ],
@@ -6930,7 +6930,7 @@
       "name": "Zombie",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
-      "description": "",
+      "description": "Don the Beachcomber, 1934, and famously limited to two per customer. Three rums, and the recipe was secret for decades.",
       "instructions": [
         "Add all ingredients into an electric blender with 170 grams of cracked ice.",
         "With pulse bottom blend for a few seconds.",
