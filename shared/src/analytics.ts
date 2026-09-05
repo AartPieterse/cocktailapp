@@ -8,12 +8,22 @@
  * nothing when it is set.
  */
 
-/** Known product event types the app emits. Stored as free-form strings; this list documents them. */
+/**
+ * Known product event types the app emits. Stored as free-form strings; this list documents them.
+ *
+ * The wizard reports its own funnel: `wizard_start` on entry, one `wizard_step_<n>` the first time
+ * each step is shown, and then exactly one of `wizard_complete` / `wizard_skip`. Because the
+ * backend tallies per type (`events.<type>`), the per-step counters alone give the drop-off curve —
+ * no per-event step field, and so no new shape in the ingest contract.
+ */
 export type AnalyticsEventType =
   | 'cocktail_view'
   | 'cabinet_add'
   | 'surprise_me'
+  | 'wizard_start'
   | 'wizard_complete'
+  | 'wizard_skip'
+  | `wizard_step_${number}`
   | 'catalog_refresh';
 
 /** One anonymous event. `cocktailId` / `ingredientId` are catalog slugs, never anything personal. */

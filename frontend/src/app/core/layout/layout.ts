@@ -8,6 +8,7 @@ import { SyncService } from '../sync/sync.service';
 import { UpdatePrompt } from '../update-prompt/update-prompt';
 import { Toast } from '../toast/toast';
 import { CabinetNotice } from '../cabinet-notice.service';
+import { StapleTopUp } from '../staple-top-up.service';
 
 @Component({
   selector: 'app-layout',
@@ -21,7 +22,10 @@ import { CabinetNotice } from '../cabinet-notice.service';
     </main>
     <footer class="no-print">
       <div class="container foot">
-        <span>{{ lang.t().common.appName }} — <span class="muted">{{ lang.t().common.tagline }}</span></span>
+        <span
+          >{{ lang.t().common.appName }} —
+          <span class="muted">{{ lang.t().common.tagline }}</span></span
+        >
         <span class="muted">
           <a routerLink="/cocktails">{{ lang.t().nav.cocktails }}</a> ·
           <a routerLink="/bar">{{ lang.t().nav.myBar }}</a>
@@ -71,4 +75,6 @@ export class Layout {
   private readonly sync = inject(SyncService);
   // Instantiating this here starts the app-wide "what changed in your bar" confirmation.
   private readonly cabinetNotice = inject(CabinetNotice);
+  // Carries staples added to the catalog since into a bar that was built before them.
+  private readonly stapleTopUp = inject(StapleTopUp);
 }

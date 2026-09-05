@@ -12,8 +12,14 @@ export const routes: Routes = [
         title: 'discover',
         loadComponent: () => import('./bar/bar').then((m) => m.Bar),
       },
+      // The wizard's step is a route param, so the browser's back button walks the wizard a step
+      // at a time instead of leaving it and dropping everything ticked so far. Every step shares
+      // ONE route config on purpose: Angular then reuses the component across steps (a second
+      // config for the bare path would tear it down and rebuild it on the first "Next"), and the
+      // redirect keeps the many existing `/bar/wizard` links working without a history entry.
+      { path: 'bar/wizard', pathMatch: 'full', redirectTo: 'bar/wizard/1' },
       {
-        path: 'bar/wizard',
+        path: 'bar/wizard/:step',
         title: 'buildBar',
         loadComponent: () => import('./bar/wizard/wizard').then((m) => m.Wizard),
       },

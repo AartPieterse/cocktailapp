@@ -1,5 +1,7 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 import {
   CATEGORY_HINTS,
   CATEGORY_LABELS_PLURAL,
@@ -199,10 +201,35 @@ export class Wizard {
   protected readonly lang = inject(LanguageService);
   private readonly ingredientService = inject(IngredientService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly analytics = inject(AnalyticsService);
 
   private readonly ingredients = signal<Ingredient[]>([]);
   readonly selection = signal<Set<string>>(new Set());
-  readonly current = signal(0);
+
+  /**
+   * The step lives in the URL (`/bar/wizard/3`), not in a signal, so the browser's back button —
+   * the one an Android user reaches for first — walks back a step instead of leaving the wizard
+   * and dropping every tick made so far.
+   */
+  private readonly routeStep = toSignal(
+    this.route.paramMap.pipe(map((p) => Number(p.get('step')) || 1)),
+    { initialValue: 1 },
+  );
+  readonly current = computed(() => {
+    const n = this.steps().length;
+    if (!n) return 0;
+    return Math.min(Math.max(this.routeStep() - 1, 0), n - 1);
+  });
+
+  /** The cabinet as it was when this run started — the baseline for "what did the user add". */
+  private cabinetAtStart = new Set<string>();
+  /** Ids ticked for the user (the pantry staples), so they are not reported as user choices. */
+  private preChecked = new Set<string>();
+  /** Ids the user actually clicked during this run. */
+  private readonly touched = new Set<string>();
+  private readonly stepsSeen = new Set<number>();
+  private committed = false;
 
   readonly steps = computed<WizardStep[]>(() => {
     const list = this.ingredients();
@@ -241,27 +268,46 @@ export class Wizard {
     return Math.round(((this.current() + 1) / n) * 100) + '%';
   });
 
-  private readonly analytics = inject(AnalyticsService);
-
   constructor() {
+    this.analytics.track('wizard_start');
+
     this.ingredientService.getAll().subscribe((list) => {
       this.ingredients.set(list);
-      const init = new Set(this.cabinet.ids());
+      this.cabinetAtStart = new Set(this.cabinet.ids());
+      const init = new Set(this.cabinetAtStart);
       // First run: pre-check the pantry staples so building a bar is fast.
       if (!this.cabinet.wizardDone()) {
-        for (const ing of list) if (ing.isStaple) init.add(ing.id);
+        for (const ing of list)
+          if (ing.isStaple) {
+            if (!init.has(ing.id)) this.preChecked.add(ing.id);
+            init.add(ing.id);
+          }
       }
-      this.selection.set(init);
+      // Resume an interrupted run, but only when the cabinet is still what it was when the draft
+      // was written — otherwise a stale draft would quietly undo edits made in Mijn bar since.
+      const draft = readDraft();
+      this.selection.set(
+        draft && sameIds(draft.base, [...this.cabinetAtStart]) ? new Set(draft.ids) : init,
+      );
     });
 
-    // Keep the step index valid if the steps list changes.
+    // Persist every tick, so a reload or an accidental navigation mid-wizard costs nothing.
     effect(() => {
-      const n = this.steps().length;
-      if (n && this.current() > n - 1) this.current.set(n - 1);
+      if (this.committed || !this.ingredients().length) return;
+      writeDraft({ base: [...this.cabinetAtStart].sort(), ids: [...this.selection()].sort() });
+    });
+
+    // One event the first time each step is shown: the totals give the drop-off curve.
+    effect(() => {
+      const i = this.current();
+      if (!this.steps().length || this.stepsSeen.has(i)) return;
+      this.stepsSeen.add(i);
+      this.analytics.track(`wizard_step_${i + 1}` as const);
     });
   }
 
   toggle(id: string): void {
+    this.touched.add(id);
     const next = new Set(this.selection());
     if (next.has(id)) next.delete(id);
     else next.add(id);
@@ -270,20 +316,86 @@ export class Wizard {
 
   next(): void {
     if (this.isLast()) this.finish();
-    else this.current.update((v) => v + 1);
+    else void this.router.navigate(['/bar/wizard', this.current() + 2]);
   }
   prev(): void {
-    if (this.current() > 0) this.current.update((v) => v - 1);
+    if (this.current() > 0) void this.router.navigate(['/bar/wizard', this.current()]);
   }
 
   finish(): void {
+    // A catalog that never loaded leaves an empty selection; committing it would wipe a cabinet
+    // the user never opened this screen to clear.
+    if (!this.ingredients().length) return this.leave();
+
+    const added = [...this.selection()].filter((id) => !this.cabinetAtStart.has(id));
     this.cabinet.setAll(this.selection());
     this.cabinet.completeWizard();
+    // `setAll` is deliberately silent (sync adopts server state through it too), so the wizard —
+    // the route most ingredients are actually added on — reports its own adds. Staples ticked for
+    // the user and never touched are not user choices and stay out of the tally.
+    for (const id of added) {
+      if (this.touched.has(id) || !this.preChecked.has(id)) {
+        this.analytics.track('cabinet_add', { ingredientId: id });
+      }
+    }
     this.analytics.track('wizard_complete');
-    void this.router.navigate(['/ontdek']);
+    this.leave();
   }
 
   quit(): void {
+    // Skipping is a decision, not a detour: remember it, or the discover page greets the user with
+    // the very "build your bar" screen they just dismissed.
+    this.cabinet.completeWizard();
+    this.analytics.track('wizard_skip');
+    this.leave();
+  }
+
+  private leave(): void {
+    this.committed = true;
+    clearDraft();
     void this.router.navigate(['/ontdek']);
   }
+}
+
+const DRAFT_KEY = 'barkast.wizardDraft';
+
+/** An interrupted wizard run: what was ticked, and the cabinet it started from. */
+interface WizardDraft {
+  base: string[];
+  ids: string[];
+}
+
+function readDraft(): WizardDraft | null {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<WizardDraft>;
+    if (!Array.isArray(parsed.ids) || !Array.isArray(parsed.base)) return null;
+    return { base: parsed.base, ids: parsed.ids };
+  } catch {
+    return null;
+  }
+}
+
+function writeDraft(draft: WizardDraft): void {
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } catch {
+    /* storage unavailable — the wizard still works, it just cannot resume */
+  }
+}
+
+function clearDraft(): void {
+  try {
+    localStorage.removeItem(DRAFT_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+function sameIds(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) return false;
+  const left = [...a].sort();
+  const right = [...b].sort();
+  return left.every((id, i) => id === right[i]);
 }
