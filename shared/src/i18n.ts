@@ -60,6 +60,7 @@ export interface UiStrings {
     discover: string;
     myBar: string;
     cocktails: string;
+    technique: string;
     surpriseMe: string;
     lightMode: string;
     darkMode: string;
@@ -95,6 +96,47 @@ export interface UiStrings {
     ingredientCount: (n: number) => string;
     countSubstitutes: string;
     editBarShort: string;
+  };
+  /**
+   * The technique lessons — the reason to open the app that is not a bottle. Every drill is
+   * alcohol-free, and there is deliberately no progress vocabulary here: no "completed", no level.
+   */
+  technique: {
+    eyebrow: string;
+    intro: string;
+    why: string;
+    how: string;
+    wrong: string;
+    tell: string;
+    practise: string;
+    seconds: (n: number) => string;
+    usedIn: string;
+    usedInCount: (n: number) => string;
+    noMethod: string;
+    notFound: string;
+    allLessons: string;
+  };
+  /**
+   * Structural families — the template underneath a drink (sour, highball, spirit-forward…). One
+   * line on every recipe, plus a small section of its own so that line has somewhere to lead.
+   */
+  family: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    ratio: string;
+    about: string;
+    othersInFamily: (n: number) => string;
+    inFamily: (n: number) => string;
+    recipesIn: string;
+    allFamilies: string;
+    notFound: string;
+  };
+  /** "Did you know?" trivia — on the home card, and on the recipe or ingredient it belongs to. */
+  facts: {
+    eyebrow: string;
+    next: string;
+    readMore: (name: string) => string;
   };
   /** First-run wizard. */
   wizard: {
@@ -270,6 +312,8 @@ export interface UiStrings {
     newCocktail: string;
     editCocktail: string;
     cocktails: string;
+    technique: string;
+    families: string;
   };
 }
 
@@ -298,6 +342,7 @@ const nl: UiStrings = {
     discover: 'Ontdek',
     myBar: 'Mijn bar',
     cocktails: 'Cocktails',
+    technique: 'Techniek',
     surpriseMe: 'Verras me',
     lightMode: 'Lichte modus',
     darkMode: 'Donkere modus',
@@ -333,6 +378,40 @@ const nl: UiStrings = {
     ingredientCount: (n) => `${n} ${n === 1 ? 'ingrediënt' : 'ingrediënten'}`,
     countSubstitutes: 'Vervangers meetellen',
     editBarShort: 'Bewerk bar',
+  },
+  technique: {
+    eyebrow: 'Leren',
+    intro:
+      'Zes handelingen waarmee je elk recept in deze app kunt maken. Elke les heeft een oefening waar geen fles voor nodig is.',
+    why: 'Waarom',
+    how: 'Zo doe je het',
+    wrong: 'Waar het misgaat',
+    tell: 'Hoe je weet dat het goed is',
+    practise: 'Oefenen',
+    seconds: (n) => `${n} seconden`,
+    usedIn: 'Recepten waarin je dit gebruikt',
+    usedInCount: (n) => `${n} ${n === 1 ? 'recept' : 'recepten'}`,
+    noMethod: 'Geldt voor elk recept',
+    notFound: 'Deze les bestaat niet.',
+    allLessons: 'Alle lessen',
+  },
+  family: {
+    eyebrow: 'De vorm',
+    title: 'Families',
+    intro:
+      'Bijna elke klassieker is één van negen vormen. Ken je de vorm, dan kun je erbinnen improviseren zonder recept.',
+    ratio: 'Verhouding',
+    about: 'Wat het is',
+    othersInFamily: (n) => (n === 1 ? 'Nog 1 in deze familie ›' : `Nog ${n} in deze familie ›`),
+    inFamily: (n) => `${n} ${n === 1 ? 'recept' : 'recepten'}`,
+    recipesIn: 'Recepten in deze familie',
+    allFamilies: 'Alle families',
+    notFound: 'Deze familie bestaat niet.',
+  },
+  facts: {
+    eyebrow: 'Wist je dat?',
+    next: 'Nog een weetje →',
+    readMore: (name) => `Bekijk ${name} ›`,
   },
   wizard: {
     step: (n, total) => `Stap ${n} van ${total}`,
@@ -495,6 +574,8 @@ const nl: UiStrings = {
     newCocktail: 'Nieuwe cocktail — Barkast',
     editCocktail: 'Cocktail bewerken — Barkast',
     cocktails: 'Cocktails — Barkast',
+    technique: 'Techniek — Barkast',
+    families: 'Families — Barkast',
   },
 };
 
@@ -523,6 +604,7 @@ const en: UiStrings = {
     discover: 'Discover',
     myBar: 'My bar',
     cocktails: 'Cocktails',
+    technique: 'Technique',
     surpriseMe: 'Surprise me',
     lightMode: 'Light mode',
     darkMode: 'Dark mode',
@@ -556,6 +638,40 @@ const en: UiStrings = {
     ingredientCount: (n) => `${n} ${n === 1 ? 'ingredient' : 'ingredients'}`,
     countSubstitutes: 'Count substitutes',
     editBarShort: 'Edit bar',
+  },
+  technique: {
+    eyebrow: 'Learn',
+    intro:
+      'Six actions that between them make every recipe in this app. Each lesson has a drill that needs no bottle.',
+    why: 'Why',
+    how: 'How to do it',
+    wrong: 'Where it goes wrong',
+    tell: 'How you know it worked',
+    practise: 'Practise',
+    seconds: (n) => `${n} seconds`,
+    usedIn: 'Recipes that use this',
+    usedInCount: (n) => `${n} ${n === 1 ? 'recipe' : 'recipes'}`,
+    noMethod: 'Applies to every recipe',
+    notFound: 'No such lesson.',
+    allLessons: 'All lessons',
+  },
+  family: {
+    eyebrow: 'The shape',
+    title: 'Families',
+    intro:
+      'Almost every classic is one of nine shapes. Know the shape and you can improvise inside it without a recipe.',
+    ratio: 'Ratio',
+    about: 'What it is',
+    othersInFamily: (n) => (n === 1 ? '1 more in this family ›' : `${n} more in this family ›`),
+    inFamily: (n) => `${n} ${n === 1 ? 'recipe' : 'recipes'}`,
+    recipesIn: 'Recipes in this family',
+    allFamilies: 'All families',
+    notFound: 'That family does not exist.',
+  },
+  facts: {
+    eyebrow: 'Did you know?',
+    next: 'Another one →',
+    readMore: (name) => `See ${name} ›`,
   },
   wizard: {
     step: (n, total) => `Step ${n} of ${total}`,
@@ -718,6 +834,8 @@ const en: UiStrings = {
     newCocktail: 'New cocktail — Barkast',
     editCocktail: 'Edit cocktail — Barkast',
     cocktails: 'Cocktails — Barkast',
+    technique: 'Technique — Barkast',
+    families: 'Families — Barkast',
   },
 };
 

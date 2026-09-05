@@ -1,5 +1,6 @@
 import { BaseSpirit, Cocktail, CocktailIngredientRole, CocktailVariation } from './cocktail';
 import { Difficulty } from './difficulty';
+import type { DrinkFamily } from './drink-family';
 import { Glassware } from './glassware';
 import type { Locale } from './i18n';
 import { Ingredient } from './ingredient';
@@ -91,6 +92,8 @@ export interface RawCatalogCocktail {
   servings?: number;
   tags?: string[];
   variations?: RawCatalogVariation[];
+  /** Structural template — see {@link DrinkFamily}. */
+  family?: DrinkFamily;
   /** Authored liquid colour (`#RRGGBB`) for the generated glass art. */
   color?: string;
   /**
@@ -419,6 +422,7 @@ export function buildCatalog(
         servings: c.servings ?? 1,
         ...(c.tags?.length ? { tags: c.tags } : {}),
         ...(variations.length ? { variations } : {}),
+        ...(c.family ? { family: c.family } : {}),
         ...(c.color ? { color: c.color } : {}),
         ...(counterpartId ? { alcoholFreeCounterpartId: counterpartId } : {}),
         ...(c.imageUrl ? { imageUrl: c.imageUrl } : {}),

@@ -186,6 +186,11 @@ import { glassSpecFor } from '../shared/cocktail-visual';
       color: var(--muted);
     }
     .hero-glasses {
+      /* The one mount that draws straight onto the page background instead of a
+         pale tint panel, so it is the one that has to flip the drawing's outline
+         colour for dark mode. Everywhere else --bk-ink keeps its dark default. */
+      --bk-ink: var(--ink);
+      --bk-glass: color-mix(in srgb, var(--ink) 8%, transparent);
       display: flex;
       justify-content: center;
       align-items: flex-end;
@@ -366,7 +371,7 @@ export class Bar {
   }
 
   spec(r: MakeableResult) {
-    return glassSpecFor(r.cocktail);
+    return glassSpecFor(r.cocktail, 'hero');
   }
 
 }

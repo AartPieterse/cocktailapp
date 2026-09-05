@@ -1,14 +1,14 @@
 /**
  * One-shot: author `abv` on every alcoholic ingredient in the seed.
  *
- * Feeds `standardDrinks()`, which turns a recipe into one neutral line — "ongeveer 1,4
- * standaardglas alcohol per glas" — at the same visual weight as the glass line. It is deliberately
- * never a sort key, a badge or a "strongest cocktails" filter: strength is information, not a virtue.
+ * Feeds `servedAbv()`, which reports how strong a drink ends up in the glass the way a bottle label
+ * reads — a stirred Martini near 30%, a highball near 10%. That is bar information: it tells you what
+ * kind of drink you are building, and therefore how to serve it.
  *
  * Figures are the common bottling strength for each category, not a specific brand. Where a range is
  * normal the middle of it is used, and the ones that vary most by producer are noted. A few points
- * either way move a serving by hundredths of a standaardglas, which is well inside the rounding the
- * UI does anyway — the number is honest about being an estimate, and the copy says "ongeveer".
+ * either way move a finished drink by a fraction of a percent, well inside the rounding the UI does
+ * anyway — the number is honest about being an estimate, and the copy says "ongeveer".
  *
  * Run once: `node scripts/add-abv.mjs`. Re-running only fills what is still missing.
  */
@@ -101,7 +101,7 @@ for (const ing of seed.ingredients) {
   filled += 1;
 }
 
-// A non-alcoholic ingredient must never carry an abv — standardDrinks() would count it.
+// A non-alcoholic ingredient must never carry an abv — servedAbv() would count it.
 const stray = seed.ingredients.filter((i) => !ALCOHOLIC.has(i.category) && typeof i.abv === 'number');
 if (stray.length) throw new Error(`abv on non-alcoholic ingredient(s): ${stray.map((i) => i.id).join(', ')}`);
 if (missing.length) throw new Error(`no abv authored for: ${missing.join(', ')}`);

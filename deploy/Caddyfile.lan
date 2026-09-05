@@ -15,10 +15,24 @@
 	try_files {path} /index.html
 	file_server
 
-	# Hashed build assets are immutable; index.html must never be cached or a deploy goes unseen.
-	@hashed path_regexp \.[0-9A-Z]{8,}\.(js|css|woff2?)$
-	header @hashed Cache-Control "public, max-age=31536000, immutable"
-	header /index.html Cache-Control "no-cache"
+	# Caching, in two non-overlapping halves.
+	#
+	# Matching `/index.html` by path was a trap: the browser asks for `/` or `/ontdek`, never for
+	# `/index.html`, so the no-cache header landed on nothing and every entry point was served with no
+	# cache directive at all. Browsers then fall back to heuristic caching off Last-Modified, and a
+	# phone will happily hold a stale HTML shell for days — which pins it to the old hashed bundles the
+	# shell names, so the whole app stays on the previous release.
+	#
+	# So: cache the hashed assets forever (their name changes when they change), and tell the browser
+	# to revalidate everything else — the shell, catalog.json, the manifest.
+	#
+	# The separator is a HYPHEN, not a dot: Angular's esbuild builder emits `styles-SBPBZZX4.css` and
+	# `chunk-3N2XJ7NA.js`. A pattern written for `name.HASH.ext` matches none of them, which silently
+	# turns the immutable-asset rule into dead config — it was written that way and never fired.
+	@hashed path_regexp [.-][0-9A-Z]{8,}\.(js|css|woff2?)$
+	@unhashed not path_regexp [.-][0-9A-Z]{8,}\.(js|css|woff2?)$
+	header @hashed   Cache-Control "public, max-age=31536000, immutable"
+	header @unhashed Cache-Control "no-cache"
 
 	log {
 		output stderr

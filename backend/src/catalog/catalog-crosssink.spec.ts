@@ -37,6 +37,22 @@ describe('CatalogService cross-sink parity (real seed)', () => {
     );
 
     const payload = await service.getCatalog();
+
+    // Name the drift before asserting the hash. `version` is a hash over exactly these objects, so a
+    // field CatalogService forgets to reverse-map fails the test either way — but as a bare hash
+    // mismatch, which says nothing about what broke. This has now bitten three times in one week
+    // (abv, color/alcoholFreeCounterpartId, family): every field buildCatalog can emit must also be
+    // carried by the Mongoose schema, this reverse map AND scripts/db-seed.mjs.
+    const drift = new Set<string>();
+    for (const [i, served] of payload.cocktails.entries()) {
+      const expected = bundle.cocktails[i];
+      if (!expected) continue;
+      for (const key of new Set([...Object.keys(served), ...Object.keys(expected)])) {
+        if (JSON.stringify((served as any)[key]) !== JSON.stringify(expected[key])) drift.add(key);
+      }
+    }
+    expect([...drift].sort()).toEqual([]);
+
     expect(payload.version).toBe(bundle.version);
     expect(payload.counts).toEqual(bundle.counts);
   });

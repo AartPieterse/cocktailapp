@@ -1,14 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { CocktailService } from '../../services/cocktail.service';
-import { AnalyticsService } from '../analytics.service';
 import { LanguageService } from '../language.service';
 
 /**
  * Fixed bottom tab bar for narrow screens (native-app feel for the installed PWA). Hidden on
  * desktop, where the top navbar carries the same links, and kept in sync with it:
- * Ontdek / Cocktails / Mijn bar / Verras me.
+ * Ontdek / Cocktails / Techniek / Mijn bar.
  *
  * It used to carry both "Mijn bar" (`/bar`) and "Mijn kast" (`/kast`, which merely redirects to
  * `/bar`) — two tabs to one destination, with the "kast" wording left over from the rename — and
@@ -27,14 +25,14 @@ import { LanguageService } from '../language.service';
         <mat-icon>format_list_bulleted</mat-icon>
         <span>{{ lang.t().nav.cocktails }}</span>
       </a>
+      <a routerLink="/techniek" routerLinkActive="active">
+        <mat-icon>school</mat-icon>
+        <span>{{ lang.t().nav.technique }}</span>
+      </a>
       <a routerLink="/bar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <mat-icon>local_bar</mat-icon>
         <span>{{ lang.t().nav.myBar }}</span>
       </a>
-      <button type="button" (click)="surprise()">
-        <mat-icon>casino</mat-icon>
-        <span>{{ lang.t().nav.surpriseMe }}</span>
-      </button>
     </nav>
   `,
   styles: `
@@ -86,15 +84,4 @@ import { LanguageService } from '../language.service';
 })
 export class BottomNav {
   protected readonly lang = inject(LanguageService);
-  private readonly cocktails = inject(CocktailService);
-  private readonly router = inject(Router);
-  private readonly analytics = inject(AnalyticsService);
-
-  surprise(): void {
-    this.analytics.track('surprise_me');
-    this.cocktails.getRandom().subscribe({
-      next: (c) => void this.router.navigate(['/cocktails', c.id]),
-      error: () => undefined,
-    });
-  }
 }

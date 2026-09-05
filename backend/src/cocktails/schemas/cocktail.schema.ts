@@ -3,6 +3,7 @@ import type {
   BaseSpirit,
   CocktailIngredientRole,
   Difficulty,
+  DrinkFamily,
   Glassware,
   MeasureUnit,
   Method,
@@ -10,6 +11,7 @@ import type {
 import {
   BASE_SPIRITS,
   DIFFICULTIES,
+  DRINK_FAMILIES,
   GLASSWARE,
   MEASURE_UNITS,
   METHODS,
@@ -164,6 +166,10 @@ export class Cocktail {
   /** Named variations (swaps + prose), resolved to base ids. */
   @Prop({ type: [CocktailVariationSchema], default: undefined })
   variations?: CocktailVariation[];
+
+  /** The structural family a recipe belongs to — the template underneath the drink. */
+  @Prop({ type: String, enum: [...DRINK_FAMILIES], required: false })
+  family?: DrinkFamily;
 
   /** Authored liquid colour (`#RRGGBB`) for the generated glass art. */
   @Prop({ trim: true })

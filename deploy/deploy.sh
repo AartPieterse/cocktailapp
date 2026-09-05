@@ -50,7 +50,24 @@ roll_out() {
     "${COMPOSE[@]}" up -d --no-deps api
   else
     log "Rolling out full stack …"
-    "${COMPOSE[@]}" up -d
+    # Name the services rather than bare `up -d`. cloudflared has no meaning without a real tunnel
+    # token: with the placeholder it exits 255 in a restart loop, and every deploy silently leaves a
+    # broken container behind. Ask compose which services exist instead of hard-coding a list, so a
+    # new overlay's service is picked up automatically.
+    local svc services=()
+    while read -r svc; do
+      [ -n "$svc" ] || continue
+      if [ "$svc" = "cloudflared" ] && { [ -z "${TUNNEL_TOKEN:-}" ] || [ "${TUNNEL_TOKEN}" = "change-me" ]; }; then
+        log "Skipping cloudflared — no real TUNNEL_TOKEN (LAN-only deployment)."
+        continue
+      fi
+      services+=("$svc")
+    done < <("${COMPOSE[@]}" config --services 2>/dev/null)
+
+    if [ ${#services[@]} -eq 0 ]; then
+      echo "Could not read the service list from compose — aborting rather than guessing."; exit 1
+    fi
+    "${COMPOSE[@]}" up -d "${services[@]}"
   fi
 
   # Versioned user-data migrations (migrate-mongo), if configured. Runs after the backup above.
