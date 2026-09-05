@@ -31,8 +31,8 @@ export interface Ingredient {
   aliases?: string[];
   /**
    * Alcohol by volume as a percentage (40 = 40% ABV). Authored only for ingredients that contain
-   * alcohol; absent means "no alcohol" for the purposes of {@link standardDrinks}. Drives the neutral
-   * strength line on a recipe — never a sort key, never a badge.
+   * alcohol; absent means "no alcohol". Drives the strength of the finished drink shown on a
+   * recipe — bar information, the way a bottle label reads, not a health measure.
    */
   abv?: number;
   createdAt?: string;
