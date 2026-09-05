@@ -31,9 +31,14 @@ html {
   --surface-2: #efe6d5;
   --surface-3: #eae0ce;
   --ink: #241e17;
-  --muted: #7b7060;
-  --faint: #9a8e7c;
-  --dim: #b0a390;
+  // Text greys, chosen for contrast on the cream ground rather than on white.
+  // Previously #7b7060 / #9a8e7c / #b0a390 measured 4.1:1, 2.7:1 and 2.1:1 against --bg — the last
+  // two failed even the 3:1 large-text floor while carrying 11px labels. Hierarchy now comes from
+  // size and weight, not from ever-paler grey. --decor keeps the old pale tone for non-text use.
+  --muted: #6b6052;
+  --faint: #736654;
+  --dim: #736654;
+  --decor: #b0a390;
   --hairline: rgba(36, 30, 23, 0.12);
   --hairline-soft: rgba(36, 30, 23, 0.08);
   --accent: #c24218;
@@ -89,9 +94,10 @@ html[data-theme='dark'] {
   --surface-2: #2b2318;
   --surface-3: #332a1d;
   --ink: #f4ecda;
-  --muted: #b3a892;
-  --faint: #9a8e79;
-  --dim: #8a7f6c;
+  --muted: #c2b8a3;
+  --faint: #b3a892;
+  --dim: #b3a892;
+  --decor: #8a7f6c;
   --hairline: rgba(244, 236, 218, 0.14);
   --hairline-soft: rgba(244, 236, 218, 0.08);
   --accent: #e8763f;
@@ -119,9 +125,10 @@ html[data-theme='dark'] {
     --surface-2: #2b2318;
     --surface-3: #332a1d;
     --ink: #f4ecda;
-    --muted: #b3a892;
-    --faint: #9a8e79;
-    --dim: #8a7f6c;
+    --muted: #c2b8a3;
+    --faint: #b3a892;
+    --dim: #b3a892;
+    --decor: #8a7f6c;
     --hairline: rgba(244, 236, 218, 0.14);
     --hairline-soft: rgba(244, 236, 218, 0.08);
     --accent: #e8763f;

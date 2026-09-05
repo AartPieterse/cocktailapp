@@ -129,17 +129,25 @@ export const CATEGORY_HINTS: Record<Locale, Record<IngredientCategory, string>> 
   },
 };
 
-/** Fixed display order of categories throughout the app. */
+/**
+ * Fixed display order of categories throughout the app — the cabinet editor and the first-run
+ * wizard both walk it.
+ *
+ * The kitchen comes before the bottles. Spirits used to lead, so the first thing anyone saw when
+ * stocking their bar was a list of liquor; in practice fresh lemon juice (33 recipes) and lime
+ * juice (30) appear in more recipes than gin (27). Putting juice, syrup and mixers first changes
+ * the reading direction of the whole screen at the cost of one line.
+ */
 export const CATEGORY_ORDER: readonly IngredientCategory[] = [
-  'spirit',
-  'liqueur',
-  'wine',
-  'mixer',
   'juice',
   'syrup',
-  'bitters',
+  'mixer',
   'dairy',
   'seasoning',
   'garnish',
   'other',
+  'spirit',
+  'liqueur',
+  'wine',
+  'bitters',
 ];

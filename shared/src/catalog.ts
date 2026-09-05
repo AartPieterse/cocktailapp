@@ -34,6 +34,8 @@ export interface RawCatalogIngredient {
   parentId?: string;
   substitutes?: string[];
   aliases?: string[];
+  /** Alcohol by volume, percent. Authored only where an ingredient contains alcohol. */
+  abv?: number;
 }
 
 /**
@@ -84,6 +86,14 @@ export interface RawCatalogCocktail {
   servings?: number;
   tags?: string[];
   variations?: RawCatalogVariation[];
+  /** Authored liquid colour (`#RRGGBB`) for the generated glass art. */
+  color?: string;
+  /**
+   * Name of this drink's alcohol-free counterpart ("Virgin Mojito"), authored on the alcoholic
+   * parent only. `buildCatalog` resolves it to `alcoholFreeCounterpartId` and stamps the inverse
+   * `alcoholFreeOfId` on the counterpart, so the pairing is authored once and cannot drift.
+   */
+  alcoholFreeCounterpart?: string;
   imageUrl?: string;
 }
 
@@ -250,6 +260,7 @@ export function buildCatalog(
         ...(ing.parentId ? { parentId: ing.parentId } : {}),
         ...(ing.substitutes?.length ? { substitutes: ing.substitutes } : {}),
         ...(ing.aliases?.length ? { aliases: ing.aliases } : {}),
+        ...(typeof ing.abv === 'number' ? { abv: ing.abv } : {}),
       };
       byName.set(ing.name.toLowerCase(), { id, name: ing.name });
       return entry;
@@ -350,6 +361,23 @@ export function buildCatalog(
         };
       });
 
+      // Resolve the alcohol-free counterpart by name, same convention as `makesCocktail`.
+      let counterpartId: string | undefined;
+      if (c.alcoholFreeCounterpart) {
+        const key = c.alcoholFreeCounterpart.trim().toLowerCase();
+        counterpartId =
+          cocktailIdByName.get(key) ??
+          (usedCocktailIds.has(c.alcoholFreeCounterpart) ? c.alcoholFreeCounterpart : undefined);
+        if (!counterpartId) {
+          throw new Error(
+            `Cocktail "${c.name}" names an unknown alcohol-free counterpart "${c.alcoholFreeCounterpart}".`,
+          );
+        }
+        if (counterpartId === cocktailId) {
+          throw new Error(`Cocktail "${c.name}" lists itself as its own alcohol-free counterpart.`);
+        }
+      }
+
       return {
         id: cocktailId,
         name: c.name,
@@ -366,9 +394,28 @@ export function buildCatalog(
         servings: c.servings ?? 1,
         ...(c.tags?.length ? { tags: c.tags } : {}),
         ...(variations.length ? { variations } : {}),
+        ...(c.color ? { color: c.color } : {}),
+        ...(counterpartId ? { alcoholFreeCounterpartId: counterpartId } : {}),
         ...(c.imageUrl ? { imageUrl: c.imageUrl } : {}),
       } as Cocktail;
     });
+
+  // Pass 3: stamp the inverse of each authored counterpart pairing onto the counterpart itself,
+  // so a recipe knows both "my alcohol-free version is X" and "I am the alcohol-free version of Y"
+  // from a single authored fact.
+  const cocktailById = new Map(cocktails.map((c) => [c.id, c]));
+  for (const c of cocktails) {
+    if (!c.alcoholFreeCounterpartId) continue;
+    const counterpart = cocktailById.get(c.alcoholFreeCounterpartId);
+    if (!counterpart) continue;
+    if (counterpart.alcoholFreeOfId && counterpart.alcoholFreeOfId !== c.id) {
+      throw new Error(
+        `Cocktail "${counterpart.name}" is claimed as the alcohol-free counterpart of both ` +
+          `"${counterpart.alcoholFreeOfId}" and "${c.id}".`,
+      );
+    }
+    counterpart.alcoholFreeOfId = c.id;
+  }
 
   return {
     counts: { ingredients: ingredients.length, cocktails: cocktails.length },

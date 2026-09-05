@@ -3,33 +3,38 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { CocktailService } from '../../services/cocktail.service';
 import { AnalyticsService } from '../analytics.service';
+import { LanguageService } from '../language.service';
 
 /**
  * Fixed bottom tab bar for narrow screens (native-app feel for the installed PWA). Hidden on
- * desktop, where the top navbar carries the same links. Kept in sync with the navbar's link set:
- * Mijn bar / Cocktails / Verras me / Mijn kast.
+ * desktop, where the top navbar carries the same links, and kept in sync with it:
+ * Ontdek / Cocktails / Mijn bar / Verras me.
+ *
+ * It used to carry both "Mijn bar" (`/bar`) and "Mijn kast" (`/kast`, which merely redirects to
+ * `/bar`) — two tabs to one destination, with the "kast" wording left over from the rename — and
+ * no tab at all for the home screen. All four labels were hardcoded Dutch outside the string table.
  */
 @Component({
   selector: 'app-bottom-nav',
   imports: [RouterLink, RouterLinkActive, MatIconModule],
   template: `
-    <nav class="bar" aria-label="Hoofdnavigatie">
-      <a routerLink="/bar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <mat-icon>local_bar</mat-icon>
-        <span>Mijn bar</span>
+    <nav class="bar" [attr.aria-label]="lang.t().nav.menu">
+      <a routerLink="/ontdek" routerLinkActive="active">
+        <mat-icon>explore</mat-icon>
+        <span>{{ lang.t().nav.discover }}</span>
       </a>
       <a routerLink="/cocktails" routerLinkActive="active">
         <mat-icon>format_list_bulleted</mat-icon>
-        <span>Cocktails</span>
+        <span>{{ lang.t().nav.cocktails }}</span>
+      </a>
+      <a routerLink="/bar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>local_bar</mat-icon>
+        <span>{{ lang.t().nav.myBar }}</span>
       </a>
       <button type="button" (click)="surprise()">
         <mat-icon>casino</mat-icon>
-        <span>Verras me</span>
+        <span>{{ lang.t().nav.surpriseMe }}</span>
       </button>
-      <a routerLink="/kast" routerLinkActive="active">
-        <mat-icon>kitchen</mat-icon>
-        <span>Mijn kast</span>
-      </a>
     </nav>
   `,
   styles: `
@@ -80,6 +85,7 @@ import { AnalyticsService } from '../analytics.service';
   `,
 })
 export class BottomNav {
+  protected readonly lang = inject(LanguageService);
   private readonly cocktails = inject(CocktailService);
   private readonly router = inject(Router);
   private readonly analytics = inject(AnalyticsService);

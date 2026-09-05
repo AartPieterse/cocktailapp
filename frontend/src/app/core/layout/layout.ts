@@ -7,7 +7,7 @@ import { InstallPrompt } from '../install-prompt/install-prompt';
 import { SyncService } from '../sync/sync.service';
 import { UpdatePrompt } from '../update-prompt/update-prompt';
 import { Toast } from '../toast/toast';
-import { UnlockWatcher } from '../unlock-watcher.service';
+import { CabinetNotice } from '../cabinet-notice.service';
 
 @Component({
   selector: 'app-layout',
@@ -69,6 +69,6 @@ export class Layout {
   protected readonly lang = inject(LanguageService);
   // Instantiated with the shell so cloud sync wires up at startup (inert when authEnabled is false).
   private readonly sync = inject(SyncService);
-  // Instantiating the watcher here starts the app-wide "unlock/added" toast pipeline.
-  private readonly unlockWatcher = inject(UnlockWatcher);
+  // Instantiating this here starts the app-wide "what changed in your bar" confirmation.
+  private readonly cabinetNotice = inject(CabinetNotice);
 }
