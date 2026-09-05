@@ -160,7 +160,7 @@ for (const c of cocktails) {
   }
 
   // difficulty is still missing on the imported mocktails; warn until that backfill lands, then
-  // promote this to fail() — see docs/plan.md step 10.
+  // promote this to fail() — see docs/plans/next-phase.md step 10.
   if (!c.difficulty) warn(`cocktail "${c.name}" has no difficulty`);
 }
 
