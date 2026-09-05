@@ -181,3 +181,79 @@ describe('applyCatalogTranslations', () => {
     expect(v.swaps).toEqual([{ fromId: 'cachaca', toId: 'vodka' }]);
   });
 });
+
+describe('buildCatalog — alcohol-free counterparts', () => {
+  const ingredients = [
+    { id: 'white-rum', name: 'White Rum', category: 'spirit' as const, abv: 40 },
+    { id: 'lime-juice', name: 'Fresh Lime Juice', category: 'juice' as const },
+  ];
+
+  it('resolves the counterpart by name and stamps the inverse on it', () => {
+    const { cocktails } = buildCatalog(ingredients, [
+      {
+        id: 'mojito',
+        name: 'Mojito',
+        alcoholFreeCounterpart: 'Virgin Mojito',
+        ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+      },
+      {
+        id: 'virgin-mojito',
+        name: 'Virgin Mojito',
+        ingredients: [{ name: 'Fresh Lime Juice', amount: 30, unit: 'ml' }],
+      },
+    ]);
+    const mojito = cocktails.find((c) => c.id === 'mojito');
+    const virgin = cocktails.find((c) => c.id === 'virgin-mojito');
+    expect(mojito?.alcoholFreeCounterpartId).toBe('virgin-mojito');
+    // Authored once on the parent; the inverse is derived so the pair cannot drift.
+    expect(virgin?.alcoholFreeOfId).toBe('mojito');
+    expect(virgin?.alcoholFreeCounterpartId).toBeUndefined();
+  });
+
+  it('carries abv and color through to the built catalog', () => {
+    const { ingredients: out, cocktails } = buildCatalog(ingredients, [
+      {
+        id: 'daiquiri',
+        name: 'Daiquiri',
+        color: '#ECE7CF',
+        ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+      },
+    ]);
+    expect(out.find((i) => i.id === 'white-rum')?.abv).toBe(40);
+    expect(out.find((i) => i.id === 'lime-juice')?.abv).toBeUndefined();
+    expect(cocktails[0].color).toBe('#ECE7CF');
+  });
+
+  it('fails loud on an unknown counterpart name', () => {
+    expect(() =>
+      buildCatalog(ingredients, [
+        {
+          id: 'mojito',
+          name: 'Mojito',
+          alcoholFreeCounterpart: 'Nojito',
+          ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+        },
+      ]),
+    ).toThrow(/unknown alcohol-free counterpart "Nojito"/);
+  });
+
+  it('refuses two drinks claiming the same counterpart', () => {
+    expect(() =>
+      buildCatalog(ingredients, [
+        {
+          id: 'mojito',
+          name: 'Mojito',
+          alcoholFreeCounterpart: 'Limeade',
+          ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+        },
+        {
+          id: 'daiquiri',
+          name: 'Daiquiri',
+          alcoholFreeCounterpart: 'Limeade',
+          ingredients: [{ name: 'White Rum', amount: 45, unit: 'ml' }],
+        },
+        { id: 'limeade', name: 'Limeade', ingredients: [{ name: 'Fresh Lime Juice', amount: 30, unit: 'ml' }] },
+      ]),
+    ).toThrow(/claimed as the alcohol-free counterpart of both/);
+  });
+});
