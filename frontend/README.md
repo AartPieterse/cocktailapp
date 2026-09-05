@@ -32,8 +32,14 @@ redirect to `/ontdek`; the legacy `/kast` is a back-compat redirect to `/bar`):
   empty, otherwise *"Je kunt N cocktails maken"*, a **Nu te maken** grid (0 missing), and a
   **Bijna — je mist er één** sidebar (1 missing) with add-the-missing-ingredient chips. Includes a
   **"Vervangers meetellen"** toggle (substitutes).
-- **Wizard** (`/bar/wizard`) — a stepped chip picker: step 0 pre-checks pantry staples on first run,
-  then one step per ingredient category. Finish writes the cabinet and returns to `/ontdek`.
+- **Wizard** (`/bar/wizard/:step`) — a stepped chip picker (`bar/wizard/`, logic in
+  `wizard-steps.ts`): spirits first, then the pre-checked pantry staples, then a step per category
+  filtered to what the chosen spirits can actually reach. Chips are ordered by how many recipes call
+  for them and capped until "toon alles"; the search box spans every category and matches aliases;
+  the footer carries a live makeable count. The step is a route param (so Back walks the wizard) and
+  the selection is drafted to `barkast.wizardDraft` on every tick, so a reload costs nothing. Finish
+  writes the cabinet and returns to `/ontdek`; Skip records the choice rather than looping back to
+  onboarding.
 - **Mijn bar** (`/bar`) — the stock editor (`bar/cabinet/cabinet.ts`): toggle ingredient chips grouped
   by category, with a live makeable count. `/kast` redirects here.
 - **Account** (`/account`) — optional sign-in + cross-device sync. The route is always registered, but
@@ -49,7 +55,9 @@ Catalog authoring routes (`add`, `:id/edit`) exist **only in dev** — they are 
 ## Local-first & data source
 
 - **Persistence is `localStorage` only** (all writes wrapped in try/catch). Keys: `barkast.cabinet`,
-  `barkast.wizardDone`, `barkast.favorites`, `barkast.theme`, `barkast.substitutes` (default on),
+  `barkast.wizardDone`, `barkast.wizardDraft` (an interrupted wizard run, cleared on finish/skip),
+  `barkast.staplesApplied` (the staple set last carried into an existing cabinet),
+  `barkast.favorites`, `barkast.theme`, `barkast.substitutes` (default on),
   `barkast.locale`, `barkast.units`, `barkast.install.dismissed` and `barkast.analyticsOptOut` (the
   opt-out flag is persisted even in the static build, where analytics itself is inert) — plus
   `barkast.auth` (tokens) and `barkast.sync`, which are only written once the accounts feature is

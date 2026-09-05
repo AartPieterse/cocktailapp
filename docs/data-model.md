@@ -324,9 +324,11 @@ line that is neither `optional` nor decorative, a `unit`/`glass`/`method`/`diffi
 vocabulary, and every line `name` matching an ingredient `name` case-insensitively — otherwise
 `buildCatalog` throws. Author an explicit `"id"` if you want it stable against a later rename.
 Then `npm run build:catalog` and commit the seed plus the generated artifacts.
-*Two landmines:* a new `isStaple` base never reaches an **existing** cabinet (the wizard pre-ticks
-staples only on first run), and a cocktail with no authored `id` silently changes id when renamed,
-orphaning every stored favourite.
+*One landmine:* a cocktail with no authored `id` silently changes id when renamed, orphaning every
+stored favourite. (The other one is fixed: a newly promoted `isStaple` base used to reach only new
+cabinets, because the wizard pre-ticks staples on the first run alone. `StapleTopUp` now carries
+staples added since into an existing cabinet, once per staple-set change, keyed on
+`barkast.staplesApplied`.)
 
 **Add a variation.** Append `{ key, name, description }` to the parent's `variations[]`, plus `swaps`
 where the ladder allows. Insert at any position — the overlay is keyed, not positional.

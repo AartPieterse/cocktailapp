@@ -175,13 +175,14 @@ This is the file you rebuild from when the NVMe dies, so wrong steps cost you th
 
 ---
 
-- **New staples never reach an existing cabinet.** `wizard.ts:252` pre-ticks staples only when
-  `!wizardDone()`, so the seven spices promoted to staples on 5 Sep 2026 (Salt, Cinnamon, Vanilla,
-  Cardamom, Coriander, Cloves, Nutmeg) are invisible to anyone who already built a bar — they will see
-  drinks drop off instead of appear. Accepted deliberately for now because Aart is the only user with a
-  cabinet. Fix before anyone else registers: either a one-off migration that unions new staples into
-  stored cabinets on load, or a "new basics since your last visit" prompt. The prompt respects the
-  user's choices; the migration does not come back the next time a staple changes.
+- ~~**New staples never reach an existing cabinet.**~~ **Done** — the migration option, not the
+  prompt. `frontend/src/app/core/staple-top-up.service.ts` records the staple set it last applied
+  (`barkast.staplesApplied`) and unions anything added since into a *non-empty* cabinet on load; an
+  empty one is left to the wizard's own pre-tick. A cabinet with no marker (every cabinet built before
+  this shipped, Aart's included) is back-filled once with every staple it lacks. It writes through the
+  silent `setAll`, so a catalog change never lands in the anonymous most-added-ingredient tally. The
+  accepted cost is the one the prompt would have avoided: a staple deliberately unticked comes back on
+  the single run after that staple joins the catalog — and never again.
 
 ## The one thing most likely to bite
 
