@@ -50,7 +50,7 @@ export const routes: Routes = [
       },
       {
         path: 'account',
-        title: 'Account — Barkast',
+        title: 'Account — Barkaart',
         loadComponent: () => import('./account/account').then((m) => m.Account),
       },
     ],

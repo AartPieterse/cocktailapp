@@ -1,4 +1,4 @@
-# Barkast self-host stack: API + locked-down MongoDB + Cloudflare Tunnel.
+# Barkaart self-host stack: API + locked-down MongoDB + Cloudflare Tunnel.
 #
 #   cd deploy && cp .env.example .env   # fill in real secrets
 #   docker compose up -d --build
@@ -8,14 +8,14 @@
 # host/LAN, and the API is reachable only inside this network and via the tunnel.
 # Pin the project name. Compose otherwise derives it from the directory, which is `deploy` — generic
 # enough to collide with any other stack on the same host, and it prefixes the volume and network too.
-name: barkast
+name: barkaart
 
 services:
   api:
     build:
       context: ..
       dockerfile: backend/Dockerfile
-    image: barkast-api:latest
+    image: barkaart-api:latest
     restart: unless-stopped
     depends_on:
       mongo:

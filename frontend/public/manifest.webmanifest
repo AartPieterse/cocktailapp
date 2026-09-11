@@ -1,6 +1,6 @@
 {
-  "name": "Barkast — wat kan jij maken?",
-  "short_name": "Barkast",
+  "name": "Barkaart — wat kan jij maken?",
+  "short_name": "Barkaart",
   "description": "Vink aan wat je in huis hebt en ontdek meteen welke cocktails je nu kunt maken.",
   "id": "/",
   "start_url": "/?source=pwa",

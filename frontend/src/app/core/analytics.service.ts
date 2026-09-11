@@ -3,7 +3,7 @@ import { Injectable, effect, inject, signal } from '@angular/core';
 import type { AnalyticsEventType, AnalyticsIngestEvent } from '@cocktailapp/shared';
 import { environment } from '../../environments/environment';
 
-const OPTOUT_KEY = 'barkast.analyticsOptOut';
+const OPTOUT_KEY = 'barkaart.analyticsOptOut';
 const FLUSH_AT = 10; // flush once this many events are buffered
 const FLUSH_DELAY = 4000; // …or this long after the last event, whichever comes first
 

@@ -341,8 +341,8 @@ for (const c of cocktails) {
     const liveIngredients = new Set(ingredients.map((i) => i.id ?? slugify(i.name ?? '')));
     const liveCocktails = new Set(cocktails.map((c) => c.id ?? slugify(c.name ?? '')));
     const surfaces = {
-      ingredient: 'frontend/src/app/core/cabinet.service.ts (barkast.cabinet)',
-      cocktail: 'frontend/src/app/core/favorites.service.ts (barkast.favorites)',
+      ingredient: 'frontend/src/app/core/cabinet.service.ts (barkaart.cabinet)',
+      cocktail: 'frontend/src/app/core/favorites.service.ts (barkaart.favorites)',
     };
     const gone = [
       ...(lock.ingredients ?? []).filter((id) => !liveIngredients.has(id)).map((id) => ['ingredient', id]),

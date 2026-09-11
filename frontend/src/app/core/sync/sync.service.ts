@@ -7,7 +7,7 @@ import { CabinetService } from '../cabinet.service';
 import { FavoritesService } from '../favorites.service';
 import { AuthService } from '../auth/auth.service';
 
-const SYNC_KEY = 'barkast.sync';
+const SYNC_KEY = 'barkaart.sync';
 
 interface SyncState {
   lastServerUpdatedAt?: string;

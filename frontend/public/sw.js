@@ -1,4 +1,4 @@
-/* Barkast service worker — makes the website installable (PWA) and offline-capable.
+/* Barkaart service worker — makes the website installable (PWA) and offline-capable.
  *
  * Strategy:
  *   - navigations: network-first, falling back to the cached app shell (`/index.html`) so the SPA
@@ -16,8 +16,8 @@
  * waits (see the install handler) until the app prompts the user to refresh — see
  * core/sw-update.service.ts. No manual version bump needed.
  */
-const BUILD_ID = '__BARKAST_BUILD__'; // replaced at build time; stays literal (harmless) in dev
-const CACHE_VERSION = `barkast-${BUILD_ID}`;
+const BUILD_ID = '__BARKAART_BUILD__'; // replaced at build time; stays literal (harmless) in dev
+const CACHE_VERSION = `barkaart-${BUILD_ID}`;
 
 /** Content-hashed, immutable build output (e.g. `chunk-O62CME4F.js`, `styles-A1B2C3D4.css`). */
 const IMMUTABLE_ASSET = /-[A-Z0-9]{8,}\.(?:js|css)$/i;

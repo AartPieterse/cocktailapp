@@ -1,6 +1,6 @@
-# Barkast self-hosting (Part C)
+# Barkaart self-hosting (Part C)
 
-Run the Barkast API from home on a dedicated laptop: Docker Compose runs the **API + MongoDB +
+Run the Barkaart API from home on a dedicated laptop: Docker Compose runs the **API + MongoDB +
 Cloudflare Tunnel**. TLS terminates at Cloudflare's edge; the tunnel dials **outbound**, so there
 are **no inbound ports** and the home IP stays hidden. Mongo is never exposed to the host/LAN.
 
@@ -12,7 +12,7 @@ are **no inbound ports** and the home IP stays hidden. Mongo is never exposed to
 > placeholder token. Full procedure: Appendix D of [`bare-metal-runbook.md`](bare-metal-runbook.md).
 >
 > **Not done yet (4 Sep 2026):** encrypted backups (§6 — `age` is not installed on the box and
-> `AGE_RECIPIENT` is still a placeholder), the auto-deploy timer (§7 — no `barkast-autodeploy` units
+> `AGE_RECIPIENT` is still a placeholder), the auto-deploy timer (§7 — no `barkaart-autodeploy` units
 > installed), and the hardening pass (§9). Reboot survival is untested too; §4 says how to check it.
 
 ```
@@ -22,6 +22,60 @@ iba-cocktails-seed.json ──db:seed──▶ MongoDB ◀──▶ API (:3000, 
                                                      │
                                         https://<your-host>  ← Cloudflare edge (TLS) ← clients
 ```
+
+## 0. One-time: migrating a box that was set up as "Barkast"
+
+The app was renamed from **Barkast** to **Barkaart**. This repository is fully renamed; a box
+installed before the rename is **not**, and the two disagree in ways that fail quietly.
+
+> **The trap: the Compose project name also names the volume.** `docker-compose.yml` declares
+> `name: barkaart`, and Compose stores `mongo-data` as `<project>_mongo-data`. A box installed
+> earlier holds `barkast_mongo-data`. Bring the stack up after pulling this branch and Compose
+> will not find that volume — it creates an **empty `barkaart_mongo-data`** and Mongo starts with
+> no database at all. Nothing errors; the API just serves an empty catalog. Decide which of the
+> three routes below you want *before* the first `up`.
+
+**Route A — re-seed (recommended while the box is LAN-only and holds no accounts).** The catalog
+is rebuilt from the frozen seed anyway, so let the new volume be created and fill it:
+
+```bash
+docker compose down                       # old project; containers only, volume survives
+git pull && docker compose up -d --build api mongo
+# then §5, from the repo root:
+npm run db:seed
+docker volume rm barkast_mongo-data       # only once you have confirmed the new stack is good
+```
+
+**Route B — carry the data over.** Docker cannot rename a volume, so copy it:
+
+```bash
+docker compose down
+docker volume create barkaart_mongo-data
+docker run --rm -v barkast_mongo-data:/from -v barkaart_mongo-data:/to alpine \
+  sh -c 'cd /from && cp -a . /to'
+docker compose up -d --build api mongo
+```
+
+**Route C — keep the old project name.** `COMPOSE_PROJECT_NAME` takes precedence over the
+compose file's `name:`, so adding `COMPOSE_PROJECT_NAME=barkast` to `deploy/.env` leaves every
+container and volume exactly where it is. Cheapest, at the price of a box whose Docker objects
+keep the old brand for good.
+
+**The rest of the box-side delta**, independent of the route:
+
+| What | On the box now | After |
+|---|---|---|
+| `MONGO_USER` / `MONGO_DB` in `.env` | `barkast` | Leave them. Renaming the Mongo **user** means re-creating it inside Mongo; renaming the **db** is a second data move on top of the volume. Neither is worth it — `.env` is gitignored, so the old values stay valid and invisible. `.env.example` shows `barkaart` for fresh installs only. |
+| `IMAGE_REPO` in `.env` | `…/barkast-api` | Set to `ghcr.io/aartpieterse/barkaart-api`. CI now pushes under the new name, so the old tag stops receiving builds. |
+| Local image `barkast-api:latest` | present | `docker image rm barkast-api:latest` once the new one builds. |
+| systemd `barkast-autodeploy.*` | **not installed** (§7 was never done) | Nothing to migrate — install the `barkaart-` units when you get to §7. |
+| Backups / `age` | **not set up** (§6 never done) | Nothing to migrate; new archives are written as `barkaart-<stamp>.archive.gz.age`. |
+| Cloudflare tunnel named `barkast` | `TUNNEL_TOKEN` is still `change-me` — no tunnel exists | Nothing to migrate. |
+| `~/.ssh/id_ed25519_barkast` | real key on the workstation | Deliberately **not** renamed; `logs.sh` and the runbook still point at it. |
+
+Because §6 and §7 were never completed, this migration is much smaller than
+[`docs/plans/next-phase.md`](../docs/plans/next-phase.md) assumed: the volume is the only thing
+that can actually bite.
 
 ## Files
 | File | Purpose |
@@ -34,7 +88,7 @@ iba-cocktails-seed.json ──db:seed──▶ MongoDB ◀──▶ API (:3000, 
 | `backup.sh` / `restore.sh` | Encrypted (`age`) `mongodump` + tested restore. |
 | `deploy.sh` | Pull a GHCR image tag, back up, migrate, roll out; `--rollback`. |
 | `auto-deploy.sh` | Poll GHCR for a new digest on the watched tag, then hand off to `deploy.sh`. |
-| `systemd/barkast-autodeploy.{service,timer}` | Units for the §7 auto-deploy poller. |
+| `systemd/barkaart-autodeploy.{service,timer}` | Units for the §7 auto-deploy poller. |
 | `bare-metal-runbook.md` | Phase-by-phase install this box was built from; **Appendix D = the LAN-only path**. |
 
 ## 1. Host setup (dedicated ASUS VivoBook Pro laptop)
@@ -92,7 +146,7 @@ docker compose up -d --build
 # placeholder TUNNEL_TOKEN. Add the admin overlay to publish the API on the LAN at :8080.
 docker compose -f docker-compose.yml -f docker-compose.admin.yml up -d --build api mongo
 docker compose ps
-docker compose logs -f api        # expect "Barkast API listening on http://localhost:3000/api"
+docker compose logs -f api        # expect "Barkaart API listening on http://localhost:3000/api"
 ```
 The API requires `CORS_ORIGIN` in production and refuses to boot without it (and refuses if the two
 JWT secrets are equal).
@@ -139,7 +193,7 @@ age-keygen -o age-key.txt      # PUBLIC key is printed; keep age-key.txt OFF the
 Put the **public** key in `AGE_RECIPIENT` (`.env`). Then schedule nightly:
 ```bash
 # crontab -e
-0 3 * * *  /path/to/repo/deploy/backup.sh >> "$HOME/barkast-backup.log" 2>&1
+0 3 * * *  /path/to/repo/deploy/backup.sh >> "$HOME/barkaart-backup.log" 2>&1
 ```
 > Do **not** log to `/var/log/…` from a *user* crontab: that directory is `root:syslog` 775, the
 > redirect fails before `backup.sh` ever runs, and the backup silently never happens. Either log
@@ -148,7 +202,7 @@ Put the **public** key in `AGE_RECIPIENT` (`.env`). Then schedule nightly:
 hashes), keeps the newest `BACKUP_KEEP`, and reminds you to copy the file **off-box**.
 **Restore drill** (do this regularly — an untested backup isn't a backup):
 ```bash
-AGE_KEY_FILE=/secure/age-key.txt ./restore.sh backups/barkast-<stamp>.archive.gz.age
+AGE_KEY_FILE=/secure/age-key.txt ./restore.sh backups/barkaart-<stamp>.archive.gz.age
 ```
 `restore.sh` runs `mongorestore --drop`, so it replaces the **whole** database from the archive
 (catalog **and** `users`/`analytics`) — unlike `db:seed`, which only reseeds the catalog collections.
@@ -156,7 +210,7 @@ AGE_KEY_FILE=/secure/age-key.txt ./restore.sh backups/barkast-<stamp>.archive.gz
 ## 7. Updating
 
 CI builds + tests every push to `main` and pushes a version-tagged image to GHCR
-(`ghcr.io/<owner>/barkast-api:<git-sha>` + `:latest`, with the git SHA stamped as the
+(`ghcr.io/<owner>/barkaart-api:<git-sha>` + `:latest`, with the git SHA stamped as the
 `org.opencontainers.image.revision` label). The box **pulls** by tag — no inbound access needed.
 
 **A release is two artifacts, and only one of them is an image.** The API ships as that GHCR image;
@@ -189,13 +243,13 @@ request execute code on your hardware. Polling is the cheap, boring answer.
   > `migrate-mongo-config.js` exists (none is committed).
   ```bash
   cd deploy
-  sudo cp systemd/barkast-autodeploy.{service,timer} /etc/systemd/system/
+  sudo cp systemd/barkaart-autodeploy.{service,timer} /etc/systemd/system/
   # The unit ships with the reference host's paths (user `aart`, checkout at ~/cocktailapp).
   # Edit User + WorkingDirectory/ExecStart only if yours differ.
   sudo systemctl daemon-reload
-  sudo systemctl enable --now barkast-autodeploy.timer
-  systemctl list-timers barkast-autodeploy.timer     # confirm it's scheduled
-  journalctl -u barkast-autodeploy.service -f         # watch a roll-out
+  sudo systemctl enable --now barkaart-autodeploy.timer
+  systemctl list-timers barkaart-autodeploy.timer     # confirm it's scheduled
+  journalctl -u barkaart-autodeploy.service -f         # watch a roll-out
   ```
   `auto-deploy.sh` follows `:latest` by default (override with `WATCH_TAG`), maps it back to the
   exact `:<git-sha>` via the revision label so rollbacks stay precise, and only records success
@@ -246,7 +300,7 @@ Never add `/api/admin` to the Cloudflare Tunnel ingress.
 - [ ] Put the host on a **separate VLAN**; keep the OS patched
       (`sudo apt update && sudo apt full-upgrade`) and images fresh
       (`docker compose pull --ignore-buildable`). Note `docker compose pull` cannot refresh a
-      locally-built `barkast-api:latest` — rebuild with `--build`, or roll out via `deploy.sh`.
+      locally-built `barkaart-api:latest` — rebuild with `--build`, or roll out via `deploy.sh`.
 - [ ] Mongo is **never** published to the host (only the seed override binds `127.0.0.1`, briefly).
 - [ ] Two **distinct** high-entropy JWT secrets; strong `MONGO_PASSWORD`.
 - [ ] `CORS_ORIGIN` is the real web origin (no reflect-any in prod — enforced at boot).

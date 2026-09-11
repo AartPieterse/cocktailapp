@@ -18,16 +18,16 @@ only because they concern the same machine.
 
 That machine link is real, though, and two things still bind the two repositories together:
 
-- **They share a host.** `aartfileserver` / `192.168.1.100` runs Barkast's stack today and the Immich
+- **They share a host.** `aartfileserver` / `192.168.1.100` runs Barkaart's stack today and the Immich
   stack later. Disk, RAM, ports, the backup window and the reverse proxy are shared, so the two sets
   of plans constrain each other. The conventions in [`deploy/`](../../deploy/) — age encryption,
   systemd timers, compose overlays — are deliberately reused by the private-cloud design.
 - **One finding lands squarely on this project**, and it is the reason to read the other repo at all:
 
-> **Barkast's Cloudflare Tunnel is no longer safe to keep, for two independent reasons, and
+> **Barkaart's Cloudflare Tunnel is no longer safe to keep, for two independent reasons, and
 > `next-phase.md` still assumes it.**
 >
-> 1. The tunnel terminates TLS at Cloudflare's edge, so a Barkast login sends the e-mail address *and
+> 1. The tunnel terminates TLS at Cloudflare's edge, so a Barkaart login sends the e-mail address *and
 >    the password itself* through a US company. That is the only place in either plan where third
 >    parties' personal data is processed in plaintext by a third party — a GDPR responsibility, not a
 >    preference.
@@ -39,12 +39,12 @@ That machine link is real, though, and two things still bind the two repositorie
 > stack. `next-phase.md` carries the same note inline, next to the reasoning it amends.
 
 One more shared prerequisite: `plan.md` will not let anything leave Google until a restore drill has
-passed, and `next-phase.md` makes the same demand before real accounts land in Barkast. That is **one
+passed, and `next-phase.md` makes the same demand before real accounts land in Barkaart. That is **one
 drill serving both**, not two.
 
 ## Where the plans stop and the record starts
 
 - [`../../deploy/bare-metal-runbook.md`](../../deploy/bare-metal-runbook.md) — what was actually done
   to the box, phase by phase, including the traps the install hit.
-- [`../../deploy/README.md`](../../deploy/README.md) — the operational reference for the Barkast stack.
+- [`../../deploy/README.md`](../../deploy/README.md) — the operational reference for the Barkaart stack.
 - [`../data-model.md`](../data-model.md) — the living reference for the catalog's shape.

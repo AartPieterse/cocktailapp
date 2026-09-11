@@ -1,8 +1,8 @@
 /* ============================================================================
-   Barkast Glassware — portable, data-driven cocktail glass renderer.
+   Barkaart Glassware — portable, data-driven cocktail glass renderer.
 
    Pure SVG on a fixed viewBox (0 0 200 260), so it stays razor sharp at 96px in
-   a card and 270px on a hero. `barkastGlassSVG(spec)` returns an `<svg>…</svg>`
+   a card and 270px on a hero. `barkaartGlassSVG(spec)` returns an `<svg>…</svg>`
    string that the GlassArt component drops in via [innerHTML]. No external
    assets, no <script>, no filters — see the notes on cost at the bottom.
 
@@ -1521,7 +1521,7 @@ function motionStyle(mode: Motion, id: string, needs: { bubbles: boolean; steam:
 /* ======================================================================
    MAIN RENDERER
    ==================================================================== */
-export function barkastGlassSVG(spec: GlassSpec): string {
+export function barkaartGlassSVG(spec: GlassSpec): string {
   spec = spec || {};
   const name: GlassName = spec.glass && GLASS[spec.glass] ? spec.glass : 'rocks';
   const cfg = applyCut(GLASS[name], spec.cut || 'classic');

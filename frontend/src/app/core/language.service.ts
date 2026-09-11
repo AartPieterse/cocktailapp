@@ -1,7 +1,7 @@
 import { Injectable, computed, effect, signal } from '@angular/core';
 import { DEFAULT_LOCALE, LOCALES, type Locale, type UiStrings, uiStrings } from '@cocktailapp/shared';
 
-const KEY = 'barkast.locale';
+const KEY = 'barkaart.locale';
 
 /**
  * Display language (nl/en), persisted and stamped onto `<html lang>`. Drives both the UI chrome

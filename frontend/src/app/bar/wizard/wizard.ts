@@ -521,7 +521,7 @@ export class Wizard {
   }
 }
 
-const DRAFT_KEY = 'barkast.wizardDraft';
+const DRAFT_KEY = 'barkaart.wizardDraft';
 
 /** An interrupted wizard run: what was ticked, and the cabinet it started from. */
 interface WizardDraft {

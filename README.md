@@ -1,4 +1,4 @@
-# Barkast 🍸
+# Barkaart 🍸
 
 **Wat staat er in jouw bar — en wat kun je daarmee maken?**
 
@@ -15,7 +15,7 @@
 > account data lands, and the box has never been rebooted to prove the stack returns unattended.
 > See [`deploy/bare-metal-runbook.md`](deploy/bare-metal-runbook.md) for what was actually done.
 
-Barkast is a full-stack cocktail app built around one flagship idea: you tick off the ingredients
+Barkaart is a full-stack cocktail app built around one flagship idea: you tick off the ingredients
 you have on hand (**"Mijn bar"** / *"My bar"*), and it instantly shows which cocktails you can make
 **right now** — plus the ones you're only one or two ingredients away from.
 
@@ -43,7 +43,7 @@ switchable at runtime.
 
 ## How it ships
 
-Barkast is **static-first and local-first**:
+Barkaart is **static-first and local-first**:
 
 - **Production is a fully static SPA** (Netlify). It ships a pre-built catalog bundle
   (`catalog.json` + Dutch overlay `catalog.nl.json`) and computes "wat kan ik maken" **client-side**
@@ -299,7 +299,7 @@ npm run db:shell    # interactive mongosh shell
 ## Project structure
 
 ```
-barkast/
+barkaart/
 ├─ shared/                  @cocktailapp/shared — domain types, enums, localized labels + UI strings (nl/en), makeable/catalog logic
 ├─ backend/                 NestJS + Mongoose API (catalog CRUD, makeable, catalog, auth, /me sync, analytics, admin)
 ├─ frontend/                Angular PWA — Ontdek (home), Mijn bar, wizard, cocktails, ingredienten
@@ -317,7 +317,7 @@ barkast/
 - **Release branch: `main`.** `.github/workflows/ci.yml` is the gate — a PR into `main` or a push to
   `development` builds and verifies (shared + backend tests, `validate:seed`, and a check that the
   committed `catalog.json` / `catalog.nl.json` bundles are up to date). A push to `main` additionally
-  deploys the frontend to Netlify and pushes `ghcr.io/<owner>/barkast-api:<sha>` and `:latest`.
+  deploys the frontend to Netlify and pushes `ghcr.io/<owner>/barkaart-api:<sha>` and `:latest`.
   **Merging to `main` is what ships.**
 - **Frontend (production):** static SPA hosted on **Netlify**, but built and uploaded by **GitHub
   Actions** (`.github/workflows/ci.yml`, job `deploy`) from `frontend/dist/frontend/browser`;

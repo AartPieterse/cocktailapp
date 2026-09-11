@@ -87,7 +87,7 @@ any id the curated loop had already produced.
   as full line objects rather than derived id sets) lands in that same commit; it has no reachable
   cases before then.
 - **Runtime id remapping.** The tombstone gate is build-time only. It does not prune or rewrite a
-  stale id already sitting in someone `barkast.cabinet` or `barkast.favorites`. That needs `retired[]`
+  stale id already sitting in someone `barkaart.cabinet` or `barkaart.favorites`. That needs `retired[]`
   shipped in the bundle plus changes to `cabinet.service.ts` and `favorites.service.ts` — worth doing
   before the step 10 deletions land.
 - **Backfill authored cocktail ids.** Most cocktails have none, so renaming one changes its id and

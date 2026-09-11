@@ -18,7 +18,7 @@ import { SwUpdateService } from '../sw-update.service';
           <span class="icon" aria-hidden="true"><mat-icon>update</mat-icon></span>
           <span class="body">
             <span class="title">Nieuwe versie beschikbaar</span>
-            <span class="sub">Vernieuw om de laatste Barkast te laden.</span>
+            <span class="sub">Vernieuw om de laatste Barkaart te laden.</span>
           </span>
           <button
             class="refresh"

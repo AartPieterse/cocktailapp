@@ -53,7 +53,7 @@ async function bootstrap() {
   await app.listen(port);
 
   Logger.log(
-    `Barkast API listening on http://localhost:${port}/api`,
+    `Barkaart API listening on http://localhost:${port}/api`,
     'Bootstrap',
   );
 }

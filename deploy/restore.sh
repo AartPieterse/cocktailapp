@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Restore a Barkast MongoDB backup produced by backup.sh.
+# Restore a Barkaart MongoDB backup produced by backup.sh.
 #
-#   ./restore.sh backups/barkast-20260101T030000Z.archive.gz.age
+#   ./restore.sh backups/barkaart-20260101T030000Z.archive.gz.age
 #
 # DECRYPTS with your age PRIVATE key and restores into the running Mongo container with --drop
 # (matching collections are replaced). Test this regularly against a throwaway db — a backup you

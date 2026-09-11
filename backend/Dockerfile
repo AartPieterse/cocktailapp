@@ -1,6 +1,6 @@
-# Multi-stage build for the Barkast API. BUILD CONTEXT = REPO ROOT (this is an npm-workspaces
+# Multi-stage build for the Barkaart API. BUILD CONTEXT = REPO ROOT (this is an npm-workspaces
 # monorepo: the backend depends on the @cocktailapp/shared workspace), so build it as:
-#   docker build -f backend/Dockerfile -t barkast-api .        (from the repo root)
+#   docker build -f backend/Dockerfile -t barkaart-api .        (from the repo root)
 # or via deploy/docker-compose.yml (context: ..).
 
 # ---- build stage: install all workspaces, build shared then backend, drop dev deps ----

@@ -6,7 +6,7 @@ interface BeforeInstallPromptEvent extends Event {
   readonly userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
-const DISMISS_KEY = 'barkast.install.dismissed';
+const DISMISS_KEY = 'barkaart.install.dismissed';
 // Stay quiet for a while after the user dismisses the prompt, rather than forever.
 const SNOOZE_MS = 1000 * 60 * 60 * 24 * 14; // 14 days
 
@@ -47,7 +47,7 @@ export class PwaService {
   constructor() {
     // Pick up an install event captured before Angular booted, plus any that arrive later.
     this.adoptStashedPrompt();
-    window.addEventListener('barkast:installable', () => this.adoptStashedPrompt());
+    window.addEventListener('barkaart:installable', () => this.adoptStashedPrompt());
     window.addEventListener('appinstalled', () => {
       this.installed.set(true);
       this.canInstall.set(false);
@@ -83,8 +83,8 @@ export class PwaService {
   }
 
   private adoptStashedPrompt(): void {
-    const stashed = (window as unknown as { __barkastInstallPrompt?: BeforeInstallPromptEvent })
-      .__barkastInstallPrompt;
+    const stashed = (window as unknown as { __barkaartInstallPrompt?: BeforeInstallPromptEvent })
+      .__barkaartInstallPrompt;
     if (stashed) {
       this.deferred = stashed;
       this.canInstall.set(true);

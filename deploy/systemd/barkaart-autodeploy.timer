@@ -6,7 +6,7 @@
 # long a release sits unnoticed, not the running cost. Widen OnUnitActiveSec freely; the deploy path
 # is identical whether it fires hourly or daily.
 [Unit]
-Description=Poll for a new Barkast release (GHCR API image + SPA source) and auto-deploy
+Description=Poll for a new Barkaart release (GHCR API image + SPA source) and auto-deploy
 
 [Timer]
 OnBootSec=2min

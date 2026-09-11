@@ -1,5 +1,5 @@
 /* ============================================================================
-   Barkast Ingredients — hand-drawn ingredient glyph renderer.
+   Barkaart Ingredients — hand-drawn ingredient glyph renderer.
 
    TypeScript port of the original framework-agnostic `ingredients.js`: the same
    ink-outline language as the glassware, but for the pantry — bottles, citrus,
@@ -368,7 +368,7 @@ export interface IngredientGlyphSpec {
   color?: string;
 }
 
-export function barkastIngredientSVG(spec: IngredientGlyphSpec): string {
+export function barkaartIngredientSVG(spec: IngredientGlyphSpec): string {
   spec = spec || {};
   const kind = spec.kind || kindFor(spec.id, spec.cat);
   const color = spec.color || colorFor(spec.id, spec.cat);

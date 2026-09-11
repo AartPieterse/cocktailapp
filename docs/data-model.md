@@ -1,4 +1,4 @@
-# Barkast data model
+# Barkaart data model
 
 _Reference for the shipped catalog data model. The domain types and logic live in `@cocktailapp/shared`
 (`shared/src`); this document explains the shape and the reasoning behind it. It replaces the retired
@@ -328,7 +328,7 @@ Then `npm run build:catalog` and commit the seed plus the generated artifacts.
 stored favourite. (The other one is fixed: a newly promoted `isStaple` base used to reach only new
 cabinets, because the wizard pre-ticks staples on the first run alone. `StapleTopUp` now carries
 staples added since into an existing cabinet, once per staple-set change, keyed on
-`barkast.staplesApplied`.)
+`barkaart.staplesApplied`.)
 
 **Add a variation.** Append `{ key, name, description }` to the parent's `variations[]`, plus `swaps`
 where the ladder allows. Insert at any position — the overlay is keyed, not positional.
@@ -412,7 +412,7 @@ and **one** `computeMakeable` engine (the backend `$aggregate` was deleted), ass
 CI check.
 
 **Open (post-launch):** **runtime** id remapping (a `replacedBy` tombstone that prunes or rewrites a
-stale id already sitting in someone's `barkast.cabinet`/`barkast.favorites` — the build-time gate
+stale id already sitting in someone's `barkaart.cabinet`/`barkaart.favorites` — the build-time gate
 below exists, the runtime half does not), **bundled cocktail images**
 (the `image` field type exists but no images are bundled yet — pending licensing), abv/dietary flags,
 and narrowing `Cocktail.tags` from `string[]` to the typed `CocktailTag[]` — which first needs

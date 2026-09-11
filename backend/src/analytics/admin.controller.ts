@@ -39,7 +39,7 @@ export class AdminController {
 
     return `<!doctype html><html lang="nl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Barkast · admin</title>
+<title>Barkaart · admin</title>
 <style>
   body{font:15px/1.5 system-ui,sans-serif;margin:0;padding:24px;background:#16130f;color:#f4efe6}
   h1{font-size:22px;margin:0 0 4px} .muted{color:#a79e90}
@@ -50,7 +50,7 @@ export class AdminController {
   td:last-child{text-align:right;color:#e0745a;font-weight:700}
   h2{font-size:16px;margin:0 0 8px}
 </style></head><body>
-<h1>Barkast admin</h1>
+<h1>Barkaart admin</h1>
 <p class="muted">Anonieme, geaggregeerde statistieken · laatste ${analytics.days} dagen · alleen op het lokale netwerk.</p>
 <div class="grid">
   <div class="card"><div class="stat">${operational.requests}</div><div class="muted">requests</div></div>

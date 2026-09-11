@@ -1,6 +1,6 @@
-# Barkast frontend
+# Barkaart frontend
 
-The **Barkast** web frontend: the Dutch cocktail app's single, consolidated client — an **installable,
+The **Barkaart** web frontend: the Dutch cocktail app's single, consolidated client — an **installable,
 offline-capable PWA** whose hero feature is *"wat kan ik maken"* (your cabinet → the cocktails you can
 make right now). This Angular app is the one client (an earlier Expo/React-Native experiment was
 removed). Route paths are Dutch (`ontdek`, `bar`, `cocktails`, `ingredienten`, `account`; `kast` is a
@@ -37,7 +37,7 @@ redirect to `/ontdek`; the legacy `/kast` is a back-compat redirect to `/bar`):
   filtered to what the chosen spirits can actually reach. Chips are ordered by how many recipes call
   for them and capped until "toon alles"; the search box spans every category and matches aliases;
   the footer carries a live makeable count. The step is a route param (so Back walks the wizard) and
-  the selection is drafted to `barkast.wizardDraft` on every tick, so a reload costs nothing. Finish
+  the selection is drafted to `barkaart.wizardDraft` on every tick, so a reload costs nothing. Finish
   writes the cabinet and returns to `/ontdek`; Skip records the choice rather than looping back to
   onboarding.
 - **Mijn bar** (`/bar`) — the stock editor (`bar/cabinet/cabinet.ts`): toggle ingredient chips grouped
@@ -54,13 +54,13 @@ Catalog authoring routes (`add`, `:id/edit`) exist **only in dev** — they are 
 
 ## Local-first & data source
 
-- **Persistence is `localStorage` only** (all writes wrapped in try/catch). Keys: `barkast.cabinet`,
-  `barkast.wizardDone`, `barkast.wizardDraft` (an interrupted wizard run, cleared on finish/skip),
-  `barkast.staplesApplied` (the staple set last carried into an existing cabinet),
-  `barkast.favorites`, `barkast.theme`, `barkast.substitutes` (default on),
-  `barkast.locale`, `barkast.units`, `barkast.install.dismissed` and `barkast.analyticsOptOut` (the
+- **Persistence is `localStorage` only** (all writes wrapped in try/catch). Keys: `barkaart.cabinet`,
+  `barkaart.wizardDone`, `barkaart.wizardDraft` (an interrupted wizard run, cleared on finish/skip),
+  `barkaart.staplesApplied` (the staple set last carried into an existing cabinet),
+  `barkaart.favorites`, `barkaart.theme`, `barkaart.substitutes` (default on),
+  `barkaart.locale`, `barkaart.units`, `barkaart.install.dismissed` and `barkaart.analyticsOptOut` (the
   opt-out flag is persisted even in the static build, where analytics itself is inert) — plus
-  `barkast.auth` (tokens) and `barkast.sync`, which are only written once the accounts feature is
+  `barkaart.auth` (tokens) and `barkaart.sync`, which are only written once the accounts feature is
   enabled (it is not in production).
 - Accounts, login/registration, cross-device sync and anonymous analytics **do exist in the code**
   (`account/account.ts`, `core/auth/`, `core/sync/sync.service.ts`, `core/analytics.service.ts`) but
@@ -90,8 +90,8 @@ Catalog authoring routes (`add`, `:id/edit`) exist **only in dev** — they are 
 
 ## PWA
 
-- **Web app manifest** (`public/manifest.webmanifest`): name *"Barkast — wat kan jij maken?"*
-  (short_name *Barkast*), `standalone`/portrait, theme/background `#17120c`, 192/512/maskable icons,
+- **Web app manifest** (`public/manifest.webmanifest`): name *"Barkaart — wat kan jij maken?"*
+  (short_name *Barkaart*), `standalone`/portrait, theme/background `#17120c`, 192/512/maskable icons,
   and 3 app shortcuts (Mijn bar, Mijn kast, Alle cocktails). **Those shortcuts have drifted from the
   router:** *Mijn bar* opens `/bar?source=pwa` and *Mijn kast* opens `/kast?source=pwa`, which now
   redirects to `/bar` — two shortcuts, one destination, and none of them opens `/ontdek`, the actual
@@ -104,7 +104,7 @@ Catalog authoring routes (`add`, `:id/edit`) exist **only in dev** — they are 
   `/api/`** so data is never served stale. It is a **hand-written** worker (not
   `@angular/service-worker`/ngsw — there's no `ngsw-config.json`), registered manually in `main.ts`
   **only in production**.
-- **Cache busting is automatic — never hand-edit a version.** `sw.js` ships a `__BARKAST_BUILD__`
+- **Cache busting is automatic — never hand-edit a version.** `sw.js` ships a `__BARKAART_BUILD__`
   placeholder in its `CACHE_VERSION`; `npm run build` runs `scripts/stamp-sw.mjs` afterwards, which
   replaces it with a SHA-256 over every shipped output file (bundles, `catalog.json`, icons,
   `index.html`, manifest) — so even a data-only deploy changes `sw.js`. The new worker deliberately
@@ -133,7 +133,7 @@ Catalog authoring routes (`add`, `:id/edit`) exist **only in dev** — they are 
   Route `title`s are **i18n keys, not literals**: `AppTitleStrategy` (`core/title-strategy.ts`,
   provided in `app.config.ts`) resolves them against `UiStrings['titles']` and re-applies them on a
   locale change. A literal yields no tab title at all — `app.routes.ts` hard-codes
-  `title: 'Account — Barkast'`, which is not a key in `titles`, so `/account` is the live example of
+  `title: 'Account — Barkaart'`, which is not a key in `titles`, so `/account` is the live example of
   that bug.
 
 ## Development

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One-command deploy for the Barkast self-host (Part F).
+# One-command deploy for the Barkaart self-host (Part F).
 #
 # The box PULLS a version-tagged image from GHCR (outbound-only — works behind the Cloudflare
 # Tunnel with no inbound ports) and rolls it out. Because the app is local-first, a brief API
@@ -9,7 +9,7 @@
 #   ./deploy.sh <tag> --api-only  # roll out only the api service (no mongo/cloudflared restart)
 #   ./deploy.sh --rollback        # redeploy the previously-running tag (saved in .deployed-previous)
 #
-# The image ref is IMAGE_REPO:<tag> (default ghcr.io/aartpieterse/barkast-api). Set IMAGE_REPO in
+# The image ref is IMAGE_REPO:<tag> (default ghcr.io/aartpieterse/barkaart-api). Set IMAGE_REPO in
 # deploy/.env to match your GHCR package. The currently-deployed tag is recorded in .deployed-current
 # and the prior one in .deployed-previous, so a rollback is always one command away.
 set -euo pipefail
@@ -17,7 +17,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 if [ -f .env ]; then set -a; . ./.env; set +a; fi
 
-IMAGE_REPO="${IMAGE_REPO:-ghcr.io/aartpieterse/barkast-api}"
+IMAGE_REPO="${IMAGE_REPO:-ghcr.io/aartpieterse/barkaart-api}"
 CURRENT_FILE=".deployed-current"
 PREVIOUS_FILE=".deployed-previous"
 # Include every overlay that is actually present, so a roll-out drives the same stack that is
@@ -35,7 +35,7 @@ roll_out() {
   # Pull by fully-qualified ref so we deploy the exact image, not whatever :latest points at.
   docker pull "$IMAGE_REF"
   # Tag it as the image name the compose file expects, so `up` uses the pulled image as-is.
-  docker tag "$IMAGE_REF" barkast-api:latest
+  docker tag "$IMAGE_REF" barkaart-api:latest
 
   # Pre-migration safety: an encrypted dump before any schema/data change (no-op if age unset).
   if [ -x ./backup.sh ] && [ -n "${AGE_RECIPIENT:-}" ]; then

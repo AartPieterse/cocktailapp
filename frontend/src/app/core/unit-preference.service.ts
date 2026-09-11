@@ -2,7 +2,7 @@ import { Injectable, effect, signal } from '@angular/core';
 import type { VolumeUnit } from '@cocktailapp/shared';
 import { VOLUME_UNITS } from '@cocktailapp/shared';
 
-const KEY = 'barkast.units';
+const KEY = 'barkaart.units';
 
 /**
  * The user's preferred volume unit (ml / cl / oz) for displaying recipe amounts. Recipes are

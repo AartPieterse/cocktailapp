@@ -1,7 +1,7 @@
-# Barkast — bare-metal self-host runbook (ASUS VivoBook Pro)
+# Barkaart — bare-metal self-host runbook (ASUS VivoBook Pro)
 
 A concrete, start-to-finish walkthrough for wiping Windows off the VivoBook Pro and running the
-Barkast backend on native Linux. This is the hands-on companion to [`README.md`](README.md) — where
+Barkaart backend on native Linux. This is the hands-on companion to [`README.md`](README.md) — where
 this file says "see README §N", that section has the authoritative detail.
 
 ## What this achieves
@@ -71,7 +71,7 @@ This runbook has been walked on the real hardware. Where it stands today:
 | 7 — Cloudflare Tunnel | **Skipped** — this box runs the LAN-only variant, [Appendix D](#appendix-d--lan-only-first-no-cloudflare-tunnel-yet) |
 | 8–11 — secrets, stack, seed, verify | Done in their Appendix D form; the API answers on the LAN |
 | 12 — encrypted backups | **Not done** — `age` isn't installed and `AGE_RECIPIENT` is still the placeholder |
-| 13 — auto-deploy timer | **Not done** — no `barkast-autodeploy` units, nothing in `systemctl list-timers` |
+| 13 — auto-deploy timer | **Not done** — no `barkaart-autodeploy` units, nothing in `systemctl list-timers` |
 | 14 — hardening pass | **Not walked** |
 
 One local deviation: the deploy user has passwordless `sudo` via `/etc/sudoers.d/90-aart-nopasswd`.
@@ -244,7 +244,7 @@ node -v                           # expect v24.x
 
 1. Add your domain to Cloudflare (if not already) and let DNS propagate.
 2. Zero Trust dashboard → **Networks → Tunnels → Create a tunnel** → connector **Cloudflared** →
-   name it `barkast`. Copy the **tunnel token** (a long string) — it goes in `.env` next.
+   name it `barkaart`. Copy the **tunnel token** (a long string) — it goes in `.env` next.
 3. Add a **Public Hostname**: `api.<yourdomain>` → service **HTTP** → `http://api:3000`.
    Map **only** this hostname. Never add `/api/admin` or any LAN service to the tunnel.
 
@@ -293,7 +293,7 @@ Set in `.env`:
 cd ~/cocktailapp/deploy
 docker compose up -d --build
 docker compose ps                 # api, mongo, cloudflared all "Up" (mongo healthy)
-docker compose logs -f api        # expect: Barkast API listening on http://localhost:3000/api
+docker compose logs -f api        # expect: Barkaart API listening on http://localhost:3000/api
 ```
 First build takes a few minutes (it builds the API image from source). `Ctrl-C` stops following logs
 (containers keep running).
@@ -337,7 +337,7 @@ docker compose -f docker-compose.yml -f docker-compose.seed.yml up -d mongo
 
 # 2. seed (run from repo root; use YOUR MONGO_USER/PASSWORD/DB from .env)
 cd ~/cocktailapp
-MONGODB_URI="mongodb://barkast:<MONGO_PASSWORD>@127.0.0.1:27017/barkast?authSource=admin" \
+MONGODB_URI="mongodb://barkaart:<MONGO_PASSWORD>@127.0.0.1:27017/barkaart?authSource=admin" \
   npm run db:seed
 
 # 3. remove the localhost binding again
@@ -376,14 +376,14 @@ Put the **public** key in `AGE_RECIPIENT` in `.env`. Schedule nightly:
 crontab -e
 # A USER crontab cannot write to /var/log (root:syslog, mode 775) — the redirect fails and the
 # backup never runs. Log into your home dir instead:
-# 0 3 * * *  /home/<you>/cocktailapp/deploy/backup.sh >> /home/<you>/barkast-backup.log 2>&1
+# 0 3 * * *  /home/<you>/cocktailapp/deploy/backup.sh >> /home/<you>/barkaart-backup.log 2>&1
 # (Prefer /var/log? Install it as root — `sudo crontab -e` — or pre-create the file:
-#  sudo install -o <you> -g <you> -m 0644 /dev/null /var/log/barkast-backup.log)
+#  sudo install -o <you> -g <you> -m 0644 /dev/null /var/log/barkaart-backup.log)
 ```
 **Then do a restore drill** (an untested backup isn't a backup):
 ```bash
 cd ~/cocktailapp/deploy
-AGE_KEY_FILE=/secure/age-key.txt ./restore.sh backups/barkast-<stamp>.archive.gz.age
+AGE_KEY_FILE=/secure/age-key.txt ./restore.sh backups/barkaart-<stamp>.archive.gz.age
 ```
 Copy the encrypted dumps **off-box** (another machine / cloud) regularly.
 
@@ -396,11 +396,11 @@ out new images (with pre-deploy encrypted backup + rollback) — no manual step,
 
 ```bash
 cd ~/cocktailapp/deploy
-sudo cp systemd/barkast-autodeploy.{service,timer} /etc/systemd/system/
-sudoedit /etc/systemd/system/barkast-autodeploy.service   # set User + WorkingDirectory + ExecStart to your checkout
+sudo cp systemd/barkaart-autodeploy.{service,timer} /etc/systemd/system/
+sudoedit /etc/systemd/system/barkaart-autodeploy.service   # set User + WorkingDirectory + ExecStart to your checkout
 sudo systemctl daemon-reload
-sudo systemctl enable --now barkast-autodeploy.timer
-systemctl list-timers barkast-autodeploy.timer            # confirm it's scheduled
+sudo systemctl enable --now barkaart-autodeploy.timer
+systemctl list-timers barkaart-autodeploy.timer            # confirm it's scheduled
 ```
 If your GHCR package is private: `docker login ghcr.io` once with a `read:packages` PAT.
 

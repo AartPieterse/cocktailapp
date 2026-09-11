@@ -1,6 +1,6 @@
 import { Injectable, computed, effect, signal } from '@angular/core';
 
-const KEY = 'barkast.favorites';
+const KEY = 'barkaart.favorites';
 
 /** Favorite cocktail ids, persisted to localStorage. */
 @Injectable({ providedIn: 'root' })

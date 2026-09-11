@@ -1,4 +1,4 @@
-# Netlify build configuration for Barkast (static-first Angular SPA).
+# Netlify build configuration for Barkaart (static-first Angular SPA).
 #
 # This file is the source of truth for the build — it overrides the settings in the Netlify
 # UI. NOTE: a build plugin added via the Netlify UI (e.g. "@netlify/angular-runtime") keeps

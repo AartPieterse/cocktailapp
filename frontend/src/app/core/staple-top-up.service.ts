@@ -3,7 +3,7 @@ import type { Ingredient } from '@cocktailapp/shared';
 import { CabinetService } from './cabinet.service';
 import { IngredientService } from '../services/ingredient.service';
 
-const APPLIED_KEY = 'barkast.staplesApplied';
+const APPLIED_KEY = 'barkaart.staplesApplied';
 
 /**
  * Carries newly promoted pantry staples into cabinets that already exist.
