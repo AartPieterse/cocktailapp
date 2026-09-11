@@ -25,7 +25,8 @@ at the home IP and Cloudflare is out of the path. The line has a public routable
 running without any tunnel is technically possible; it was declined to keep the home address private.
 
 > **Amended 2026-09-05 — the tunnel rationale above is now contested, on a ground it did not consider.**
-> [`private-cloud-sovereignty.md`](private-cloud-sovereignty.md) found that a Cloudflare Tunnel
+> `sovereignty.md`, in the separate **FileServer** repo (`~/source/repos/FileServer`), found that a
+> Cloudflare Tunnel
 > **terminates TLS at the edge** — inherent to how WAF, Access and caching work. A Barkast login
 > therefore sends the e-mail address *and the password itself* (POST body, not the hash) through a US
 > company. That is the only place in either plan where **other people's** personal data is processed by
@@ -36,7 +37,7 @@ running without any tunnel is technically possible; it was declined to keep the 
 > a WireGuard port is forwarded, which the private-cloud plan now does.
 >
 > This does not settle it; it adds a cost that was not on the scale. The two exits are in
-> [`private-cloud.md`](private-cloud.md) phase 4: publish `api.<domain>` straight from Caddy (free, home
+> `plan.md` phase 4, same repo: publish `api.<domain>` straight from Caddy (free, home
 > IP becomes public), or put an EU VPS in front as a pure TCP/SNI forwarder that never terminates TLS
 > (~€60/yr, strictly better than the tunnel on both privacy and jurisdiction). Decide once, because
 > `admin.guard.ts` and the header hygiene below assume Cloudflare is in the path.
