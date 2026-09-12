@@ -41,6 +41,11 @@ running without any tunnel is technically possible; it was declined to keep the 
 > IP becomes public), or put an EU VPS in front as a pure TCP/SNI forwarder that never terminates TLS
 > (~€60/yr, strictly better than the tunnel on both privacy and jurisdiction). Decide once, because
 > `admin.guard.ts` and the header hygiene below assume Cloudflare is in the path.
+>
+> **Settled on 12 Sep 2026: exit (a).** The tunnel goes, and Caddy publishes on 443 itself. The
+> home IP becoming public is not a new concession — the forwarded WireGuard port made it on 11 Sep.
+> Consequence for this plan: step 8 below is superseded by [public-access.md](public-access.md), and
+> the `admin.guard.ts` inversion moves from "before any public exposure" to blocking that step.
 
 What that changes here:
 

@@ -8,6 +8,7 @@ someone intended and why.
 |---|---|---|
 | [next-phase.md](next-phase.md) | What to build next in CocktailApp, ordered by dependency | Steps 1 and 11 done; step 2 onward not started |
 | [variations.md](variations.md) | How variations are stored, and the contract for adding or removing catalog entries | Built, except the four promotions and runtime id remapping |
+| [public-access.md](public-access.md) | How Barkaart goes from LAN-only to a public https:// address, and in what order | Decided 12 Sep 2026; nothing built yet |
 
 ## The private-cloud plans moved out
 
@@ -37,6 +38,10 @@ That machine link is real, though, and two things still bind the two repositorie
 >
 > The two exits are in `plan.md` phase 4 in the FileServer repo. Resolve this before building either
 > stack. `next-phase.md` carries the same note inline, next to the reasoning it amends.
+>
+> **Resolved on 12 Sep 2026** — exit (a): publish straight from Caddy on 443 and drop the tunnel.
+> The home IP becomes public, which the forwarded WireGuard port had already conceded.
+> [public-access.md](public-access.md) carries the reasoning and the build order.
 
 One more shared prerequisite: `plan.md` will not let anything leave Google until a restore drill has
 passed, and `next-phase.md` makes the same demand before real accounts land in Barkaart. That is **one
