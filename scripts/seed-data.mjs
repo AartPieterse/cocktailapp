@@ -233,6 +233,7 @@ export const cocktails = [
   {
     name: 'Whiskey Sour',
     description: 'Zacht schuimend, met de perfecte balans tussen zuur en zoet.',
+    notes: 'Gebruik je eiwit, schud dan iets steviger — dan komt het schuim los en mengt het door de drank.',
     glass: 'rocks',
     method: 'shaken',
     difficulty: 'medium',
@@ -379,6 +380,7 @@ export const cocktails = [
   {
     name: 'Piña Colada',
     description: 'Romig-tropisch met rum, ananas en kokos.',
+    notes: 'Van oudsher gingen er naar smaak een paar druppels vers limoensap bij. In plaats van sap kun je ook vier schijven verse ananas gebruiken.',
     glass: 'hurricane',
     method: 'blended',
     difficulty: 'easy',
@@ -447,6 +449,7 @@ export const cocktails = [
   {
     name: 'Mimosa',
     description: 'Brunch-klassieker: prosecco met vers sinaasappelsap.',
+    notes: 'Ook bekend als Buck\'s Fizz.',
     glass: 'flute',
     method: 'build',
     difficulty: 'easy',
@@ -462,6 +465,7 @@ export const cocktails = [
   {
     name: 'Bloody Mary',
     description: 'Hartig en kruidig — het beroemde brunch-medicijn.',
+    notes: 'Wordt er om ijs gevraagd, schenk hem dan in een longdrinkglas.',
     glass: 'highball',
     method: 'build',
     difficulty: 'medium',

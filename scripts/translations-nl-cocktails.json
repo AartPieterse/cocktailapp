@@ -85,7 +85,21 @@
       "Roer voorzichtig en schenk in een gekoeld flûteglas."
     ],
     "notes": "PUCCINI - vers mandarijnensap; ROSSINI - verse aardbeienpuree; TINTORETTO - vers granaatappelsap.",
-    "description": "Venetië, 1948, genoemd naar het roze van een schilder. Alleen witte perzik: gele perzik maakt hem mierzoet."
+    "description": "Venetië, 1948, genoemd naar het roze van een schilder. Alleen witte perzik: gele perzik maakt hem mierzoet.",
+    "variations": {
+      "puccini": {
+        "name": "Puccini",
+        "description": "Met vers mandarijnsap in plaats van perzikpuree."
+      },
+      "rossini": {
+        "name": "Rossini",
+        "description": "Met verse aardbeienpuree in plaats van perzikpuree."
+      },
+      "tintoretto": {
+        "name": "Tintoretto",
+        "description": "Met vers granaatappelsap in plaats van perzikpuree."
+      }
+    }
   },
   "between-the-sheets": {
     "name": "Between the Sheets",
@@ -422,7 +436,13 @@
       "Schenk crème de cassis in het glas en vul aan met droge witte wijn."
     ],
     "notes": "KIR ROYAL - Gebruik champagne in plaats van witte wijn.",
-    "description": "Het aperitief van de Bourgogne: een scheut cassis in droge witte wijn. Genoemd naar een burgemeester van Dijon die het onophoudelijk schonk."
+    "description": "Het aperitief van de Bourgogne: een scheut cassis in droge witte wijn. Genoemd naar een burgemeester van Dijon die het onophoudelijk schonk.",
+    "variations": {
+      "kir-royal": {
+        "name": "Kir Royal",
+        "description": "Met champagne (of mousserende wijn) in plaats van droge witte wijn."
+      }
+    }
   },
   "last-word": {
     "name": "Last word",
@@ -762,7 +782,21 @@
     ],
     "notes": "Er zijn andere versies van de Spritz die Campari, Cynar of Select gebruiken in plaats van Aperol.",
     "garnish": "Garneer met een schijfje sinaasappel.",
-    "description": "Venetië, en de verhouding ligt vast: drie prosecco, twee Aperol, één soda. Laag in alcohol en gemaakt voor de middag."
+    "description": "Venetië, en de verhouding ligt vast: drie prosecco, twee Aperol, één soda. Laag in alcohol en gemaakt voor de middag.",
+    "variations": {
+      "campari-spritz": {
+        "name": "Campari Spritz",
+        "description": "Ruil de Aperol voor Campari — bitterder van karakter."
+      },
+      "cynar-spritz": {
+        "name": "Cynar Spritz",
+        "description": "Ruil de Aperol voor Cynar, een amaro van artisjok."
+      },
+      "select-spritz": {
+        "name": "Select Spritz",
+        "description": "Het Venetiaanse origineel, met Select in plaats van Aperol."
+      }
+    }
   },
   "stinger": {
     "name": "Stinger",

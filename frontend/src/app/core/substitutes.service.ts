@@ -1,6 +1,6 @@
 import { Injectable, effect, signal } from '@angular/core';
 
-const KEY = 'barkast.substitutes';
+const KEY = 'barkaart.substitutes';
 
 /**
  * "Ook vervangers meetellen" — when on, the cabinet is expanded (via the shared `expandCabinet`)

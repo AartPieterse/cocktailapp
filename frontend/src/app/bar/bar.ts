@@ -105,7 +105,7 @@ import { glassSpecFor } from '../shared/cocktail-visual';
                     [checked]="!analytics.optedOut()"
                     (change)="analytics.setOptOut(!$event.checked)"
                   >
-                    Anonieme statistieken delen
+                    {{ lang.t().home.shareStats }}
                   </mat-slide-toggle>
                 </label>
               }

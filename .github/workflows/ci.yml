@@ -90,7 +90,7 @@ jobs:
 
       - name: Lowercase the image repo (GHCR requires lowercase)
         id: repo
-        run: echo "name=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/barkast-api" >> "$GITHUB_OUTPUT"
+        run: echo "name=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/barkaart-api" >> "$GITHUB_OUTPUT"
 
       - name: Log in to GHCR
         uses: docker/login-action@v3

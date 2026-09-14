@@ -18,6 +18,7 @@ import {
   of,
   shareReplay,
   switchMap,
+  take,
   throwError,
 } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -92,8 +93,21 @@ export class CatalogService {
     );
   }
 
+  /**
+   * One random cocktail — a request, not a stream, and `take(1)` is what makes it one.
+   *
+   * `catalog$` re-emits on every language switch, by design: a list or a detail view is supposed
+   * to re-render in the new locale. Inherited here it meant something else entirely — the caller
+   * navigates to whatever this emits, so flipping the language on a drink you were sent to by
+   * "Surprise me" rolled the dice again and threw you at a different recipe. Every press also left
+   * its subscription alive, so a second press armed a second navigation.
+   *
+   * The API sibling (`GET /cocktails/random`) has always completed after one value. This is the
+   * static path agreeing with it.
+   */
   randomCocktail(): Observable<Cocktail> {
     return this.catalog$.pipe(
+      take(1),
       switchMap((c) => {
         if (!c.cocktails.length)
           return throwError(() => new Error(this.lang.t().errors.noCocktails));

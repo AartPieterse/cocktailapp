@@ -1,19 +1,19 @@
-# Barkast automatic pull-deploy — one-shot, fired by barkast-autodeploy.timer.
+# Barkaart automatic pull-deploy — one-shot, fired by barkaart-autodeploy.timer.
 #
 # The box has no inbound ports, so a release cannot be pushed to it: it must be PULLED. This unit is
 # that pull. It checks the GHCR API image and the release branch's SPA source independently, and
 # deploys whichever moved.
 #
 # Install (paths below match the reference host: user `aart`, checkout at ~/cocktailapp):
-#   sudo cp deploy/systemd/barkast-autodeploy.{service,timer} /etc/systemd/system/
+#   sudo cp deploy/systemd/barkaart-autodeploy.{service,timer} /etc/systemd/system/
 #   sudo systemctl daemon-reload
-#   sudo systemctl enable --now barkast-autodeploy.timer
+#   sudo systemctl enable --now barkaart-autodeploy.timer
 # Inspect:
-#   systemctl list-timers barkast-autodeploy.timer
-#   journalctl -u barkast-autodeploy.service -f
-#   sudo systemctl start barkast-autodeploy.service   # force a cycle now
+#   systemctl list-timers barkaart-autodeploy.timer
+#   journalctl -u barkaart-autodeploy.service -f
+#   sudo systemctl start barkaart-autodeploy.service   # force a cycle now
 [Unit]
-Description=Barkast auto-deploy (pull the new API image from GHCR, rebuild the SPA, roll out)
+Description=Barkaart auto-deploy (pull the new API image from GHCR, rebuild the SPA, roll out)
 Wants=network-online.target
 After=network-online.target docker.service
 Requires=docker.service

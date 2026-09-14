@@ -3,7 +3,7 @@ import type { Cocktail } from '@cocktailapp/shared';
 import catalog from '../../../public/catalog.json';
 import { COCKTAIL_ART } from './cocktail-art.data';
 import { derivedSpec, glassSpecFor, liquidFor, tintFor } from './cocktail-visual';
-import { barkastGlassSVG } from './glass-art/glass-svg';
+import { barkaartGlassSVG } from './glass-art/glass-svg';
 
 const COCKTAILS = (catalog as { cocktails: Cocktail[] }).cocktails;
 const IDS = new Set(COCKTAILS.map((c) => c.id));
@@ -38,7 +38,7 @@ describe('cocktail art', () => {
     for (const c of COCKTAILS) {
       // Strip the per-drink seed, so a collision means the drinks genuinely
       // describe the same drawing rather than merely differing in jitter.
-      const svg = barkastGlassSVG({ ...glassSpecFor(c), seed: 'x' });
+      const svg = barkaartGlassSVG({ ...glassSpecFor(c), seed: 'x' });
       const list = byDrawing.get(svg) ?? [];
       list.push(c.name);
       byDrawing.set(svg, list);
@@ -49,7 +49,7 @@ describe('cocktail art', () => {
 
   it('the same drink always renders byte-identically', () => {
     for (const c of COCKTAILS.slice(0, 12)) {
-      expect(barkastGlassSVG(glassSpecFor(c))).toBe(barkastGlassSVG(glassSpecFor(c)));
+      expect(barkaartGlassSVG(glassSpecFor(c))).toBe(barkaartGlassSVG(glassSpecFor(c)));
     }
   });
 
@@ -57,7 +57,7 @@ describe('cocktail art', () => {
     for (const c of COCKTAILS) {
       for (const detail of ['card', 'hero'] as const) {
         for (const motion of ['none', 'ambient', 'pour'] as const) {
-          const svg = barkastGlassSVG(glassSpecFor(c, detail, motion));
+          const svg = barkaartGlassSVG(glassSpecFor(c, detail, motion));
           expect(svg.startsWith('<svg'), c.id).toBe(true);
           expect(svg.endsWith('</svg>'), c.id).toBe(true);
           expect(svg, c.id).not.toContain('NaN');
@@ -106,14 +106,14 @@ describe('cocktail art', () => {
     // the per-card cost is the whole grid's cost. Measured at ~46; the ceiling is
     // there to make a regression loud rather than to be hit.
     for (const c of COCKTAILS) {
-      const nodes = (barkastGlassSVG(glassSpecFor(c, 'card')).match(/<[a-z]/g) ?? []).length;
+      const nodes = (barkaartGlassSVG(glassSpecFor(c, 'card')).match(/<[a-z]/g) ?? []).length;
       expect(nodes, `${c.id} emits too many nodes for a card`).toBeLessThan(90);
     }
   });
 
   it('cards animate only where the drink actually fizzes or steams', () => {
     const moving = COCKTAILS.filter((c) => {
-      const svg = barkastGlassSVG(glassSpecFor(c, 'card', 'ambient'));
+      const svg = barkaartGlassSVG(glassSpecFor(c, 'card', 'ambient'));
       return svg.includes('bk-bub') || svg.includes('bk-steam');
     });
     // A minority of the grid moves; the rest emits no animated node at all.
@@ -127,14 +127,14 @@ describe('cocktail art', () => {
 
   it('every animation is switched off under prefers-reduced-motion', () => {
     for (const c of COCKTAILS) {
-      const svg = barkastGlassSVG(glassSpecFor(c, 'hero', 'pour'));
+      const svg = barkaartGlassSVG(glassSpecFor(c, 'hero', 'pour'));
       if (svg.includes('<style>')) expect(svg, c.id).toContain('prefers-reduced-motion');
     }
   });
 
   it('the output is self-contained: no scripts, no external references', () => {
     for (const c of COCKTAILS) {
-      const svg = barkastGlassSVG(glassSpecFor(c, 'hero', 'pour'));
+      const svg = barkaartGlassSVG(glassSpecFor(c, 'hero', 'pour'));
       expect(svg, c.id).not.toContain('<script');
       expect(svg, c.id).not.toContain('xlink:href');
       // The SVG namespace is the only URL allowed to appear.
@@ -241,7 +241,7 @@ describe('the derivation, on drinks with no authored art', () => {
   });
 
   it('produces a drawable spec for a drink it knows nothing about', () => {
-    const svg = barkastGlassSVG({ ...derivedSpec(drink({})), seed: 'unknown' });
+    const svg = barkaartGlassSVG({ ...derivedSpec(drink({})), seed: 'unknown' });
     expect(svg).not.toContain('NaN');
     expect(svg).toContain('<svg');
   });

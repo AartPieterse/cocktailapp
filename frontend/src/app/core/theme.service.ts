@@ -1,7 +1,7 @@
 import { Injectable, effect, signal } from '@angular/core';
 
 type Theme = 'light' | 'dark';
-const KEY = 'barkast.theme';
+const KEY = 'barkaart.theme';
 
 // Match the editorial background tokens so the mobile browser chrome / PWA status bar
 // blends with the page instead of flashing a default colour.

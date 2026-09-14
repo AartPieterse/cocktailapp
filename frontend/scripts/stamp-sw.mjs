@@ -1,6 +1,6 @@
 // Post-build: stamp a unique per-build id into the emitted service worker.
 //
-// public/sw.js ships with a `__BARKAST_BUILD__` placeholder in its CACHE_VERSION. Angular copies it
+// public/sw.js ships with a `__BARKAART_BUILD__` placeholder in its CACHE_VERSION. Angular copies it
 // to the build output verbatim (it's a static asset), so without this step every deploy would ship a
 // byte-identical sw.js and the browser would never notice a new version. Here we replace the
 // placeholder with a hash of ALL shipped output — JS/CSS bundles, the catalog data (catalog.json),
@@ -15,7 +15,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 
-const PLACEHOLDER = '__BARKAST_BUILD__';
+const PLACEHOLDER = '__BARKAART_BUILD__';
 
 // ng build (application builder) emits to dist/frontend/browser. cwd is the frontend workspace when
 // run via `npm run build --workspace frontend`; tolerate a run from the repo root too.

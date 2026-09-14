@@ -2,14 +2,19 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { App } from './app/app';
 import { environment } from './environments/environment';
+import { migrateLegacyStorageKeys } from './app/core/storage-migration';
+
+// Carry a pre-rename install's cabinet, favourites and preferences over to the `barkaart.*`
+// keys. Must run before bootstrap: the services read their key once, at construction.
+migrateLegacyStorageKeys();
 
 // Capture the browser's install prompt as early as possible — it can fire before Angular
 // has bootstrapped. We stash it on window and re-broadcast so PwaService can pick it up
 // whenever it initialises. See core/pwa.service.ts.
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
-  (window as unknown as { __barkastInstallPrompt?: Event }).__barkastInstallPrompt = e;
-  window.dispatchEvent(new Event('barkast:installable'));
+  (window as unknown as { __barkaartInstallPrompt?: Event }).__barkaartInstallPrompt = e;
+  window.dispatchEvent(new Event('barkaart:installable'));
 });
 
 bootstrapApplication(App, appConfig)

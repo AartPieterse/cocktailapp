@@ -1,8 +1,8 @@
-# Barkast — Privacybeleid
+# Barkaart — Privacybeleid
 
 _Laatst bijgewerkt: 2026-09-04_
 
-Barkast is een cocktail-app die laat zien welke drankjes je kunt maken met wat je in huis hebt. De
+Barkaart is een cocktail-app die laat zien welke drankjes je kunt maken met wat je in huis hebt. De
 app is **local-first**: je kunt hem volledig gebruiken **zonder account** en **zonder internet**. Dit
 beleid legt uit welke gegevens we verwerken, waarom, en wat je rechten zijn.
 
@@ -14,7 +14,7 @@ dat is een verwerking door een derde partij buiten onze controle (zie §4). De p
 over **accounts, synchronisatie en statistieken** beschrijven een optionele (zelf-gehoste) backend
 die in de huidige app **nog niet is ingeschakeld**.
 
-**Verwerkingsverantwoordelijke:** de beheerder van deze Barkast-installatie (particulier, Nederland).
+**Verwerkingsverantwoordelijke:** de beheerder van deze Barkaart-installatie (particulier, Nederland).
 **Contact:** a.pieterse@ratho.nl.
 
 > Deze tekst is een sjabloon dat is opgesteld op basis van de daadwerkelijke werking van de app en
@@ -22,7 +22,7 @@ die in de huidige app **nog niet is ingeschakeld**.
 
 ## 1. Gebruik zonder account (standaard)
 
-Zonder in te loggen slaat Barkast **alleen op jouw apparaat** op:
+Zonder in te loggen slaat Barkaart **alleen op jouw apparaat** op:
 
 - je bar (welke ingrediënten je hebt),
 - je favoriete cocktails,
@@ -47,8 +47,8 @@ tussen je apparaten. Daarvoor verwerken we:
   refresh-token).
 
 Op je eigen apparaat bewaart de app je inlogstatus in de app-opslag (localStorage) onder de sleutel
-`barkast.auth`: je e-mailadres en **beide** tokens, dus ook het langlevende refresh-token. Zodra
-synchronisatie draait, komt daar `barkast.sync` bij met het tijdstip van de laatste synchronisatie.
+`barkaart.auth`: je e-mailadres en **beide** tokens, dus ook het langlevende refresh-token. Zodra
+synchronisatie draait, komt daar `barkaart.sync` bij met het tijdstip van de laatste synchronisatie.
 Uitloggen wist die sleutels; wis je zelf de app-opslag, dan word je daarmee ook uitgelogd.
 
 **Grondslag:** uitvoering van de dienst die je hebt aangevraagd (synchronisatie). **Bewaartermijn:**
@@ -129,7 +129,7 @@ persoonsgegevens, en je kunt bezwaar maken tegen verwerking.
 
 ## 6. Kinderen
 
-Barkast gaat over alcoholische dranken en is niet bedoeld voor personen onder de wettelijke
+Barkaart gaat over alcoholische dranken en is niet bedoeld voor personen onder de wettelijke
 leeftijdsgrens voor alcohol.
 
 ## 7. Wijzigingen

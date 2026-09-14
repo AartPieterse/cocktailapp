@@ -11,7 +11,7 @@ import type {
 import { Observable, finalize, map, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-const KEY = 'barkast.auth';
+const KEY = 'barkaart.auth';
 
 interface StoredAuth {
   user: AuthUser;
@@ -21,7 +21,7 @@ interface StoredAuth {
 /**
  * Optional accounts for cross-device sync. Talks to the NestJS backend's `/auth/*` endpoints.
  * Tokens come back in the JSON body (not a cookie), so both the access and the rotating refresh
- * token are persisted to localStorage under `barkast.auth` — the refresh token must be JS-readable
+ * token are persisted to localStorage under `barkaart.auth` — the refresh token must be JS-readable
  * to send it on the next `POST /auth/refresh`. localStorage is XSS-readable; acceptable here since
  * the app renders no user HTML (Angular escapes by default) and the synced data is low-sensitivity.
  * The whole service is inert when `environment.authEnabled` is false.

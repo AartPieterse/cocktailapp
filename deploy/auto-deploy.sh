@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Automatic pull-deploy for the Barkast self-host (Part F — the "no manual step" upgrade).
+# Automatic pull-deploy for the Barkaart self-host (Part F — the "no manual step" upgrade).
 #
 # The box has NO inbound ports (the Cloudflare Tunnel dials outbound), so deploys can't be pushed
 # to it — they must be PULLED. This script polls GHCR for a newer image on the watched tag
@@ -12,7 +12,7 @@
 #   bash auto-deploy.sh --watch # loop in-process every AUTODEPLOY_INTERVAL seconds
 #
 # Env (all optional; put in deploy/.env):
-#   IMAGE_REPO          GHCR package        (default ghcr.io/aartpieterse/barkast-api)
+#   IMAGE_REPO          GHCR package        (default ghcr.io/aartpieterse/barkaart-api)
 #   WATCH_TAG           tag to follow       (default latest)
 #   AUTODEPLOY_INTERVAL --watch poll seconds (default 300)
 #   RELEASE_BRANCH      git branch to track (default main) — set empty to skip the SPA entirely
@@ -32,7 +32,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 if [ -f .env ]; then set -a; . ./.env; set +a; fi
 
-IMAGE_REPO="${IMAGE_REPO:-ghcr.io/aartpieterse/barkast-api}"
+IMAGE_REPO="${IMAGE_REPO:-ghcr.io/aartpieterse/barkaart-api}"
 WATCH_TAG="${WATCH_TAG:-latest}"
 RELEASE_BRANCH="${RELEASE_BRANCH-main}"
 STATE_FILE=".autodeploy-digest"

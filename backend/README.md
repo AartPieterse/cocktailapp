@@ -1,6 +1,6 @@
-# Barkast API (backend)
+# Barkaart API (backend)
 
-The **Barkast** NestJS API: the cocktail catalog authoring service, plus the optional accounts /
+The **Barkaart** NestJS API: the cocktail catalog authoring service, plus the optional accounts /
 per-user sync / anonymous-analytics backend for the app. Built on **NestJS 11**, **Mongoose 9**,
 **MongoDB**, **TypeScript 5**, and the workspace package **`@cocktailapp/shared`** (exact versions live
 in `package.json` / the root `package-lock.json`).
@@ -147,7 +147,7 @@ npm run dev               # backend + frontend together
 npm run db:seed           # seed the catalog collections (ingredients + cocktails) from iba-cocktails-seed.json
 ```
 
-On boot you should see `Barkast API listening on http://localhost:3000/api`.
+On boot you should see `Barkaart API listening on http://localhost:3000/api`.
 
 Within this workspace (`backend/`):
 

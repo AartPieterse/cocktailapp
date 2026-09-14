@@ -1,6 +1,6 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { DomSanitizer, type SafeHtml } from '@angular/platform-browser';
-import { barkastIngredientSVG } from './ingredient-svg';
+import { barkaartIngredientSVG } from './ingredient-svg';
 
 /**
  * A small hand-drawn ingredient glyph (bottle, citrus, herb, ice…). Picks a shape and colour
@@ -28,6 +28,6 @@ export class IngredientGlyph {
   readonly cat = input<string | undefined>(undefined);
 
   protected readonly html = computed<SafeHtml>(() =>
-    this.sanitizer.bypassSecurityTrustHtml(barkastIngredientSVG({ id: this.ingId(), cat: this.cat() })),
+    this.sanitizer.bypassSecurityTrustHtml(barkaartIngredientSVG({ id: this.ingId(), cat: this.cat() })),
   );
 }

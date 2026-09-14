@@ -1,8 +1,8 @@
 import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { AnalyticsService } from './analytics.service';
 
-const IDS_KEY = 'barkast.cabinet';
-const DONE_KEY = 'barkast.wizardDone';
+const IDS_KEY = 'barkaart.cabinet';
+const DONE_KEY = 'barkaart.wizardDone';
 
 /**
  * "Mijn bar" — the set of ingredient ids the user has on hand, persisted to

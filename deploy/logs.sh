@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Read the Barkast stack's logs — from the box, or from your laptop over SSH.
+# Read the Barkaart stack's logs — from the box, or from your laptop over SSH.
 #
 # Runs either side. If docker is present locally it reads directly; otherwise it SSHes to the box, so
 # the same command works from your dev machine and from the box itself.
@@ -22,8 +22,8 @@
 set -euo pipefail
 
 BOX="${BOX:-aart@192.168.1.100}"
-SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_ed25519_barkast}"
-PROJECT="${COMPOSE_PROJECT:-barkast}"
+SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_ed25519_fileserver}"
+PROJECT="${COMPOSE_PROJECT:-barkaart}"
 TAIL="${TAIL:-100}"
 
 log()  { printf '\033[1;36m▸ %s\033[0m\n' "$*" >&2; }
@@ -58,7 +58,7 @@ fi
 
 containers() { docker ps -a --filter "label=com.docker.compose.project=$PROJECT" --format '{{.Names}}' | sort; }
 
-resolve() {  # service name -> container name, tolerating both `api` and `barkast-api-1`
+resolve() {  # service name -> container name, tolerating both `api` and `barkaart-api-1`
   local want="$1" c
   for c in $(containers); do
     [ "$c" = "$want" ] && { echo "$c"; return; }

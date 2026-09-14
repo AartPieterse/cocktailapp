@@ -1,4 +1,4 @@
-# Barkast 🍸
+# Barkaart 🍸
 
 **Wat staat er in jouw bar — en wat kun je daarmee maken?**
 
@@ -15,13 +15,16 @@
 > account data lands, and the box has never been rebooted to prove the stack returns unattended.
 > See [`deploy/bare-metal-runbook.md`](deploy/bare-metal-runbook.md) for what was actually done.
 
-Barkast is a full-stack cocktail app built around one flagship idea: you tick off the ingredients
+Barkaart is a full-stack cocktail app built around one flagship idea: you tick off the ingredients
 you have on hand (**"Mijn bar"** / *"My bar"*), and it instantly shows which cocktails you can make
 **right now** — plus the ones you're only one or two ingredients away from.
 
-- **First-run wizard** walks you through your bar in sections, starting with the staples you
-  probably already own (ice, sugar, simple syrup, water, milk, cola, soda water — the `isStaple`
-  bases) pre-checked, then spirits, liqueurs, mixers, and so on.
+- **First-run wizard** asks which spirits you own first, then only asks about what fits them —
+  choosing gin alone leaves 29 of 115 ingredients worth asking about. Pantry staples come
+  pre-checked, each step leads with the ingredients most recipes call for (the rest one tap away),
+  a search box reaches every ingredient across categories, and the live *"hiermee maak je al N
+  cocktails"* under the buttons shows what the ticks so far already buy. It never asks about an
+  ingredient that cannot change the answer — a garnish or a seasoning never blocks a drink.
 - **Ontdek** / *Discover* (home) is the discovery surface: *"Je kunt 19 cocktails maken"*, a
   **Nu te maken** grid, and **Bijna — je mist er één** with the exact missing ingredient per drink.
 - **Mijn bar** is where you tick what you own; the wizard fills it for you on first run.
@@ -40,7 +43,7 @@ switchable at runtime.
 
 ## How it ships
 
-Barkast is **static-first and local-first**:
+Barkaart is **static-first and local-first**:
 
 - **Production is a fully static SPA** (Netlify). It ships a pre-built catalog bundle
   (`catalog.json` + Dutch overlay `catalog.nl.json`) and computes "wat kan ik maken" **client-side**
@@ -296,11 +299,11 @@ npm run db:shell    # interactive mongosh shell
 ## Project structure
 
 ```
-barkast/
+barkaart/
 ├─ shared/                  @cocktailapp/shared — domain types, enums, localized labels + UI strings (nl/en), makeable/catalog logic
 ├─ backend/                 NestJS + Mongoose API (catalog CRUD, makeable, catalog, auth, /me sync, analytics, admin)
 ├─ frontend/                Angular PWA — Ontdek (home), Mijn bar, wizard, cocktails, ingredienten
-├─ scripts/                 build-catalog · validate-seed · build-translations-nl · db-ping/count/seed/shell
+├─ scripts/                 build-catalog · validate-seed · build-translations-nl (+ -ingredients/-text) · db-ping/count/seed/shell
 │                           (+ import-mocktails ← mocktails-source.json, rewrites the seed; archived
 │                           one-shots build-iba-seed · fold-seed; seed-data.mjs = Dutch-text source)
 ├─ deploy/                  Docker Compose self-hosting stack (api + mongo + cloudflared), backup/restore/deploy,
@@ -314,7 +317,7 @@ barkast/
 - **Release branch: `main`.** `.github/workflows/ci.yml` is the gate — a PR into `main` or a push to
   `development` builds and verifies (shared + backend tests, `validate:seed`, and a check that the
   committed `catalog.json` / `catalog.nl.json` bundles are up to date). A push to `main` additionally
-  deploys the frontend to Netlify and pushes `ghcr.io/<owner>/barkast-api:<sha>` and `:latest`.
+  deploys the frontend to Netlify and pushes `ghcr.io/<owner>/barkaart-api:<sha>` and `:latest`.
   **Merging to `main` is what ships.**
 - **Frontend (production):** static SPA hosted on **Netlify**, but built and uploaded by **GitHub
   Actions** (`.github/workflows/ci.yml`, job `deploy`) from `frontend/dist/frontend/browser`;

@@ -95,6 +95,7 @@ export interface UiStrings {
     yourBar: string;
     ingredientCount: (n: number) => string;
     countSubstitutes: string;
+    shareStats: string;
     editBarShort: string;
   };
   /**
@@ -141,6 +142,7 @@ export interface UiStrings {
   /** First-run wizard. */
   wizard: {
     step: (n: number, total: number) => string;
+    progressLabel: string;
     skip: string;
     emptyCategory: string;
     back: string;
@@ -148,6 +150,17 @@ export interface UiStrings {
     finish: string;
     staplesTitle: string;
     staplesHint: string;
+    spiritsTitle: string;
+    spiritsHint: string;
+    searchPlaceholder: string;
+    searchResults: string;
+    searchEmpty: string;
+    showAll: (n: number) => string;
+    showLess: string;
+    /** Live payoff under the buttons: what the ticks so far already buy you. */
+    makeable: (n: number) => string;
+    almost: (n: number) => string;
+    nothingYet: string;
   };
   /** "Mijn bar" — the stock editor (route/component was "Mijn kast"/Cabinet). */
   bar: {
@@ -319,7 +332,7 @@ export interface UiStrings {
 
 const nl: UiStrings = {
   common: {
-    appName: 'Barkast',
+    appName: 'Barkaart',
     tagline: 'wat kun je maken?',
     cocktails: 'Cocktails',
     edit: 'Bewerk',
@@ -349,16 +362,16 @@ const nl: UiStrings = {
     toggleTheme: 'Wissel thema',
     toggleLanguage: 'Wissel taal',
     menu: 'Menu',
-    brandHome: 'Barkast home',
-    install: 'Installeer Barkast',
+    brandHome: 'Barkaart home',
+    install: 'Installeer Barkaart',
     account: 'Account',
     login: 'Inloggen',
   },
   home: {
-    welcome: 'Welkom bij Barkast',
+    welcome: 'Welkom bij Barkaart',
     heroTitle: 'Wat staat er<br />in jouw bar?',
     heroLede:
-      'Vink aan wat je in huis hebt — sterke drank, mixers, dat ene flesje achterin — en Barkast laat meteen zien welke cocktails je <em>nu</em> kunt maken.',
+      'Vink aan wat je in huis hebt — sterke drank, mixers, dat ene flesje achterin — en Barkaart laat meteen zien welke cocktails je <em>nu</em> kunt maken.',
     buildBar: 'Stel je bar samen',
     browseFirst: 'Blader eerst rond',
     eyebrow: 'Ontdek',
@@ -377,6 +390,7 @@ const nl: UiStrings = {
     yourBar: 'Mijn bar',
     ingredientCount: (n) => `${n} ${n === 1 ? 'ingrediënt' : 'ingrediënten'}`,
     countSubstitutes: 'Vervangers meetellen',
+    shareStats: 'Anonieme statistieken delen',
     editBarShort: 'Bewerk bar',
   },
   technique: {
@@ -415,17 +429,29 @@ const nl: UiStrings = {
   },
   wizard: {
     step: (n, total) => `Stap ${n} van ${total}`,
+    progressLabel: 'Voortgang',
     skip: 'Overslaan',
-    emptyCategory: 'Geen ingrediënten in deze categorie.',
+    emptyCategory: 'Niets in deze categorie past bij je flessen — tik op “toon alles”.',
     back: 'Terug',
     next: 'Volgende',
     finish: 'Klaar — toon mijn bar',
     staplesTitle: 'Dit heb je vast al in huis',
-    staplesHint: 'IJs, suiker, citroensap… vink aan wat klopt. We hebben alvast wat aangevinkt.',
+    staplesHint: 'Suiker, siroop, bruiswater… vink aan wat klopt. We hebben alvast wat aangevinkt.',
+    spiritsTitle: 'Welke sterke drank staat er?',
+    spiritsHint: 'Begin hier: hierna vragen we alleen nog naar wat bij jouw flessen past.',
+    searchPlaceholder: 'Zoek een ingrediënt…',
+    searchResults: 'Zoekresultaten',
+    searchEmpty: 'Niets gevonden.',
+    showAll: (n) => `Toon alles (${n} meer)`,
+    showLess: 'Toon minder',
+    makeable: (n) => `Hiermee maak je al ${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
+    almost: (n) =>
+      `${n} ${n === 1 ? 'cocktail is' : 'cocktails zijn'} nog één ingrediënt van je af`,
+    nothingYet: 'Vink aan wat je in huis hebt.',
   },
   bar: {
     title: 'Mijn bar',
-    sub: 'Vink aan wat je in huis hebt — de rest rekent Barkast uit.',
+    sub: 'Vink aan wat je in huis hebt — de rest rekent Barkaart uit.',
     youCanMake: (n) => `Je kunt ${n} ${n === 1 ? 'cocktail' : 'cocktails'} maken`,
     selected: (n) => `${n} ${n === 1 ? 'ingrediënt' : 'ingrediënten'} geselecteerd`,
   },
@@ -567,21 +593,21 @@ const nl: UiStrings = {
     dismiss: 'Sluiten',
   },
   titles: {
-    discover: 'Ontdek — Barkast',
-    buildBar: 'Stel je bar samen — Barkast',
-    myBar: 'Mijn bar — Barkast',
-    ingredients: 'Ingrediënten — Barkast',
-    newCocktail: 'Nieuwe cocktail — Barkast',
-    editCocktail: 'Cocktail bewerken — Barkast',
-    cocktails: 'Cocktails — Barkast',
-    technique: 'Techniek — Barkast',
-    families: 'Families — Barkast',
+    discover: 'Ontdek — Barkaart',
+    buildBar: 'Stel je bar samen — Barkaart',
+    myBar: 'Mijn bar — Barkaart',
+    ingredients: 'Ingrediënten — Barkaart',
+    newCocktail: 'Nieuwe cocktail — Barkaart',
+    editCocktail: 'Cocktail bewerken — Barkaart',
+    cocktails: 'Cocktails — Barkaart',
+    technique: 'Techniek — Barkaart',
+    families: 'Families — Barkaart',
   },
 };
 
 const en: UiStrings = {
   common: {
-    appName: 'Barkast',
+    appName: 'Barkaart',
     tagline: 'what can you make?',
     cocktails: 'Cocktails',
     edit: 'Edit',
@@ -611,16 +637,16 @@ const en: UiStrings = {
     toggleTheme: 'Toggle theme',
     toggleLanguage: 'Switch language',
     menu: 'Menu',
-    brandHome: 'Barkast home',
-    install: 'Install Barkast',
+    brandHome: 'Barkaart home',
+    install: 'Install Barkaart',
     account: 'Account',
     login: 'Log in',
   },
   home: {
-    welcome: 'Welcome to Barkast',
+    welcome: 'Welcome to Barkaart',
     heroTitle: "What's in<br />your bar?",
     heroLede:
-      "Tick what you have on hand — spirits, mixers, that one bottle at the back — and Barkast shows you right away which cocktails you can make <em>now</em>.",
+      "Tick what you have on hand — spirits, mixers, that one bottle at the back — and Barkaart shows you right away which cocktails you can make <em>now</em>.",
     buildBar: 'Build your bar',
     browseFirst: 'Browse first',
     eyebrow: 'Discover',
@@ -637,6 +663,7 @@ const en: UiStrings = {
     yourBar: 'Your bar',
     ingredientCount: (n) => `${n} ${n === 1 ? 'ingredient' : 'ingredients'}`,
     countSubstitutes: 'Count substitutes',
+    shareStats: 'Share anonymous statistics',
     editBarShort: 'Edit bar',
   },
   technique: {
@@ -675,17 +702,28 @@ const en: UiStrings = {
   },
   wizard: {
     step: (n, total) => `Step ${n} of ${total}`,
+    progressLabel: 'Progress',
     skip: 'Skip',
-    emptyCategory: 'No ingredients in this category.',
+    emptyCategory: 'Nothing here fits your bottles — tap “show all”.',
     back: 'Back',
     next: 'Next',
     finish: 'Done — show my bar',
-    staplesTitle: "You probably have these already",
-    staplesHint: "Ice, sugar, lemon juice… tick what's right. We've pre-checked a few.",
+    staplesTitle: 'You probably have these already',
+    staplesHint: "Sugar, syrup, soda water… tick what's right. We've pre-checked a few.",
+    spiritsTitle: 'Which spirits do you have?',
+    spiritsHint: 'Start here: after this we only ask about what fits your bottles.',
+    searchPlaceholder: 'Search an ingredient…',
+    searchResults: 'Search results',
+    searchEmpty: 'Nothing found.',
+    showAll: (n) => `Show all (${n} more)`,
+    showLess: 'Show less',
+    makeable: (n) => `That already makes ${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
+    almost: (n) => `${n} ${n === 1 ? 'cocktail is' : 'cocktails are'} one ingredient away`,
+    nothingYet: 'Tick what you have on hand.',
   },
   bar: {
     title: 'My bar',
-    sub: 'Tick what you have on hand — Barkast works out the rest.',
+    sub: 'Tick what you have on hand — Barkaart works out the rest.',
     youCanMake: (n) => `You can make ${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
     selected: (n) => `${n} ${n === 1 ? 'ingredient' : 'ingredients'} selected`,
   },
@@ -827,15 +865,15 @@ const en: UiStrings = {
     dismiss: 'Dismiss',
   },
   titles: {
-    discover: 'Discover — Barkast',
-    buildBar: 'Build your bar — Barkast',
-    myBar: 'My bar — Barkast',
-    ingredients: 'Ingredients — Barkast',
-    newCocktail: 'New cocktail — Barkast',
-    editCocktail: 'Edit cocktail — Barkast',
-    cocktails: 'Cocktails — Barkast',
-    technique: 'Technique — Barkast',
-    families: 'Families — Barkast',
+    discover: 'Discover — Barkaart',
+    buildBar: 'Build your bar — Barkaart',
+    myBar: 'My bar — Barkaart',
+    ingredients: 'Ingredients — Barkaart',
+    newCocktail: 'New cocktail — Barkaart',
+    editCocktail: 'Edit cocktail — Barkaart',
+    cocktails: 'Cocktails — Barkaart',
+    technique: 'Technique — Barkaart',
+    families: 'Families — Barkaart',
   },
 };
 
