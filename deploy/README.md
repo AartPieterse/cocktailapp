@@ -71,7 +71,7 @@ keep the old brand for good.
 | systemd `barkast-autodeploy.*` | **not installed** (§7 was never done) | Nothing to migrate — install the `barkaart-` units when you get to §7. |
 | Backups / `age` | **not set up** (§6 never done) | Nothing to migrate; new archives are written as `barkaart-<stamp>.archive.gz.age`. |
 | Cloudflare tunnel named `barkast` | `TUNNEL_TOKEN` is still `change-me` — no tunnel exists | Nothing to migrate. |
-| `~/.ssh/id_ed25519_barkast` | real key on the workstation | Deliberately **not** renamed; `logs.sh` and the runbook still point at it. |
+| `~/.ssh/id_ed25519_fileserver` | real key on the workstation | Renamed 2026-09-14, and not for this migration: the key is *host* access, and the host is the fileserver — barkaart is one of the apps on it. `logs.sh` and the runbook point at the new name. |
 
 Because §6 and §7 were never completed, this migration is much smaller than
 [`docs/plans/next-phase.md`](../docs/plans/next-phase.md) assumed: the volume is the only thing

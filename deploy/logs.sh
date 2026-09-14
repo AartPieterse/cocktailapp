@@ -22,7 +22,7 @@
 set -euo pipefail
 
 BOX="${BOX:-aart@192.168.1.100}"
-SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_ed25519_barkast}"
+SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_ed25519_fileserver}"
 PROJECT="${COMPOSE_PROJECT:-barkaart}"
 TAIL="${TAIL:-100}"
 

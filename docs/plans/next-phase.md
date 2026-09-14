@@ -99,7 +99,7 @@ Log opts only apply to containers created after, hence `--force-recreate`. Alway
 This is the single biggest untested assumption, and it gates steps 9, 11 and 14.
 
 ```bash
-ssh -i /c/Users/a.pieterse/.ssh/id_ed25519_barkast aart@192.168.1.100 'sudo systemctl reboot'
+ssh -i /c/Users/a.pieterse/.ssh/id_ed25519_fileserver aart@192.168.1.100 'sudo systemctl reboot'
 time (until curl -sf -m 5 -o /dev/null http://192.168.1.100:8080/api/catalog; do sleep 5; done)
 ```
 Prove it was automatic: `docker inspect -f '{{.Name}} {{.State.StartedAt}}' $(docker ps -q)` within a minute of `uptime -s`. Second run with the lid closed and no SSH session. Note the trap: `unless-stopped` deliberately does *not* restart a container you had explicitly stopped, which is exactly the state after any manual `docker compose stop`. If it fails, add `/etc/systemd/system/barkaart-stack.service` (`Type=oneshot`, `RemainAfterExit=yes`, `After=docker.service network-online.target`) with the full `-f ... -f ... up -d api mongo` invocation baked in — that also permanently kills the cloudflared footgun.
@@ -113,7 +113,7 @@ sudo apt install -y age && age-keygen -o /tmp/age-key.txt
 Public key → `AGE_RECIPIENT` in `deploy/.env`. Then `scp` the private key to the laptop **and** paste it into the password manager, verify both, then `shred -u /tmp/age-key.txt`. A private key living only on the machine it protects is not a backup key. Add `barkaart-backup.service` (oneshot, `User=aart`, `WorkingDirectory=/home/aart/cocktailapp/deploy`) + `barkaart-backup.timer` (`OnCalendar=*-*-* 03:00:00`, `Persistent=true`). Force one run and confirm a real `.age` file exists. Then get it off the single NVMe — pull from the laptop so the box holds no outbound credentials:
 
 ```bash
-rsync -av --ignore-existing -e "ssh -i /c/Users/a.pieterse/.ssh/id_ed25519_barkast" \
+rsync -av --ignore-existing -e "ssh -i /c/Users/a.pieterse/.ssh/id_ed25519_fileserver" \
   aart@192.168.1.100:/home/aart/cocktailapp/deploy/backups/ /c/Users/a.pieterse/barkast-backups/
 ```
 
