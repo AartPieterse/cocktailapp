@@ -48,12 +48,15 @@ services:
       - "27017"       # NEVER published to the host (see docker-compose.seed.yml for one-time seeding)
     networks:
       - internal
+    # mongosh is a Node program: every check burns a core for a moment. Once a minute is plenty for a
+    # box this quiet; start_interval keeps startup fast, so `api` (service_healthy) isn't held back.
     healthcheck:
       test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
+      interval: 60s
       timeout: 5s
       retries: 5
       start_period: 20s
+      start_interval: 5s
 
   cloudflared:
     image: cloudflare/cloudflared:latest
