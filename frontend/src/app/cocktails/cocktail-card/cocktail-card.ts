@@ -40,7 +40,7 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
         <h3 class="name">
           <a [routerLink]="['/cocktails', cocktail().id]" [queryParams]="query()">{{ cocktail().name }}</a>
         </h3>
-        @if (showStatus()) {
+        @if (showStatus() && missingCount() !== null) {
           <div class="status">
             <span class="dot" [style.background]="statusColor()"></span>
             <span class="label">{{ statusLabel() }}</span>
