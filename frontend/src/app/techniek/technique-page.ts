@@ -1,5 +1,6 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 import type { Cocktail, Ingredient } from '@cocktailapp/shared';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
@@ -20,7 +21,7 @@ import { TECHNIQUES, techniqueById } from './techniques';
  */
 @Component({
   selector: 'app-technique-page',
-  imports: [RouterLink, CocktailCard, IngredientGlyph],
+  imports: [RouterLink, MatIconModule, CocktailCard, IngredientGlyph],
   template: `
     @if (lesson(); as l) {
       <div class="page">
@@ -78,19 +79,29 @@ import { TECHNIQUES, techniqueById } from './techniques';
           <p>{{ l.tell }}</p>
         </section>
 
+        <!-- Same card as the lesson list: one hairline all round, ink headings, the kit as the same
+             chips Mijn bar uses. The time is a fact about the drill, so it reads as one, not as a button. -->
         <section class="drill">
-          <h2>{{ lang.t().technique.practise }}</h2>
-          <p>{{ l.drill.body }}</p>
-          <div class="kit">
-            @for (id of l.drill.kit; track id) {
-              <figure>
-                <span class="g"><app-ingredient-glyph [ingId]="id" [cat]="catOf(id)" /></span>
-                <figcaption>{{ nameOf(id) }}</figcaption>
-              </figure>
+          <div class="drill-head">
+            <h2>{{ lang.t().technique.practise }}</h2>
+            @if (l.drill.seconds) {
+              <span class="timer">
+                <mat-icon aria-hidden="true">timer</mat-icon>
+                {{ lang.t().technique.seconds(l.drill.seconds) }}
+              </span>
             }
           </div>
-          @if (l.drill.seconds) {
-            <span class="timer">{{ lang.t().technique.seconds(l.drill.seconds) }}</span>
+          <p>{{ l.drill.body }}</p>
+          @if (l.drill.kit.length) {
+            <div class="kit-label">{{ lang.t().technique.youNeed }}</div>
+            <ul class="kit">
+              @for (id of l.drill.kit; track id) {
+                <li class="kit-chip">
+                  <span class="g"><app-ingredient-glyph [ingId]="id" [cat]="catOf(id)" /></span>
+                  {{ nameOf(id) }}
+                </li>
+              }
+            </ul>
           }
         </section>
 
@@ -216,54 +227,75 @@ import { TECHNIQUES, techniqueById } from './techniques';
       color: var(--ink);
     }
     .drill {
-      background: color-mix(in srgb, var(--ok) 10%, transparent);
-      border: 1px solid color-mix(in srgb, var(--ok) 28%, transparent);
+      background: var(--surface);
+      border: 1px solid var(--hairline);
       border-radius: var(--radius-lg);
       padding: 22px 24px;
       margin-top: 26px;
     }
+    .drill-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+      margin-bottom: 10px;
+    }
     .drill h2 {
       font-size: 1.3rem;
-      margin: 0 0 10px;
-      color: var(--ok);
+      margin: 0;
     }
     .drill p {
       font-size: 1rem;
-      color: var(--ok-ink);
-      margin: 0 0 16px;
-    }
-    .kit {
-      display: flex;
-      gap: 22px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-    .kit figure {
+      color: var(--muted);
       margin: 0;
-      width: 66px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-    .kit .g {
-      width: 34px;
-      height: 34px;
-      display: block;
-    }
-    .kit figcaption {
-      font: 500 0.75rem var(--font-body);
-      color: var(--ok-ink);
-      text-align: center;
     }
     .timer {
       display: inline-flex;
       align-items: center;
-      background: var(--ok);
-      color: #fff;
+      gap: 6px;
+      font: 600 0.813rem var(--font-body);
+      color: var(--muted);
+    }
+    .timer mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: var(--accent);
+    }
+    .kit-label {
+      margin: 18px 0 10px;
+      font: 600 0.688rem var(--font-body);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+    .kit {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    /* The chip Mijn bar uses, minus the button: here it only names what to fetch. */
+    .kit-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 7px;
       border-radius: var(--radius-pill);
-      padding: 11px 20px;
-      font: 600 0.875rem var(--font-body);
+      border: 1.6px solid var(--hairline);
+      background: var(--bg);
+      color: var(--ink);
+      font: 600 0.844rem var(--font-body);
+      line-height: 1;
+    }
+    .kit-chip .g {
+      width: 23px;
+      height: 23px;
+      flex: none;
+      display: block;
     }
     .uses {
       margin-top: 32px;

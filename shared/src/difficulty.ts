@@ -7,7 +7,7 @@ export const DIFFICULTIES: readonly Difficulty[] = ['easy', 'medium', 'advanced'
 
 export const DIFFICULTY_LABELS: Record<Locale, Record<Difficulty, string>> = {
   nl: {
-    easy: 'Makkelijk',
+    easy: 'Eenvoudig',
     medium: 'Gemiddeld',
     advanced: 'Gevorderd',
   },

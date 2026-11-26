@@ -126,13 +126,14 @@ export interface UiStrings {
    * alcohol-free, and there is deliberately no progress vocabulary here: no "completed", no level.
    */
   technique: {
-    eyebrow: string;
     intro: string;
     why: string;
     how: string;
     wrong: string;
     tell: string;
     practise: string;
+    /** Label above the drill's kit. */
+    youNeed: string;
     seconds: (n: number) => string;
     usedIn: string;
     usedInCount: (n: number) => string;
@@ -463,14 +464,13 @@ const nl: UiStrings = {
     toFamily: 'Bekijk de familie',
   },
   technique: {
-    eyebrow: 'Leren',
-    intro:
-      'Zes handelingen waarmee je elk recept in deze app kunt maken. Elke les heeft een oefening waar geen fles voor nodig is.',
+    intro: 'Zes technieken waarmee je elk recept kunt maken. Elke methode heeft een oefening.',
     why: 'Waarom',
     how: 'Zo doe je het',
     wrong: 'Waar het misgaat',
     tell: 'Hoe je weet dat het goed is',
     practise: 'Oefenen',
+    youNeed: 'Je hebt nodig',
     seconds: (n) => `${n} seconden`,
     usedIn: 'Recepten waarin je dit gebruikt',
     usedInCount: (n) => `${n} ${n === 1 ? 'recept' : 'recepten'}`,
@@ -520,7 +520,7 @@ const nl: UiStrings = {
   },
   bar: {
     title: 'Mijn bar',
-    sub: 'Vink aan wat je in huis hebt — de rest rekent Barkaart uit.',
+    sub: 'Vink aan wat je in huis hebt',
     youCanMake: (n) => `Je kunt ${n} ${n === 1 ? 'cocktail' : 'cocktails'} maken`,
     selected: (n) => `${n} ${n === 1 ? 'ingrediënt' : 'ingrediënten'} geselecteerd`,
     settingsTitle: 'Instellingen',
@@ -774,14 +774,13 @@ const en: UiStrings = {
     toFamily: 'See the family',
   },
   technique: {
-    eyebrow: 'Learn',
-    intro:
-      'Six actions that between them make every recipe in this app. Each lesson has a drill that needs no bottle.',
+    intro: 'Six techniques that make every recipe. Each method has a drill.',
     why: 'Why',
     how: 'How to do it',
     wrong: 'Where it goes wrong',
     tell: 'How you know it worked',
     practise: 'Practise',
+    youNeed: 'You need',
     seconds: (n) => `${n} seconds`,
     usedIn: 'Recipes that use this',
     usedInCount: (n) => `${n} ${n === 1 ? 'recipe' : 'recipes'}`,
@@ -830,7 +829,7 @@ const en: UiStrings = {
   },
   bar: {
     title: 'My bar',
-    sub: 'Tick what you have on hand — Barkaart works out the rest.',
+    sub: 'Tick what you have on hand',
     youCanMake: (n) => `You can make ${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
     selected: (n) => `${n} ${n === 1 ? 'ingredient' : 'ingredients'} selected`,
     settingsTitle: 'Settings',

@@ -211,6 +211,10 @@ interface Group {
       display: block;
     }
     @media (max-width: 760px) {
+      /* On a phone the tally drops under the title, so it lines up with the title, not the edge. */
+      .tally {
+        text-align: left;
+      }
       .groups {
         grid-template-columns: 1fr;
         gap: 8px;
