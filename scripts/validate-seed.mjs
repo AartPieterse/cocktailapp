@@ -236,9 +236,18 @@ for (const c of cocktails) {
       for (const alt of line.alternatives ?? []) reach(alt);
     }
   }
+  // Mirror expandCabinet (shared/src/makeable.ts): stocking X adds X.parentId and X.substitutes,
+  // then every child of a present parent. So X matters when what it expands to is something a
+  // recipe uses — not when X is merely the *target* of someone else's link (the old check had
+  // that backwards, and would flag a new `spiced-rum → dark-rum` base as an orphan).
+  const used = new Set(reachable);
+  const childrenOf = (id) => ingredients.filter((c) => c.parentId === id);
   for (const ing of ingredients) {
-    if (ing.parentId) reachable.add(ing.parentId);
-    for (const s of ing.substitutes ?? []) reachable.add(s);
+    if (ing.parentId && (used.has(ing.parentId) || childrenOf(ing.parentId).some((c) => used.has(c.id)))) {
+      reachable.add(ing.id); // child → its parent, and through the parent to its siblings
+    }
+    if ((ing.substitutes ?? []).some((s) => used.has(s))) reachable.add(ing.id);
+    if (childrenOf(ing.id).some((c) => used.has(c.id))) reachable.add(ing.id); // generic → its specifics
   }
   const orphans = ingredients.filter((i) => i.id && !reachable.has(i.id)).map((i) => i.id);
   if (orphans.length) {

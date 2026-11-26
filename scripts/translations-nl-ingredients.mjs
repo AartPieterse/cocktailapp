@@ -19,7 +19,7 @@ export const NL_INGREDIENTS = {
   tequila: 'Tequila', mezcal: 'Mezcal', bourbon: 'Bourbon whiskey', 'rye-whiskey': 'Rye whiskey',
   'irish-whiskey': 'Ierse whiskey', scotch: 'Scotch whisky', brandy: 'Brandy', cognac: 'Cognac',
   calvados: 'Calvados', pisco: 'Pisco', cachaca: 'Cachaça', grappa: 'Grappa', absinthe: 'Absint',
-  pernod: 'Pernod',
+  pernod: 'Pernod', jenever: 'Jenever', 'spiced-rum': 'Spiced rum', vieux: 'Vieux',
   // liqueurs
   'triple-sec': 'Triple sec', amaretto: 'Amaretto', amaro: 'Amaro', aperol: 'Aperol',
   'apricot-brandy': 'Abrikozenlikeur', benedictine: 'Bénédictine', 'cherry-liqueur': 'Kersenlikeur',
@@ -31,9 +31,12 @@ export const NL_INGREDIENTS = {
   'peach-schnapps': 'Perziklikeur', 'raspberry-liqueur': 'Frambozenlikeur', campari: 'Campari',
   'grand-marnier': 'Grand Marnier', cynar: 'Cynar', frangelico: 'Frangelico',
   'allspice-liqueur': 'Pimentlikeur', 'passion-fruit-liqueur': 'Passievruchtlikeur',
-  'elderflower-liqueur': 'Vlierbloesemlikeur',
+  'elderflower-liqueur': 'Vlierbloesemlikeur', 'irish-cream': 'Ierse roomlikeur',
+  'licor-43': 'Licor 43', jagermeister: 'Jägermeister', 'coconut-liqueur': 'Kokoslikeur',
+  advocaat: 'Advocaat', limoncello: 'Limoncello',
   // wine & vermouth
-  'sweet-vermouth': 'Rode vermout', 'dry-vermouth': 'Droge vermout', 'lillet-blanc': 'Lillet Blanc',
+  'sweet-vermouth': 'Rode vermout', 'dry-vermouth': 'Droge vermout',
+  'bianco-vermouth': 'Witte vermout (bianco)', 'lillet-blanc': 'Lillet Blanc',
   'sparkling-wine': 'Mousserende wijn', 'white-wine': 'Droge witte wijn', 'red-wine': 'Rode wijn',
   port: 'Tawny port',
   // mixers

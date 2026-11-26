@@ -564,6 +564,24 @@ export const COCKTAIL_ART: Readonly<Record<string, CocktailArt>> = {
   // mix give a burnt amber that deepens to grenadine red at the base, under a white mound of
   // crushed ice pushed above the rim with a mint bouquet planted in it and two straws.
   'zombie': { liquid: '#CF6A22', liquidBottom: '#9C3315', fill: 0.85, cut: 'wide', ice: 'crushed', fizz: 'none', foam: 'none', rim: 'none', clarity: 'hazy', inclusion: 'none', straw: 'straw-pair', steam: false, garnishes: [{ type: 'mint-sprig', placement: 'surface', color: '#3E8B4A' }] },
+
+  // ── Dutch home-bar bottles: one drink each for the bottles no IBA recipe uses ──
+  // Three equal bands in a shot glass, top first: amber orange liqueur, caramel Irish cream,
+  // near-black coffee liqueur. The clean lines are the drink, so nothing goes on it.
+  'b-52': { liquid: '#C9A27A', layers: [{ color: '#D98A2E', share: 1 }, { color: '#D9BE9A', share: 1 }, { color: '#3A1E12', share: 1 }], fill: 0.85, cut: 'classic', ice: 'none', fizz: 'none', foam: 'none', rim: 'none', clarity: 'opaque', inclusion: 'none', straw: 'none', steam: false, garnishes: [] },
+  // Shaken espresso over ice: a dark coffee body under a tan crema the shake builds, three
+  // beans on top. Darker and frothier than any other rocks glass.
+  'carajillo': { liquid: '#6A3F22', liquidBottom: '#3E2214', fill: 0.6, cut: 'wide', ice: 'cubes', fizz: 'none', foam: 'espresso-crema', rim: 'none', clarity: 'opaque', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'coffee-beans', placement: 'surface', color: '#3A241A' }] },
+  // Jägermeister turns ginger beer a muddy, glowing brown, much darker than a Moscow Mule.
+  'jager-mule': { liquid: '#8A5A2A', fill: 0.86, cut: 'classic', ice: 'cubes', fizz: 'lively', foam: 'none', rim: 'none', clarity: 'hazy', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lime-wedge', placement: 'rim', color: '#7FAE3C' }] },
+  // Cranberry poured last sinks through the pineapple: pink-red over a hazy yellow base.
+  'malibu-bay-breeze': { liquid: '#D9506A', liquidBottom: '#EBC25A', fill: 0.86, cut: 'classic', ice: 'cubes', fizz: 'none', foam: 'none', rim: 'none', clarity: 'cloudy', inclusion: 'none', straw: 'straw', steam: false, garnishes: [{ type: 'pineapple-wedge', placement: 'rim', color: '#F2C94C' }] },
+  // Advocaat loosened with soda: a pale, opaque custard yellow with a gentle fizz.
+  'snowball': { liquid: '#F3E29A', fill: 0.86, cut: 'classic', ice: 'cubes', fizz: 'gentle', foam: 'none', rim: 'none', clarity: 'opaque', inclusion: 'none', straw: 'straw', steam: false, garnishes: [{ type: 'lime-wheel', placement: 'rim', color: '#8FB63C' }] },
+  // A Spritz in lemon yellow instead of orange, cloudy from the limoncello, mint on top.
+  'limoncello-spritz': { liquid: '#F2E27A', fill: 0.78, cut: 'deep', ice: 'cubes', fizz: 'lively', foam: 'none', rim: 'none', clarity: 'cloudy', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lemon-wheel', placement: 'rim', color: '#E9C84A' }, { type: 'mint-sprig', placement: 'surface', color: '#3E8B4A' }] },
+  // Almost clear: pale straw vermouth thinned by tonic, lively bubbles, a lime wedge.
+  'bianco-tonic': { liquid: '#F1ECCF', fill: 0.78, cut: 'deep', ice: 'cubes', fizz: 'lively', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lime-wedge', placement: 'rim', color: '#8FB63C' }] },
 };
 
 /**

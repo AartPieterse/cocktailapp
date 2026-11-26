@@ -73,6 +73,7 @@ const COLORS: Record<string, string> = {
   bourbon: '#C57A22', 'rye-whiskey': '#C57A22', 'irish-whiskey': '#D08A34', scotch: '#B5701E',
   cognac: '#9E5320', brandy: '#9E5320', calvados: '#C57A22', mezcal: '#E6DDC4', cachaca: '#EFE7D2',
   pisco: '#ECE4C6', grappa: '#E9EFF1', absinthe: '#8FB63C', pernod: '#C9D46A',
+  jenever: '#E9EFF1', 'spiced-rum': '#A8642A', vieux: '#9E5320',
   // liqueurs
   campari: '#B4231A', aperol: '#E8712A', amaretto: '#B5732E', 'coffee-liqueur': '#3A241A',
   'creme-de-cacao': '#6B4A2E', 'creme-de-cassis': '#5E1E3E', 'creme-de-menthe': '#4E9E5A',
@@ -81,8 +82,10 @@ const COLORS: Record<string, string> = {
   'yellow-chartreuse': '#E0C64A', benedictine: '#C58A34', drambuie: '#C57A22', galliano: '#E0C64A',
   'fernet-branca': '#3A241A', amaro: '#5E2E1E', 'cherry-liqueur': '#8A1E2A',
   'raspberry-liqueur': '#B4243F', 'peach-schnapps': '#F0B24A', 'apricot-brandy': '#D9902E',
+  'irish-cream': '#C9A27A', 'licor-43': '#E0B23A', jagermeister: '#3A2A1A',
+  'coconut-liqueur': '#EFEBE2', advocaat: '#F0CF3A', limoncello: '#F2E15A',
   // wine & vermouth
-  'dry-vermouth': '#EBE4C6', 'sweet-vermouth': '#7E2A22', 'lillet-blanc': '#E7DFB2', port: '#6E1E2A',
+  'dry-vermouth': '#EBE4C6', 'bianco-vermouth': '#EFE8CC', 'sweet-vermouth': '#7E2A22', 'lillet-blanc': '#E7DFB2', port: '#6E1E2A',
   'red-wine': '#6E1E2A', 'white-wine': '#E7DFB2', 'sparkling-wine': '#E7DFB2',
   // mixers
   cola: '#3A2018', 'ginger-ale': '#E3C07A', 'ginger-beer': '#E3C07A', 'grapefruit-soda': '#EAB0A0', 'soda-water': '#E7EFF1',

@@ -61,9 +61,11 @@ function mix(a: string, b: string, t: number): string {
 
 const CLEAR_SPIRITS = [
   'gin', 'vodka', 'white-rum', 'tequila', 'mezcal', 'pisco', 'cachaca', 'grappa', 'aquavit',
+  'jenever',
 ];
 const AMBER = [
   'bourbon', 'rye-whiskey', 'scotch', 'irish-whiskey', 'cognac', 'brandy', 'dark-rum', 'aged-rum',
+  'spiced-rum', 'vieux',
   'amaro', 'amaretto', 'drambuie', 'benedictine', 'calvados', 'apricot-brandy', 'grand-marnier',
 ];
 /** Anything that arrives with a bead on it. `tonic-water` was the one that got away. */
