@@ -15,7 +15,7 @@ jou zien. Er is geen backend voor nodig.
 | Productiebuild | `dataSource: 'static'` en `authEnabled: false`. De app doet in productie **geen enkele API-call** en leest de gebundelde `catalog.json`. |
 | HTTPS | Niet aanwezig, en de gebruiker heeft dat op 26 nov afgewezen (geen domein). Dus geen service worker, geen push, geen Wake Lock, geen camera-API voor gasten. |
 | Catalogus-id's | `catalog-ids.lock.json` is **alfabetisch gesorteerd** en niet append-only. Een index-bitset in een link verschuift dus zodra er een cocktail bijkomt. |
-| Wat kan ik maken | Na stap 1 van [verras-me.md](verras-me.md) staat dit in een herbruikbare `MakeableStore`. |
+| Wat kan ik maken | Staat sinds 26 nov in `MakeableStore` en wordt getoond op Mijn bar (`/bar`). |
 
 **Het inzicht dat dit goedkoop maakt:** gasten op een feestje bij jou thuis zitten op jouw wifi.
 `http://192.168.1.100` werkt voor hen gewoon in de browser, zonder Brave-flag, want die flag is alleen
@@ -24,7 +24,7 @@ nodig.**
 
 ## De menukaart via QR
 
-**De host.** Vanaf Ontdek of Mijn bar opent een knop "Gastenmenu" een scherm met:
+**De host.** Op Mijn bar, naast de lijst wat je kunt maken, opent een knop "Gastenmenu" een scherm met:
 
 1. Alles wat je nu kunt maken, voorgevinkt en gegroepeerd per familie. Je vinkt uit wat je vanavond
    niet wilt maken.
@@ -107,11 +107,11 @@ het huis. Dan kun je de kaart vooraf rondsturen. Daar is geen extra werk voor no
 
 Elke stap is een eigen PR.
 
-1. *(Gedeeld met verras-me stap 1)* `MakeableStore`.
+1. ~~`MakeableStore`~~ — gedaan op 26 nov.
 2. **Gastroute `/menu`**, buiten `Layout`: link parsen, de kaart per familie, het alcoholvrij-filter
    en de bestelkaart. Test met een handgemaakte link.
-3. **Hostscherm "Gastenmenu"**: aanvinken, titel, QR-code en kopiëren/delen, plus de ingang vanaf
-   Ontdek en Mijn bar.
+3. **Hostscherm "Gastenmenu"**: aanvinken, titel, QR-code en kopiëren/delen, plus de ingang op
+   Mijn bar.
 4. **Het smaakkompas** op de gastenkaart. Dit vereist verras-me stap 4, waarin `TasteChips` gebouwd wordt.
 
 ## Testen

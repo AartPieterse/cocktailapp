@@ -30,7 +30,7 @@ Beslissingen van de gebruiker, 26 nov 2026:
 | Twee gokken | Daarmee zijn er twee willekeurige keuzes die zich verschillend gedragen. Dit plan maakt er één van. |
 | Cocktailpagina | De chips zijn Gin, Wodka, Rum, Tequila, Whisky, Brandy, Overig en Alcoholvrij (`cocktail-list.ts`). De filter staat niet in de URL en er linkt niets naar. De zoekbalk zoekt op naam **en ingrediënt**, dus "gin" typen vindt de gindrankjes nog steeds. |
 | Schenkanimatie | Bestaat al: `glassSpecFor(c, 'hero', 'pour', key)` laat het glas vullen en de garnering landen. `prefers-reduced-motion` zet het uit (`shared/glass-art/glass-svg.ts`). |
-| Wat kan ik maken | Wordt berekend in de `Bar`-component zelf en is niet herbruikbaar. |
+| Wat kan ik maken | *Bijgewerkt 26 nov:* staat in `MakeableStore` (`core/makeable.store.ts`), gedeeld door Ontdek, Mijn bar en de ingrediëntenpagina. De lijst "Nu te maken" staat sinds diezelfde dag op **Mijn bar** (`/bar`), niet meer op Ontdek; het afvinken zit op `/bar/ingredienten`. |
 | Smaakdata | **Geen.** `tags` bevat alleen `iba-official`, `modern-classic` en `mocktail`. Wel beschikbaar: `family`, de ingrediëntregels met hoeveelheden, `servedAbv()` en `isLong()`. |
 
 ## Het smaakkompas: één component, drie plekken
@@ -56,11 +56,12 @@ Hetzelfde component doet op elke plek iets anders:
 |---|---|
 | **Cocktailpagina** | **Een strikte filter**, ter vervanging van de chips per hoofddrank. Alleen drankjes die op elke gekozen as precies kloppen blijven over. "Alcoholvrij" blijft als losse chip achteraan staan, na een scheidingsstreepje. Bij 0 resultaten verschijnt de bestaande lege-filtermelding. |
 | **Ontdek, bij de dagkeuze** | **Het stuurt bij, het filtert niet.** De dagkeuze komt uit de best passende drankjes die je kunt maken. Als niets precies past, kiest hij de dichtstbijzijnde, met de rustige regel "Niets precies zo, dit komt het dichtst bij". De dagkeuze kan dus nooit leeg raken. |
+| **Mijn bar, de lijst wat je kunt maken** | **Een strikte filter, ter vervanging van de familie-chips** (besluit van de gebruiker, 26 nov). "Alcoholvrij" blijft. Tot het kompas er is, blijven de familie-chips staan. |
 | **Gastenmenu** | Dezelfde strikte filter als op de cocktailpagina, op de menukaart van de gast. Zie [gastenmenu.md](gastenmenu.md). |
 
 **Op Ontdek** staat het rijtje binnen het dagkeuze-blok, direct onder "Naar recept / Iets anders".
-Het hoort bij de keuze, niet bij de lijst "Nu te maken" eronder. Die lijst houdt haar familie-chips
-en krijgt geen tweede filterrij.
+Het hoort bij de keuze. De lijst wat je kunt maken staat sinds 26 nov op Mijn bar, met dezelfde
+chips als strikte filter.
 
 ## Verras me
 
@@ -145,10 +146,8 @@ variation?)` en `tasteDistance(profile, choice)`. Ze worden getest zoals `drink-
 
 Elke stap is een eigen PR die zelfstandig te shippen is.
 
-1. **`MakeableStore`** (`core/makeable.store.ts`, root, signals). Haal de pijplijn cabinet →
-   `expandCabinet` → `makeable` uit `Bar` en laat `Bar` hem gebruiken. Dit verandert niets
-   zichtbaars, en het gastenmenu heeft dezelfde lijst nodig. De bestaande specs van `Bar` en
-   `discover` moeten groen blijven.
+1. ~~**`MakeableStore`**~~ **Gedaan 26 nov**, samen met de verhuizing van de lijst naar Mijn bar.
+   Ontdek, Mijn bar en de ingrediëntenpagina lezen er alle drie uit.
 2. **Verras me → Ontdek.** `SurpriseService`, de navbar navigeert en verhoogt de teller, `Bar` stapt
    verder en speelt `'pour'` af bij een keuze van de gebruiker. Ruim `randomCocktail()` op.
    Analytics: de bestaande `surprise_me` blijft, met `{ from: 'bar' | 'menu' }`. Er is geen smaakdata
@@ -157,7 +156,8 @@ Elke stap is een eigen PR die zelfstandig te shippen is.
    conceptscript, de review door de gebruiker, de seed-edit en de validatorregel. Draai daarna
    `build:catalog`, dan `build:translations -- --check`, dan opnieuw `build:catalog`. Werk
    `docs/data-model.md` bij.
-4. **`TasteChips` op de cocktailpagina**, ter vervanging van de chips per hoofddrank, als strikte
+4. **`TasteChips` op de cocktailpagina en op Mijn bar**, ter vervanging van de chips per hoofddrank
+   en van de familie-chips, als strikte
    filter. "Wis filters" wist ook het kompas.
 5. **`TasteChips` op Ontdek**, in het dagkeuze-blok, als bijsturing met de "dichtstbij"-regel.
    Analytics: `taste_compass` met de gekozen assen en de plek, verder niets.
@@ -181,6 +181,5 @@ Elke stap is een eigen PR die zelfstandig te shippen is.
 
 ## Niet in dit plan
 
-Schudden, geluid, trillen, punten en streaks. Ook niet het kompas als filter op de lijst "Nu te
-maken": die heeft haar familie-chips, en een tweede filterrij maakt Ontdek drukker in plaats van
-speelser.
+Schudden, geluid, trillen, punten en streaks. Ook geen tweede filterrij: op Mijn bar vervangt het
+kompas de familie-chips, het komt er niet naast.

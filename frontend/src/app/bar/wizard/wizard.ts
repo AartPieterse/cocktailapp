@@ -510,7 +510,8 @@ export class Wizard {
       }
     }
     this.analytics.track('wizard_complete');
-    this.leave();
+    // "Klaar — toon mijn bar": the button promises Mijn bar, which is where the list now lives.
+    this.leave('/bar');
   }
 
   quit(): void {
@@ -521,10 +522,10 @@ export class Wizard {
     this.leave();
   }
 
-  private leave(): void {
+  private leave(to: '/ontdek' | '/bar' = '/ontdek'): void {
     this.committed = true;
     clearDraft();
-    void this.router.navigate(['/ontdek']);
+    void this.router.navigate([to]);
   }
 }
 
