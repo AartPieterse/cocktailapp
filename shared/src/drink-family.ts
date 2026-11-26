@@ -40,7 +40,7 @@ export const DRINK_FAMILIES: readonly DrinkFamily[] = [
 export const DRINK_FAMILY_LABELS: Record<Locale, Record<DrinkFamily, string>> = {
   nl: {
     sour: 'Sour',
-    'spirit-forward': 'Puur en geroerd',
+    'spirit-forward': 'Stevig',
     highball: 'Highball',
     fizz: 'Fizz',
     sparkling: 'Mousserend',
@@ -120,13 +120,13 @@ export const DRINK_FAMILY_ABOUT: Record<Locale, Record<DrinkFamily, string>> = {
  * The "this is a …" sentence opener, per family and per language.
  *
  * Written out per family rather than assembled from {@link DRINK_FAMILY_LABELS} because the label
- * alone does not survive an article: "een sour" is Dutch, "een puur en geroerd" is not. One authored
+ * alone does not survive an article: "een sour" is Dutch, "een stevig" is not. One authored
  * sentence per family is the only way both languages read like a bartender wrote them.
  */
 export const DRINK_FAMILY_INTRO: Record<Locale, Record<DrinkFamily, string>> = {
   nl: {
     sour: 'Dit is een sour',
-    'spirit-forward': 'Dit is puur en geroerd',
+    'spirit-forward': 'Dit is een stevige cocktail',
     highball: 'Dit is een highball',
     fizz: 'Dit is een fizz',
     sparkling: 'Dit is een mousserende cocktail',
