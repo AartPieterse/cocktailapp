@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type {
   Cocktail as CocktailType,
+  Ingredient,
   MakeableResult,
 } from '@cocktailapp/shared';
 import { computeMakeableWithVariations, slugify } from '@cocktailapp/shared';
@@ -92,10 +93,11 @@ export class CocktailsService {
 
   /**
    * The flagship "what can I make with what I have" search — now running the SINGLE shared
-   * `computeMakeable` engine (the same one the web client uses) over the ~90 cocktails loaded
+   * `computeMakeable` engine (the same one the web client uses) over the cocktails loaded
    * from Mongo, instead of a separate Mongo `$aggregate` pipeline. This keeps the backend byte-for-
    * byte in agreement with the offline bundle: same slug id space, same optional/garnish/seasoning
-   * rules, same "X or Y" alternatives handling, same ordering — and the same variation results,
+   * rules, same "X or Y" alternatives handling, same substitutes (the client sends its own,
+   * unexpanded ingredient ids), same ordering — and the same variation results,
    * which need the ingredient names to label a swapped-in line.
    */
   async makeable(dto: MakeableSearchDto): Promise<MakeableResult[]> {
@@ -104,9 +106,9 @@ export class CocktailsService {
       this.ingredientsService.findAll(),
     ]);
     const cocktails = docs.map((d) => d.toJSON() as CocktailType);
-    const ingredients = ingredientDocs.map(
-      (d) => d.toJSON() as { id: string; name: string },
-    );
+    // The ingredients double as the substitution graph (parentId / substitutes), so the backend
+    // counts substitutes exactly as the web client does.
+    const ingredients = ingredientDocs.map((d) => d.toJSON() as Ingredient);
     return computeMakeableWithVariations(
       { cocktails, ingredients },
       dto.availableIngredientIds,
@@ -136,6 +138,7 @@ export class CocktailsService {
           ...(line.alternativeIds?.length
             ? { alternativeIds: line.alternativeIds }
             : {}),
+          ...(line.exact ? { exact: true } : {}),
         } as CocktailIngredient;
       }),
     );

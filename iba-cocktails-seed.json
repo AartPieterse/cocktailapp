@@ -130,6 +130,9 @@
       "id": "bourbon",
       "name": "Bourbon",
       "category": "spirit",
+      "substitutes": [
+        "rye-whiskey"
+      ],
       "aliases": [
         "Bourbon Whiskey",
         "Bourbon or Rye Whiskey",
@@ -148,6 +151,9 @@
       "id": "rye-whiskey",
       "name": "Rye Whiskey",
       "category": "spirit",
+      "substitutes": [
+        "bourbon"
+      ],
       "aliases": [
         "Bulleit Rye",
         "Michter's Rye",
@@ -279,6 +285,9 @@
       "id": "absinthe",
       "name": "Absinthe",
       "category": "spirit",
+      "substitutes": [
+        "pernod"
+      ],
       "aliases": [
         "Kübler",
         "La Fée"
@@ -289,6 +298,9 @@
       "id": "pernod",
       "name": "Pernod",
       "category": "spirit",
+      "substitutes": [
+        "absinthe"
+      ],
       "aliases": [
         "Pastis",
         "Pastis 51",
@@ -332,6 +344,9 @@
       "name": "Vieux",
       "category": "spirit",
       "parentId": "brandy",
+      "substitutes": [
+        "cognac"
+      ],
       "aliases": [
         "Bols Vieux",
         "Hollandse Vieux",
@@ -573,6 +588,9 @@
       "id": "grand-marnier",
       "name": "Grand Marnier",
       "category": "liqueur",
+      "substitutes": [
+        "triple-sec"
+      ],
       "aliases": [
         "Grand Marnier Cordon Rouge"
       ],
@@ -1036,6 +1054,9 @@
       "id": "coffee",
       "name": "Coffee",
       "category": "other",
+      "substitutes": [
+        "espresso"
+      ],
       "aliases": [
         "Hot Coffee"
       ]
@@ -1044,6 +1065,9 @@
       "id": "espresso",
       "name": "Espresso",
       "category": "other",
+      "substitutes": [
+        "coffee"
+      ],
       "aliases": [
         "Strong Espresso"
       ]
@@ -1133,12 +1157,18 @@
     {
       "id": "orange",
       "name": "Orange",
-      "category": "garnish"
+      "category": "garnish",
+      "substitutes": [
+        "orange-juice"
+      ]
     },
     {
       "id": "lemon",
       "name": "Lemon",
-      "category": "garnish"
+      "category": "garnish",
+      "substitutes": [
+        "lemon-juice"
+      ]
     },
     {
       "id": "cloves",
@@ -2628,7 +2658,8 @@
         {
           "name": "Gin",
           "amount": 60,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "name": "Dry Vermouth",
@@ -3651,7 +3682,8 @@
           "name": "Dark Rum",
           "call": "Blackstrap Rum",
           "amount": 45,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "name": "Campari",
@@ -5439,7 +5471,8 @@
         {
           "name": "Cognac",
           "amount": 50,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "name": "Absinthe",
@@ -6379,7 +6412,8 @@
         {
           "name": "Gin",
           "amount": 45,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "name": "Vodka",
@@ -6457,12 +6491,14 @@
         {
           "name": "Rye Whiskey",
           "amount": 30,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "name": "Cognac",
           "amount": 30,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "name": "Sweet Vermouth",

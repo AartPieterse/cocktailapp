@@ -34,7 +34,7 @@ export class Ingredient {
   @Prop({ default: false })
   isStaple: boolean;
 
-  /** A broader base that may substitute this one (`cognac`.parentId = `brandy`). Opt-in expansion. */
+  /** A broader base that may substitute this one (`cognac`.parentId = `brandy`). Substitutes both ways. */
   @Prop({ type: String, required: false })
   parentId?: string;
 

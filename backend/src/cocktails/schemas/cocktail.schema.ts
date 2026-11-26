@@ -63,6 +63,10 @@ export class CocktailIngredient {
   /** For a recipe "X or Y" line: any of these base ids also satisfies the line. */
   @Prop({ type: [String], default: undefined })
   alternativeIds?: string[];
+
+  /** No substitute satisfies this line, only its own base or an alternative. */
+  @Prop({ required: false })
+  exact?: boolean;
 }
 
 const CocktailIngredientSchema =

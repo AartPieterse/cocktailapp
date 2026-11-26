@@ -16,7 +16,7 @@ string table (`@cocktailapp/shared` `uiStrings`) and the Dutch catalog overlay a
   mode.
 - **TypeScript 5.9**, **RxJS 7.8**.
 - Depends on the monorepo package **`@cocktailapp/shared`** for the domain types and the pure
-  `computeMakeable` / `expandCabinet` logic.
+  `computeMakeable` / `cabinetCoverage` logic.
 - Tests run on **Vitest** (`@angular/build:unit-test`, jsdom), but this workspace holds exactly one
   spec — `src/app/app.spec.ts`, a bootstrap smoke test. The real unit suite lives in `shared/`
   (`catalog.spec.ts`, `expand-cabinet.spec.ts`, `makeable.spec.ts`, `measure-convert.spec.ts`). CI runs
@@ -30,8 +30,8 @@ redirect to `/ontdek`; the legacy `/kast` is a back-compat redirect to `/bar`):
 
 - **Ontdek** (`/ontdek`) — the flagship surface (`bar/bar.ts`). An onboarding CTA when the cabinet is
   empty, otherwise *"Je kunt N cocktails maken"*, a **Nu te maken** grid (0 missing), and a
-  **Bijna — je mist er één** sidebar (1 missing) with add-the-missing-ingredient chips. Includes a
-  **"Vervangers meetellen"** toggle (substitutes).
+  **Bijna — je mist er één** sidebar (1 missing) with add-the-missing-ingredient chips. Substitutes always
+  count, and a card says which of your ingredients stands in ("met jenever").
 - **Wizard** (`/bar/wizard/:step`) — a stepped chip picker (`bar/wizard/`, logic in
   `wizard-steps.ts`): spirits first, then the pre-checked pantry staples, then a step per category
   filtered to what the chosen spirits can actually reach. Chips are ordered by how many recipes call
@@ -57,7 +57,7 @@ Catalog authoring routes (`add`, `:id/edit`) exist **only in dev** — they are 
 - **Persistence is `localStorage` only** (all writes wrapped in try/catch). Keys: `barkaart.cabinet`,
   `barkaart.wizardDone`, `barkaart.wizardDraft` (an interrupted wizard run, cleared on finish/skip),
   `barkaart.staplesApplied` (the staple set last carried into an existing cabinet),
-  `barkaart.favorites`, `barkaart.theme`, `barkaart.substitutes` (default on),
+  `barkaart.favorites`, `barkaart.theme`,
   `barkaart.locale`, `barkaart.units`, `barkaart.install.dismissed` and `barkaart.analyticsOptOut` (the
   opt-out flag is persisted even in the static build, where analytics itself is inert) — plus
   `barkaart.auth` (tokens) and `barkaart.sync`, which are only written once the accounts feature is
@@ -68,8 +68,7 @@ Catalog authoring routes (`add`, `:id/edit`) exist **only in dev** — they are 
   `AuthService`, `SyncService` and `authInterceptor` are inert and the account entry is hidden) and
   `analyticsUrl: ''` (so `AnalyticsService` never buffers or sends). The shipped app is therefore
   purely local-first and sends nothing to a server about you; where analytics *is* configured it also
-  honours a persisted user opt-out. ("Vervangers meetellen" is a search-behavior preference, not
-  tracking.)
+  honours a persisted user opt-out.
 - **Dev vs production data source:**
   - **dev** (`dataSource: 'api'`) — talks to the NestJS catalog API at `http://localhost:3000/api/`
     for authoring.

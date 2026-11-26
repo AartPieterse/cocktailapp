@@ -69,7 +69,7 @@ This is the file you rebuild from when the NVMe dies, so a wrong step costs the 
 
 - **Catalog/overlay version parity**: the API payload omits `locale` and `schemaVersion` that `Catalog` declares required; `applyCatalogTranslations` silently reverts the whole Dutch UI to English on mismatch. Low risk while the selfhost SPA reads its bundled catalog; fix before ever pointing `dataSource: 'api'` at the box.
 - **Dutch text for the surviving mocktails** — size set by step 10, safety set by step 11.
-- **The substitutes graph.** "Vervangers meetellen" currently changes the makeable count by exactly 0: 1 `parentId`, 2 `substitutes`, 4 of 631 lines with `alternativeIds` across 156 ingredients. Add the dairy/whiskey/citrus/sweetener families in the seed (no code change needed), re-measure, and if the delta is still near zero, remove the toggle rather than ship a placebo.
+- **The substitutes graph.** Done: the "Vervangers meetellen" toggle is gone, substitutes always count and the UI names them ("met jenever"); the expansion is one hop from what you have; `exact` lines (Dry Martini, Vesper, Sazerac, Vieux Carré, Jungle Bird) take no substitute; espresso/coffee, bourbon/rye, Pernod/absinthe, Grand Marnier to triple sec and lemon/orange to their juice joined the graph. Left: grow it only pair by pair where the drink stays the same drink (see docs/data-model.md, Substitutes, for the pairs deliberately not linked).
 - **Wi-Fi drop test.** Test before building a watchdog; it may already be fine, and that measurement belongs in the runbook. A €15 USB Ethernet adapter deletes the entire failure class on a box that hasn't moved since install (`eno2` is DOWN for want of a cable).
 
 ---

@@ -5,12 +5,24 @@ import {
   type Cocktail,
   type CocktailVariation,
   GLASSWARE_LABELS,
+  type MakeableResult,
   METHOD_LABELS,
 } from '@cocktailapp/shared';
 import { FavoritesService } from '../../core/favorites.service';
 import { LanguageService } from '../../core/language.service';
 import { GlassArt } from '../../shared/glass-art/glass-art';
 import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
+import { inSentence } from '../../shared/in-sentence';
+
+/**
+ * The own ingredient a makeable result leans on, as it reads in a sentence ("jenever"), or null
+ * when every line is covered by its own base. A card names one, which is the common case and keeps
+ * the line short.
+ */
+export function viaName(result: Pick<MakeableResult, 'substitutions'>): string | null {
+  const via = result.substitutions?.[0]?.via[0];
+  return via ? inSentence(via) : null;
+}
 
 /** Presentational cocktail card with the hand-drawn glass on a tinted panel. */
 @Component({
@@ -47,6 +59,9 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
           </div>
         } @else {
           <div class="meta">{{ meta() }}</div>
+          @if (via(); as name) {
+            <div class="via">{{ lang.t().card.withIngredient(name) }}</div>
+          }
         }
         <div class="actions"><ng-content /></div>
       </div>
@@ -159,6 +174,10 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
       font: 500 0.75rem var(--font-body);
       color: var(--faint);
     }
+    .via {
+      font: 500 0.75rem var(--font-body);
+      color: var(--faint);
+    }
     .actions {
       margin-top: auto;
       padding-top: var(--sp-3);
@@ -207,6 +226,10 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
         font-size: 0.625rem;
         letter-spacing: 0.04em;
       }
+      .via {
+        font-size: 0.7rem;
+        line-height: 1.35;
+      }
     }
   `,
 })
@@ -226,6 +249,11 @@ export class CocktailCard {
    */
   readonly variation = input<CocktailVariation | null>(null);
   readonly parentName = input<string | null>(null);
+  /**
+   * The own ingredient standing in for a recipe line, already as it reads in a sentence ("jenever").
+   * Added to "Nu te maken"; on a card without a status it gets a quiet line of its own.
+   */
+  readonly via = input<string | null>(null);
 
   readonly query = computed(() => {
     const v = this.variation();
@@ -258,7 +286,10 @@ export class CocktailCard {
     const m = this.missingCount();
     if (m === null) return this.meta();
     const t = this.lang.t().card;
-    if (m === 0) return t.makeNow;
+    if (m === 0) {
+      const via = this.via();
+      return via ? t.makeNowWith(via) : t.makeNow;
+    }
     const names = this.missingNames();
     if (m === 1) return names.length ? t.missName(names[0]) : t.missMany(1);
     return t.missMany(m);

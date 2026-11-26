@@ -6,14 +6,12 @@ import {
   CATEGORY_HINTS,
   CATEGORY_LABELS_PLURAL,
   computeMakeableWithVariations,
-  expandCabinet,
   type Cocktail,
   type Ingredient,
 } from '@cocktailapp/shared';
 import { AnalyticsService } from '../../core/analytics.service';
 import { CabinetService } from '../../core/cabinet.service';
 import { LanguageService } from '../../core/language.service';
-import { SubstitutesService } from '../../core/substitutes.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { IngredientService } from '../../services/ingredient.service';
 import { IngredientGlyph } from '../../shared/ingredient-glyph/ingredient-glyph';
@@ -315,7 +313,6 @@ const CHIP_LIMIT = 8;
 export class Wizard {
   private readonly cabinet = inject(CabinetService);
   protected readonly lang = inject(LanguageService);
-  private readonly subs = inject(SubstitutesService);
   private readonly ingredientService = inject(IngredientService);
   private readonly cocktailService = inject(CocktailService);
   private readonly router = inject(Router);
@@ -393,12 +390,8 @@ export class Wizard {
   );
 
   /** The live payoff: what the ticks so far already buy, in the app's own hero terms. */
-  private readonly available = computed(() =>
-    expandCabinet([...this.selection()], this.ingredients(), {
-      substitutes: this.subs.enabled(),
-    }),
-  );
-  /** Counts variations too, exactly as the bar's "Maak nu" grid lists them. */
+  private readonly available = computed(() => [...this.selection()]);
+  /** Counts variations and substitutes too, exactly as the bar's "Maak nu" grid lists them. */
   private readonly catalog = computed(() => ({
     cocktails: this.cocktails(),
     ingredients: this.ingredients(),

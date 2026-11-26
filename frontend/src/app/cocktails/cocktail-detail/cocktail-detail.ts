@@ -12,11 +12,11 @@ import {
   type CocktailIngredient,
   type VolumeUnit,
   convertMeasure,
+  coverLines,
   DIFFICULTY_LABELS,
   type DrinkFamily,
   DRINK_FAMILY_INTRO,
   DRINK_FAMILY_RATIO,
-  expandCabinet,
   GLASSWARE_LABELS,
   isVolumeUnit,
   type Ingredient,
@@ -32,13 +32,13 @@ import { factForCocktail } from '../../core/facts';
 import { LanguageService } from '../../core/language.service';
 import { FavoritesService } from '../../core/favorites.service';
 import { UnitPreferenceService } from '../../core/unit-preference.service';
-import { SubstitutesService } from '../../core/substitutes.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { IngredientService } from '../../services/ingredient.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { GlassArt } from '../../shared/glass-art/glass-art';
 import { IngredientGlyph } from '../../shared/ingredient-glyph/ingredient-glyph';
 import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
+import { inSentence } from '../../shared/in-sentence';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -171,7 +171,7 @@ import { environment } from '../../../environments/environment';
                   </div>
                 }
               </div>
-              @for (i of c.ingredients; track i.ingredientId + i.name) {
+              @for (i of c.ingredients; track i.ingredientId + i.name; let n = $index) {
                 <div class="line">
                   <span class="glyph"><app-ingredient-glyph [ingId]="i.ingredientId" [cat]="ingCat(i)" /></span>
                   <div class="meas">{{ scaled(i) }} {{ unitLabel(i) }}</div>
@@ -179,13 +179,14 @@ import { environment } from '../../../environments/environment';
                     {{ i.call ?? i.name }}
                     @if (i.optional) { <em class="opt">{{ lang.t().detail.optional }}</em> }
                     @if (i.note) { <span class="note">· {{ i.note }}</span> }
+                    @if (viaText(n); as via) { <span class="via">{{ via }}</span> }
                   </div>
-                  @if (inBar(i)) {
+                  @if (covers()[n]) {
                     <mat-icon
                       class="in-kast"
                       role="img"
-                      [attr.aria-label]="lang.t().detail.inBar"
-                      [matTooltip]="lang.t().detail.inBar"
+                      [attr.aria-label]="viaText(n) ?? lang.t().detail.inBar"
+                      [matTooltip]="viaText(n) ?? lang.t().detail.inBar"
                     >check</mat-icon>
                   } @else if (!i.optional) {
                     <button class="add-line no-print" (click)="add(i)">{{ lang.t().detail.add }}</button>
@@ -620,6 +621,13 @@ import { environment } from '../../../environments/environment';
     .iname .note {
       color: var(--muted);
     }
+    /* Which of your own ingredients stands in for this line: small, under the name. */
+    .iname .via {
+      display: block;
+      margin-top: 2px;
+      font-size: var(--step--1);
+      color: var(--muted);
+    }
     .in-kast {
       flex: none;
       font-size: 22px;
@@ -768,7 +776,6 @@ export class CocktailDetail {
   private readonly cocktailService = inject(CocktailService);
   private readonly ingredientService = inject(IngredientService);
   private readonly cabinet = inject(CabinetService);
-  private readonly subs = inject(SubstitutesService);
   private readonly favorites = inject(FavoritesService);
   private readonly unitPref = inject(UnitPreferenceService);
   private readonly dialog = inject(MatDialog);
@@ -846,21 +853,20 @@ export class CocktailDetail {
   });
 
   /**
-   * The cabinet expanded for substitutions (parent/child + the "vervangers meetellen" toggle) — the
-   * exact same expansion the bar and list run — as a Set for O(1) line lookups. Keeping this
-   * identical to the other surfaces is what stops the detail page's verdict from disagreeing with them.
+   * How the bar covers each line, aligned with the recipe: its own base, a substitute (naming your
+   * ingredient that stands in), or nothing. The same shared rule, with the same own ids and the same
+   * substitution graph, as the bar and the list, which is what stops this page's verdict from
+   * disagreeing with them.
    */
-  private readonly availableIds = computed(
-    () =>
-      new Set(
-        expandCabinet(this.cabinet.ids(), this.ingredients(), { substitutes: this.subs.enabled() }),
-      ),
-  );
+  readonly covers = computed(() => {
+    const c = this.cocktail();
+    return c ? coverLines(c, this.cabinet.ids(), this.ingredients()) : [];
+  });
 
-  /** Required lines still missing — via the shared rule (honours alternativeIds + substitutes). */
+  /** Required lines still missing, via the shared rule (alternativeIds, substitutes, exact lines). */
   private readonly missing = computed(() => {
     const c = this.cocktail();
-    return c ? missingLines(c, this.availableIds()) : [];
+    return c ? missingLines(c, this.cabinet.ids(), this.ingredients()) : [];
   });
   readonly makeable = computed(() => this.missing().length === 0);
   readonly missingNames = computed(() =>
@@ -928,10 +934,11 @@ export class CocktailDetail {
     return this.ingredientNames().get(id) ?? id;
   }
 
-  /** True when the line is satisfied by the (expanded) cabinet — same rule as the makeable banner. */
-  inBar(i: CocktailIngredient): boolean {
-    const avail = this.availableIds();
-    return avail.has(i.ingredientId) || (i.alternativeIds?.some((id) => avail.has(id)) ?? false);
+  /** "Met jenever uit je bar" under a line a substitute covers; null when it is not one. */
+  viaText(index: number): string | null {
+    const id = this.covers()[index]?.via[0];
+    if (!id) return null;
+    return this.lang.t().detail.usingFromBar(inSentence({ ingredientId: id, name: this.ingName(id) }));
   }
   add(i: CocktailIngredient): void {
     this.cabinet.toggle(i.ingredientId, true);
