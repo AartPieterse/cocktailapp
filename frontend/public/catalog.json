@@ -1,5 +1,5 @@
 {
-  "version": "f86acceac0e9",
+  "version": "773d6e07dc33",
   "schemaVersion": 2,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
@@ -13,6 +13,10 @@
       "name": "Absinthe",
       "category": "spirit",
       "isStaple": false,
+      "aliases": [
+        "Kübler",
+        "La Fée"
+      ],
       "abv": 68
     },
     {
@@ -39,7 +43,9 @@
       "category": "liqueur",
       "isStaple": false,
       "aliases": [
-        "Pimento Dram"
+        "Allspice Dram",
+        "Pimento Dram",
+        "St. Elizabeth Allspice Dram"
       ],
       "abv": 22
     },
@@ -48,6 +54,11 @@
       "name": "Amaretto",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "De Kuyper Amaretto",
+        "Disaronno",
+        "Lazzaroni"
+      ],
       "abv": 28
     },
     {
@@ -56,7 +67,12 @@
       "category": "liqueur",
       "isStaple": false,
       "aliases": [
-        "Amaro Nonino"
+        "Amaro Lucano",
+        "Amaro Montenegro",
+        "Amaro Nonino",
+        "Averna",
+        "Braulio",
+        "Ramazzotti"
       ],
       "abv": 30
     },
@@ -88,6 +104,13 @@
       "name": "Apricot Brandy",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Apricot Liqueur",
+        "Bols Apricot Brandy",
+        "De Kuyper Apricot Brandy",
+        "Giffard Abricot du Roussillon",
+        "Marie Brizard Apry"
+      ],
       "abv": 24
     },
     {
@@ -132,8 +155,16 @@
       "category": "spirit",
       "isStaple": false,
       "aliases": [
+        "Bourbon Whiskey",
         "Bourbon or Rye Whiskey",
-        "Bourbon Whiskey"
+        "Buffalo Trace",
+        "Bulleit",
+        "Four Roses",
+        "Jack Daniel's",
+        "Jim Beam",
+        "Maker's Mark",
+        "Wild Turkey",
+        "Woodford Reserve"
       ],
       "abv": 40
     },
@@ -142,6 +173,12 @@
       "name": "Brandy",
       "category": "spirit",
       "isStaple": false,
+      "aliases": [
+        "Asbach",
+        "Fundador",
+        "Torres 10",
+        "Vecchia Romagna"
+      ],
       "abv": 40
     },
     {
@@ -149,6 +186,12 @@
       "name": "Cachaça",
       "category": "spirit",
       "isStaple": false,
+      "aliases": [
+        "Cachaça 51",
+        "Leblon",
+        "Velho Barreiro",
+        "Ypióca"
+      ],
       "abv": 40
     },
     {
@@ -156,6 +199,12 @@
       "name": "Calvados",
       "category": "spirit",
       "isStaple": false,
+      "aliases": [
+        "Apple Brandy",
+        "Boulard",
+        "Christian Drouin",
+        "Père Magloire"
+      ],
       "abv": 40
     },
     {
@@ -191,6 +240,13 @@
       "name": "Cherry Liqueur",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Bols Cherry Brandy",
+        "Cherry Brandy",
+        "Cherry Heering",
+        "De Kuyper Cherry Brandy",
+        "Heering"
+      ],
       "abv": 24
     },
     {
@@ -247,7 +303,10 @@
       "category": "liqueur",
       "isStaple": false,
       "aliases": [
-        "Kahlúa"
+        "Borghetti",
+        "Kahlúa",
+        "Mr Black",
+        "Tia Maria"
       ],
       "abv": 20
     },
@@ -258,7 +317,12 @@
       "isStaple": false,
       "parentId": "brandy",
       "aliases": [
-        "Cognac or Brandy"
+        "Cognac or Brandy",
+        "Courvoisier",
+        "Hennessy",
+        "Martell",
+        "Pierre Ferrand",
+        "Rémy Martin"
       ],
       "abv": 40
     },
@@ -269,7 +333,8 @@
       "isStaple": true,
       "aliases": [
         "Coca Cola",
-        "Coca-Cola"
+        "Coca-Cola",
+        "Pepsi"
       ]
     },
     {
@@ -292,6 +357,12 @@
       "name": "Crème de Cacao",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Bols Crème de Cacao",
+        "Cacao Liqueur",
+        "De Kuyper Crème de Cacao",
+        "Giffard Crème de Cacao"
+      ],
       "abv": 24
     },
     {
@@ -299,6 +370,11 @@
       "name": "Crème de Cassis",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Giffard Cassis",
+        "Lejay",
+        "Védrenne"
+      ],
       "abv": 20
     },
     {
@@ -307,6 +383,9 @@
       "category": "liqueur",
       "isStaple": false,
       "aliases": [
+        "Get 27",
+        "Peppermint Liqueur",
+        "Pippermint",
         "White Crème de Menthe"
       ],
       "abv": 24
@@ -316,6 +395,10 @@
       "name": "Crème de Mûre",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Blackberry Liqueur",
+        "Giffard Crème de Mûre"
+      ],
       "abv": 20
     },
     {
@@ -323,6 +406,11 @@
       "name": "Crème de Violette",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Giffard Violette",
+        "Rothman & Winter",
+        "Violet Liqueur"
+      ],
       "abv": 20
     },
     {
@@ -343,14 +431,22 @@
       "aliases": [
         "Aged Rum",
         "Amber Jamaican Rum",
+        "Appleton Estate",
+        "Bacardi Carta Negra",
         "Demerara Rum",
+        "Diplomático",
+        "El Dorado",
         "Gold Puerto Rican Rum",
         "Gold Rum",
         "Goslings Black Seal Rum",
         "Goslings Rum",
+        "Havana Club 7 Años",
         "Jamaican Dark Rum",
         "Jamaican Rum",
-        "Martinique Molasses Rhum"
+        "Martinique Molasses Rhum",
+        "Mount Gay",
+        "Myers's",
+        "Ron Zacapa"
       ],
       "abv": 40
     },
@@ -372,6 +468,12 @@
       "name": "Dry Vermouth",
       "category": "wine",
       "isStaple": false,
+      "aliases": [
+        "Cinzano Extra Dry",
+        "Dolin Dry",
+        "Martini Extra Dry",
+        "Noilly Prat"
+      ],
       "abv": 18
     },
     {
@@ -435,6 +537,9 @@
       "name": "Fernet Branca",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Fernet"
+      ],
       "abv": 39
     },
     {
@@ -478,9 +583,19 @@
       "category": "spirit",
       "isStaple": false,
       "aliases": [
+        "Beefeater",
+        "Bobby's",
+        "Bombay Sapphire",
+        "Bulldog",
         "Dry Gin",
+        "Gin Mare",
+        "Gordon's",
+        "Hendrick's",
         "London Dry Gin",
-        "Old Tom Gin"
+        "Monkey 47",
+        "Nolet's",
+        "Old Tom Gin",
+        "Tanqueray"
       ],
       "abv": 40
     },
@@ -498,19 +613,30 @@
       "id": "ginger-ale",
       "name": "Ginger Ale",
       "category": "mixer",
-      "isStaple": false
+      "isStaple": false,
+      "aliases": [
+        "Canada Dry",
+        "Schweppes Ginger Ale"
+      ]
     },
     {
       "id": "ginger-beer",
       "name": "Ginger Beer",
       "category": "mixer",
-      "isStaple": false
+      "isStaple": false,
+      "aliases": [
+        "Bundaberg",
+        "Fever-Tree Ginger Beer"
+      ]
     },
     {
       "id": "grand-marnier",
       "name": "Grand Marnier",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Grand Marnier Cordon Rouge"
+      ],
       "abv": 40
     },
     {
@@ -534,6 +660,10 @@
       "category": "spirit",
       "isStaple": false,
       "aliases": [
+        "Bocchino",
+        "Nardini",
+        "Nonino",
+        "Sibona",
         "White Grappa",
         "White Smooth Grappa"
       ],
@@ -544,6 +674,9 @@
       "name": "Green Chartreuse",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Chartreuse Verte"
+      ],
       "abv": 55
     },
     {
@@ -591,6 +724,15 @@
       "name": "Irish Whiskey",
       "category": "spirit",
       "isStaple": false,
+      "aliases": [
+        "Bushmills",
+        "Jameson",
+        "Powers",
+        "Redbreast",
+        "Teeling",
+        "Tullamore D.E.W.",
+        "Writers' Tears"
+      ],
       "abv": 40
     },
     {
@@ -644,6 +786,9 @@
       "name": "Lillet Blanc",
       "category": "wine",
       "isStaple": false,
+      "aliases": [
+        "Lillet"
+      ],
       "abv": 17
     },
     {
@@ -666,7 +811,8 @@
       "isStaple": false,
       "aliases": [
         "Luxardo Maraschino",
-        "Maraschino Luxardo"
+        "Maraschino Luxardo",
+        "Maraska"
       ],
       "abv": 32
     },
@@ -676,8 +822,11 @@
       "category": "spirit",
       "isStaple": false,
       "aliases": [
+        "400 Conejos",
+        "Del Maguey",
         "Espadin Mezcal",
-        "Espadín Mezcal"
+        "Espadín Mezcal",
+        "Montelobos"
       ],
       "abv": 45
     },
@@ -738,6 +887,11 @@
       "name": "Passion Fruit Liqueur",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Bols Passion Fruit",
+        "De Kuyper Passion Fruit",
+        "Passoa"
+      ],
       "abv": 20
     },
     {
@@ -768,7 +922,11 @@
       "category": "liqueur",
       "isStaple": false,
       "aliases": [
-        "Peach Brandy"
+        "Archers",
+        "Bols Peach",
+        "De Kuyper Peachtree",
+        "Peach Brandy",
+        "Peachtree"
       ],
       "abv": 20
     },
@@ -783,6 +941,11 @@
       "name": "Pernod",
       "category": "spirit",
       "isStaple": false,
+      "aliases": [
+        "Pastis",
+        "Pastis 51",
+        "Ricard"
+      ],
       "abv": 40
     },
     {
@@ -815,6 +978,12 @@
       "name": "Pisco",
       "category": "spirit",
       "isStaple": false,
+      "aliases": [
+        "BarSol",
+        "Capel",
+        "Macchu Pisco",
+        "Pisco Porton"
+      ],
       "abv": 42
     },
     {
@@ -823,6 +992,8 @@
       "category": "liqueur",
       "isStaple": false,
       "aliases": [
+        "Chambord",
+        "Crème de Framboise",
         "Raspberry Liqueur (Chambord)"
       ],
       "abv": 20
@@ -846,7 +1017,13 @@
       "category": "spirit",
       "isStaple": false,
       "aliases": [
-        "Rye Whiskey or Bourbon"
+        "Bulleit Rye",
+        "Michter's Rye",
+        "Old Overholt",
+        "Rittenhouse",
+        "Rye Whiskey or Bourbon",
+        "Sazerac Rye",
+        "Wild Turkey Rye"
       ],
       "abv": 45
     },
@@ -862,9 +1039,22 @@
       "category": "spirit",
       "isStaple": false,
       "aliases": [
+        "Ballantine's",
         "Blended Scotch Whisky",
+        "Chivas Regal",
+        "Dewar's",
+        "Famous Grouse",
+        "Glenfiddich",
+        "Grant's",
         "Islay Single Malt (Lagavulin 16)",
-        "Lagavulin 16 y Whisky"
+        "J&B",
+        "Johnnie Walker",
+        "Lagavulin 16 y Whisky",
+        "Laphroaig",
+        "Monkey Shoulder",
+        "Single Malt Scotch",
+        "Talisker",
+        "The Glenlivet"
       ],
       "abv": 40
     },
@@ -892,7 +1082,13 @@
       "id": "soda-water",
       "name": "Soda Water",
       "category": "mixer",
-      "isStaple": true
+      "isStaple": true,
+      "aliases": [
+        "Bruiswater",
+        "Sourcy Rood",
+        "Spa Rood",
+        "Sparkling Water"
+      ]
     },
     {
       "id": "sparkling-wine",
@@ -901,8 +1097,11 @@
       "isStaple": false,
       "aliases": [
         "Brut Champagne or Prosecco",
+        "Cava",
         "Champagne",
         "Chilled Champagne",
+        "Crémant",
+        "Freixenet",
         "Prosecco"
       ],
       "abv": 12
@@ -952,6 +1151,11 @@
       "category": "wine",
       "isStaple": false,
       "aliases": [
+        "Carpano Antica Formula",
+        "Cinzano Rosso",
+        "Cocchi Vermouth di Torino",
+        "Martini Rosso",
+        "Punt e Mes",
         "Sweet Red Vermouth"
       ],
       "abv": 16
@@ -968,7 +1172,11 @@
       "category": "wine",
       "isStaple": false,
       "aliases": [
-        "Red Tawny Port Wine"
+        "Graham's",
+        "Red Tawny Port Wine",
+        "Ruby Port",
+        "Sandeman",
+        "Taylor's"
       ],
       "abv": 20
     },
@@ -985,7 +1193,16 @@
       "isStaple": false,
       "aliases": [
         "100% Agave Tequila",
+        "1800",
+        "Casamigos",
+        "Don Julio",
+        "El Jimador",
+        "Espolòn",
+        "Jose Cuervo",
+        "Olmeca",
+        "Patrón",
         "Reposado Tequila (100% Agave)",
+        "Sierra",
         "Tequila 100% Agave",
         "Tequila Agave 100% Reposado"
       ],
@@ -1003,7 +1220,9 @@
       "category": "mixer",
       "isStaple": false,
       "aliases": [
+        "Fever-Tree Tonic",
         "Indian Tonic",
+        "Schweppes Tonic",
         "Tonic"
       ]
     },
@@ -1013,11 +1232,17 @@
       "category": "liqueur",
       "isStaple": false,
       "aliases": [
+        "Blue Curaçao",
+        "Bols Blue",
+        "Bols Triple Sec",
         "Cointreau",
+        "Combier",
         "Curacao",
         "Curaçao",
+        "De Kuyper Triple Sec",
         "Orange Curacao",
-        "Orange Curaçao"
+        "Orange Curaçao",
+        "Pierre Ferrand Dry Curaçao"
       ],
       "abv": 30
     },
@@ -1046,11 +1271,19 @@
       "category": "spirit",
       "isStaple": false,
       "aliases": [
+        "Absolut",
+        "Belvedere",
         "Citroenwodka",
+        "Eristoff",
+        "Grey Goose",
+        "Ketel One",
+        "Russian Standard",
         "Smirnoff Vodka",
+        "Stolichnaya",
         "Vanillewodka",
         "Vodka Citron",
-        "Vodka Vanilla"
+        "Vodka Vanilla",
+        "Wodka Gorbatschow"
       ],
       "abv": 40
     },
@@ -1072,9 +1305,13 @@
         "dark-rum"
       ],
       "aliases": [
+        "Bacardi",
+        "Bacardi Carta Blanca",
         "Cuban Aguardiente",
+        "Havana Club 3 Años",
         "Jamaica Overproof White Rum",
         "Jamaican Overproof White Rum",
+        "Plantation 3 Stars",
         "Rum",
         "White Cuban Ron",
         "White Cuban Rum"
@@ -1092,6 +1329,9 @@
       "name": "Yellow Chartreuse",
       "category": "liqueur",
       "isStaple": false,
+      "aliases": [
+        "Chartreuse Jaune"
+      ],
       "abv": 40
     }
   ],
