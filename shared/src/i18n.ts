@@ -412,7 +412,7 @@ const nl: UiStrings = {
     heroLede:
       'Vink aan wat je in huis hebt — sterke drank, mixers, dat ene flesje achterin — en Barkaart laat meteen zien welke cocktails je <em>nu</em> kunt maken.',
     buildBar: 'Stel je bar samen',
-    browseFirst: 'Blader eerst rond',
+    browseFirst: 'Bekijk cocktails',
     howTitle: 'Zo werkt het',
     howSteps: [
       {
@@ -720,7 +720,7 @@ const en: UiStrings = {
     heroLede:
       "Tick what you have on hand — spirits, mixers, that one bottle at the back — and Barkaart shows you right away which cocktails you can make <em>now</em>.",
     buildBar: 'Build your bar',
-    browseFirst: 'Browse first',
+    browseFirst: 'Browse cocktails',
     howTitle: 'How it works',
     howSteps: [
       {

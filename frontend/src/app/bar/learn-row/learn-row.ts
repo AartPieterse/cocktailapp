@@ -35,17 +35,19 @@ import { dayIndex, familyExamples, familyOfTheDay } from '../discover';
           <div class="card-head">
             <span class="badge"><mat-icon>school</mat-icon></span>
             <span class="eyebrow">{{ lang.t().home.techniqueEyebrow }}</span>
+            <mat-icon class="chev" aria-hidden="true">chevron_right</mat-icon>
           </div>
           <h3>{{ lesson().title }}</h3>
           <p class="body">{{ lesson().lede }}</p>
           <p class="small">{{ lang.t().home.drillLine(lesson().drill.seconds) }}</p>
-          <span class="go">{{ lang.t().home.toLesson }} <mat-icon>arrow_forward</mat-icon></span>
+          <span class="sr-only">{{ lang.t().home.toLesson }}</span>
         </a>
 
         <a class="card" [routerLink]="['/families', family]">
           <div class="card-head">
             <span class="badge"><mat-icon>category</mat-icon></span>
             <span class="eyebrow">{{ lang.t().home.familyEyebrow }}</span>
+            <mat-icon class="chev" aria-hidden="true">chevron_right</mat-icon>
           </div>
           <h3>{{ familyLabel() }}</h3>
           <p class="ratio">{{ familyRatio() }}</p>
@@ -53,7 +55,7 @@ import { dayIndex, familyExamples, familyOfTheDay } from '../discover';
           @if (examples().length) {
             <p class="small">{{ lang.t().home.familyExamples(examples()) }}</p>
           }
-          <span class="go">{{ lang.t().home.toFamily }} <mat-icon>arrow_forward</mat-icon></span>
+          <span class="sr-only">{{ lang.t().home.toFamily }}</span>
         </a>
 
         <app-fact-card />
@@ -152,26 +154,30 @@ import { dayIndex, familyExamples, familyOfTheDay } from '../discover';
       color: var(--faint);
       font-size: var(--step--1);
     }
-    .go {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: auto;
-      padding-top: 6px;
-      font: 600 0.75rem var(--font-body);
+    /* The whole card is the link; the chevron on the eyebrow's line only says so, like a list row. */
+    .chev {
+      margin-left: auto;
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+      color: var(--faint);
+      transition: transform 0.15s ease, color 0.15s ease;
+    }
+    .card:hover .chev {
+      transform: translateX(2px);
       color: var(--accent);
-    }
-    .go mat-icon {
-      font-size: 15px;
-      width: 15px;
-      height: 15px;
-      transition: transform 0.15s ease;
-    }
-    .card:hover .go mat-icon {
-      transform: translateX(3px);
     }
     app-fact-card {
       display: block;
+    }
+    /* Read out, not shown: the chevron is decoration, the words say where the card goes. */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
     }
     @media (max-width: 900px) {
       .cards {
