@@ -15,8 +15,8 @@ import { CocktailService } from '../services/cocktail.service';
 /**
  * The nine families, with how many recipes sit in each.
  *
- * This is the index behind the one line every recipe now carries ("Dit is een sour · 2 sterk :
- * 1 zuur : 1 zoet"). The counts come from the catalog rather than a constant, so a family that
+ * This is the index behind the one line every recipe now carries ("Dit is een sour · twee delen
+ * sterke drank, één deel citroen of limoen, één deel suikersiroop"). The counts come from the catalog rather than a constant, so a family that
  * gains or loses a recipe reports the truth without anyone remembering to edit a number.
  */
 @Component({

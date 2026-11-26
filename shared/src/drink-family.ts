@@ -62,29 +62,33 @@ export const DRINK_FAMILY_LABELS: Record<Locale, Record<DrinkFamily, string>> = 
   },
 };
 
-/** The working ratio of a family, written the way a bartender would say it aloud. */
+/**
+ * The shape of a family in plain words: what goes in, and in what proportion where there is a
+ * fixed one. No bar jargon ("lang", "basis", "bruis"), so it reads without explanation. Lower-case
+ * on purpose: the recipe page sets it mid-sentence ("Dit is een sour · twee delen …").
+ */
 export const DRINK_FAMILY_RATIO: Record<Locale, Record<DrinkFamily, string>> = {
   nl: {
-    sour: '2 sterk : 1 zuur : 1 zoet',
-    'spirit-forward': '2 basis : 1 vermout of bitter',
-    highball: '1 sterk : 3 lang',
-    fizz: '2 sterk : 1 zuur : 1 zoet, aangevuld met bruis',
-    sparkling: '1 basis : 2 mousserend',
-    creamy: '2 sterk : 1 zoet : 1 room',
-    tiki: 'meerdere rums, citrus en siroop',
-    hot: 'sterk, zoet en iets heets',
-    savoury: 'sap, zuur en kruiden',
+    sour: 'twee delen sterke drank, één deel citroen of limoen, één deel suikersiroop',
+    'spirit-forward': 'twee delen sterke drank, één deel vermout of bitter',
+    highball: 'één deel sterke drank, drie delen frisdrank',
+    fizz: 'zoals een sour, aangevuld met bruiswater',
+    sparkling: 'één deel likeur of sap, twee delen bubbels',
+    creamy: 'sterke drank of likeur, met room, kokos of ei',
+    tiki: 'meerdere soorten rum, citrus en siroop',
+    hot: 'koffie of iets anders heets, iets zoets, vaak sterke drank',
+    savoury: 'sap, iets zuurs en kruiden',
   },
   en: {
-    sour: '2 strong : 1 sour : 1 sweet',
-    'spirit-forward': '2 base : 1 vermouth or bitter',
-    highball: '1 strong : 3 long',
-    fizz: '2 strong : 1 sour : 1 sweet, lengthened with soda',
-    sparkling: '1 base : 2 sparkling',
-    creamy: '2 strong : 1 sweet : 1 cream',
-    tiki: 'several rums, citrus and syrup',
-    hot: 'strong, sweet and something hot',
-    savoury: 'juice, acid and seasoning',
+    sour: 'two parts spirit, one part lemon or lime, one part sugar syrup',
+    'spirit-forward': 'two parts spirit, one part vermouth or bitter',
+    highball: 'one part spirit, three parts mixer',
+    fizz: 'like a sour, topped up with soda water',
+    sparkling: 'one part liqueur or juice, two parts bubbles',
+    creamy: 'spirit or liqueur, with cream, coconut or egg',
+    tiki: 'several kinds of rum, citrus and syrup',
+    hot: 'coffee or something else hot, something sweet, often a spirit',
+    savoury: 'juice, something sour and seasoning',
   },
 };
 
