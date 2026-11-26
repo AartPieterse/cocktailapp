@@ -1,14 +1,15 @@
 name: CI
 
-# Guard the release path AND publish it.
+# Guard the release path, and publish the release.
 #
-# Netlify's own builds are STOPPED for this project: it auto-installs the
-# @netlify/angular-runtime plugin (framework detection), which cannot build this
-# npm-workspaces monorepo from the repo root. So GitHub Actions is the sole path to
-# production — it builds the static SPA here and pushes the finished files to Netlify.
+# Production is self-hosted: the box at home runs the whole application, and nothing is uploaded to
+# a third-party host. A release is one commit on main, published as two images on GHCR tagged with
+# its SHA — barkaart-api, and barkaart-web (the SPA baked into Caddy). The box pulls both and builds
+# nothing (deploy/auto-deploy.sh). The frontend build in the `build` job is the gate that runs on
+# every PR; the web image rebuilds it from the same commit.
 #
 #   PR into main / push to development -> build + verify (gate)
-#   push to main (merged PR)           -> build + verify, then deploy to Netlify
+#   push to main (merged PR)           -> build + verify, then push both images to GHCR
 on:
   pull_request:
     branches: [main]
@@ -75,10 +76,13 @@ jobs:
         run: npm test --workspace backend
 
   image:
-    # Build the API container and push a version-tagged image to GHCR (Part F / Phase 11). The
-    # self-hosted box PULLS this by tag via deploy/deploy.sh — outbound-only, so it works behind the
-    # Cloudflare Tunnel with no inbound ports. Tagged with the git SHA (immutable, for rollback) and
-    # `latest`. Only after a green build on main.
+    # Build the two release images and push them to GHCR (Part F / Phase 11), tagged with the git SHA
+    # — immutable, and the only tag the box deploys or rolls back to — and `latest` for humans. The
+    # box PULLS them: deploy/auto-deploy.sh waits until both `:<sha>` tags exist, then deploy.sh rolls
+    # them out. Only after a green build on main.
+    #
+    # The box pulls anonymously, so both packages must be public. A package's first push can leave it
+    # private: check barkaart-web's visibility on GitHub after the first run of this job.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
@@ -88,9 +92,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Lowercase the image repo (GHCR requires lowercase)
+      - name: Lowercase the registry namespace (GHCR requires lowercase)
         id: repo
-        run: echo "name=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/barkaart-api" >> "$GITHUB_OUTPUT"
+        run: echo "prefix=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
@@ -99,76 +103,28 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push the API image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: backend/Dockerfile
           push: true
           tags: |
-            ${{ steps.repo.outputs.name }}:${{ github.sha }}
-            ${{ steps.repo.outputs.name }}:latest
-          # Stamp the git SHA into the image so the self-hosted auto-deploy poller can map the
-          # :latest it watches back to the exact immutable :<sha> tag — giving deploy.sh a real
-          # rollback target instead of an ambiguous "latest".
+            ${{ steps.repo.outputs.prefix }}/barkaart-api:${{ github.sha }}
+            ${{ steps.repo.outputs.prefix }}/barkaart-api:latest
           labels: |
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
-  deploy:
-    # Publish the static SPA to Netlify. Only after a green build on main (a merged PR).
-    #
-    # Requires one repository secret:
-    #   NETLIFY_AUTH_TOKEN — Netlify → User settings → Applications → New access token
-    # NETLIFY_SITE_ID below is the site's API ID, not a secret (it appears in every deploy
-    # URL); move it to a secret if you prefer. The Netlify CLI reads both from the env.
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    concurrency:
-      group: netlify-production
-      cancel-in-progress: false
-    env:
-      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      NETLIFY_SITE_ID: abff2bf1-356b-4be6-ab90-d314080ee2e3
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Build and push the web image (SPA + Caddy)
+        uses: docker/build-push-action@v6
         with:
-          node-version: 24
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build shared types
-        run: npm run build:shared
-
-      - name: Generate static catalog
-        run: npm run build:catalog
-
-      - name: Build frontend (production)
-        run: npm run build --workspace frontend
-
-      - name: Deploy to Netlify (production)
-        # Deploy the already-built SPA from a directory OUTSIDE the repo checkout. Two reasons:
-        #   1. Running the Netlify CLI inside the npm-workspaces tree makes it abort with
-        #      "multiple projects detected" — running from a plain dir avoids that entirely.
-        #   2. There is no netlify.toml / package.json above this dir, so the CLI can't resolve
-        #      a build command or plugins — it does a pure static upload (no build, no plugin).
-        # (The site's server-side @netlify/angular-runtime plugin registration was also removed
-        # via the API; this keeps the deploy plugin-free regardless.) SPA routing + custom headers
-        # ship via the committed frontend/public/_redirects and _headers, copied in explicitly
-        # below: the @angular/build:application builder drops these underscore-prefixed public
-        # files from dist/, so relying on the build output alone silently loses the SPA fallback.
-        run: |
-          publish="$RUNNER_TEMP/netlify-publish"
-          rm -rf "$publish"; mkdir -p "$publish"
-          cp -a "$GITHUB_WORKSPACE/frontend/dist/frontend/browser/." "$publish/"
-          # Guarantee Netlify's _redirects (SPA fallback) and _headers reach the deploy root,
-          # independent of whether the Angular builder emitted them.
-          cp "$GITHUB_WORKSPACE/frontend/public/_redirects" "$publish/_redirects"
-          cp "$GITHUB_WORKSPACE/frontend/public/_headers" "$publish/_headers"
-          cd "$publish"
-          npx --yes netlify-cli deploy --prod --dir=. --site="$NETLIFY_SITE_ID" --message="CI deploy ${GITHUB_SHA::7} (${GITHUB_REF_NAME})"
+          context: .
+          file: frontend/Dockerfile
+          push: true
+          tags: |
+            ${{ steps.repo.outputs.prefix }}/barkaart-web:${{ github.sha }}
+            ${{ steps.repo.outputs.prefix }}/barkaart-web:latest
+          labels: |
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}

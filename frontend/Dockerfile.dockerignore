@@ -1,0 +1,20 @@
+# Build-context filter for frontend/Dockerfile ONLY. BuildKit reads <Dockerfile>.dockerignore in
+# preference to the root .dockerignore, which is tuned for the API image and excludes the frontend.
+#
+# An allowlist: everything is out unless named here, so nothing new in the repo (least of all a
+# deploy/.env) can drift into the image by accident.
+*
+!package.json
+!package-lock.json
+!shared/package.json
+!shared/tsconfig.json
+!shared/src
+!backend/package.json
+!frontend
+!deploy/Caddyfile.lan
+
+# Re-excluded inside the allowed directories. node_modules and dist are rebuilt in the image.
+**/node_modules
+**/dist
+**/.angular
+**/*.spec.ts

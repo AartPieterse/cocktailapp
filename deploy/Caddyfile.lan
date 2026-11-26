@@ -4,16 +4,23 @@
 # catalog.json, so it makes no API calls at all. Serving it needs nothing but a file server, and
 # leaving the API unpublished keeps the LAN surface at zero.
 #
-# When the same-origin deploy lands (docs/plans/next-phase.md step 8) this gains a
-# `handle /api/* { reverse_proxy api:3000 }` block and moves behind the tunnel for TLS.
+# This file is baked into the barkaart-web image together with the SPA (frontend/Dockerfile), so an
+# edit ships with a release; editing the copy on the box changes nothing that is running.
+#
+# Getting a public address (docs/plans/public-access.md step 1) adds TLS and a
+# `handle /api/* { reverse_proxy api:3000 }` block here.
 :80 {
 	root * /srv
 	encode gzip zstd
 
 	# Angular routes are client-side: anything that is not a real file must return index.html,
-	# or a reload on /ontdek 404s. Mirrors frontend/public/_redirects, which only Netlify reads.
+	# or a reload on /ontdek 404s. This is the only copy of the SPA fallback.
 	try_files {path} /index.html
 	file_server
+
+	# The manifest needs no Content-Type pin: caddy:2-alpine ships /etc/mime.types, which maps
+	# .webmanifest to application/manifest+json (measured on the box, 10 Oct 2026). Only Netlify's
+	# MIME table lacked it.
 
 	# Caching, in two non-overlapping halves.
 	#

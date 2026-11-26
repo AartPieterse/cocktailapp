@@ -1,95 +1,37 @@
 # Barkaart self-hosting (Part C)
 
-Run the Barkaart API from home on a dedicated laptop: Docker Compose runs the **API + MongoDB +
-Cloudflare Tunnel**. TLS terminates at Cloudflare's edge; the tunnel dials **outbound**, so there
-are **no inbound ports** and the home IP stays hidden. Mongo is never exposed to the host/LAN.
+Run Barkaart from home on a dedicated laptop. Docker Compose runs three services: the **API**, a
+locked-down **MongoDB**, and a **Caddy** (`web`) whose image has the production SPA baked in. Mongo
+and the API publish no host port; only Caddy does, on `:80`.
 
-> **The tunnel is optional, and the box in service does without it.** `aartfileserver`
-> (Ubuntu Server 24.04.4) runs **LAN-only**: no `cloudflared`, `TUNNEL_TOKEN` left at `change-me`,
-> the API published on the LAN at `:8080` via `docker-compose.admin.yml`, Mongo publishing nothing.
-> On that path, skip §2 and **name the services** in every `docker compose` command
-> (`… up -d --build api mongo`) — a bare `up -d` starts `cloudflared`, which crash-loops on the
-> placeholder token. Full procedure: Appendix D of [`bare-metal-runbook.md`](bare-metal-runbook.md).
->
-> **Not done yet (4 Sep 2026):** encrypted backups (§6 — `age` is not installed on the box and
-> `AGE_RECIPIENT` is still a placeholder), the auto-deploy timer (§7 — no `barkaart-autodeploy` units
-> installed), and the hardening pass (§9). Reboot survival is untested too; §4 says how to check it.
+The box in service is **`aartfileserver` (Ubuntu Server 24.04.4), reachable over the home LAN and
+WireGuard only** — no public hostname, no TLS, no account data. Caddy serves static files and has no
+`/api` proxy, so the API answers nothing outside the container network. The route to a public
+address is [`../docs/plans/public-access.md`](../docs/plans/public-access.md).
 
 ```
 iba-cocktails-seed.json ──db:seed──▶ MongoDB ◀──▶ API (:3000, internal only)
-                                                     │
-                                          cloudflared (outbound tunnel)
-                                                     │
-                                        https://<your-host>  ← Cloudflare edge (TLS) ← clients
+                                                       │
+                                     Caddy `web` ──▶ SPA on :80 (LAN + WireGuard)
 ```
-
-## 0. One-time: migrating a box that was set up as "Barkast"
-
-The app was renamed from **Barkast** to **Barkaart**. This repository is fully renamed; a box
-installed before the rename is **not**, and the two disagree in ways that fail quietly.
-
-> **The trap: the Compose project name also names the volume.** `docker-compose.yml` declares
-> `name: barkaart`, and Compose stores `mongo-data` as `<project>_mongo-data`. A box installed
-> earlier holds `barkast_mongo-data`. Bring the stack up after pulling this branch and Compose
-> will not find that volume — it creates an **empty `barkaart_mongo-data`** and Mongo starts with
-> no database at all. Nothing errors; the API just serves an empty catalog. Decide which of the
-> three routes below you want *before* the first `up`.
-
-**Route A — re-seed (recommended while the box is LAN-only and holds no accounts).** The catalog
-is rebuilt from the frozen seed anyway, so let the new volume be created and fill it:
-
-```bash
-docker compose down                       # old project; containers only, volume survives
-git pull && docker compose up -d --build api mongo
-# then §5, from the repo root:
-npm run db:seed
-docker volume rm barkast_mongo-data       # only once you have confirmed the new stack is good
-```
-
-**Route B — carry the data over.** Docker cannot rename a volume, so copy it:
-
-```bash
-docker compose down
-docker volume create barkaart_mongo-data
-docker run --rm -v barkast_mongo-data:/from -v barkaart_mongo-data:/to alpine \
-  sh -c 'cd /from && cp -a . /to'
-docker compose up -d --build api mongo
-```
-
-**Route C — keep the old project name.** `COMPOSE_PROJECT_NAME` takes precedence over the
-compose file's `name:`, so adding `COMPOSE_PROJECT_NAME=barkast` to `deploy/.env` leaves every
-container and volume exactly where it is. Cheapest, at the price of a box whose Docker objects
-keep the old brand for good.
-
-**The rest of the box-side delta**, independent of the route:
-
-| What | On the box now | After |
-|---|---|---|
-| `MONGO_USER` / `MONGO_DB` in `.env` | `barkast` | Leave them. Renaming the Mongo **user** means re-creating it inside Mongo; renaming the **db** is a second data move on top of the volume. Neither is worth it — `.env` is gitignored, so the old values stay valid and invisible. `.env.example` shows `barkaart` for fresh installs only. |
-| `IMAGE_REPO` in `.env` | `…/barkast-api` | Set to `ghcr.io/aartpieterse/barkaart-api`. CI now pushes under the new name, so the old tag stops receiving builds. |
-| Local image `barkast-api:latest` | present | `docker image rm barkast-api:latest` once the new one builds. |
-| systemd `barkast-autodeploy.*` | **not installed** (§7 was never done) | Nothing to migrate — install the `barkaart-` units when you get to §7. |
-| Backups / `age` | **not set up** (§6 never done) | Nothing to migrate; new archives are written as `barkaart-<stamp>.archive.gz.age`. |
-| Cloudflare tunnel named `barkast` | `TUNNEL_TOKEN` is still `change-me` — no tunnel exists | Nothing to migrate. |
-| `~/.ssh/id_ed25519_fileserver` | real key on the workstation | Renamed 2026-09-14, and not for this migration: the key is *host* access, and the host is the fileserver — barkaart is one of the apps on it. `logs.sh` and the runbook point at the new name. |
-
-Because §6 and §7 were never completed, this migration is much smaller than
-[`docs/plans/next-phase.md`](../docs/plans/next-phase.md) assumed: the volume is the only thing
-that can actually bite.
 
 ## Files
 | File | Purpose |
 |---|---|
-| `../backend/Dockerfile` | Multi-stage API image (build context = repo root). |
-| `docker-compose.yml` | `api` + `mongo` (locked down) + `cloudflared`. |
+| `../backend/Dockerfile` | Multi-stage API image, `barkaart-api` (build context = repo root). |
+| `../frontend/Dockerfile` | Multi-stage web image, `barkaart-web`: builds the SPA, bakes it and `Caddyfile.lan` into Caddy. |
+| `docker-compose.yml` | `api` + `mongo` (locked down). |
+| `docker-compose.lan.yml` | **The overlay in service:** adds the Caddy `web` service on `:80`. |
+| `Caddyfile.lan` | Caddy's config, baked into the web image: static SPA, SPA fallback, cache rules. No `/api` proxy. |
 | `docker-compose.seed.yml` | One-time override: bind Mongo to `127.0.0.1` for seeding. |
-| `docker-compose.admin.yml` | Overlay: publish the API on the LAN (`:8080`) for the admin dashboard. |
+| `docker-compose.admin.yml` | Overlay: publish the API on the LAN (`:8080`) for the admin dashboard. Not in use. |
 | `.env.example` | Copy to `.env` and fill in secrets (gitignored). |
-| `backup.sh` / `restore.sh` | Encrypted (`age`) `mongodump` + tested restore. |
-| `deploy.sh` | Pull a GHCR image tag, back up, migrate, roll out; `--rollback`. |
-| `auto-deploy.sh` | Poll GHCR for a new digest on the watched tag, then hand off to `deploy.sh`. |
+| `backup.sh` / `restore.sh` | Encrypted (`age`) `mongodump` + restore. |
+| `deploy.sh` | Pull a release's two GHCR images by tag, back up, roll out, migrate; `--rollback`. |
+| `auto-deploy.sh` | Poll `main`; once both images for a new commit are on GHCR, move the checkout there and hand off to `deploy.sh`. |
+| `logs.sh` | Tail the stack's logs over SSH from the workstation. |
 | `systemd/barkaart-autodeploy.{service,timer}` | Units for the §7 auto-deploy poller. |
-| `bare-metal-runbook.md` | Phase-by-phase install this box was built from; **Appendix D = the LAN-only path**. |
+| `bare-metal-runbook.md` | Phase-by-phase install this box was built from. |
 
 ## 1. Host setup (dedicated ASUS VivoBook Pro laptop)
 Ubuntu Server / Debian + Docker Engine. Laptop-as-server tweaks:
@@ -100,11 +42,11 @@ Ubuntu Server / Debian + Docker Engine. Laptop-as-server tweaks:
 - **Battery:** the ASUS charge limit (60–80%) lives in MyASUS, a **Windows** app — once Windows is
   wiped only a BIOS setting (if your firmware has one) can cap charging. Measure what the pack is
   still worth before calling it a UPS:
-  `cat /sys/class/power_supply/BAT0/energy_full{,_design}`. On this box that is 24.89 Wh of
-  48.1 Wh — **51.7% of design**. Measured draw on battery here was 13.65 W, so a full charge is
-  roughly **1 h 50**, not the ~4 h a healthy 48 Wh pack would give. Treat it as a clean-shutdown
-  window, not outage tolerance — and note the box will run flat and die **without a shutdown entry
-  in the journal**, which looks exactly like a suspend bug. Check `AC0/online` before theorising.
+  `cat /sys/class/power_supply/BAT0/energy_full{,_design}`. On this box that is 26.7 Wh of
+  48.1 Wh — **55.6% of design**. At the 13.65 W measured draw that is roughly **1 h 55**, not the
+  ~4 h a healthy 48 Wh pack would give. Treat it as a clean-shutdown window, not outage tolerance —
+  and note the box runs flat and dies **without a shutdown entry in the journal**, which looks
+  exactly like a suspend bug. Check `AC0/online` before theorising.
 - **Network:** wired (a USB-Ethernet adapter) is best. This box runs **Wi-Fi** (`wlo1`), which needs
   one fix: Wi-Fi power saving is on by default and cost ~250 ms of latency here (227–299 ms →
   3–54 ms with it off). Ubuntu Server uses systemd-networkd + wpa_supplicant, **not**
@@ -114,12 +56,13 @@ Ubuntu Server / Debian + Docker Engine. Laptop-as-server tweaks:
 - **Storage:** keep Docker volumes + Mongo data on the internal **NVMe**. Ensure airflow.
 - Idle draw ~10–20 W (≈ €30–60/yr).
 
-## 2. Cloudflare Tunnel
-1. Buy/manage a domain in Cloudflare (~€10/yr) for a stable hostname.
-2. Zero Trust dashboard → **Networks → Tunnels → Create tunnel** (choose *Cloudflared*, connector
-   run via Docker). Copy the **tunnel token** into `TUNNEL_TOKEN` in `.env`.
-3. Add a **Public Hostname**: `api.<your-domain>` → `HTTP` → `http://api:3000`.
-   Map **only** this hostname. (The future LAN admin dashboard is intentionally never added here.)
+## 2. Reaching the box from outside the LAN
+
+**WireGuard**: `wg0` on `10.10.0.1/24`, UDP 51820 forwarded on the router, peers carrying their own
+keys. Over it the SPA is at `http://10.10.0.1/`, exactly as on the LAN.
+
+Giving Barkaart a public `https://` address is
+[`../docs/plans/public-access.md`](../docs/plans/public-access.md).
 
 ## 3. Configure secrets
 ```bash
@@ -129,7 +72,7 @@ cp .env.example .env
 openssl rand -hex 32      # MONGO_PASSWORD (hex — base64 breaks the Mongo URI)
 openssl rand -base64 48   # JWT_SECRET
 openssl rand -base64 48   # JWT_REFRESH_SECRET (must DIFFER from JWT_SECRET)
-# set CORS_ORIGIN to the deployed web origin, TUNNEL_TOKEN from step 2, AGE_RECIPIENT from step 6.
+# set CORS_ORIGIN to the deployed web origin and AGE_RECIPIENT from step 6.
 ```
 `MONGO_PASSWORD` is a **one-shot** decision: Mongo creates the root user only on the first start of
 an empty data volume, so changing it afterwards needs `docker compose down -v` (which drops that
@@ -138,34 +81,34 @@ volume). Settle it before you seed — the full warning is under Phase 8 of
 done: a placeholder value makes `deploy.sh` abort (see §7).
 
 ## 4. Bring up
+In service, `deploy.sh` (§7) pulls the images CI built for a release. For a first bring-up — or a
+local test — build both on the box instead. Nothing needs building on the host first: the web
+image runs the whole Angular build itself.
+
 ```bash
 cd deploy
-# With a Cloudflare Tunnel configured (§2):
-docker compose up -d --build
-# LAN-only (no tunnel): NAME the services, or `cloudflared` starts and crash-loops on the
-# placeholder TUNNEL_TOKEN. Add the admin overlay to publish the API on the LAN at :8080.
-docker compose -f docker-compose.yml -f docker-compose.admin.yml up -d --build api mongo
+docker compose -f docker-compose.yml -f docker-compose.lan.yml up -d --build
 docker compose ps
 docker compose logs -f api        # expect "Barkaart API listening on http://localhost:3000/api"
 ```
 The API requires `CORS_ORIGIN` in production and refuses to boot without it (and refuses if the two
 JWT secrets are equal).
 
-**Verify end-to-end** once the catalog is seeded (§5). Don't assert a fixed catalog size — it grows;
-check instead that the API serves the same content as the committed bundle:
+**Verify.** The SPA answers on the LAN; the API has no host port, so reach it through the `web`
+container. Don't assert a fixed catalog size — it changes; check that the API and the committed
+bundle agree:
 ```bash
-# from any machine on the home network (LAN-only path):
-curl -sS -o /dev/null -w '%{http_code}\n' http://<box-lan-ip>:8080/api/catalog   # expect 200
-curl -s http://<box-lan-ip>:8080/api/catalog | head -c 120                       # version + counts
-# from the repo root — both must match what the API just printed:
-node -p "require('./frontend/public/catalog.json').version"
-node -p "const s=require('./iba-cocktails-seed.json'); s.ingredients.length+' ingredients, '+s.cocktails.length+' cocktails'"
+curl -sS -o /dev/null -w '%{http_code}\n' http://<box-lan-ip>/          # SPA, expect 200
+docker compose exec web wget -qO- http://api:3000/api/catalog | head -c 120   # version + counts
+node -p "require('./frontend/public/catalog.json').version"             # from the repo root
 ```
+> `/api/…` on port 80 returns **the SPA shell with HTTP 200**, not the API — Caddy's `try_files`
+> fallback catches it. A 200 there proves nothing; check the content type.
 
-**Survive a reboot.** `api` and `mongo` are `restart: unless-stopped` and `docker.service` is
-enabled (`systemctl is-enabled docker`), so the stack should come back on its own after a power cut
-— verify it rather than assume: `sudo reboot`, then re-run `docker compose ps` and the catalog check
-above once the box answers SSH again.
+**Reboot recovery.** `api`, `mongo` and `web` are `restart: unless-stopped` and `docker.service` is
+enabled, so the stack returns on its own — confirmed on this box after a reboot. Note that
+`unless-stopped` does **not** restart a container you stopped by hand, which is the state after any
+`docker compose stop`.
 
 ## 5. Seed the catalog (first bring-up, and after catalog changes)
 Mongo isn't published to the host, so seed via the localhost-only override:
@@ -185,45 +128,68 @@ cd deploy && docker compose -f docker-compose.yml up -d mongo
 `db:seed` reseeds **only** the catalog collections (`ingredients`, `cocktails`). It must never touch
 `users` / user-data / analytics. Clients pick up a changed catalog via `/api/catalog`'s version/ETag.
 
+> **This box needs that re-seed.** Its Mongo serves an older catalog than the committed bundle, so
+> the API and the SPA disagree. Nothing reads the API today, so it costs nothing now — and it is a
+> live bug the moment `/api` is proxied. `npm run validate:seed` prints the authoritative counts and
+> catalog version; compare them with what the API returns (§4).
+
 ## 6. Encrypted backups
 Install [`age`](https://github.com/FiloSottile/age) on the host and generate a keypair:
 ```bash
 age-keygen -o age-key.txt      # PUBLIC key is printed; keep age-key.txt OFF the box (gitignored anyway)
 ```
-Put the **public** key in `AGE_RECIPIENT` (`.env`). Then schedule nightly:
-```bash
-# crontab -e
-0 3 * * *  /path/to/repo/deploy/backup.sh >> "$HOME/barkaart-backup.log" 2>&1
+Put the **public** key in `AGE_RECIPIENT` (`.env`). `backup.sh` encrypts the dump with `age`
+**before it hits disk** (dumps carry emails + password hashes) and keeps the newest `BACKUP_KEEP`
+(14 here) in `deploy/backups/`.
+
+**Nightly, via a systemd timer — not cron.** Cron silently skips runs the box was powered off for,
+and this box is a laptop that will be off during exactly the outages you want covered. The two units
+run on the box but are **not in this repo**; recreate them as:
+
+```ini
+# /etc/systemd/system/barkaart-backup.service     [Service] Type=oneshot, User=aart,
+#   WorkingDirectory=…/deploy, ExecStart=/bin/bash …/deploy/backup.sh, Nice=10, IOSchedulingClass=idle
+# /etc/systemd/system/barkaart-backup.timer       [Timer] OnCalendar=*-*-* 03:00:00,
+#   Persistent=true, RandomizedDelaySec=5m
 ```
-> Do **not** log to `/var/log/…` from a *user* crontab: that directory is `root:syslog` 775, the
-> redirect fails before `backup.sh` ever runs, and the backup silently never happens. Either log
-> under `$HOME` as above, or install it as a root cron / systemd timer.
-`backup.sh` encrypts the dump with `age` **before it hits disk** (dumps contain emails + password
-hashes), keeps the newest `BACKUP_KEEP`, and reminds you to copy the file **off-box**.
-**Restore drill** (do this regularly — an untested backup isn't a backup):
+
+**Off-box copy.** `backup.sh` cannot do this — pull from the workstation, so the box holds no
+outbound credentials:
+```bash
+rsync -av --ignore-existing -e "ssh -i ~/.ssh/id_ed25519_fileserver" \
+  aart@192.168.1.100:/home/aart/cocktailapp/deploy/backups/ /c/Users/a.pieterse/barkast-backups/
+```
+That copy currently lags the box by several archives. Until it is caught up, every recent backup
+lives only on the box's single NVMe.
+
+**Restore drill** (an untested backup isn't a backup):
 ```bash
 AGE_KEY_FILE=/secure/age-key.txt ./restore.sh backups/barkaart-<stamp>.archive.gz.age
 ```
 `restore.sh` runs `mongorestore --drop`, so it replaces the **whole** database from the archive
 (catalog **and** `users`/`analytics`) — unlike `db:seed`, which only reseeds the catalog collections.
+There is no non-destructive flag: to drill without touching live data, restore into a scratch
+namespace by hand (`--nsFrom 'barkaart.*' --nsTo 'restoretest.*'`).
 
 ## 7. Updating
 
-CI builds + tests every push to `main` and pushes a version-tagged image to GHCR
-(`ghcr.io/<owner>/barkaart-api:<git-sha>` + `:latest`, with the git SHA stamped as the
-`org.opencontainers.image.revision` label). The box **pulls** by tag — no inbound access needed.
+CI builds + tests every push to `main` and pushes **two** images to GHCR, both tagged with the git
+SHA (plus `:latest`): `ghcr.io/<owner>/barkaart-api`, and `ghcr.io/<owner>/barkaart-web` — Caddy
+with the production SPA and `Caddyfile.lan` baked in. The box **pulls** them — no inbound access
+needed — and builds nothing.
 
-**A release is two artifacts, and only one of them is an image.** The API ships as that GHCR image;
-the SPA does not — CI publishes it to Netlify, and the box builds it from source. `auto-deploy.sh`
-therefore watches both, independently: the image digest, and `origin/main`'s HEAD. A commit that
-touches only the frontend produces no new image, and one that touches only the backend needs no
-rebuild, so each side records its own state and a failure on one retries without redoing the other.
+**A release is one commit.** `auto-deploy.sh` follows `origin/main`. When its head moves, it waits —
+changing nothing — until both `:<sha>` images are on GHCR (a few minutes after the merge), then moves
+the checkout to that commit and hands off to `deploy.sh`. Moving the checkout *first* means the
+compose files and `deploy.sh` that roll a release out are that release's own. The checkout is
+forced (`git checkout -f`), deliberately: the box is a deploy target, never a place work is
+authored, so a dirty tree there is drift to discard rather than a merge to resolve at three in the
+morning. Untracked files — `.env`, backups, the deploy state — are left alone.
 
-The SPA path does `git reset --hard` onto the release branch, deliberately: the box is a deploy
-target, never a place work is authored, so a dirty tree there is drift to discard rather than a merge
-to resolve at three in the morning. It then runs `npm ci` (the lockfile *is* the release) and reloads
-Caddy rather than restarting it, so the app keeps serving throughout. A failed build leaves the
-previous bundle in place and retries next cycle.
+Shipping the SPA as an image is what makes this safe. A failed frontend build fails in CI and never
+reaches the box; a Caddyfile change ships inside the release instead of depending on a reload
+noticing an edited file; `deploy.sh --rollback` rolls the SPA back together with the API; and npm,
+with every install script in the lockfile, never runs on the production box.
 
 **Why the trigger lives on the box and not in CI.** With no inbound ports, a release cannot be pushed
 here — it has to be pulled. A self-hosted GitHub Actions runner would invert that without opening a
@@ -234,13 +200,14 @@ request execute code on your hardware. Polling is the cheap, boring answer.
   It hands off to `deploy.sh`, so an automatic roll-out still does the pre-deploy encrypted backup,
   migrations, and rollback history — unlike plain Watchtower, which would pull-and-restart with none
   of that. Hourly rather than every few minutes because `main` is the stable branch and merges into
-  it are rare; a cycle that finds nothing costs a fetch and a digest check, so the interval governs
-  only how long a release sits unnoticed. `OnUnitActiveSec` in the timer is the one line to change.
-  > **Finish §6 before you enable this.** `deploy.sh` runs `backup.sh` whenever `AGE_RECIPIENT` is
-  > **non-empty** — a placeholder counts — and aborts the whole deploy if that backup fails, which
-  > it does when `age` isn't installed. Until §6 is done, leave `AGE_RECIPIENT` **empty** so the
-  > deploy logs "Skipping backup" instead of failing. Migrations stay inert until a
-  > `migrate-mongo-config.js` exists (none is committed).
+  it are rare; a cycle that finds nothing costs one `git fetch`, so the interval governs only how
+  long a release sits unnoticed. `OnUnitActiveSec` in the timer is the one line to change.
+  It is installed and running on this box. To install it elsewhere:
+  > **Finish §6 first.** `deploy.sh` runs `backup.sh` whenever `AGE_RECIPIENT` is **non-empty** — a
+  > placeholder counts — and aborts the whole deploy if that backup fails, which it does when `age`
+  > isn't installed. Until §6 is done, leave `AGE_RECIPIENT` **empty** so the deploy logs "Skipping
+  > backup" instead of failing. Migrations stay inert until a `migrate-mongo-config.js` exists (none
+  > is committed).
   ```bash
   cd deploy
   sudo cp systemd/barkaart-autodeploy.{service,timer} /etc/systemd/system/
@@ -251,25 +218,27 @@ request execute code on your hardware. Polling is the cheap, boring answer.
   systemctl list-timers barkaart-autodeploy.timer     # confirm it's scheduled
   journalctl -u barkaart-autodeploy.service -f         # watch a roll-out
   ```
-  `auto-deploy.sh` follows `:latest` by default (override with `WATCH_TAG`), maps it back to the
-  exact `:<git-sha>` via the revision label so rollbacks stay precise, and only records success
-  after a clean deploy (a failed cycle retries next tick). Because the app is local-first, the brief
-  API restart only pauses sync — clients keep working from cache. (Today nothing syncs at all:
-  `frontend/src/environments/environment.prod.ts` sets `authEnabled: false` and
-  `dataSource: 'static'`, so the deployed SPA never calls this backend. Accounts/sync go live only
-  once that is flipped, the frontend is redeployed, and `CORS_ORIGIN` on the box is set to the real
-  web origin — it is still the placeholder `http://localhost:4200`.)
+  `auto-deploy.sh` deploys by the exact `:<git-sha>` tag, so rollbacks stay precise, and records the
+  commit only after a clean deploy (a failed cycle retries next tick). Because the app is local-first, the brief
+  API restart only pauses sync — clients keep working from cache. Nothing syncs today:
+  `environment.prod.ts` sets `authEnabled: false` and `dataSource: 'static'`, so the SPA never calls
+  this backend, and `CORS_ORIGIN` on the box is still `http://localhost:4200`. Accounts and sync
+  need all three changed.
 - **Manual / override:** pin or roll back a specific tag by hand — `auto-deploy.sh` won't fight you,
-  it redeploys only when the watched tag's digest actually changes.
+  it acts only when `main` moves to a new commit.
   ```bash
-  ./deploy.sh <git-sha>            # pull, encrypted pre-deploy backup, migrate, roll out full stack
-  ./deploy.sh <git-sha> --api-only # roll out only the api service
-  ./deploy.sh --rollback           # redeploy the previous tag (kept in .deployed-previous)
+  ./deploy.sh <git-sha>            # pull both images, encrypted pre-deploy backup, roll out, migrate
+  ./deploy.sh <git-sha> --api-only # pull and roll out only the api service
+  ./deploy.sh --rollback           # redeploy the previous tag (kept in .deployed-previous), API + SPA
   ```
-  Set `IMAGE_REPO` in `.env` to your GHCR package. If the package is private, `docker login ghcr.io`
-  once with a `read:packages` PAT (outbound-only, fine behind the tunnel).
-- **Local build alternative:** `docker compose up -d --build` builds the image on the box instead of
-  pulling (LAN-only: name the services, per §4).
+  Tags from before the web image existed have no `barkaart-web` image; roll those back with
+  `--api-only`. Set `IMAGE_REPO` / `WEB_IMAGE_REPO` in `.env` if your GHCR packages differ from the
+  defaults (`ghcr.io/aartpieterse/barkaart-{api,web}`). The box pulls **anonymously**, so both
+  packages must be **public** — a package's first push can leave it private, so check `barkaart-web`
+  on GitHub after its first release. The alternative is `docker login ghcr.io` once with a
+  `read:packages` PAT.
+- **Local build alternative:** `docker compose … up -d --build` builds both images on the box instead
+  of pulling them (§4).
 - **Catalog:** edit `iba-cocktails-seed.json`, rebuild the offline bundle
   (`npm run build:catalog`), and reseed (step 5). `db:seed` never touches `users` / user-data /
   `analytics`.
@@ -282,83 +251,41 @@ request execute code on your hardware. Polling is the cheap, boring answer.
 The API serves a small owner-only dashboard at **`/api/admin/dashboard`** (JSON at
 `/api/admin/metrics`) showing anonymous aggregate product stats and in-process operational metrics
 (requests / errors / latency / uptime). It is protected two ways: **basic-auth**
-(`ADMIN_USER`/`ADMIN_PASSWORD`) **and** a guard that rejects any request arriving through the tunnel
-(so it is invisible on the public hostname even if the ingress were misconfigured).
+(`ADMIN_USER`/`ADMIN_PASSWORD`, fail-closed) **and** a guard in `analytics/admin.guard.ts` that
+rejects any request carrying a `CF-Connecting-IP` header.
 
-The base stack publishes no host ports, so reach it over the LAN with the overlay:
+**It is unreachable as the stack runs today** — the API publishes no host port and Caddy does not
+proxy `/api`. To open it on the LAN, add the admin overlay:
 ```bash
 cd deploy
-# Name the services: a bare `up -d` also starts cloudflared, which crash-loops without a real
-# TUNNEL_TOKEN. ADMIN_USER/ADMIN_PASSWORD must be set in .env — the guard fails closed.
-docker compose -f docker-compose.yml -f docker-compose.admin.yml up -d --build api mongo
-# then, on the home network (optionally publish aartfileserver.local via avahi/mDNS):
+docker compose -f docker-compose.yml -f docker-compose.lan.yml -f docker-compose.admin.yml up -d
 #   http://<box-lan-ip>:8080/api/admin/dashboard
 ```
-Never add `/api/admin` to the Cloudflare Tunnel ingress.
+> That guard no longer proves anything. With no Cloudflare in the path the header never arrives, so
+> the check always passes and basic-auth is the only thing left. Replace it with a source-address
+> check before the box faces the internet — [`../docs/plans/public-access.md`](../docs/plans/public-access.md) §2.
 
 ## 9. Hardening checklist (before storing anyone's PII)
-- [ ] Put the host on a **separate VLAN**; keep the OS patched
-      (`sudo apt update && sudo apt full-upgrade`) and images fresh
-      (`docker compose pull --ignore-buildable`). Note `docker compose pull` cannot refresh a
-      locally-built `barkaart-api:latest` — rebuild with `--build`, or roll out via `deploy.sh`.
-- [ ] Mongo is **never** published to the host (only the seed override binds `127.0.0.1`, briefly).
-- [ ] Two **distinct** high-entropy JWT secrets; strong `MONGO_PASSWORD`.
-- [ ] `CORS_ORIGIN` is the real web origin (no reflect-any in prod — enforced at boot).
-- [ ] Nightly **encrypted** backups, stored **off-box**, with a **tested** restore.
-- [ ] Publish a **privacy policy** (`docs/privacy-policy.md`); `DELETE /api/me` erases account + data (GDPR).
-- [ ] Confirm the residential ISP allows hosting, and content licensing for bundled data/images.
-- [ ] Set a strong `ADMIN_PASSWORD`; the LAN admin dashboard is bound to the LAN only and excluded
-      from the tunnel (basic-auth + CF-header rejection).
+Done on this box:
+- [x] Mongo and the API publish **no host port** (only the seed override binds `127.0.0.1`, briefly).
+- [x] Two **distinct** high-entropy JWT secrets; strong `MONGO_PASSWORD` and `ADMIN_PASSWORD`.
+- [x] Nightly **encrypted** backups with a restore drill that passed (§6).
+- [x] UFW active, default deny incoming; SSH is key-only, from the LAN and WireGuard.
+- [x] Unattended-upgrades active; Docker log caps + `live-restore` in `/etc/docker/daemon.json`.
+- [x] A **privacy policy** exists (`../docs/privacy-policy.md`); `DELETE /api/me` erases account +
+      data (GDPR).
 
-## 10. Alternative host: Windows via WSL2
+Still open:
+- [ ] Get the backups **off-box** on a schedule (§6) — the pull is manual and lagging.
+- [ ] Replace the `admin.guard.ts` header check with a source-address check (§8).
+- [ ] `CORS_ORIGIN` is still `http://localhost:4200`, not a real web origin.
+- [ ] Link `/privacy` from the app — nothing in `frontend/src` points at it.
+- [ ] Keep images fresh: `docker compose pull --ignore-buildable` refreshes `mongo:7`. The api and
+      web images take fresh base images (`node:24-slim`, `caddy:2-alpine`) on every CI build, so
+      they refresh with each release — and only then; `pull` cannot refresh them.
+- [ ] A separate **VLAN** for the host; confirm the residential ISP allows hosting, and content
+      licensing for bundled data/images.
 
-> Not the path in service. The box that runs today is **native Ubuntu Server 24.04.4**
-> (`aartfileserver`) — see [`bare-metal-runbook.md`](bare-metal-runbook.md). This section is only
-> for hosting on a machine that has to stay on Windows.
-
-Everything above is Linux-native (systemd, `deploy.sh`, `auto-deploy.sh`). To host on a **Windows**
-machine, run it inside a **WSL2 Ubuntu** distro with systemd — then the units and scripts work
-**unchanged**, and moving to a real Linux box later is a copy-paste of the same files. Install
-Docker Engine *inside* the distro (not Docker Desktop integration) so the box is self-contained and
-byte-identical to native Linux.
-
-```powershell
-# 1. In Windows PowerShell — install the distro, then create your Linux user on first launch:
-wsl --install -d Ubuntu-24.04
-```
-```bash
-# 2. Inside Ubuntu — enable systemd so docker.service and the timer run:
-printf '[boot]\nsystemd=true\n' | sudo tee /etc/wsl.conf
-```
-```powershell
-# 3. Back in PowerShell — restart the distro so systemd takes effect:
-wsl --shutdown
-```
-```bash
-# 4. Inside Ubuntu — Docker Engine (CE), managed by systemd (NO Docker Desktop needed):
-curl -fsSL https://get.docker.com | sudo sh
-sudo usermod -aG docker "$USER"           # then `exit` + `wsl --shutdown` + reopen for the group to apply
-sudo systemctl enable --now docker
-systemctl is-system-running               # expect "running" (or "degraded" — fine)
-
-# 5. Clone under the LINUX filesystem (~/, NOT /mnt/c — far faster + correct file perms):
-git clone https://github.com/AartPieterse/cocktailapp.git ~/cocktailapp
-cd ~/cocktailapp/deploy
-cp .env.example .env                       # fill secrets per §3, then bring up per §4–5
-
-# 6. Install the auto-deploy timer exactly as §7, but point the .service at the WSL checkout, e.g.:
-#     User=<you>
-#     WorkingDirectory=/home/<you>/cocktailapp/deploy
-#     ExecStart=/bin/bash /home/<you>/cocktailapp/deploy/auto-deploy.sh
-```
-
-**Survive Windows reboots.** WSL does not auto-start a distro at boot, so systemd (and the whole
-stack + the 5-min timer) won't run until the distro is first touched. Create a **Task Scheduler**
-task: trigger **At startup**, action `wsl.exe -d Ubuntu-24.04 -u root -e true`, and check *"Run
-whether user is logged on or not."* That boots the distro at machine startup — systemd then brings up
-docker, the `api`/`mongo`/`cloudflared` containers, and the auto-deploy timer, with no interactive
-login. (`Persistent=true` on the timer also catches up any run missed while the machine slept.)
-
-**Moving off WSL onto bare metal:** no WSL-specific state leaks into the deploy tooling — it's the
-same `deploy.sh` / `auto-deploy.sh` / systemd files. Build the native box from
-[`bare-metal-runbook.md`](bare-metal-runbook.md), then `git clone` + copy your `.env` across.
+> UFW does **not** cover Docker's published ports: Docker's DNAT rules run ahead of UFW's INPUT
+> chain, so port 80 is reachable on the LAN whatever UFW says. Enforcing that needs `DOCKER-USER`
+> rules (e.g. `chaifeng/ufw-docker`). Never set `{"iptables": false}` in `daemon.json`.

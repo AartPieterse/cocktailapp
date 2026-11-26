@@ -1,11 +1,11 @@
-# Barkaart self-host stack: API + locked-down MongoDB + Cloudflare Tunnel.
+# Barkaart self-host stack: API + locked-down MongoDB. The Caddy `web` service that serves the SPA
+# lives in docker-compose.lan.yml, the overlay the box runs.
 #
 #   cd deploy && cp .env.example .env   # fill in real secrets
-#   docker compose up -d --build
+#   docker compose -f docker-compose.yml -f docker-compose.lan.yml up -d --build
 #
-# TLS terminates at Cloudflare's edge; the tunnel dials OUTBOUND, so NO inbound ports are opened
-# and the home IP stays hidden. Nothing here publishes a host port — Mongo is unreachable from the
-# host/LAN, and the API is reachable only inside this network and via the tunnel.
+# Nothing in this file publishes a host port: Mongo is unreachable from the host/LAN, and the API is
+# reachable only inside this network. Caddy's :80 (docker-compose.lan.yml) is the one way in.
 # Pin the project name. Compose otherwise derives it from the directory, which is `deploy` — generic
 # enough to collide with any other stack on the same host, and it prefixes the volume and network too.
 name: barkaart
@@ -30,7 +30,7 @@ services:
       TRUST_PROXY: "1"
       MONGODB_URI: "mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DB}?authSource=admin"
     expose:
-      - "3000"        # internal-only; the tunnel reaches this, the host does not
+      - "3000"        # internal-only; reachable from this network (Caddy), not from the host
     networks:
       - internal
 
@@ -57,21 +57,6 @@ services:
       retries: 5
       start_period: 20s
       start_interval: 5s
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    restart: unless-stopped
-    command: ["tunnel", "--no-autoupdate", "run"]
-    depends_on:
-      - api
-    environment:
-      TUNNEL_TOKEN: "${TUNNEL_TOKEN}"
-    networks:
-      - internal
-    # Outbound-only; no ports published. Configure ingress in the Cloudflare Zero Trust dashboard:
-    #   <your-hostname>  ->  http://api:3000
-    # Map ONLY the public API hostname here. The (future) LAN admin dashboard is deliberately NOT
-    # added to any tunnel ingress, so it stays invisible to the internet.
 
 volumes:
   mongo-data:

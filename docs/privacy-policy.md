@@ -1,6 +1,6 @@
 # Barkaart — Privacybeleid
 
-_Laatst bijgewerkt: 2026-09-04_
+_Laatst bijgewerkt: 2026-10-10_
 
 Barkaart is een cocktail-app die laat zien welke drankjes je kunt maken met wat je in huis hebt. De
 app is **local-first**: je kunt hem volledig gebruiken **zonder account** en **zonder internet**. Dit
@@ -8,9 +8,8 @@ beleid legt uit welke gegevens we verwerken, waarom, en wat je rechten zijn.
 
 In de **huidige, gepubliceerde versie** draait de app op je eigen apparaat: hij werkt met een
 ingebouwde cocktailcatalogus en stuurt **geen** gegevens over jou of je gebruik naar een eigen server.
-Eén uitzondering: de app laadt lettertypen en icoonfonts rechtstreeks bij **Google Fonts**
-(`fonts.googleapis.com` / `fonts.gstatic.com`). Daarbij ziet Google je IP-adres en browsergegevens;
-dat is een verwerking door een derde partij buiten onze controle (zie §4). De paragrafen hieronder
+Ook derde partijen krijgen niets te zien: lettertypen en iconen komen van dezelfde server als de app
+zelf (zie §4). De paragrafen hieronder
 over **accounts, synchronisatie en statistieken** beschrijven een optionele (zelf-gehoste) backend
 die in de huidige app **nog niet is ingeschakeld**.
 
@@ -81,17 +80,18 @@ het openbare internet.
 
 ## 4. Technische verwerking & bewaring
 
-- De backend draait op een zelf-gehoste machine die **alleen op het lokale thuisnetwerk** bereikbaar
-  is (poort 8080, onversleuteld HTTP binnen het eigen netwerk). Er staan **geen inkomende poorten**
-  open naar het internet en de gepubliceerde app praat op dit moment helemaal niet met deze backend.
-  Zodra de backend wél publiek wordt aangeboden, gebeurt dat over **HTTPS** via een uitgaande
-  Cloudflare-tunnel (TLS eindigt aan de rand van Cloudflare; het thuis-IP blijft verborgen) — en
-  wordt dit beleid daarop aangepast.
+- De backend draait op een zelf-gehoste machine en is **alleen op het lokale thuisnetwerk en via de
+  eigen VPN** bereikbaar. De API publiceert zelf geen enkele poort; op het netwerk staat alleen de
+  webserver die de app serveert (onversleuteld HTTP binnen het eigen netwerk). Er staan **geen
+  inkomende poorten** open naar het internet en de app praat op dit moment helemaal niet met deze
+  backend.
+  Zodra de backend wél publiek wordt aangeboden, gebeurt dat over **HTTPS** met een certificaat dat
+  op de machine zelf eindigt: er komt geen tussenpartij in de verbinding, dus niemand anders kan
+  onderweg meelezen. Dit beleid wordt daarop aangepast zodra het zover is.
 - De database (MongoDB) is niet vanaf het internet bereikbaar; toegang vereist inloggegevens.
-- Er worden op dit moment **geen back-ups** van de database gemaakt. Zodra accounts opengesteld
-  worden, gaan er nachtelijke back-ups draaien die **vóór het wegschrijven** versleuteld worden met
-  `age` (de dump bevat e-mailadressen en wachtwoord-hashes) en alleen versleuteld de machine
-  verlaten; ze worden dan maximaal 14 dagen bewaard. Een verwijderverzoek werkt daardoor met een
+- Er draaien **nachtelijke back-ups** van de database. Ze worden **vóór het wegschrijven**
+  versleuteld met `age` (de dump bevat e-mailadressen en wachtwoord-hashes), verlaten de machine
+  alleen versleuteld en worden maximaal 14 dagen bewaard. Een verwijderverzoek werkt daardoor met een
   vertraging van maximaal die bewaartermijn door in de back-ups.
 - Verzoeken worden beperkt (rate limiting) per client-IP om misbruik te voorkomen; dat IP wordt
   alleen kortstondig in het geheugen gebruikt om te tellen en **niet als profielgegeven bewaard**.
@@ -100,20 +100,17 @@ het openbare internet.
 
 ### Derden
 
-De app draait op je eigen apparaat, maar om hem te laden zijn twee externe partijen betrokken:
-
-- **Netlify** — hosting van de statische app. Als hostingpartij verwerkt Netlify standaard
-  technische gegevens van bezoekers (IP-adres, tijdstip, opgevraagde bestanden) en levert het de
-  site over HTTPS uit.
-- **Google Fonts** — lettertypen. De pagina opent een verbinding met `fonts.googleapis.com` en haalt
-  de lettertypebestanden (Fraunces, Inter en de Material Icons) op bij `fonts.gstatic.com`. Google
-  ziet daarbij je IP-adres en browsergegevens. De app bewaart die bestanden daarna lokaal in de
-  cache, maar bij het eerste bezoek gaat er dus wél een verzoek naar Google.
+De app wordt **op eigen hardware gehost**; sinds 14 september 2026 zit er geen hostingpartij meer
+tussen (daarvoor was dat Netlify). De webserver op die machine legt, zoals elke webserver,
+technische gegevens van bezoekers vast in zijn logbestand: IP-adres, tijdstip en opgevraagd
+bestand. Om de app te laden is **geen externe partij** betrokken: ook de lettertypen (Fraunces en
+Inter) en de Material Icons worden vanaf die machine meegeleverd. Eerder haalde de app ze op bij
+Google Fonts (`fonts.googleapis.com` / `fonts.gstatic.com`), waarbij Google je IP-adres en
+browsergegevens zag; die verbinding is vervallen.
 
 **Grondslag:** gerechtvaardigd belang — het uitleveren en leesbaar tonen van de app. Er worden geen
 cookies of trackers van derden geplaatst en er zit geen advertentie- of analysecode van derden in de
-app. De lettertypen lokaal meeleveren, waarmee de verbinding met Google helemaal vervalt, is nog niet
-gedaan.
+app.
 
 ## 5. Je rechten (AVG/GDPR)
 

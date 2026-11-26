@@ -1,25 +1,26 @@
-# LAN preview overlay: serve the built SPA on http://<box-lan-ip>/ with no accounts and no API.
+# LAN preview overlay: serve the SPA on http://<box-lan-ip>/ with no accounts and no API.
 #
-#   npm run build                     # from the repo root — writes dist/frontend/browser
 #   cd deploy
-#   docker compose -f docker-compose.yml -f docker-compose.lan.yml up -d web
+#   docker compose -f docker-compose.yml -f docker-compose.lan.yml up -d --build web
 #
-# Name the service. A bare `up -d` also starts cloudflared, which crash-loops on a placeholder
-# TUNNEL_TOKEN (see bare-metal-runbook.md, Appendix D).
+# `web` is the barkaart-web image: Caddy with the production SPA and Caddyfile.lan baked in
+# (frontend/Dockerfile). On the box, deploy.sh pulls the CI-built image for a release instead of
+# building it, so nothing here mounts a host directory — the image is the whole release.
 #
 # Caveat worth knowing before you judge the result: over plain HTTP this is not a secure context, so
 # the service worker silently does not register — no install-to-homescreen, no offline. main.ts
-# swallows that failure. The app itself works fully; only the PWA layer is absent. TLS via the tunnel
-# is what brings it back.
+# swallows that failure. The app itself works fully; only the PWA layer is absent. TLS
+# (docs/plans/public-access.md step 1) is what brings it back.
 services:
   web:
-    image: caddy:2-alpine
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+    image: barkaart-web:latest
     restart: unless-stopped
     ports:
       - "80:80"
     volumes:
-      - ../frontend/dist/frontend/browser:/srv:ro
-      - ./Caddyfile.lan:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
       - caddy-config:/config
     networks:
