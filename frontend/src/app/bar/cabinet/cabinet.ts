@@ -1,23 +1,15 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { Component, computed, inject } from '@angular/core';
 import {
   CATEGORY_LABELS_PLURAL,
   CATEGORY_ORDER,
-  expandCabinet,
   type Ingredient,
   type IngredientCategory,
-  type MakeableResult,
 } from '@cocktailapp/shared';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { catchError, combineLatest, of, switchMap } from 'rxjs';
-import { AnalyticsService } from '../../core/analytics.service';
 import { CabinetService } from '../../core/cabinet.service';
 import { LanguageService } from '../../core/language.service';
-import { SubstitutesService } from '../../core/substitutes.service';
-import { CocktailService } from '../../services/cocktail.service';
-import { IngredientService } from '../../services/ingredient.service';
+import { MakeableStore } from '../../core/makeable.store';
 import { IngredientGlyph } from '../../shared/ingredient-glyph/ingredient-glyph';
 
 interface Group {
@@ -26,15 +18,20 @@ interface Group {
   items: Ingredient[];
 }
 
+/**
+ * Ticking what you have, at `/bar/ingredienten`. One step under Mijn bar, which lists what the
+ * ticks make; the count in the header updates as you go, so you see the effect without leaving.
+ */
 @Component({
   selector: 'app-cabinet',
-  imports: [IngredientGlyph, RouterLink, MatIconModule, MatSlideToggleModule],
+  imports: [IngredientGlyph, RouterLink, MatIconModule],
   template: `
     <div class="page">
+      <a class="crumb" routerLink="/bar">‹ {{ lang.t().bar.title }}</a>
       <header class="head">
         <div>
           <div class="title-row">
-            <h1>{{ lang.t().bar.title }}</h1>
+            <h1>{{ lang.t().bar.ingredientsTitle }}</h1>
             <a class="wizard-btn" routerLink="/bar/wizard">
               <mat-icon aria-hidden="true">auto_fix_high</mat-icon>
               {{ lang.t().bar.startWizard }}
@@ -43,7 +40,7 @@ interface Group {
           <p class="sub">{{ lang.t().bar.sub }}</p>
         </div>
         <div class="tally">
-          <div class="makeable">{{ lang.t().bar.youCanMake(makeableCount()) }}</div>
+          <div class="makeable">{{ lang.t().bar.youCanMake(store.makeable().length) }}</div>
           <div class="selected">{{ lang.t().bar.selected(cabinet.count()) }}</div>
         </div>
       </header>
@@ -69,34 +66,21 @@ interface Group {
           </section>
         }
       </div>
-
-      <!-- How the bar is read. Moved here from the home screen, which is for drinks, not switches. -->
-      <section class="settings" [attr.aria-label]="lang.t().bar.settingsTitle">
-        <div class="group-label">{{ lang.t().bar.settingsTitle }}</div>
-        <div class="setting">
-          <mat-slide-toggle [checked]="subs.enabled()" (change)="subs.toggle($event.checked)">
-            {{ lang.t().bar.countSubstitutes }}
-          </mat-slide-toggle>
-          <p class="hint">{{ lang.t().bar.countSubstitutesHint }}</p>
-        </div>
-        @if (analytics.available) {
-          <div class="setting">
-            <mat-slide-toggle
-              [checked]="!analytics.optedOut()"
-              (change)="analytics.setOptOut(!$event.checked)"
-            >
-              {{ lang.t().bar.shareStats }}
-            </mat-slide-toggle>
-            <p class="hint">{{ lang.t().bar.shareStatsHint }}</p>
-          </div>
-        }
-      </section>
     </div>
   `,
   styles: `
     .page {
-      padding-top: 44px;
+      padding-top: 28px;
       animation: rise 0.45s ease both;
+    }
+    .crumb {
+      display: inline-block;
+      margin-bottom: 12px;
+      font: 600 0.875rem var(--font-body);
+      color: var(--muted);
+    }
+    .crumb:hover {
+      color: var(--accent);
     }
     .head {
       display: flex;
@@ -220,39 +204,15 @@ interface Group {
         gap: 8px;
       }
     }
-    .settings {
-      display: grid;
-      gap: 14px;
-      margin: 40px 0 8px;
-      padding-top: 20px;
-      border-top: 1px solid var(--hairline);
-      max-width: 640px;
-    }
-    .setting {
-      --mdc-switch-selected-track-color: var(--accent);
-      --mdc-switch-selected-handle-color: #fff;
-    }
-    .hint {
-      margin: 4px 0 0 52px;
-      font-size: var(--step--1);
-      color: var(--muted);
-      max-width: 52ch;
-    }
   `,
 })
 export class Cabinet {
   protected readonly cabinet = inject(CabinetService);
   protected readonly lang = inject(LanguageService);
-  protected readonly subs = inject(SubstitutesService);
-  protected readonly analytics = inject(AnalyticsService);
-  private readonly ingredientService = inject(IngredientService);
-  private readonly cocktailService = inject(CocktailService);
-
-  private readonly ingredients = signal<Ingredient[]>([]);
-  readonly makeableCount = signal(0);
+  protected readonly store = inject(MakeableStore);
 
   readonly groups = computed<Group[]>(() => {
-    const list = this.ingredients();
+    const list = this.store.ingredients();
     const labels = CATEGORY_LABELS_PLURAL[this.lang.locale()];
     const byCat = new Map<IngredientCategory, Ingredient[]>();
     for (const ing of list) {
@@ -267,23 +227,4 @@ export class Cabinet {
       items: (byCat.get(c) ?? []).sort((a, b) => a.name.localeCompare(b.name)),
     }));
   });
-
-  constructor() {
-    this.ingredientService.getAll().subscribe((list) => this.ingredients.set(list));
-
-    combineLatest([
-      toObservable(this.cabinet.ids),
-      toObservable(this.subs.enabled),
-      toObservable(this.ingredients),
-    ])
-      .pipe(
-        switchMap(([ids, substitutes, ingredients]) => {
-          if (!ids.length) return of<MakeableResult[]>([]);
-          const query = expandCabinet(ids, ingredients, { substitutes });
-          return this.cocktailService.makeable(query, 0).pipe(catchError(() => of<MakeableResult[]>([])));
-        }),
-        takeUntilDestroyed(),
-      )
-      .subscribe((res) => this.makeableCount.set(res.length));
-  }
 }

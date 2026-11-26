@@ -23,13 +23,20 @@ export const routes: Routes = [
         title: 'buildBar',
         loadComponent: () => import('./bar/wizard/wizard').then((m) => m.Wizard),
       },
+      // Mijn bar: what the bar makes. Ticking what you have is one step under it.
       {
         path: 'bar',
+        pathMatch: 'full',
         title: 'myBar',
+        loadComponent: () => import('./bar/my-bar/my-bar').then((m) => m.MyBar),
+      },
+      {
+        path: 'bar/ingredienten',
+        title: 'myIngredients',
         loadComponent: () => import('./bar/cabinet/cabinet').then((m) => m.Cabinet),
       },
       // Back-compat: the stock editor used to live at /kast.
-      { path: 'kast', pathMatch: 'full', redirectTo: 'bar' },
+      { path: 'kast', pathMatch: 'full', redirectTo: 'bar/ingredienten' },
       {
         path: 'techniek',
         loadChildren: () => import('./techniek/techniek.routes').then((m) => m.TECHNIQUE_ROUTES),

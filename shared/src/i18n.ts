@@ -96,22 +96,7 @@ export interface UiStrings {
     pickFromMenu: string;
     pickAnother: string;
     toRecipe: string;
-    /**
-     * One quiet line of fact where a counting-up hero number used to be. It reports a filter
-     * result, never a score that rises as the user acquires more.
-     */
-    fitLine: (n: number) => string;
-    makeNow: string;
     cocktailsCount: (n: number) => string;
-    filterLabel: string;
-    filterAll: string;
-    filterAlcoholFree: string;
-    noneInFilter: string;
-    showAll: (n: number) => string;
-    showFewer: string;
-    emptyTitle: string;
-    emptyBody: string;
-    refillBar: string;
     learnTitle: string;
     learnLede: string;
     techniqueEyebrow: string;
@@ -200,6 +185,18 @@ export interface UiStrings {
     shareStatsHint: string;
     /** The button beside the "Mijn bar" title that (re)runs the first-run wizard. */
     startWizard: string;
+    /** Mijn bar's link to the page where you tick what you have, and that page's title. */
+    editIngredients: string;
+    ingredientsTitle: string;
+    /** The makeable list on Mijn bar: its family chips, "show all" and the empty state. */
+    filterLabel: string;
+    filterAll: string;
+    filterAlcoholFree: string;
+    noneInFilter: string;
+    showAll: (n: number) => string;
+    showFewer: string;
+    emptyTitle: string;
+    emptyBody: string;
   };
   /** Cocktail list. */
   list: {
@@ -355,6 +352,7 @@ export interface UiStrings {
     discover: string;
     buildBar: string;
     myBar: string;
+    myIngredients: string;
     ingredients: string;
     newCocktail: string;
     editCocktail: string;
@@ -437,22 +435,7 @@ const nl: UiStrings = {
     pickFromMenu: 'Uit de kaart vandaag',
     pickAnother: 'Iets anders',
     toRecipe: 'Naar het recept',
-    fitLine: (n) =>
-      n === 1
-        ? '1 recept past bij wat je in huis hebt.'
-        : `${n} recepten passen bij wat je in huis hebt.`,
-    makeNow: 'Nu te maken',
     cocktailsCount: (n) => `${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
-    filterLabel: 'Filter op familie',
-    filterAll: 'Alles',
-    filterAlcoholFree: 'Zonder alcohol',
-    noneInFilter: 'Niets in deze selectie.',
-    showAll: (n) => `Toon alle ${n}`,
-    showFewer: 'Toon minder',
-    emptyTitle: 'Nog niks helemaal compleet.',
-    emptyBody:
-      'Zet in je bar wat je in huis hebt, dan zie je hier wat je ermee kunt maken. Of begin bij een techniek.',
-    refillBar: 'Werk je bar bij',
     learnTitle: 'Achter de bar',
     learnLede: 'Elke dag iets anders, en er komt geen fles aan te pas.',
     techniqueEyebrow: 'Techniek van de dag',
@@ -531,6 +514,16 @@ const nl: UiStrings = {
     shareStatsHint:
       'Alleen tellingen van welke recepten en ingrediënten gebruikt worden, zonder iets dat naar jou te herleiden is.',
     startWizard: 'Start wizard',
+    editIngredients: 'Ingrediënten bijwerken',
+    ingredientsTitle: 'Ingrediënten',
+    filterLabel: 'Filter op familie',
+    filterAll: 'Alles',
+    filterAlcoholFree: 'Zonder alcohol',
+    noneInFilter: 'Niets in deze selectie.',
+    showAll: (n) => `Toon alle ${n}`,
+    showFewer: 'Toon minder',
+    emptyTitle: 'Nog niks helemaal compleet.',
+    emptyBody: 'Vink aan wat je in huis hebt, dan zie je hier wat je ermee kunt maken.',
   },
   list: {
     title: 'Alle cocktails',
@@ -673,6 +666,7 @@ const nl: UiStrings = {
     discover: 'Ontdek — Barkaart',
     buildBar: 'Stel je bar samen — Barkaart',
     myBar: 'Mijn bar — Barkaart',
+    myIngredients: 'Mijn ingrediënten — Barkaart',
     ingredients: 'Ingrediënten — Barkaart',
     newCocktail: 'Nieuwe cocktail — Barkaart',
     editCocktail: 'Cocktail bewerken — Barkaart',
@@ -749,20 +743,7 @@ const en: UiStrings = {
     pickFromMenu: 'From the menu today',
     pickAnother: 'Something else',
     toRecipe: 'See the recipe',
-    fitLine: (n) =>
-      n === 1 ? '1 recipe matches what you have at home.' : `${n} recipes match what you have at home.`,
-    makeNow: 'Make now',
     cocktailsCount: (n) => `${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
-    filterLabel: 'Filter by family',
-    filterAll: 'All',
-    filterAlcoholFree: 'Alcohol-free',
-    noneInFilter: 'Nothing in this selection.',
-    showAll: (n) => `Show all ${n}`,
-    showFewer: 'Show fewer',
-    emptyTitle: 'Nothing quite complete yet.',
-    emptyBody:
-      'Put what you have at home in your bar and you will see what it makes. Or start with a technique.',
-    refillBar: 'Update your bar',
     learnTitle: 'Behind the bar',
     learnLede: 'Something different every day, and no bottle involved.',
     techniqueEyebrow: 'Technique of the day',
@@ -840,6 +821,16 @@ const en: UiStrings = {
     shareStatsHint:
       'Only counts of which recipes and ingredients get used, with nothing that can be traced back to you.',
     startWizard: 'Start wizard',
+    editIngredients: 'Update ingredients',
+    ingredientsTitle: 'Ingredients',
+    filterLabel: 'Filter by family',
+    filterAll: 'All',
+    filterAlcoholFree: 'Alcohol-free',
+    noneInFilter: 'Nothing in this selection.',
+    showAll: (n) => `Show all ${n}`,
+    showFewer: 'Show fewer',
+    emptyTitle: 'Nothing quite complete yet.',
+    emptyBody: 'Tick what you have at home and you will see here what it makes.',
   },
   list: {
     title: 'All cocktails',
@@ -982,6 +973,7 @@ const en: UiStrings = {
     discover: 'Discover — Barkaart',
     buildBar: 'Build your bar — Barkaart',
     myBar: 'My bar — Barkaart',
+    myIngredients: 'My ingredients — Barkaart',
     ingredients: 'Ingredients — Barkaart',
     newCocktail: 'New cocktail — Barkaart',
     editCocktail: 'Edit cocktail — Barkaart',

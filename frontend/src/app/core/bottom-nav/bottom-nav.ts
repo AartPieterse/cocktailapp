@@ -29,7 +29,8 @@ import { LanguageService } from '../language.service';
         <mat-icon>school</mat-icon>
         <span>{{ lang.t().nav.technique }}</span>
       </a>
-      <a routerLink="/bar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <!-- Not exact: /bar/ingredienten and the wizard are part of Mijn bar too. -->
+      <a routerLink="/bar" routerLinkActive="active">
         <mat-icon>shelves</mat-icon>
         <span>{{ lang.t().nav.myBar }}</span>
       </a>
