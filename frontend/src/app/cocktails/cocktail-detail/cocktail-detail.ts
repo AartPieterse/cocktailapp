@@ -633,7 +633,9 @@ import { environment } from '../../../environments/environment';
     }
     @media (max-width: 860px) {
       .wrap {
-        grid-template-columns: 1fr;
+        /* minmax(0, …): a bare 1fr grows to its widest unbreakable child and pushes the page
+           sideways on a 320px phone. */
+        grid-template-columns: minmax(0, 1fr);
         gap: 28px;
       }
       .visual {
