@@ -1,5 +1,5 @@
 {
-  "version": "a14241f71d55",
+  "version": "238f93c0c9d4",
   "ingredients": {
     "gin": {
       "name": "Gin"
@@ -401,7 +401,13 @@
         "Shake 15 seconden.",
         "Zeef in het glas en garneer met limoen."
       ],
-      "garnish": "Zoutrand en schijfje limoen"
+      "garnish": "Zoutrand en schijfje limoen",
+      "variations": {
+        "mezcal-margarita": {
+          "name": "Mezcal Margarita",
+          "description": "Gebruik mezcal in plaats van tequila voor een rokerige Margarita."
+        }
+      }
     },
     "daiquiri": {
       "name": "Daiquiri",
@@ -456,7 +462,13 @@
         "Zeef in een gekoeld martiniglas.",
         "Garneer met een olijf of een citroenschil."
       ],
-      "garnish": "Olijf of citroenschil"
+      "garnish": "Olijf of citroenschil",
+      "variations": {
+        "vodka-martini": {
+          "name": "Vodka Martini",
+          "description": "Gebruik wodka in plaats van gin. Zonder de jeneverbes komen de vermout en de citroenolie meer naar voren."
+        }
+      }
     },
     "cosmopolitan": {
       "name": "Cosmopolitan",
@@ -479,7 +491,17 @@
         "Druppel bitters op het schuim en garneer."
       ],
       "notes": "Gebruik je eiwit, schud dan iets steviger. Dan komt het schuim los en mengt het door de drank.",
-      "garnish": "Cocktailkers en schijfje citroen"
+      "garnish": "Cocktailkers en schijfje citroen",
+      "variations": {
+        "scotch-sour": {
+          "name": "Scotch Sour",
+          "description": "Gebruik blended Scotch in plaats van bourbon. Droger en minder vanille dan de versie met bourbon."
+        },
+        "vodka-sour": {
+          "name": "Vodka Sour",
+          "description": "Gebruik wodka in plaats van bourbon. Lichter en neutraler, zodat de citroen en het schuim de toon zetten."
+        }
+      }
     },
     "espresso-martini": {
       "name": "Espresso Martini",
@@ -690,6 +712,17 @@
       ],
       "garnish": "Bestrooi met versgeraspte nootmuskaat."
     },
+    "amaretto-sour": {
+      "name": "Amaretto Sour",
+      "description": "Amaretto alleen geeft een zoete sour. Jeffrey Morgenthaler voegde er in 2012 bourbon aan toe voor ruggengraat en eiwit voor textuur, en die versie maken de meeste bars nu.",
+      "instructions": [
+        "Doe alle ingrediënten zonder ijs in een shaker en shake om het eiwit op te kloppen.",
+        "Voeg ijs toe en shake stevig.",
+        "Zeef in een rocksglas met vers ijs."
+      ],
+      "notes": "Morgenthaler gebruikt een bourbon op vatsterkte. Laat de bourbon weg voor de oudere, zoetere stijl. Zonder eiwit is de drank dunner, maar nog steeds in balans.",
+      "garnish": "Garneer met een citroenzeste en een cocktailkers aan een prikker."
+    },
     "angel-face": {
       "name": "Angel Face",
       "description": "Drie sterke dranken in gelijke delen en geen druppel citrus, en juist daarom drinkt hij zachter en zwaarder dan hij leest.",
@@ -738,6 +771,16 @@
         "Laag de Grand Marnier er op dezelfde manier bovenop.",
         "Serveer direct."
       ]
+    },
+    "bamboo": {
+      "name": "Bamboo",
+      "description": "Een licht aperitief uit de jaren tachtig van de negentiende eeuw, bekend geworden via Louis Eppinger in het Grand Hotel in Yokohama. Droge sherry en droge vermout in gelijke delen, dus het smaakt naar wijn en niet naar sterke drank. Gebruik een fino of een manzanilla.",
+      "instructions": [
+        "Doe alle ingrediënten in een mengglas met ijs.",
+        "Roer tot alles goed koud is.",
+        "Zeef in een gekoeld Nick & Nora-glas."
+      ],
+      "garnish": "Knijp een citroenzeste uit boven de drank en gooi hem weg. Leg er daarna een groene olijf aan een prikker in."
     },
     "basil-lemonade": {
       "name": "Basilicumlimonade",
@@ -957,6 +1000,15 @@
       ],
       "garnish": "Een halve passievrucht"
     },
+    "east-8-hold-up": {
+      "name": "East 8 Hold-up",
+      "description": "Kevin Armstrong maakte hem in 2010 bij Milk & Honey in Londen en noemde hem naar E8, de postcode waar hij woonde. Aperol, ananas en passievrucht met wodka: fruitig, maar de bittere sinaasappel houdt hem droog.",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker met ijs.",
+        "Shake stevig en zeef in een rocksglas met vers ijs."
+      ],
+      "garnish": "Garneer met een partje ananas en een partje limoen."
+    },
     "elder-fashion": {
       "name": "Elder Fashion",
       "description": "De old fashioned van Phil Ward, herbouwd bij Death & Co: gin in plaats van whiskey, vlierbloesemlikeur in plaats van suiker, sinaasappelbitter in plaats van Angostura.",
@@ -1029,6 +1081,15 @@
       ],
       "garnish": "Partje sinaasappel"
     },
+    "gimlet": {
+      "name": "Gimlet",
+      "description": "Oorspronkelijk gin met Rose's limoencordial, door de Britse marine gedronken tegen scheurbuik. Met vers limoensap en suikersiroop krijg je de versie die de meeste bars nu schenken: strak, fris en snel gemaakt.",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker met ijs.",
+        "Shake stevig en zeef in een gekoelde coupe."
+      ],
+      "garnish": "Garneer met een schijfje limoen."
+    },
     "gin-basil-smash": {
       "name": "Gin Basil Smash",
       "description": "Een Hamburgse vondst uit 2008 en nu al een moderne klassieker. Sla de basilicum één keer hard aan; versnipperen maakt hem bitter.",
@@ -1046,6 +1107,16 @@
       ],
       "notes": "Serveer zonder ijs.",
       "garnish": "Garneer met een schijfje citroen, eventueel een schilletje citroen."
+    },
+    "gin-tonic": {
+      "name": "Gin-tonic",
+      "description": "Gin en kininewater, door de Britten in India gedronken tegen malaria. Vul het glas helemaal met ijs en gebruik koude tonic: hoe voller het glas, hoe langzamer het ijs smelt en hoe langer de prik blijft.",
+      "instructions": [
+        "Vul een longdrinkglas tot de rand met ijs.",
+        "Voeg de gin toe.",
+        "Top af met koude tonic en roer één keer, voorzichtig."
+      ],
+      "garnish": "Garneer met een partje limoen."
     },
     "ginger-mule": {
       "name": "Gembermule",
@@ -1274,6 +1345,15 @@
         "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
       ]
     },
+    "milano-torino": {
+      "name": "Milano Torino",
+      "description": "Campari uit Milaan en vermout uit Turijn, vandaar de naam. Hij was er eerder dan de Americano en de Negroni: voeg soda toe voor de eerste, gin voor de tweede.",
+      "instructions": [
+        "Doe beide ingrediënten in een mengglas met ijs en roer.",
+        "Zeef in een rocksglas over een groot ijsblok."
+      ],
+      "garnish": "Garneer met een schijfje sinaasappel."
+    },
     "missionary-s-downfall": {
       "name": "Missionary's Downfall",
       "description": "Een geblend tikidrankje gebouwd op munt en perzik. Lichter en frisser dan de meeste uit die categorie.",
@@ -1297,6 +1377,16 @@
         "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
       ]
     },
+    "negroni-sbagliato": {
+      "name": "Negroni Sbagliato",
+      "description": "Een Negroni met mousserende wijn op de plek van de gin. Volgens het verhaal pakte een barman van Bar Basso in Milaan de verkeerde fles; sbagliato is Italiaans voor vergist. Lichter en minder sterk dan het origineel.",
+      "instructions": [
+        "Vul een rocksglas met ijs.",
+        "Voeg de Campari en de rode vermout toe.",
+        "Top af met de prosecco en roer kort."
+      ],
+      "garnish": "Garneer met een schijfje sinaasappel."
+    },
     "new-york-sour": {
       "name": "New York Sour",
       "description": "Een whiskeysour met rode wijn erop gedreven. De wijn blijft als band liggen en mengt zich al drinkend, waardoor hij halverwege verandert.",
@@ -1308,6 +1398,16 @@
       ],
       "garnish": "Garneer met een schilletje citroen of sinaasappel en een kers."
     },
+    "oaxaca-old-fashioned": {
+      "name": "Oaxaca Old Fashioned",
+      "description": "Phil Ward maakte hem in 2007 bij Death & Co in New York: een Old Fashioned op reposado tequila, met een beetje mezcal voor de rook. Geen andere drank heeft bartenders zo aan het mixen met mezcal gekregen.",
+      "instructions": [
+        "Doe alle ingrediënten in een mengglas met ijs.",
+        "Roer tot alles goed koud is.",
+        "Zeef in een rocksglas over een groot ijsblok."
+      ],
+      "garnish": "Garneer met een geflambeerde sinaasappelzeste."
+    },
     "old-cuban": {
       "name": "Old Cuban",
       "description": "Een Mojito in avondkleding: gerijpte rum, bitters en champagne. Bedacht in de New Yorkse Pegu Club in de jaren 2000.",
@@ -1316,6 +1416,17 @@
         "Vul aan met de mousserende wijn."
       ],
       "garnish": "Garneer met munttakjes."
+    },
+    "painkiller": {
+      "name": "Painkiller",
+      "description": "Uit de Soggy Dollar Bar op de Britse Maagdeneilanden, waar gasten naar de kant zwommen en met natte bankbiljetten betaalden. Rum, ananas, sinaasappel en kokos: verwant aan de Piña Colada, maar geshaket en afgemaakt met nootmuskaat.",
+      "instructions": [
+        "Doe de rum, het ananassap, het sinaasappelsap en de kokosroom in een shaker met ijs.",
+        "Shake stevig.",
+        "Zeef in een collinsglas gevuld met gemalen ijs."
+      ],
+      "notes": "Traditioneel gemaakt met een navy rum zoals Pusser's, het merk dat de naam als handelsmerk heeft vastgelegd.",
+      "garnish": "Rasp er verse nootmuskaat over en garneer met een schijfje sinaasappel."
     },
     "paper-plane": {
       "name": "Paper Plane",
@@ -1352,6 +1463,17 @@
         "Laat de single malt whisky bovenop drijven."
       ],
       "garnish": "Garneer met gekonfijte gember."
+    },
+    "picante": {
+      "name": "Picante",
+      "description": "De pittige margarita van Soho House: tequila, limoen en agave, met verse chilipeper die in de shaker wordt aangedrukt. Begonnen in Soho Beach House in Miami en nu in elk House te krijgen.",
+      "instructions": [
+        "Druk een plakje chilipeper aan op de bodem van een shaker.",
+        "Voeg de tequila, het limoensap en de agavesiroop toe.",
+        "Shake stevig met ijs en zeef dubbel in een rocksglas met ijs."
+      ],
+      "notes": "Soho House klapt ook zo'n tien blaadjes koriander tussen de handen en shaket ze mee, voor een groene, kruidige toon. Voor meer pit gebruik je een tweede plakje chilipeper.",
+      "garnish": "Garneer met het steeltje van een rode chilipeper."
     },
     "pineapple-swizzle": {
       "name": "Ananasswizzle",
