@@ -9,6 +9,7 @@ import {
   type MakeableResult,
 } from '@cocktailapp/shared';
 import { RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { catchError, combineLatest, of, switchMap } from 'rxjs';
 import { AnalyticsService } from '../../core/analytics.service';
@@ -27,12 +28,18 @@ interface Group {
 
 @Component({
   selector: 'app-cabinet',
-  imports: [IngredientGlyph, RouterLink, MatSlideToggleModule],
+  imports: [IngredientGlyph, RouterLink, MatIconModule, MatSlideToggleModule],
   template: `
     <div class="page">
       <header class="head">
         <div>
-          <h1>{{ lang.t().bar.title }}</h1>
+          <div class="title-row">
+            <h1>{{ lang.t().bar.title }}</h1>
+            <a class="wizard-btn" routerLink="/bar/wizard">
+              <mat-icon aria-hidden="true">auto_fix_high</mat-icon>
+              {{ lang.t().bar.startWizard }}
+            </a>
+          </div>
           <p class="sub">{{ lang.t().bar.sub }}</p>
         </div>
         <div class="tally">
@@ -83,7 +90,6 @@ interface Group {
             <p class="hint">{{ lang.t().bar.shareStatsHint }}</p>
           </div>
         }
-        <a class="wizard" routerLink="/bar/wizard">{{ lang.t().bar.wizardAgain }}</a>
       </section>
     </div>
   `,
@@ -105,6 +111,34 @@ interface Group {
       font-size: var(--step-4);
       letter-spacing: -0.025em;
       margin: 0;
+    }
+    .title-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+    }
+    /* The same outlined pill as the detail page's Save / Print buttons. */
+    .wizard-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-pill);
+      padding: 8px 14px;
+      font: 600 0.813rem var(--font-body);
+      color: var(--muted);
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .wizard-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .wizard-btn mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
     }
     .sub {
       color: var(--muted);
@@ -199,14 +233,6 @@ interface Group {
       font-size: var(--step--1);
       color: var(--muted);
       max-width: 52ch;
-    }
-    .wizard {
-      justify-self: start;
-      font: 600 0.813rem var(--font-body);
-      color: var(--accent);
-    }
-    .wizard:hover {
-      text-decoration: underline;
     }
   `,
 })

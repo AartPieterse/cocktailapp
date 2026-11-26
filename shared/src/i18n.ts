@@ -198,7 +198,8 @@ export interface UiStrings {
     countSubstitutesHint: string;
     shareStats: string;
     shareStatsHint: string;
-    wizardAgain: string;
+    /** The button beside the "Mijn bar" title that (re)runs the first-run wizard. */
+    startWizard: string;
   };
   /** Cocktail list. */
   list: {
@@ -531,7 +532,7 @@ const nl: UiStrings = {
     shareStats: 'Anonieme statistieken delen',
     shareStatsHint:
       'Alleen tellingen van welke recepten en ingrediënten gebruikt worden, zonder iets dat naar jou te herleiden is.',
-    wizardAgain: 'Wizard opnieuw',
+    startWizard: 'Start wizard',
   },
   list: {
     title: 'Alle cocktails',
@@ -842,7 +843,7 @@ const en: UiStrings = {
     shareStats: 'Share anonymous statistics',
     shareStatsHint:
       'Only counts of which recipes and ingredients get used, with nothing that can be traced back to you.',
-    wizardAgain: 'Restart wizard',
+    startWizard: 'Start wizard',
   },
   list: {
     title: 'All cocktails',
