@@ -1,5 +1,5 @@
 {
-  "version": "238f93c0c9d4",
+  "version": "eede9b817279",
   "schemaVersion": 2,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
@@ -13,6 +13,9 @@
       "name": "Absinthe",
       "category": "spirit",
       "isStaple": false,
+      "substitutes": [
+        "pernod"
+      ],
       "aliases": [
         "Kübler",
         "La Fée"
@@ -154,6 +157,9 @@
       "name": "Bourbon",
       "category": "spirit",
       "isStaple": false,
+      "substitutes": [
+        "rye-whiskey"
+      ],
       "aliases": [
         "Bourbon Whiskey",
         "Bourbon or Rye Whiskey",
@@ -293,6 +299,9 @@
       "name": "Coffee",
       "category": "other",
       "isStaple": false,
+      "substitutes": [
+        "espresso"
+      ],
       "aliases": [
         "Hot Coffee"
       ]
@@ -522,6 +531,9 @@
       "name": "Espresso",
       "category": "other",
       "isStaple": false,
+      "substitutes": [
+        "coffee"
+      ],
       "aliases": [
         "Strong Espresso"
       ]
@@ -634,6 +646,9 @@
       "name": "Grand Marnier",
       "category": "liqueur",
       "isStaple": false,
+      "substitutes": [
+        "triple-sec"
+      ],
       "aliases": [
         "Grand Marnier Cordon Rouge"
       ],
@@ -769,7 +784,10 @@
       "id": "lemon",
       "name": "Lemon",
       "category": "garnish",
-      "isStaple": false
+      "isStaple": false,
+      "substitutes": [
+        "lemon-juice"
+      ]
     },
     {
       "id": "licor-43",
@@ -851,7 +869,10 @@
       "id": "orange",
       "name": "Orange",
       "category": "garnish",
-      "isStaple": false
+      "isStaple": false,
+      "substitutes": [
+        "orange-juice"
+      ]
     },
     {
       "id": "orange-bitters",
@@ -941,6 +962,9 @@
       "name": "Pernod",
       "category": "spirit",
       "isStaple": false,
+      "substitutes": [
+        "absinthe"
+      ],
       "aliases": [
         "Pastis",
         "Pastis 51",
@@ -1016,6 +1040,9 @@
       "name": "Rye Whiskey",
       "category": "spirit",
       "isStaple": false,
+      "substitutes": [
+        "bourbon"
+      ],
       "aliases": [
         "Bulleit Rye",
         "Michter's Rye",
@@ -1260,6 +1287,9 @@
       "category": "spirit",
       "isStaple": false,
       "parentId": "brandy",
+      "substitutes": [
+        "cognac"
+      ],
       "aliases": [
         "Bols Vieux",
         "Hollandse Vieux",
@@ -3220,7 +3250,8 @@
           "ingredientId": "gin",
           "name": "Gin",
           "amount": 60,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "ingredientId": "dry-vermouth",
@@ -4564,7 +4595,8 @@
           "name": "Dark Rum",
           "call": "Blackstrap Rum",
           "amount": 45,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "ingredientId": "campari",
@@ -6921,7 +6953,8 @@
           "ingredientId": "cognac",
           "name": "Cognac",
           "amount": 50,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "ingredientId": "absinthe",
@@ -7966,7 +7999,8 @@
           "ingredientId": "gin",
           "name": "Gin",
           "amount": 45,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "ingredientId": "vodka",
@@ -8053,13 +8087,15 @@
           "ingredientId": "rye-whiskey",
           "name": "Rye Whiskey",
           "amount": 30,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "ingredientId": "cognac",
           "name": "Cognac",
           "amount": 30,
-          "unit": "ml"
+          "unit": "ml",
+          "exact": true
         },
         {
           "ingredientId": "sweet-vermouth",

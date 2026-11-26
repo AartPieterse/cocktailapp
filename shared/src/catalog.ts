@@ -55,6 +55,8 @@ export interface RawCatalogLine {
   role?: CocktailIngredientRole;
   /** Names (not ids) of alternative bases for a recipe "X or Y" line. */
   alternatives?: string[];
+  /** No substitute satisfies this line, only its own base or an alternative (`CocktailIngredient.exact`). */
+  exact?: boolean;
 }
 
 /**
@@ -334,6 +336,7 @@ export function buildCatalog(
           ...(line.optional ? { optional: true } : {}),
           ...(line.role ? { role: line.role } : {}),
           ...(alternativeIds.length ? { alternativeIds } : {}),
+          ...(line.exact ? { exact: true } : {}),
         };
       });
 

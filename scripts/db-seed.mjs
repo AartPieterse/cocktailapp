@@ -73,7 +73,7 @@ try {
     ...(c.baseSpirit ? { baseSpirit: c.baseSpirit } : {}),
     description: c.description ?? '',
     instructions: c.instructions ?? [],
-    ingredients: c.ingredients, // already resolved to slug ingredientId + call/role/alternativeIds
+    ingredients: c.ingredients, // already resolved to slug ingredientId + call/role/alternativeIds/exact
     ...(c.glass ? { glass: c.glass } : {}),
     ...(c.method ? { method: c.method } : {}),
     ...(c.difficulty ? { difficulty: c.difficulty } : {}),

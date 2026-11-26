@@ -21,11 +21,15 @@ export interface Ingredient {
    */
   isStaple?: boolean;
   /**
-   * A broader base that may stand in for this one (`old-tom-gin`.parentId = `gin`). Used only by the
-   * opt-in `expandCabinet` substitution pass — never by `computeMakeable` itself.
+   * A broader base this one is a kind of (`cognac`.parentId = `brandy`). Substitution runs both ways:
+   * stocking the child covers a call for the parent, and stocking the parent covers a call for the
+   * child (`cabinetCoverage` in makeable.ts). A recipe line marked `exact` ignores it.
    */
   parentId?: string;
-  /** Explicit acceptable swaps (used sparingly — e.g. NOT sweet↔dry vermouth). Also `expandCabinet`. */
+  /**
+   * Bases this one may stand in for, one way (`jenever` covers a call for `gin`; list both sides for a
+   * two-way swap). Used sparingly, e.g. NOT sweet/dry vermouth. Ignored by a line marked `exact`.
+   */
   substitutes?: string[];
   /** Folded spellings & brand names, kept for the search box ("Sugar Syrup", "Smirnoff Vodka"). */
   aliases?: string[];

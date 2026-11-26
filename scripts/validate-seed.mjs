@@ -22,6 +22,7 @@
  *  16. an id that left the shipped catalog without a tombstone in the seed's `retired[]`.
  *  17. a base with no Dutch display name (the overlay must never fall back to English);
  *  18. a cocktail whose Dutch text doesn't cover what the English catalog actually shows.
+ *  19. an `exact` line that is not `true`, or sits on a base no substitute can reach.
  *
  * Usage: node scripts/validate-seed.mjs   (or: npm run validate:seed)
  */
@@ -236,16 +237,14 @@ for (const c of cocktails) {
       for (const alt of line.alternatives ?? []) reach(alt);
     }
   }
-  // Mirror expandCabinet (shared/src/makeable.ts): stocking X adds X.parentId and X.substitutes,
-  // then every child of a present parent. So X matters when what it expands to is something a
-  // recipe uses — not when X is merely the *target* of someone else's link (the old check had
+  // Mirror cabinetCoverage (shared/src/makeable.ts): stocking X covers X.parentId, X.substitutes
+  // and X's own children, one hop and never further. So X matters when what it covers is something
+  // a recipe uses — not when X is merely the *target* of someone else's link (the old check had
   // that backwards, and would flag a new `spiced-rum → dark-rum` base as an orphan).
   const used = new Set(reachable);
   const childrenOf = (id) => ingredients.filter((c) => c.parentId === id);
   for (const ing of ingredients) {
-    if (ing.parentId && (used.has(ing.parentId) || childrenOf(ing.parentId).some((c) => used.has(c.id)))) {
-      reachable.add(ing.id); // child → its parent, and through the parent to its siblings
-    }
+    if (ing.parentId && used.has(ing.parentId)) reachable.add(ing.id); // child → its parent
     if ((ing.substitutes ?? []).some((s) => used.has(s))) reachable.add(ing.id);
     if (childrenOf(ing.id).some((c) => used.has(c.id))) reachable.add(ing.id); // generic → its specifics
   }
@@ -255,6 +254,41 @@ for (const c of cocktails) {
       `${orphans.length} base(s) are referenced by no recipe line, alternative, parentId or ` +
         `substitute — stocking them changes no makeable answer: ${orphans.join(', ')}`,
     );
+  }
+}
+
+// ── 19: `exact` lines ────────────────────────────────────────────────────────
+// `exact: true` says no substitute covers the line (a Dry Martini made with jenever is another
+// drink). It only means something on a base a substitute can reach: one with a parent or children,
+// or one named in another base's `substitutes`. Anywhere else the flag changes nothing and reads
+// like a decision nobody took, so it fails. The value is `true` or absent, never `false`.
+{
+  const substitutable = new Set();
+  for (const ing of ingredients) {
+    if (ing.parentId) {
+      substitutable.add(ing.id);
+      substitutable.add(ing.parentId);
+    }
+    for (const s of ing.substitutes ?? []) substitutable.add(s);
+  }
+  const idByName = new Map(
+    ingredients.filter((i) => i.name).map((i) => [i.name.trim().toLowerCase(), i.id]),
+  );
+  for (const c of cocktails) {
+    for (const line of c.ingredients ?? []) {
+      if (line.exact === undefined) continue;
+      if (line.exact !== true) {
+        fail(`cocktail "${c.name}" line "${line.name}" has exact ${JSON.stringify(line.exact)}; use true or leave it out`);
+        continue;
+      }
+      const id = idByName.get(line.name?.trim().toLowerCase());
+      if (id && !substitutable.has(id)) {
+        fail(
+          `cocktail "${c.name}" line "${line.name}" is exact, but no substitute can reach "${id}" ` +
+            `(no parent, children or substitutes point at it), so the flag changes nothing`,
+        );
+      }
+    }
   }
 }
 

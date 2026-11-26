@@ -28,8 +28,8 @@ interface Ingredient {
   name: string;
   category?: IngredientCategory;
   isStaple?: boolean;      // pantry basic, pre-checked in the wizard
-  parentId?: string;       // a specific base (old-tom-gin) → a broader one (gin)
-  substitutes?: string[];  // explicit swap ids
+  parentId?: string;       // a specific base (cognac) → a broader one (brandy); covers both ways
+  substitutes?: string[];  // bases this one stands in for, one way (jenever → gin)
   aliases?: string[];
   createdAt?: string;
   updatedAt?: string;
@@ -51,6 +51,7 @@ interface CocktailIngredient {
   optional?: boolean;
   role?: CocktailIngredientRole;
   alternativeIds?: string[];  // "X or Y" — any one satisfies the line
+  exact?: boolean;            // no substitute satisfies the line (Dry Martini gin)
 }
 
 interface Cocktail {
@@ -171,14 +172,15 @@ example: the vessel rule makes it required, but Thai oliang is traditionally mad
 
 
 So: **"makeable now"** = `maxMissing 0` (0 missing); **"bijna — je mist er één"** = query with
-`maxMissing 1`. `computeMakeable` does **not** itself apply staples or substitutes — its 3-arg
-signature is deliberately locked.
+`maxMissing 1`. `computeMakeable` never applies staples. It applies substitutes only when its optional
+fourth argument, the substitution graph (the catalog's ingredients), is passed; see
+[Substitutes](#substitutes).
 
-`missingLines(cocktail, availableIngredientIds)` (same module) **is** that per-cocktail predicate;
-`computeMakeable` just maps it over the catalog. A single-cocktail view — the detail page — must call it
-directly instead of re-deriving the rule: that duplication is how the detail page once silently drifted
-from the list. Like `computeMakeable` it expects an already-**expanded** cabinet if substitutions are to
-count.
+`missingLines(cocktail, ownIngredientIds, ingredients?)` (same module) **is** that per-cocktail
+predicate; `computeMakeable` just maps it over the catalog. A single-cocktail view (the detail page) must
+call it directly instead of re-deriving the rule: that duplication is how the detail page once silently
+drifted from the list. Both take the user's **own** ids, never an expanded list, because an `exact` line
+must know which ids the user really has.
 
 **Variations count too.** Every "wat kan ik maken" surface — the bar's *Maak nu* grid and its count,
 the cabinet count, the wizard's payoff line, and the backend's `POST /cocktails/makeable` — calls
@@ -196,23 +198,46 @@ a favourite. Its glass art is the parent's entry overlaid with `VARIATION_ART`
 (`frontend/src/app/shared/cocktail-art.data.ts`). `computeMakeable` itself still answers for catalog
 cocktails alone.
 
-## Substitutes (opt-in)
+## Substitutes
 
-`expandCabinet(availableIngredientIds, ingredients, opts)` is a separate, opt-in pass run **before**
-`computeMakeable` (behind the UI's *"Vervangers meetellen"* toggle, default **on**). With substitutes
-off it just de-duplicates ids. With substitutes on it is **bidirectional**:
+Substitutes **always count**. There used to be a *"Vervangers meetellen"* switch; it was removed
+because the effect was real but invisible (the Gin line said "in je bar" when you only had jenever).
+The substitution is now shown where it is used instead.
 
-1. stocking a **child** adds its `parentId` (a specific base satisfies a generic call),
-2. explicit `substitutes` ids are added,
-3. a second pass adds every **child** whose `parentId` is now present (stocking the generic satisfies
-   specific calls).
+`cabinetCoverage(ownIngredientIds, ingredients)` (`shared/src/makeable.ts`) maps every base id the
+user's own ingredients satisfy to the own ids that satisfy it. One hop, and only from what the user
+actually has:
 
-`isStaple` is not referenced by either function — staples factor in only by being ticked into the
-cabinet during the wizard.
+1. an own base covers **itself**;
+2. a **child** covers its `parentId` (cognac answers a brandy call);
+3. a **parent** covers its children (brandy answers a cognac or vieux call);
+4. a base covers its explicit `substitutes` (jenever answers a gin call; list both sides for a
+   two-way swap).
 
-Today's seed authors this machinery sparsely: **1** ingredient has a `parentId` and **2** have
-`substitutes`, so flipping the toggle changes almost nothing on current data. A substitution that
-"doesn't work" is usually one that was never written.
+A covered id is never expanded again. The old two-pass expansion did, which is how white rum reached
+spiced rum (white → dark → dark's child) and cognac reached vieux (cognac → brandy → brandy's other
+child). `expandCabinet` is now just the keys of that map.
+
+Per line, `coverLines(cocktail, ownIds, ingredients)` says whether the user has the line's own base
+(or a recipe alternative), which own ids stand in for it, or nothing. A line marked
+**`exact: true`** is covered only by its own base or an alternative, never by a substitute: it marks
+the lines where a substitute makes a different drink (the gin in a Dry Martini or Vesper, the cognac
+and rye in a Sazerac and Vieux Carré, the blackstrap rum in a Jungle Bird). `validate-seed` fails an
+`exact` on a base no substitute can reach, since the flag would change nothing there.
+
+`computeMakeableWithVariations` always passes the catalog's ingredients as the graph, so every "wat
+kan ik maken" surface and `POST /cocktails/makeable` agree. Each result lists the required lines a
+substitute covers in `substitutions` (`{ ingredientId, name, via: [{ ingredientId, name }] }`), which
+the UI shows as *"Nu te maken, met jenever"* on a status card, a quiet *"met jenever"* line on a Mijn
+bar card, and *"Met jenever uit je bar"* under the line on the recipe page.
+
+`isStaple` is not referenced by any of these functions: staples factor in only by being ticked into
+the cabinet during the wizard.
+
+What goes in the graph is a judgement per pair: add a swap only when the result is still the drink
+the recipe names. Deliberately **not** linked: lime and lemon, honey or agave and simple syrup,
+scotch or Irish and bourbon, tequila and mezcal, cachaça and rum, ginger ale and ginger beer. A
+substitution that "doesn't work" is usually one that was never written.
 
 ## Variations, and the five things that look like one
 
@@ -223,8 +248,8 @@ distinct, and the difference that matters is **whether it changes a makeability 
 | --- | --- | --- | --- |
 | `Cocktail.variations` | on the cocktail | **As its own drink** | a *different drink* you can make from this one — listed by "wat kan ik maken" when it has `swaps`, and never satisfying the parent |
 | `CocktailIngredient.alternativeIds` | on a recipe line | **Yes** | an "X or Y" line — either satisfies *this* recipe |
-| `Ingredient.parentId` | on a base | via `expandCabinet` | a specific base standing in for a broader call |
-| `Ingredient.substitutes` | on a base | via `expandCabinet` | an explicit acceptable swap |
+| `Ingredient.parentId` | on a base | via `cabinetCoverage` | a specific base and its broader call, standing in for each other |
+| `Ingredient.substitutes` | on a base | via `cabinetCoverage` | an explicit acceptable swap (not on an `exact` line) |
 | `Ingredient.aliases` | on a base | No | folded spellings and brands, for the search box |
 
 Reach for `alternativeIds` when the recipe itself says "or". Reach for `variations` when the result

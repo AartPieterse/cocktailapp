@@ -84,8 +84,8 @@ per-recipe **`call`** that preserves the recipe's own wording.
 Ingredient {
   id, name,
   category?, isStaple?,
-  parentId?,            // a specific base (old-tom-gin) points at a broader one (gin)
-  substitutes?: string[],   // explicit swap ids
+  parentId?,            // a specific base (cognac) points at a broader one (brandy)
+  substitutes?: string[],   // bases this one stands in for (jenever → gin)
   aliases?: string[],
   createdAt?, updatedAt?
 }
@@ -131,9 +131,11 @@ of its `alternativeIds` is in the cabinet. "Makeable now" = 0 missing; "bijna" =
 with no ingredient lines are excluded. `isStaple` marks pantry basics that are pre-checked in the
 wizard.
 
-**Substitutes** are a deliberately separate, opt-in pass (`expandCabinet`, behind the "Vervangers
-meetellen" toggle): stocking a child base satisfies its parent's generic call and vice-versa, and
-explicit `substitutes` are folded in — `computeMakeable` itself never applies substitutes or staples.
+**Substitutes** always count: stocking a child base satisfies its parent's generic call and
+vice-versa, and explicit `substitutes` are folded in, one hop from what the user has
+(`cabinetCoverage`). A line marked `exact` takes no substitute. The UI says where a substitute is used
+("Nu te maken, met jenever"). `computeMakeable` applies them only when given the substitution graph,
+and never applies staples. See [docs/data-model.md](docs/data-model.md#substitutes).
 
 `buildCatalog` is the pure, dependency-free function that shapes raw seed data into the catalog and
 stamps a content-hash `version`. The **same** function feeds `scripts/build-catalog.mjs` (the committed

@@ -177,10 +177,8 @@ export interface UiStrings {
     sub: string;
     youCanMake: (n: number) => string;
     selected: (n: number) => string;
-    /** The few switches that change how the bar is read. They live here, not on the home screen. */
+    /** The bar's settings (the analytics switch). They live here, not on the home screen. */
     settingsTitle: string;
-    countSubstitutes: string;
-    countSubstitutesHint: string;
     shareStats: string;
     shareStatsHint: string;
     /** The button beside the "Mijn bar" title that (re)runs the first-run wizard. */
@@ -239,6 +237,8 @@ export interface UiStrings {
     optional: string;
     /** Accessible name of the check mark on an ingredient line you already have; not shown as text. */
     inBar: string;
+    /** Under a recipe line a substitute covers: which of your own ingredients stands in. */
+    usingFromBar: (name: string) => string;
     add: string;
     preparation: string;
     noInstructions: string;
@@ -255,6 +255,10 @@ export interface UiStrings {
     removeFavorite: string;
     addFavorite: string;
     makeNow: string;
+    /** "Nu te maken", when a substitute covers one of the lines. */
+    makeNowWith: (name: string) => string;
+    /** The quiet line on a card that shows no status, naming the substitute it uses. */
+    withIngredient: (name: string) => string;
     missName: (name: string) => string;
     missMany: (n: number) => string;
   };
@@ -551,9 +555,6 @@ const nl: UiStrings = {
     youCanMake: (n) => `Je kunt ${n} ${n === 1 ? 'cocktail' : 'cocktails'} maken`,
     selected: (n) => `${n} ${n === 1 ? 'ingrediënt' : 'ingrediënten'} geselecteerd`,
     settingsTitle: 'Instellingen',
-    countSubstitutes: 'Vervangers meetellen',
-    countSubstitutesHint:
-      'Een ingrediënt telt ook mee voor een recept dat om een verwant ingrediënt vraagt, zoals donkere rum voor witte.',
     shareStats: 'Anonieme statistieken delen',
     shareStatsHint:
       'Alleen tellingen van welke recepten en ingrediënten gebruikt worden, zonder iets dat naar jou te herleiden is.',
@@ -606,6 +607,7 @@ const nl: UiStrings = {
     glasses: (n) => `${n} ${n === 1 ? 'glas' : 'glazen'}`,
     optional: 'optioneel',
     inBar: 'In je bar',
+    usingFromBar: (name) => `Met ${name} uit je bar`,
     add: '+ Toevoegen',
     preparation: 'Bereiding',
     noInstructions: 'Geen instructies opgegeven.',
@@ -621,6 +623,8 @@ const nl: UiStrings = {
     removeFavorite: 'Verwijder uit favorieten',
     addFavorite: 'Voeg toe aan favorieten',
     makeNow: 'Nu te maken',
+    makeNowWith: (name) => `Nu te maken, met ${name}`,
+    withIngredient: (name) => `met ${name}`,
     missName: (name) => `Mist ${name}`,
     missMany: (n) => `Mist ${n} ingrediënten`,
   },
@@ -895,9 +899,6 @@ const en: UiStrings = {
     youCanMake: (n) => `You can make ${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
     selected: (n) => `${n} ${n === 1 ? 'ingredient' : 'ingredients'} selected`,
     settingsTitle: 'Settings',
-    countSubstitutes: 'Count substitutes',
-    countSubstitutesHint:
-      'An ingredient also counts for a recipe that asks for a close relative, such as dark rum for white.',
     shareStats: 'Share anonymous statistics',
     shareStatsHint:
       'Only counts of which recipes and ingredients get used, with nothing that can be traced back to you.',
@@ -950,6 +951,7 @@ const en: UiStrings = {
     glasses: (n) => `${n} ${n === 1 ? 'glass' : 'glasses'}`,
     optional: 'optional',
     inBar: 'In your bar',
+    usingFromBar: (name) => `Using ${name} from your bar`,
     add: '+ Add',
     preparation: 'Method',
     noInstructions: 'No instructions provided.',
@@ -965,6 +967,8 @@ const en: UiStrings = {
     removeFavorite: 'Remove from favorites',
     addFavorite: 'Add to favorites',
     makeNow: 'Make now',
+    makeNowWith: (name) => `Make now, with ${name}`,
+    withIngredient: (name) => `with ${name}`,
     missName: (name) => `Missing ${name}`,
     missMany: (n) => `Missing ${n} ingredients`,
   },

@@ -7,7 +7,7 @@ const KEY = 'barkaart.units';
 /**
  * The user's preferred volume unit (ml / cl / oz) for displaying recipe amounts. Recipes are
  * authored in ml or cl; the detail screen re-expresses volume lines in this unit via the shared
- * `convertMeasure`. Persisted to localStorage; default `ml`. Mirrors the SubstitutesService pattern.
+ * `convertMeasure`. Persisted to localStorage; default `ml`.
  */
 @Injectable({ providedIn: 'root' })
 export class UnitPreferenceService {
