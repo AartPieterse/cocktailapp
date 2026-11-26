@@ -103,7 +103,10 @@ import { environment } from '../../../environments/environment';
             }
 
             @if (makeable()) {
-              <div class="banner ok">{{ lang.t().detail.haveAll }}</div>
+              <div class="banner ok">
+                <mat-icon aria-hidden="true">check_circle</mat-icon>
+                <span>{{ lang.t().detail.haveAll }}</span>
+              </div>
             } @else {
               <div class="banner miss">
                 <span>{{ lang.t().detail.youStillMiss(missingNames()) }}</span>
@@ -143,7 +146,12 @@ import { environment } from '../../../environments/environment';
                     @if (i.note) { <span class="note">· {{ i.note }}</span> }
                   </div>
                   @if (inBar(i)) {
-                    <span class="in-kast">{{ lang.t().detail.inBar }}</span>
+                    <mat-icon
+                      class="in-kast"
+                      role="img"
+                      [attr.aria-label]="lang.t().detail.inBar"
+                      [matTooltip]="lang.t().detail.inBar"
+                    >check</mat-icon>
                   } @else if (!i.optional) {
                     <button class="add-line no-print" (click)="add(i)">{{ lang.t().detail.add }}</button>
                   }
@@ -342,25 +350,36 @@ import { environment } from '../../../environments/environment';
       max-width: 520px;
       font-size: 1rem;
     }
+    /* Same box as the family card above it: full row, one even hairline, same radius. */
     .banner {
-      margin-top: 22px;
-      border-radius: 14px;
-      font: 600 0.875rem var(--font-body);
+      display: flex;
+      align-items: center;
+      margin-top: 12px;
+      max-width: 520px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font: 600 0.906rem var(--font-body);
     }
     .banner.ok {
-      display: inline-flex;
-      align-items: center;
       gap: 10px;
+      padding: 12px 16px;
       background: var(--ok-soft);
+      border-color: color-mix(in srgb, var(--ok) 30%, transparent);
       color: var(--ok-ink);
-      padding: 14px 20px;
+    }
+    .banner.ok mat-icon {
+      flex: none;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      color: var(--ok);
     }
     .banner.miss {
-      display: inline-flex;
-      align-items: center;
+      justify-content: space-between;
       gap: 16px;
+      padding: 8px 8px 8px 16px;
       background: var(--warn-soft);
-      padding: 12px 12px 12px 20px;
+      border-color: color-mix(in srgb, var(--warn) 30%, transparent);
       color: var(--warn);
     }
     .family {
@@ -373,7 +392,6 @@ import { environment } from '../../../environments/environment';
       max-width: 520px;
       padding: 12px 16px;
       border: 1px solid var(--hairline);
-      border-left: 3px solid var(--accent);
       border-radius: 12px;
       background: var(--surface-2);
     }
@@ -568,9 +586,11 @@ import { environment } from '../../../environments/environment';
       color: var(--muted);
     }
     .in-kast {
-      font: 700 0.875rem var(--font-body);
+      flex: none;
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
       color: var(--ok);
-      white-space: nowrap;
     }
     .add-line {
       background: var(--warn-soft);
@@ -630,6 +650,7 @@ import { environment } from '../../../environments/environment';
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
+        padding: 12px;
       }
       .banner.miss .add-btn {
         width: 100%;
