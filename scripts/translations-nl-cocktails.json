@@ -58,6 +58,16 @@
     "garnish": "Optioneel een maraschinokers.",
     "description": "Maraschino en viooltjes maken van een gin-sour iets bleekgrijs-blauws. Terughoudendheid telt — te veel violette smaakt naar zeep."
   },
+  "b-52": {
+    "name": "B-52",
+    "description": "Drie likeuren in drie strakke lagen: koffie onderin, Irish cream in het midden, sinaasappel bovenop. Vernoemd naar de bommenwerper en meestal herleid tot Canada, eind jaren zeventig. De volgorde volgt het gewicht, dus schenk ze op volgorde.",
+    "instructions": [
+      "Schenk de koffielikeur in een shotglas.",
+      "Houd een barlepel ondersteboven vlak boven het glas en schenk de Irish cream langzaam over de bolle kant van de lepel.",
+      "Laag de Grand Marnier er op dezelfde manier bovenop.",
+      "Serveer direct."
+    ]
+  },
   "basil-lemonade": {
     "name": "Basilicumlimonade",
     "description": "Basilicum één keer aangeslagen in plaats van zacht gemuddled, zodat je de olie krijgt en niet het gekneusde blad. Kruidig en droog voor een limonade.",
@@ -109,6 +119,16 @@
     ],
     "description": "Een Sidecar met rum erbij, wat te veel klinkt en het niet is. Droger en scherper dan beide drankjes apart."
   },
+  "bianco-tonic": {
+    "name": "Bianco Tonic",
+    "description": "Witte vermout met tonic, de lange manier om vermout als aperitief te drinken. Bianco is zoeter en vanilliger dan droge vermout, en de kinine in de tonic brengt dat in balans.",
+    "instructions": [
+      "Vul een wijnglas met ijs.",
+      "Voeg de bianco vermout toe.",
+      "Top af met de tonic en roer één keer."
+    ],
+    "garnish": "Garneer met een partje limoen."
+  },
   "black-russian": {
     "name": "Black Russian",
     "instructions": [
@@ -145,6 +165,16 @@
     ],
     "garnish": "Partje limoen.",
     "description": "Cubaans, en ouder dan de Daiquiri. Honing en limoen over aguardiente, aangelengd met water in plaats van geshaket."
+  },
+  "carajillo": {
+    "name": "Carajillo",
+    "description": "In Spanje is een carajillo koffie met een scheut sterke drank erin. De geshakete versie op ijs, met Licor 43, komt uit Mexico en is nu wat de meeste bars ermee bedoelen. De vanille in de likeur doet wat anders suiker zou doen.",
+    "instructions": [
+      "Zet een verse espresso.",
+      "Shake hem tien seconden stevig met de Licor 43 en ijs.",
+      "Zeef op vers ijs in een rocksglas."
+    ],
+    "garnish": "Garneer met drie koffiebonen."
   },
   "cardamom-coffee": {
     "name": "Kardemomkoffie",
@@ -464,6 +494,16 @@
     ],
     "description": "Hete koffie onder koude room, en nooit geroerd — je drinkt de een door de ander. Klop de room net tot hij schenkbaar dik is."
   },
+  "jager-mule": {
+    "name": "Jäger Mule",
+    "description": "Een Moscow Mule met Jägermeister in plaats van wodka. De kruiden en de gember komen elkaar halverwege tegemoet, en als longdrink smaakt het totaal anders dan het shotje waar de meeste mensen het van kennen.",
+    "instructions": [
+      "Vul een longdrinkglas met ijs.",
+      "Voeg de Jägermeister en het limoensap toe.",
+      "Top af met de gemberbier en roer één keer."
+    ],
+    "garnish": "Garneer met een partje limoen."
+  },
   "john-collins": {
     "name": "John Collins",
     "instructions": [
@@ -524,6 +564,17 @@
     ],
     "garnish": "Citroentwist"
   },
+  "limoncello-spritz": {
+    "name": "Limoncello Spritz",
+    "description": "Het Spritz-recept met limoncello in plaats van Aperol. Zoeter en frisser dan het origineel, dus hij heeft de volle maat prosecco en soda nodig om licht te blijven.",
+    "instructions": [
+      "Vul een wijnglas met ijs.",
+      "Voeg de limoncello toe.",
+      "Top af met de prosecco en het sodawater.",
+      "Roer één keer, voorzichtig."
+    ],
+    "garnish": "Garneer met een schijfje citroen en een takje munt."
+  },
   "long-island-ice-tea": {
     "name": "Long Island Ice Tea",
     "instructions": [
@@ -532,6 +583,16 @@
     ],
     "garnish": "Schijfje citroen (optioneel)",
     "description": "Vijf sterke dranken en een scheut cola waardoor het op ijsthee lijkt. Je proeft er geen enkele apart, en dat is precies de truc."
+  },
+  "malibu-bay-breeze": {
+    "name": "Malibu Bay Breeze",
+    "description": "Een Bay Breeze met kokoslikeur in plaats van wodka. Cranberry voorkomt dat het naar zonnebrandcrème smaakt; ananas doet de rest. Weinig alcohol en in het glas gebouwd.",
+    "instructions": [
+      "Vul een longdrinkglas met ijs.",
+      "Voeg de kokoslikeur en het ananassap toe.",
+      "Top af met het cranberrysap en roer voorzichtig."
+    ],
+    "garnish": "Garneer met een partje ananas."
   },
   "martinez": {
     "name": "Martinez",
@@ -809,6 +870,16 @@
     ],
     "garnish": "Garneer met ananas en een maraschinokers.",
     "description": "Het Raffles Hotel, rond 1915, en over het recept wordt sindsdien geruzied. Acht ingrediënten die op een of andere manier tot rust komen."
+  },
+  "snowball": {
+    "name": "Snowball",
+    "description": "Advocaat verlengd tot longdrink, en in Groot-Brittannië een vaste waarde met kerst. Het origineel wordt afgetopt met prik-limonade; limoen, een beetje siroop en soda geven hetzelfde met minder suiker.",
+    "instructions": [
+      "Vul een longdrinkglas met ijs.",
+      "Voeg de advocaat, het limoensap en de siroop toe en roer de advocaat los.",
+      "Top af met het sodawater en roer voorzichtig."
+    ],
+    "garnish": "Garneer met een schijfje limoen."
   },
   "southside": {
     "name": "Southside",
