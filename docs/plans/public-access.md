@@ -22,22 +22,23 @@ is daarmee al kenbaar aan wie ernaar kijkt, dus een VPS zou €60 per jaar koste
 bewaken die openstaat. Wie die eis later alsnog wil, neemt de VPS **en** laat het
 WireGuard-endpoint erlangs lopen — anders is het incoherent.
 
-## Uitgangssituatie, gemeten
+## Uitgangssituatie, gemeten op de box
 
-| | Werkelijke staat (12 sep) | Wat de docs zeiden |
-|---|---|---|
-| Stack | `api` + `mongo` + `web` (caddy:2-alpine) up, project `barkast` | idem |
-| Web | Caddy publiceert `0.0.0.0:80`, serveert de SPA, **geen `/api`-proxy**, geen TLS | "komt nog" |
-| API | intern op `:3000`; `:8080` is **niet** meer gepubliceerd | admin-overlay op `:8080` |
-| WireGuard | `wg0` up, peer live vanaf 4G, UDP 51820 geforward | fase 1 net afgerond |
-| UFW | **actief**, deny incoming, alleen 51820/udp + 22/tcp vanaf LAN + alles op wg0 | "inactive" |
-| Backups | **twee `.age`-archieven, nachtelijke timer, restore-drill geslaagd** (hash-identiek) | "er is geen enkele backup" |
-| Auto-deploy | `barkast-autodeploy.timer` draait, elke 5 min | "niet geïnstalleerd" |
-| CORS_ORIGIN | `http://localhost:4200` | — |
+| | Staat |
+|---|---|
+| Stack | project `barkaart`: `api` + `mongo` + `web` (caddy:2-alpine), alle drie `unless-stopped` en up |
+| Web | Caddy publiceert `0.0.0.0:80` en serveert de SPA. **Geen `/api`-proxy, geen TLS** |
+| API | alleen intern op `:3000` — geen enkele hostpoort |
+| WireGuard | `wg0` op `10.10.0.1/24`, twee peers, UDP 51820 geforward |
+| UFW | actief, deny incoming: 51820/udp, 22/tcp vanaf het LAN, alles op `wg0`. Poort 80 valt erbuiten (Docker DNAT) |
+| Backups | nachtelijke `barkaart-backup.timer`, versleutelde archieven, restore-drill geslaagd. Kopie buiten de box loopt achter |
+| Auto-deploy | `barkaart-autodeploy.timer`, elk uur |
+| Catalogus | Mongo serveert een **oudere** catalogus dan de gecommitte bundel — `npm run db:seed` nodig |
+| CORS_ORIGIN | `http://localhost:4200` |
+| Reboot | overleefd: de stack komt vanzelf terug |
 
-**Het gevolg dat telt: de backup-poort is open.** `next-phase.md` liet "nodig iemand anders uit"
-wachten op een bewezen restore. Die is er nu (312 documenten, 18 indexen, byte-identiek, live
-aantoonbaar onaangeroerd). Publiek gaan is daarmee geen roekeloosheid meer, maar een volgende stap.
+De restore is bewezen (312 documenten, 18 indexen, byte-identiek, live onaangeroerd), dus de rem op
+"nodig iemand anders uit" is eraf. Wat ontbreekt is een publiek adres.
 
 ## Wat er nog tussen zit
 
@@ -63,14 +64,22 @@ dan niet omleiden.
 Vandaag serveert Caddy alleen bestanden. Erbij komen TLS en de API-proxy, waarmee mixed content,
 CORS en certificaten in één klap verdwijnen: alles wordt same-origin.
 
-De deSEC-module zit niet in het standaard-image, dus een eigen build (`deploy/caddy.Dockerfile`):
+De deSEC-module zit niet in het standaard-image. Caddy draait al als eigen image — `barkaart-web`
+(`frontend/Dockerfile`), met de SPA en `Caddyfile.lan` erin gebakken — dus de module komt in de
+runtime-stage dáárvan, niet in een apart `deploy/caddy.Dockerfile`:
 
 ```dockerfile
-FROM caddy:2-builder AS builder
+FROM caddy:2-builder AS caddy-builder
 RUN xcaddy build --with github.com/caddy-dns/desec
+# … de bestaande build-stage van de SPA …
 FROM caddy:2-alpine
-COPY --from=builder /usr/bin/caddy /usr/bin/caddy
+COPY --from=caddy-builder /usr/bin/caddy /usr/bin/caddy
+COPY deploy/Caddyfile.lan /etc/caddy/Caddyfile
+COPY --from=build /repo/frontend/dist/frontend/browser /srv
 ```
+
+Omdat de Caddyfile in het image zit, gaat elke wijziging eraan mee met de release en rolt
+`deploy.sh --rollback` hem mee terug.
 
 > **Waarom DNS-01 en niet HTTP-01.** HTTP-01 is tien minuten werk en vraagt geen module — maar het
 > vereist dat poort 80 open blijft staan, en het kan geen wildcard. Dezelfde Caddy gaat straks
@@ -138,11 +147,16 @@ same-origin gebruikt het niet, maar `main.ts:26` weigert te booten als het leeg 
 `/privacy`-route in de build opnemen — `docs/privacy-policy.md` bestaat en niets in de app linkt
 ernaar, terwijl er e-mailadressen en bcrypt-hashes gaan landen.
 
-### 3. Een `selfhost`-build van de frontend
+### 3. De productiebuild krijgt accounts
 
-`environment.prod.ts` is de Netlify-build: `authEnabled: false`, geen backend. Ernaast komt
-`environment.selfhost.ts` met `authEnabled: true`, `apiBaseUrl: '/api/'`, `analyticsUrl: '/api/events'`,
-`admin: false` — plus een `selfhost`-configuratie in `angular.json` die hem inwisselt.
+<!-- Herzien op 14 sep 2026. Dit stond hier als "een `selfhost`-build ernáást", omdat
+     environment.prod.ts toen nog de Netlify-build was. Netlify is uit de repo, dus er is nog maar
+     één productiebuild en het tweede environment-bestand heeft geen reden van bestaan meer. -->
+
+`environment.prod.ts` ís de self-hostbuild, en de enige die er nog is. Wat er verandert is één
+regel: `authEnabled: true`. `apiBaseUrl` staat al op het relatieve `'/api/'`, wat precies klopt
+zodra Caddy same-origin proxyt; `analyticsUrl` gaat naar `'/api/events'`, `admin` blijft `false`.
+Geen `environment.selfhost.ts`, geen extra configuratie in `angular.json`.
 
 **`dataSource` blijft `'static'`.** De gebundelde `catalog.json` is wat de app overeind houdt als de
 backend thuis plat ligt; een backend-storing mag alleen sync degraderen, niet de app. Bovendien
@@ -166,22 +180,25 @@ TXT-record nodig.
 certificaat is geldig, installeren-op-beginscherm werkt weer (een secure context, dus de service
 worker registreert eindelijk), registreren en inloggen werken, en `/api/admin/dashboard` geeft 404.
 
-### 5. Netlify eruit, en de rename erin
+### 5. Opruimen — gedaan
 
-Pas ná een geslaagde checkpoint 4: de `deploy`-job uit `.github/workflows/ci.yml`, `netlify.toml`
-weg. Tot dat moment is Netlify de gratis terugvaloptie.
+Netlify is uit de repo: de `deploy`-job in `.github/workflows/ci.yml`, `netlify.toml`, en
+`frontend/public/_redirects` + `_headers`. De SPA-fallback uit `_redirects` zit nu in
+`Caddyfile.lan`; de MIME-type-pin uit `_headers` bleek alleen voor Netlify nodig — `caddy:2-alpine`
+kent `.webmanifest` al (gemeten op de box, 10 okt). Er is dus geen gratis
+terugvaloptie meer: tot stap 4 rond is, is er geen publiek adres. Met de hand nog te doen: de site
+verwijderen bij Netlify en het access-token intrekken, waarna `NETLIFY_AUTH_TOKEN` uit de
+GitHub-secrets kan.
 
-En de rename landt nog: de box draait project `barkast` met volume `barkast_mongo-data`, de repo
-zegt `barkaart`. Een kale `up` maakt dan een **leeg** `barkaart_mongo-data` aan zonder te klagen.
-`deploy/README.md` §0 schrijft de drie routes uit. Nu er echte backups zijn heeft dit meer gewicht
-dan toen het werd opgeschreven: de archieven heten `barkast-*.age` en `MONGO_DB` op de box is
-`barkast`. Doe dit als losse stap, met een verse backup ervoor, en nooit tegelijk met stap 4.
+De rename is ook rond: de box draait project `barkaart`, met `barkaart_mongo-data`,
+`MONGO_DB=barkaart` en archieven `barkaart-*.age`. Het oude volume `deploy_mongo-data` staat er nog
+als enige kopie van de toestand ervoor; weggooien is een besluit, geen opruimwerk.
 
 ## Volgorde
 
 Stappen 1, 2 en 3 hebben **geen domein nodig** en zijn volledig te testen over WireGuard. Ze kunnen
 vandaag. Stap 0 loopt er parallel aan (NS-propagatie kost uren, geen werk). Stap 4 is het moment
-zelf. Stap 5 daarna, en de rename als laatste, apart.
+zelf. Stap 5 is klaar.
 
 Wat je niet moet doen: stap 4 vóór stap 2. Het verschil tussen "publiek" en "publiek met een open
 admin-dashboard" is één commit, en het is dezelfde middag.
@@ -189,7 +206,7 @@ admin-dashboard" is één commit, en het is dezelfde middag.
 ## Wat dit niet oplost
 
 "Bereikbaar vanaf internet" is hier niet hetzelfde als "altijd bereikbaar". Dit is een laptop op
-wifi, met een accu op 51,7% van zijn ontwerpcapaciteit (~1u50), zonder UPS, waarvan de
-reboot-recovery nog nooit is getest. Dat is prima voor dit project — maar het maakt offline-first
-dragend in plaats van decoratief, en het maakt de ethernetkabel uit fase 1 van het FileServer-plan
-(nog steeds overgeslagen, `eno2` is DOWN) een echte resilience-stap in plaats van een nettigheidje.
+wifi, met een accu op 55,6% van zijn ontwerpcapaciteit (~1u55) en zonder UPS. De reboot-recovery is
+inmiddels bewezen; de stroomvoorziening en de wifi zijn dat niet. Dat is prima voor dit project —
+maar het maakt offline-first dragend in plaats van decoratief, en het maakt een ethernetkabel
+(`eno2` is DOWN, er zit er geen in) een echte resilience-stap in plaats van een nettigheidje.

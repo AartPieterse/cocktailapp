@@ -6,9 +6,9 @@ someone intended and why.
 
 | Plan | About | Status |
 |---|---|---|
-| [next-phase.md](next-phase.md) | What to build next in CocktailApp, ordered by dependency | Steps 1 and 11 done; step 2 onward not started |
+| [next-phase.md](next-phase.md) | What to build next in CocktailApp, ordered by dependency | Steps 1–5, 11 and 12 done; 6–10 and 13–15 open; step 8 is superseded by public-access.md |
 | [variations.md](variations.md) | How variations are stored, and the contract for adding or removing catalog entries | Built, except the four promotions and runtime id remapping |
-| [public-access.md](public-access.md) | How Barkaart goes from LAN-only to a public https:// address, and in what order | Decided 12 Sep 2026; nothing built yet |
+| [public-access.md](public-access.md) | How Barkaart goes from LAN-only to a public https:// address, and in what order | Decided 12 Sep 2026; the rename from step 5 landed 14 Sep, steps 0–4 open |
 
 ## The private-cloud plans moved out
 
@@ -19,10 +19,11 @@ only because they concern the same machine.
 
 That machine link is real, though, and two things still bind the two repositories together:
 
-- **They share a host.** `aartfileserver` / `192.168.1.100` runs Barkaart's stack today and the Immich
-  stack later. Disk, RAM, ports, the backup window and the reverse proxy are shared, so the two sets
-  of plans constrain each other. The conventions in [`deploy/`](../../deploy/) — age encryption,
-  systemd timers, compose overlays — are deliberately reused by the private-cloud design.
+- **They share a host.** `aartfileserver` / `192.168.1.100` runs Barkaart alongside the private-cloud
+  stack. Disk, RAM, ports and the backup window are shared, so the two sets of plans constrain each
+  other — concretely, **Barkaart's Caddy holds port 80**. The conventions in
+  [`deploy/`](../../deploy/) — age encryption, systemd timers, compose overlays — are reused by the
+  private-cloud design.
 - **One finding lands squarely on this project**, and it is the reason to read the other repo at all:
 
 > **Barkaart's Cloudflare Tunnel is no longer safe to keep, for two independent reasons, and
@@ -53,3 +54,5 @@ drill serving both**, not two.
   to the box, phase by phase, including the traps the install hit.
 - [`../../deploy/README.md`](../../deploy/README.md) — the operational reference for the Barkaart stack.
 - [`../data-model.md`](../data-model.md) — the living reference for the catalog's shape.
+- `status.md` in the **FileServer** repo — the host itself: hardware, SMART, network. That repo owns
+  the machine; this one owns the application on it.
