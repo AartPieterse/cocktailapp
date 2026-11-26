@@ -31,11 +31,11 @@ export class AdminController {
     const { analytics, operational } = await this.metricsJson();
     const rows = (items: { id: string; count: number }[]) =>
       items.map((t) => `<tr><td>${escapeHtml(t.id)}</td><td>${t.count}</td></tr>`).join('') ||
-      '<tr><td colspan="2">—</td></tr>';
+      '<tr><td colspan="2">geen</td></tr>';
     const totals = Object.entries(analytics.totals)
       .sort((a, b) => b[1] - a[1])
       .map(([k, v]) => `<tr><td>${escapeHtml(k)}</td><td>${v}</td></tr>`)
-      .join('') || '<tr><td colspan="2">—</td></tr>';
+      .join('') || '<tr><td colspan="2">geen</td></tr>';
 
     return `<!doctype html><html lang="nl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
