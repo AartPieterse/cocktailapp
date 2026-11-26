@@ -1259,7 +1259,8 @@
       "family": "sour"
     },
     {
-      "name": "Alexander",
+      "id": "alexander",
+      "name": "Brandy Alexander",
       "category": "The Unforgettables",
       "baseSpirit": "brandy",
       "instructions": [
@@ -1677,7 +1678,7 @@
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "easy",
-      "notes": "WHITE RUSSIAN - Float fresh cream on the top and stir in slowly.",
+      "notes": "White Russian - Float fresh cream on the top and stir in slowly.",
       "tags": [
         "iba-official"
       ],
@@ -2489,7 +2490,7 @@
         }
       ],
       "description": "Rum and cola only becomes this when the lime goes in. Squeeze it in and drop the shell in the glass.",
-      "family": "fizz"
+      "family": "highball"
     },
     {
       "name": "Daiquiri",
@@ -2530,7 +2531,8 @@
       "family": "sour"
     },
     {
-      "name": "Dark ‘n' stormy",
+      "id": "dark-n-stormy",
+      "name": "Dark 'n' Stormy",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
       "instructions": [
@@ -3600,7 +3602,7 @@
       "method": "stirred",
       "difficulty": "medium",
       "garnish": "Garnish with a lemon slice and maraschino cherry.",
-      "notes": "Use ‘Old Tom' Gin for Tom Collins.",
+      "notes": "Use 'Old Tom' Gin for Tom Collins.",
       "tags": [
         "iba-official"
       ],
@@ -3677,7 +3679,8 @@
       "family": "tiki"
     },
     {
-      "name": "KIR",
+      "id": "kir",
+      "name": "Kir",
       "category": "Contemporary Classics",
       "instructions": [
         "Pour Crème de Cassis into glass, top up with white wine."
@@ -3718,7 +3721,8 @@
       "family": "sparkling"
     },
     {
-      "name": "Last word",
+      "id": "last-word",
+      "name": "Last Word",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
       "instructions": [
@@ -3758,7 +3762,8 @@
       "family": "sour"
     },
     {
-      "name": "Lemon drop Martini",
+      "id": "lemon-drop-martini",
+      "name": "Lemon Drop Martini",
       "category": "New Era Drinks",
       "baseSpirit": "vodka",
       "instructions": [
@@ -3837,7 +3842,8 @@
       "family": "fizz"
     },
     {
-      "name": "Long Island Ice Tea",
+      "id": "long-island-ice-tea",
+      "name": "Long Island Iced Tea",
       "category": "Contemporary Classics",
       "baseSpirit": "vodka",
       "instructions": [
@@ -3895,10 +3901,11 @@
         }
       ],
       "description": "Five spirits and a splash of cola that makes it look like iced tea. Tastes of none of them individually, which is the trick.",
-      "family": "tiki"
+      "family": "highball"
     },
     {
-      "name": "Mai-Tai",
+      "id": "mai-tai",
+      "name": "Mai Tai",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
       "instructions": [
@@ -4363,7 +4370,7 @@
       ],
       "alcoholFreeCounterpart": "Ginger Mule",
       "description": "Invented to sell vodka and copper mugs in equal measure. Ginger beer, not ginger ale — the heat is the point.",
-      "family": "fizz"
+      "family": "highball"
     },
     {
       "name": "Naked and Famous",
@@ -4640,7 +4647,7 @@
       ],
       "alcoholFreeCounterpart": "Virgin Paloma",
       "description": "Mexico drinks far more of these than Margaritas. Grapefruit soda and salt, and it works because it is not sweet.",
-      "family": "fizz"
+      "family": "highball"
     },
     {
       "name": "Paper Plane",
@@ -4810,7 +4817,8 @@
       "family": "sour"
     },
     {
-      "name": "Pina Colada",
+      "id": "pina-colada",
+      "name": "Piña Colada",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
       "instructions": [
@@ -5811,7 +5819,8 @@
       "family": "sour"
     },
     {
-      "name": "Spritz",
+      "id": "spritz",
+      "name": "Aperol Spritz",
       "category": "New Era Drinks",
       "instructions": [
         "Build all ingredients into a wine glass filled with ice.",
@@ -5998,7 +6007,7 @@
         }
       ],
       "description": "Cairo, 1942, invented as a hangover cure for soldiers. Ginger beer over gin and cognac, which reads worse than it drinks.",
-      "family": "fizz"
+      "family": "highball"
     },
     {
       "id": "sunrise",
@@ -6428,7 +6437,8 @@
       "family": "hot"
     },
     {
-      "name": "Vieux Carrè",
+      "id": "vieux-carre",
+      "name": "Vieux Carré",
       "category": "The Unforgettables",
       "baseSpirit": "whisky",
       "instructions": [

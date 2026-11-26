@@ -1,5 +1,5 @@
 {
-  "version": "773d6e07dc33",
+  "version": "839c350b3fcb",
   "schemaVersion": 2,
   "generatedFrom": "iba-cocktails-seed.json",
   "locale": "en",
@@ -1388,48 +1388,6 @@
       "alcoholFreeOfId": "tommy-s-margarita"
     },
     {
-      "id": "alexander",
-      "name": "Alexander",
-      "category": "The Unforgettables",
-      "baseSpirit": "brandy",
-      "description": "Dessert in a coupe: cream and cacao rounded off by brandy, with grated nutmeg doing more work than it looks.",
-      "instructions": [
-        "Pour all ingredients into cocktail shaker filled with ice cubes.",
-        "Shake and strain into a chilled cocktail glass."
-      ],
-      "ingredients": [
-        {
-          "ingredientId": "cognac",
-          "name": "Cognac",
-          "amount": 30,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "creme-de-cacao",
-          "name": "Crème de Cacao",
-          "amount": 30,
-          "unit": "ml",
-          "note": "Brown"
-        },
-        {
-          "ingredientId": "cream",
-          "name": "Cream",
-          "call": "Fresh Cream",
-          "amount": 30,
-          "unit": "ml"
-        }
-      ],
-      "glass": "coupe",
-      "method": "shaken",
-      "difficulty": "easy",
-      "garnish": "Sprinkle fresh ground nutmeg on top.",
-      "servings": 1,
-      "tags": [
-        "iba-official"
-      ],
-      "family": "creamy"
-    },
-    {
       "id": "americano",
       "name": "Americano",
       "category": "The Unforgettables",
@@ -1510,6 +1468,76 @@
         "iba-official"
       ],
       "family": "spirit-forward"
+    },
+    {
+      "id": "spritz",
+      "name": "Aperol Spritz",
+      "category": "New Era Drinks",
+      "baseSpirit": "other",
+      "description": "Venice, and the ratio is fixed: three prosecco, two Aperol, one soda. Low in alcohol and built for the afternoon.",
+      "instructions": [
+        "Build all ingredients into a wine glass filled with ice.",
+        "Stir gently."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "sparkling-wine",
+          "name": "Sparkling Wine",
+          "call": "Prosecco",
+          "amount": 90,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "aperol",
+          "name": "Aperol",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "soda-water",
+          "name": "Soda Water",
+          "amount": 1,
+          "unit": "splash"
+        }
+      ],
+      "glass": "wine",
+      "method": "stirred",
+      "difficulty": "easy",
+      "garnish": "Garnish with a slice of orange.",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ],
+      "variations": [
+        {
+          "key": "campari-spritz",
+          "name": "Campari Spritz",
+          "description": "Swap the Aperol for Campari for a more bitter profile.",
+          "swaps": [
+            {
+              "fromId": "aperol",
+              "toId": "campari"
+            }
+          ]
+        },
+        {
+          "key": "cynar-spritz",
+          "name": "Cynar Spritz",
+          "description": "Swap the Aperol for Cynar (artichoke amaro).",
+          "swaps": [
+            {
+              "fromId": "aperol",
+              "toId": "cynar"
+            }
+          ]
+        },
+        {
+          "key": "select-spritz",
+          "name": "Select Spritz",
+          "description": "The Venetian original, made with Select instead of Aperol."
+        }
+      ],
+      "family": "sparkling"
     },
     {
       "id": "apple-and-ginger",
@@ -1952,7 +1980,7 @@
       "glass": "rocks",
       "method": "stirred",
       "difficulty": "easy",
-      "notes": "WHITE RUSSIAN - Float fresh cream on the top and stir in slowly.",
+      "notes": "White Russian - Float fresh cream on the top and stir in slowly.",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -2121,6 +2149,48 @@
         "iba-official"
       ],
       "family": "sour"
+    },
+    {
+      "id": "alexander",
+      "name": "Brandy Alexander",
+      "category": "The Unforgettables",
+      "baseSpirit": "brandy",
+      "description": "Dessert in a coupe: cream and cacao rounded off by brandy, with grated nutmeg doing more work than it looks.",
+      "instructions": [
+        "Pour all ingredients into cocktail shaker filled with ice cubes.",
+        "Shake and strain into a chilled cocktail glass."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cognac",
+          "name": "Cognac",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredientId": "creme-de-cacao",
+          "name": "Crème de Cacao",
+          "amount": 30,
+          "unit": "ml",
+          "note": "Brown"
+        },
+        {
+          "ingredientId": "cream",
+          "name": "Cream",
+          "call": "Fresh Cream",
+          "amount": 30,
+          "unit": "ml"
+        }
+      ],
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Sprinkle fresh ground nutmeg on top.",
+      "servings": 1,
+      "tags": [
+        "iba-official"
+      ],
+      "family": "creamy"
     },
     {
       "id": "brandy-crusta",
@@ -2894,7 +2964,7 @@
       "tags": [
         "iba-official"
       ],
-      "family": "fizz"
+      "family": "highball"
     },
     {
       "id": "daiquiri",
@@ -2941,7 +3011,7 @@
     },
     {
       "id": "dark-n-stormy",
-      "name": "Dark ‘n' stormy",
+      "name": "Dark 'n' Stormy",
       "category": "New Era Drinks",
       "baseSpirit": "rum",
       "description": "Poured, not stirred, so the dark rum sits as a layer on the ginger beer. The name is trademarked in Bermuda.",
@@ -4218,7 +4288,7 @@
       "method": "stirred",
       "difficulty": "medium",
       "garnish": "Garnish with a lemon slice and maraschino cherry.",
-      "notes": "Use ‘Old Tom' Gin for Tom Collins.",
+      "notes": "Use 'Old Tom' Gin for Tom Collins.",
       "servings": 1,
       "tags": [
         "iba-official"
@@ -4281,7 +4351,7 @@
     },
     {
       "id": "kir",
-      "name": "KIR",
+      "name": "Kir",
       "category": "Contemporary Classics",
       "baseSpirit": "other",
       "description": "Burgundy's aperitif: a splash of blackcurrant in dry white wine. Named after a mayor of Dijon who served it constantly.",
@@ -4326,7 +4396,7 @@
     },
     {
       "id": "last-word",
-      "name": "Last word",
+      "name": "Last Word",
       "category": "The Unforgettables",
       "baseSpirit": "gin",
       "description": "Equal parts, all four assertive, and somehow balanced. Lost for decades and revived in Seattle in the 2000s.",
@@ -4372,7 +4442,7 @@
     },
     {
       "id": "lemon-drop-martini",
-      "name": "Lemon drop Martini",
+      "name": "Lemon Drop Martini",
       "category": "New Era Drinks",
       "baseSpirit": "vodka",
       "description": "A sugared rim and a lemon sour underneath. Sharper than it looks if the lemon is fresh.",
@@ -4505,7 +4575,7 @@
     },
     {
       "id": "long-island-ice-tea",
-      "name": "Long Island Ice Tea",
+      "name": "Long Island Iced Tea",
       "category": "Contemporary Classics",
       "baseSpirit": "vodka",
       "description": "Five spirits and a splash of cola that makes it look like iced tea. Tastes of none of them individually, which is the trick.",
@@ -4572,11 +4642,11 @@
       "tags": [
         "iba-official"
       ],
-      "family": "tiki"
+      "family": "highball"
     },
     {
       "id": "mai-tai",
-      "name": "Mai-Tai",
+      "name": "Mai Tai",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
       "description": "Trader Vic's, 1944, and nothing to do with pineapple juice. Orgeat and lime over good rum, with a mint sprig for the nose.",
@@ -5147,7 +5217,7 @@
       "tags": [
         "iba-official"
       ],
-      "family": "fizz",
+      "family": "highball",
       "alcoholFreeCounterpartId": "ginger-mule"
     },
     {
@@ -5462,7 +5532,7 @@
       "tags": [
         "iba-official"
       ],
-      "family": "fizz",
+      "family": "highball",
       "alcoholFreeCounterpartId": "virgin-paloma"
     },
     {
@@ -5657,7 +5727,7 @@
     },
     {
       "id": "pina-colada",
-      "name": "Pina Colada",
+      "name": "Piña Colada",
       "category": "Contemporary Classics",
       "baseSpirit": "rum",
       "description": "Puerto Rico's national drink. Coconut cream, not coconut milk — the difference is the whole texture.",
@@ -6846,76 +6916,6 @@
       "family": "sour"
     },
     {
-      "id": "spritz",
-      "name": "Spritz",
-      "category": "New Era Drinks",
-      "baseSpirit": "other",
-      "description": "Venice, and the ratio is fixed: three prosecco, two Aperol, one soda. Low in alcohol and built for the afternoon.",
-      "instructions": [
-        "Build all ingredients into a wine glass filled with ice.",
-        "Stir gently."
-      ],
-      "ingredients": [
-        {
-          "ingredientId": "sparkling-wine",
-          "name": "Sparkling Wine",
-          "call": "Prosecco",
-          "amount": 90,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "aperol",
-          "name": "Aperol",
-          "amount": 60,
-          "unit": "ml"
-        },
-        {
-          "ingredientId": "soda-water",
-          "name": "Soda Water",
-          "amount": 1,
-          "unit": "splash"
-        }
-      ],
-      "glass": "wine",
-      "method": "stirred",
-      "difficulty": "easy",
-      "garnish": "Garnish with a slice of orange.",
-      "servings": 1,
-      "tags": [
-        "iba-official"
-      ],
-      "variations": [
-        {
-          "key": "campari-spritz",
-          "name": "Campari Spritz",
-          "description": "Swap the Aperol for Campari for a more bitter profile.",
-          "swaps": [
-            {
-              "fromId": "aperol",
-              "toId": "campari"
-            }
-          ]
-        },
-        {
-          "key": "cynar-spritz",
-          "name": "Cynar Spritz",
-          "description": "Swap the Aperol for Cynar (artichoke amaro).",
-          "swaps": [
-            {
-              "fromId": "aperol",
-              "toId": "cynar"
-            }
-          ]
-        },
-        {
-          "key": "select-spritz",
-          "name": "Select Spritz",
-          "description": "The Venetian original, made with Select instead of Aperol."
-        }
-      ],
-      "family": "sparkling"
-    },
-    {
       "id": "stinger",
       "name": "Stinger",
       "category": "The Unforgettables",
@@ -7054,7 +7054,7 @@
       "tags": [
         "iba-official"
       ],
-      "family": "fizz"
+      "family": "highball"
     },
     {
       "id": "sunrise",
@@ -7545,7 +7545,7 @@
     },
     {
       "id": "vieux-carre",
-      "name": "Vieux Carrè",
+      "name": "Vieux Carré",
       "category": "The Unforgettables",
       "baseSpirit": "whisky",
       "description": "New Orleans' French Quarter in a glass, and named after it. Two spirits, two bitters, and nothing sharp anywhere.",

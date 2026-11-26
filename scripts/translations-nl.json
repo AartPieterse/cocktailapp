@@ -681,7 +681,7 @@
       "garnish": "Zoutrand en een schijfje limoen"
     },
     "alexander": {
-      "name": "Alexander",
+      "name": "Brandy Alexander",
       "description": "Dessert in een coupe: room en cacao afgerond met cognac, waarbij de geraspte nootmuskaat meer doet dan je zou denken.",
       "instructions": [
         "Doe alle ingrediënten in een shaker gevuld met ijsblokjes.",
@@ -765,7 +765,7 @@
         "Doe de perzikpuree met ijs in het mengglas en voeg de prosecco toe.",
         "Roer voorzichtig en schenk in een gekoeld flûteglas."
       ],
-      "notes": "PUCCINI - vers mandarijnensap; ROSSINI - verse aardbeienpuree; TINTORETTO - vers granaatappelsap.",
+      "notes": "Puccini - vers mandarijnensap; Rossini - verse aardbeienpuree; Tintoretto - vers granaatappelsap.",
       "variations": {
         "puccini": {
           "name": "Puccini",
@@ -806,7 +806,7 @@
         "Doe de ingrediënten in een old-fashionedglas gevuld met ijsblokjes.",
         "Roer voorzichtig."
       ],
-      "notes": "WHITE RUSSIAN - laat verse room bovenop drijven en roer langzaam door."
+      "notes": "White Russian - laat verse room bovenop drijven en roer langzaam door."
     },
     "boulevardier": {
       "name": "Boulevardier",
@@ -1186,12 +1186,12 @@
       "garnish": "Partje ananas"
     },
     "kir": {
-      "name": "KIR",
+      "name": "Kir",
       "description": "Het aperitief van de Bourgogne: een scheut cassis in droge witte wijn. Genoemd naar een burgemeester van Dijon die het onophoudelijk schonk.",
       "instructions": [
         "Schenk crème de cassis in het glas en vul aan met droge witte wijn."
       ],
-      "notes": "KIR ROYAL - Gebruik champagne in plaats van witte wijn.",
+      "notes": "Kir Royal - Gebruik champagne in plaats van witte wijn.",
       "variations": {
         "kir-royal": {
           "name": "Kir Royal",
@@ -1200,7 +1200,7 @@
       }
     },
     "last-word": {
-      "name": "Last word",
+      "name": "Last Word",
       "description": "Gelijke delen, alle vier uitgesproken, en toch in balans. Decennialang vergeten en in de jaren 2000 in Seattle herontdekt.",
       "instructions": [
         "Doe alle ingrediënten in een shaker.",
@@ -1208,7 +1208,7 @@
       ]
     },
     "lemon-drop-martini": {
-      "name": "Lemon drop Martini",
+      "name": "Lemon Drop Martini",
       "description": "Een suikerrand met daaronder een citroensour. Scherper dan hij eruitziet, als de citroen vers is.",
       "instructions": [
         "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
@@ -1238,7 +1238,7 @@
       "garnish": "Garneer met een schijfje citroen en een takje munt."
     },
     "long-island-ice-tea": {
-      "name": "Long Island Ice Tea",
+      "name": "Long Island Iced Tea",
       "description": "Vijf sterke dranken en een scheut cola waardoor het op ijsthee lijkt. Je proeft er geen enkele apart, en dat is precies de truc.",
       "instructions": [
         "Doe alle ingrediënten in een met ijs gevuld highballglas.",
@@ -1561,7 +1561,7 @@
       "garnish": "Garneer met een rode peper."
     },
     "spritz": {
-      "name": "Spritz",
+      "name": "Aperol Spritz",
       "description": "Venetië, en de verhouding ligt vast: drie prosecco, twee Aperol, één soda. Laag in alcohol en gemaakt voor de middag.",
       "instructions": [
         "Bouw alle ingrediënten op in een wijnglas gevuld met ijs.",
@@ -1702,7 +1702,7 @@
       "garnish": "Geraspte nootmuskaat"
     },
     "vieux-carre": {
-      "name": "Vieux Carrè",
+      "name": "Vieux Carré",
       "description": "Het Franse Kwartier van New Orleans in een glas, en ernaar genoemd. Twee sterke dranken, twee bitters, en nergens iets scherps.",
       "instructions": [
         "Doe alle ingrediënten met ijsblokjes in een mengglas.",
