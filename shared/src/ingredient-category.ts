@@ -102,11 +102,11 @@ export const CATEGORY_LABELS_PLURAL: Record<Locale, Record<IngredientCategory, s
 /** A short helper line shown under each wizard section heading, per locale. */
 export const CATEGORY_HINTS: Record<Locale, Record<IngredientCategory, string>> = {
   nl: {
-    spirit: 'De basis van elke cocktail — gin, wodka, rum, whisky…',
+    spirit: 'De basis van elke cocktail: gin, wodka, rum, whisky…',
     liqueur: 'Zoete of kruidige likeuren die smaak en kleur geven.',
-    wine: 'Wijn, vermout en bruiswijn — droog tot zoet.',
+    wine: 'Wijn, vermout en bruiswijn, van droog tot zoet.',
     mixer: 'Frisdrank en bruis om mee aan te vullen.',
-    juice: 'Vers of uit pak — citroen, limoen, sinaasappel…',
+    juice: 'Vers of uit pak: citroen, limoen, sinaasappel…',
     syrup: 'Suikersiroop en smaaksiropen voor balans.',
     bitters: 'Een paar druppels voor diepte en complexiteit.',
     dairy: 'Room, kokosroom en ei voor volle, romige drankjes.',
@@ -115,11 +115,11 @@ export const CATEGORY_HINTS: Record<Locale, Record<IngredientCategory, string>> 
     other: 'Alles wat verder niet in een hokje past.',
   },
   en: {
-    spirit: 'The base of every cocktail — gin, vodka, rum, whisky…',
+    spirit: 'The base of every cocktail: gin, vodka, rum, whisky…',
     liqueur: 'Sweet or spiced liqueurs that add flavour and colour.',
-    wine: 'Wine, vermouth and sparkling — dry to sweet.',
+    wine: 'Wine, vermouth and sparkling, from dry to sweet.',
     mixer: 'Sodas and fizz to top things up.',
-    juice: 'Fresh or from a carton — lemon, lime, orange…',
+    juice: 'Fresh or from a carton: lemon, lime, orange…',
     syrup: 'Sugar syrup and flavoured syrups for balance.',
     bitters: 'A few drops for depth and complexity.',
     dairy: 'Cream, coconut cream and egg for rich, silky drinks.',

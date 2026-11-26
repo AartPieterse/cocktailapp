@@ -95,7 +95,7 @@ export const DRINK_FAMILY_RATIO: Record<Locale, Record<DrinkFamily, string>> = {
 /** One or two sentences on what the family is and how to improvise inside it. */
 export const DRINK_FAMILY_ABOUT: Record<Locale, Record<DrinkFamily, string>> = {
   nl: {
-    sour: 'De grootste familie en de nuttigste om te kennen: iets sterks, iets zuurs, iets zoets. Wissel de sterke drank en je hebt een ander drankje met dezelfde balans — dat is het verschil tussen een Daiquiri en een Whiskey Sour.',
+    sour: 'De grootste familie en de nuttigste om te kennen: iets sterks, iets zuurs, iets zoets. Wissel de sterke drank en je hebt een ander drankje met dezelfde balans. Dat is het verschil tussen een Daiquiri en een Whiskey Sour.',
     'spirit-forward':
       'Alleen gedistilleerd, geroerd en koud geserveerd. Er is niets om je achter te verschuilen, dus alles hangt af van de verhouding en de verdunning.',
     highball: 'Eén sterke drank, lang gemaakt met iets bruisends. De makkelijkste familie om te maken en de moeilijkste om goed te maken: vol ijs, één keer roeren.',
@@ -103,11 +103,11 @@ export const DRINK_FAMILY_ABOUT: Record<Locale, Record<DrinkFamily, string>> = {
     sparkling: 'Iets kleins onderin, aangevuld met mousserende wijn. De temperatuur telt hier zwaarder dan de verhouding.',
     creamy: 'Room, kokosroom of ei geven body en zachtheid. Stevig shaken is verplicht, anders scheidt het.',
     tiki: 'Meerdere rums, citrus en siroop, gelaagd tot iets wat naar geen van de onderdelen smaakt. Complex bedoeld, niet toevallig.',
-    hot: 'Warm geschonken, en de temperatuur doet het werk dat ijs anders doet. Niet laten koken — daar wordt bijna alles bitter van.',
+    hot: 'Warm geschonken, en de temperatuur doet het werk dat ijs anders doet. Niet laten koken, daar wordt bijna alles bitter van.',
     savoury: 'Geen suiker maar zout, zuur en kruiden. De uitzondering in de cocktailkaart, en het bewijs dat balans niet hetzelfde is als zoet.',
   },
   en: {
-    sour: 'The largest family and the most useful to know: something strong, something sour, something sweet. Swap the spirit and you have a different drink with the same balance — that is all that separates a Daiquiri from a Whiskey Sour.',
+    sour: 'The largest family and the most useful to know: something strong, something sour, something sweet. Swap the spirit and you have a different drink with the same balance. That is all that separates a Daiquiri from a Whiskey Sour.',
     'spirit-forward':
       'Spirits only, stirred and served cold. There is nothing to hide behind, so everything rests on the ratio and the dilution.',
     highball: 'One spirit, made long with something fizzy. The easiest family to make and the hardest to make well: full of ice, stirred once.',
@@ -115,7 +115,7 @@ export const DRINK_FAMILY_ABOUT: Record<Locale, Record<DrinkFamily, string>> = {
     sparkling: 'Something small in the bottom, topped with sparkling wine. Temperature matters more here than the ratio does.',
     creamy: 'Cream, coconut cream or egg give body and softness. A hard shake is not optional or it separates.',
     tiki: 'Several rums, citrus and syrup, layered into something that tastes of none of its parts. Complex on purpose, not by accident.',
-    hot: 'Served warm, with temperature doing the work ice usually does. Never boil it — almost everything turns bitter above a simmer.',
+    hot: 'Served warm, with temperature doing the work ice usually does. Never boil it: almost everything turns bitter above a simmer.',
     savoury: 'No sugar, but salt, acid and seasoning. The exception on a cocktail list, and proof that balance is not the same as sweetness.',
   },
 };

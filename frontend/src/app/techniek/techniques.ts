@@ -63,9 +63,9 @@ export const TECHNIQUES: readonly Technique[] = [
     copy: {
       nl: {
         title: 'Geschud',
-        lede: 'Koelen, verdunnen en lucht inslaan — in twaalf seconden.',
+        lede: 'Koelen, verdunnen en lucht inslaan, in twaalf seconden.',
         why: [
-          'Schudden doet drie dingen tegelijk: het koelt, het verdunt en het slaat lucht in. Die derde is waar het om gaat. Alles met citrus, ei, room of sap wordt er lichter en romiger van — een Whiskey Sour zonder schuimkraag is gewoon whisky met citroen.',
+          'Schudden doet drie dingen tegelijk: het koelt, het verdunt en het slaat lucht in. Die derde is waar het om gaat. Alles met citrus, ei, room of sap wordt er lichter en romiger van. Een Whiskey Sour zonder schuimkraag is gewoon whisky met citroen.',
           'En daarom schud je een Negroni juist níet. Drank zonder sap heeft geen lucht nodig; die wordt er alleen troebel van.',
         ],
         steps: [
@@ -77,25 +77,25 @@ export const TECHNIQUES: readonly Technique[] = [
         mistakes: [
           {
             title: 'Te weinig ijs',
-            body: 'Half gevuld schud je vooral smeltwater. Vol blik, kort schudden — niet andersom.',
+            body: 'Half gevuld schud je vooral smeltwater. Vol blik, kort schudden, niet andersom.',
           },
           {
             title: 'Schudden wat geroerd moet worden',
-            body: 'Alles wat alleen uit gedistilleerd bestaat — Martini, Manhattan, Negroni — wordt troebel en schuimig van de shaker. Die gaan de roerbeker in.',
+            body: 'Alles wat alleen uit gedistilleerd bestaat (Martini, Manhattan, Negroni) wordt troebel en schuimig van de shaker. Die gaan de roerbeker in.',
           },
         ],
         tell: 'Aan de buitenkant van het blik slaat rijp neer en het wordt te koud om vast te houden. Dat is het signaal, niet de klok. Voel je het niet, dan was er te weinig ijs of schudde je te zacht.',
         drill: {
-          body: 'Schud citroensap, suikersiroop en water — twaalf seconden, tot het blik aan de buitenkant te koud is om vast te houden. Zo leer je het geluid en de kou zonder een fles open te maken.',
+          body: 'Schud citroensap, suikersiroop en water twaalf seconden lang, tot het blik aan de buitenkant te koud is om vast te houden. Zo leer je het geluid en de kou zonder een fles open te maken.',
           kit: ['lemon-juice', 'simple-syrup', 'water', 'ice'],
           seconds: 12,
         },
       },
       en: {
         title: 'Shaken',
-        lede: 'Chill, dilute and aerate — in twelve seconds.',
+        lede: 'Chill, dilute and aerate, in twelve seconds.',
         why: [
-          'Shaking does three things at once: it chills, it dilutes and it beats air in. The third is the point. Anything with citrus, egg, cream or juice comes out lighter and softer for it — a Whiskey Sour with no head is just whisky and lemon.',
+          'Shaking does three things at once: it chills, it dilutes and it beats air in. The third is the point. Anything with citrus, egg, cream or juice comes out lighter and softer for it. A Whiskey Sour with no head is just whisky and lemon.',
           'Which is exactly why you do not shake a Negroni. Spirits without juice need no air; all they get from a shaker is a cloud.',
         ],
         steps: [
@@ -107,16 +107,16 @@ export const TECHNIQUES: readonly Technique[] = [
         mistakes: [
           {
             title: 'Not enough ice',
-            body: 'A half-filled tin mostly shakes meltwater. Full tin, short shake — not the other way round.',
+            body: 'A half-filled tin mostly shakes meltwater. Full tin, short shake, not the other way round.',
           },
           {
             title: 'Shaking what should be stirred',
-            body: 'Anything that is only spirits — Martini, Manhattan, Negroni — turns cloudy and frothy in a shaker. Those go in the mixing glass.',
+            body: 'Anything that is only spirits (Martini, Manhattan, Negroni) turns cloudy and frothy in a shaker. Those go in the mixing glass.',
           },
         ],
         tell: 'Frost forms on the outside of the tin and it becomes too cold to hold. That is the signal, not the clock. If you cannot feel it, there was too little ice or you shook too gently.',
         drill: {
-          body: 'Shake lemon juice, sugar syrup and water — twelve seconds, until the outside of the tin is too cold to hold. That teaches you the sound and the cold without opening a bottle.',
+          body: 'Shake lemon juice, sugar syrup and water for twelve seconds, until the outside of the tin is too cold to hold. That teaches you the sound and the cold without opening a bottle.',
           kit: ['lemon-juice', 'simple-syrup', 'water', 'ice'],
           seconds: 12,
         },
@@ -152,7 +152,7 @@ export const TECHNIQUES: readonly Technique[] = [
         ],
         tell: 'De buitenkant van de beker beslaat en de drank wordt duidelijk stroperiger aan de lepel. Twintig seconden is de vuistregel, maar de beker vertelt het je.',
         drill: {
-          body: 'Roer water met ijs, twintig seconden, en proef het daarna. Je proeft de verdunning — en dat is precies wat je bij een Martini regelt.',
+          body: 'Roer water met ijs, twintig seconden, en proef het daarna. Je proeft de verdunning, en dat is precies wat je bij een Martini regelt.',
           kit: ['water', 'ice'],
           seconds: 20,
         },
@@ -182,7 +182,7 @@ export const TECHNIQUES: readonly Technique[] = [
         ],
         tell: 'The outside of the glass frosts and the drink turns visibly thicker on the spoon. Twenty seconds is the rule of thumb, but the glass tells you.',
         drill: {
-          body: 'Stir water with ice for twenty seconds, then taste it. You can taste the dilution — and that is the exact thing you are setting in a Martini.',
+          body: 'Stir water with ice for twenty seconds, then taste it. You can taste the dilution, and that is the exact thing you are setting in a Martini.',
           kit: ['water', 'ice'],
           seconds: 20,
         },
@@ -201,7 +201,7 @@ export const TECHNIQUES: readonly Technique[] = [
           'Het is de makkelijkste techniek en tegelijk de meest onvergeeflijke, want er is geen enkele stap waarin je iets kunt rechttrekken.',
         ],
         steps: [
-          'Vul het glas helemaal met ijs — tot boven, niet halverwege.',
+          'Vul het glas helemaal met ijs: tot boven, niet halverwege.',
           'Schenk eerst de zware ingrediënten: sap, siroop, sterke drank.',
           'Top af met het bruisende deel.',
           'Roer één keer, van onderaf omhoog. Meer niet.',
@@ -209,7 +209,7 @@ export const TECHNIQUES: readonly Technique[] = [
         mistakes: [
           {
             title: 'Te weinig ijs',
-            body: 'Een half gevuld glas smelt snel en wordt halverwege slap. Vol ijs koelt beter én verdunt minder — dat voelt tegenstrijdig en is het niet.',
+            body: 'Een half gevuld glas smelt snel en wordt halverwege slap. Vol ijs koelt beter én verdunt minder. Dat voelt tegenstrijdig en is het niet.',
           },
           {
             title: 'Doorroeren na het bruis',
@@ -231,7 +231,7 @@ export const TECHNIQUES: readonly Technique[] = [
           'It is the easiest technique and the least forgiving, because there is no later step in which to fix anything.',
         ],
         steps: [
-          'Fill the glass completely with ice — to the top, not halfway.',
+          'Fill the glass completely with ice: to the top, not halfway.',
           'Pour the heavy ingredients first: juice, syrup, spirits.',
           'Top with the carbonated part.',
           'Stir once, lifting from the bottom. No more than that.',
@@ -239,7 +239,7 @@ export const TECHNIQUES: readonly Technique[] = [
         mistakes: [
           {
             title: 'Not enough ice',
-            body: 'A half-filled glass melts fast and goes weak halfway down. A full glass chills better and dilutes less — which feels contradictory and is not.',
+            body: 'A half-filled glass melts fast and goes weak halfway down. A full glass chills better and dilutes less, which feels contradictory and is not.',
           },
           {
             title: 'Stirring after the fizz',
@@ -268,7 +268,7 @@ export const TECHNIQUES: readonly Technique[] = [
         ],
         steps: [
           'Leg het kruid of fruit in de bodem van het glas of de shaker.',
-          'Voeg de suiker of siroop toe — die werkt als schuurmiddel en helpt de olie eruit.',
+          'Voeg de suiker of siroop toe. Die werkt als schuurmiddel en helpt de olie eruit.',
           'Druk drie tot vier keer en draai een kwartslag. Niet malen.',
           'Bouw de rest van de drank er direct bovenop.',
         ],
@@ -284,7 +284,7 @@ export const TECHNIQUES: readonly Technique[] = [
         ],
         tell: 'Je ruikt het voordat je het ziet. Houd het glas onder je neus: er hoort munt of citrus uit te komen, niet gras.',
         drill: {
-          body: 'Muddle munt met suiker in een leeg glas en ruik eraan. Doe het daarna nog een keer en stamp door tot het blad donker wordt — ruik opnieuw. Het verschil is het hele punt.',
+          body: 'Muddle munt met suiker in een leeg glas en ruik eraan. Doe het daarna nog een keer en stamp door tot het blad donker wordt. Ruik opnieuw. Het verschil is het hele punt.',
           kit: ['mint', 'sugar'],
           seconds: null,
         },
@@ -298,7 +298,7 @@ export const TECHNIQUES: readonly Technique[] = [
         ],
         steps: [
           'Put the herb or fruit in the base of the glass or shaker.',
-          'Add the sugar or syrup — it works as an abrasive and helps the oil out.',
+          'Add the sugar or syrup. It works as an abrasive and helps the oil out.',
           'Press three or four times, turning a quarter each time. Do not grind.',
           'Build the rest of the drink straight on top.',
         ],
@@ -314,7 +314,7 @@ export const TECHNIQUES: readonly Technique[] = [
         ],
         tell: 'You smell it before you see it. Hold the glass under your nose: it should come up mint or citrus, not grass.',
         drill: {
-          body: 'Muddle mint with sugar in an empty glass and smell it. Then do it again and keep pounding until the leaf darkens — smell again. The difference is the whole lesson.',
+          body: 'Muddle mint with sugar in an empty glass and smell it. Then do it again and keep pounding until the leaf darkens, then smell again. The difference is the whole lesson.',
           kit: ['mint', 'sugar'],
           seconds: null,
         },
@@ -330,7 +330,7 @@ export const TECHNIQUES: readonly Technique[] = [
         lede: 'Het ingrediënt dat in bijna elk recept zit en nergens op de lijst staat.',
         why: [
           'IJs is geen koeling maar een ingrediënt: het levert het water dat elke drank nodig heeft. Een geroerde Martini is voor ongeveer een kwart smeltwater, en dat is geen verlies maar het recept.',
-          'De vorm bepaalt het tempo. Groot ijs heeft weinig oppervlak en koelt sneller dan het smelt; gemalen ijs koelt bliksemsnel en verdunt net zo hard — precies wat je wilt in een julep, en precies wat je niet wilt in een Old Fashioned.',
+          'De vorm bepaalt het tempo. Groot ijs heeft weinig oppervlak en koelt sneller dan het smelt; gemalen ijs koelt bliksemsnel en verdunt net zo hard: precies wat je wilt in een julep, en precies wat je niet wilt in een Old Fashioned.',
         ],
         steps: [
           'Gebruik groot, hard ijs recht uit de vriezer voor alles wat geroerd of op ijs geserveerd wordt.',
@@ -359,8 +359,8 @@ export const TECHNIQUES: readonly Technique[] = [
         title: 'Ice and glassware',
         lede: 'The ingredient in nearly every recipe that appears on no ingredient list.',
         why: [
-          'Ice is not cooling, it is an ingredient: it supplies the water every drink needs. A stirred Martini is roughly a quarter meltwater, and that is not a loss — it is the recipe.',
-          'Shape sets the pace. Large ice has little surface area and chills faster than it melts; crushed ice chills instantly and dilutes just as fast — exactly what a julep wants, and exactly what an Old Fashioned does not.',
+          'Ice is not cooling, it is an ingredient: it supplies the water every drink needs. A stirred Martini is roughly a quarter meltwater, and that is not a loss. It is the recipe.',
+          'Shape sets the pace. Large ice has little surface area and chills faster than it melts; crushed ice chills instantly and dilutes just as fast: exactly what a julep wants, and exactly what an Old Fashioned does not.',
         ],
         steps: [
           'Use large, hard ice straight from the freezer for anything stirred or served on the rocks.',
@@ -399,7 +399,7 @@ export const TECHNIQUES: readonly Technique[] = [
           'Daarom staat er in zoveel recepten sinaasappel bij bittere drankjes en limoen bij frisse. Laat je de garnering weg, dan mis je niet een plaatje maar een halve smaak.',
         ],
         steps: [
-          'Snijd de schil breed en dun, met zo min mogelijk wit — het wit is bitter.',
+          'Snijd de schil breed en dun, met zo min mogelijk wit. Het wit is bitter.',
           'Houd de schil met de gekleurde kant naar beneden, een paar centimeter boven het glas.',
           'Knijp hem één keer kort dicht. Je ziet een fijne nevel op het oppervlak.',
           'Wrijf de rand ermee in en leg hem in het glas, of gooi hem weg als het recept dat zegt.',
@@ -429,7 +429,7 @@ export const TECHNIQUES: readonly Technique[] = [
           'That is why so many recipes pair orange with bitter drinks and lime with fresh ones. Skip the garnish and you lose half a flavour, not a picture.',
         ],
         steps: [
-          'Cut the peel wide and thin, with as little pith as possible — pith is bitter.',
+          'Cut the peel wide and thin, with as little pith as possible. Pith is bitter.',
           'Hold the peel coloured-side down, a few centimetres above the glass.',
           'Pinch it shut once. You will see a fine mist settle on the surface.',
           'Wipe it around the rim and drop it in, or discard it if the recipe says so.',

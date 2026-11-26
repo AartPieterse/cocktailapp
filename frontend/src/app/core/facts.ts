@@ -28,16 +28,16 @@ export const FACTS: readonly Fact[] = [
     id: 'vodka-spelling',
     ingredientId: 'vodka',
     text: {
-      nl: "'Wodka' en 'vodka' zijn precies dezelfde drank — alleen de spelling verschilt per taal. In Polen, Nederland en Duitsland schrijf je wodka, in het Engels vodka.",
-      en: "'Wodka' and 'vodka' are exactly the same spirit — only the spelling differs by language. Polish, Dutch and German write wodka; English writes vodka.",
+      nl: "'Wodka' en 'vodka' zijn precies dezelfde drank. Alleen de spelling verschilt per taal. In Polen, Nederland en Duitsland schrijf je wodka, in het Engels vodka.",
+      en: "'Wodka' and 'vodka' are exactly the same spirit. Only the spelling differs by language. Polish, Dutch and German write wodka; English writes vodka.",
     },
   },
   {
     id: 'absinthe-thujone',
     ingredientId: 'absinthe',
     text: {
-      nl: 'Absint werd decennialang verboden omdat men dacht dat de stof thujon hallucinaties gaf. Later onderzoek liet zien dat het gehalte veel te laag is voor enig effect — het was gewoon de hoge alcohol.',
-      en: 'Absinthe was banned for decades because thujone was believed to cause hallucinations. Later analysis showed the levels are far too low to do anything — it was simply the high proof.',
+      nl: 'Absint werd decennialang verboden omdat men dacht dat de stof thujon hallucinaties gaf. Later onderzoek liet zien dat het gehalte veel te laag is voor enig effect. Het was gewoon de hoge alcohol.',
+      en: 'Absinthe was banned for decades because thujone was believed to cause hallucinations. Later analysis showed the levels are far too low to do anything. It was simply the high proof.',
     },
   },
   {
@@ -60,7 +60,7 @@ export const FACTS: readonly Fact[] = [
     id: 'angostura-town',
     ingredientId: 'angostura-bitters',
     text: {
-      nl: 'Angostura bitter komt niet van een plant, maar is genoemd naar de stad Angostura in Venezuela — tegenwoordig Ciudad Bolívar.',
+      nl: 'Angostura bitter komt niet van een plant, maar is genoemd naar de stad Angostura in Venezuela, tegenwoordig Ciudad Bolívar.',
       en: 'Angostura bitters are not made from a plant called angostura: they are named after the town of Angostura in Venezuela, today Ciudad Bolívar.',
     },
   },
@@ -68,15 +68,15 @@ export const FACTS: readonly Fact[] = [
     id: 'angostura-label',
     ingredientId: 'angostura-bitters',
     text: {
-      nl: 'Het etiket van Angostura is te groot voor het flesje. Volgens het bedrijf zelf een oude vergissing — twee familieleden bestelden los van elkaar het etiket en de fles — en die vergissing is nooit rechtgezet.',
+      nl: 'Het etiket van Angostura is te groot voor het flesje. Volgens het bedrijf zelf een oude vergissing (twee familieleden bestelden los van elkaar het etiket en de fles), en die vergissing is nooit rechtgezet.',
       en: "Angostura's label is famously too big for its bottle. The company's own telling is that two family members ordered the label and the bottle separately, and the mistake was never corrected.",
     },
   },
   {
     id: 'coupe-myth',
     text: {
-      nl: 'De coupe waaruit champagne vroeger werd gedronken is níet gevormd naar de borst van Marie Antoinette — dat is een hardnekkig broodjeaapverhaal.',
-      en: "The coupe glass was not moulded from Marie Antoinette's breast — that is a stubborn piece of folklore, nothing more.",
+      nl: 'De coupe waaruit champagne vroeger werd gedronken is níet gevormd naar de borst van Marie Antoinette. Dat is een hardnekkig broodjeaapverhaal.',
+      en: "The coupe glass was not moulded from Marie Antoinette's breast. That is a stubborn piece of folklore, nothing more.",
     },
   },
   {
@@ -99,8 +99,8 @@ export const FACTS: readonly Fact[] = [
     id: 'campari-carmine',
     ingredientId: 'campari',
     text: {
-      nl: "Campari's felrode kleur kwam ooit van karmijn — een kleurstof uit gemalen schildluizen. Sinds 2006 wordt er een kunstmatige kleurstof gebruikt.",
-      en: "Campari's bright red used to come from carmine — a dye made from crushed cochineal insects. Since 2006 it has been coloured artificially.",
+      nl: "Campari's felrode kleur kwam ooit van karmijn, een kleurstof uit gemalen schildluizen. Sinds 2006 wordt er een kunstmatige kleurstof gebruikt.",
+      en: "Campari's bright red used to come from carmine, a dye made from crushed cochineal insects. Since 2006 it has been coloured artificially.",
     },
   },
   {
@@ -123,15 +123,15 @@ export const FACTS: readonly Fact[] = [
     id: 'aperol-strength',
     ingredientId: 'aperol',
     text: {
-      nl: "Aperol bestaat al sinds 1919 en heeft maar zo'n 11% alcohol — een stuk lichter dan de meeste likeuren.",
-      en: 'Aperol has been made since 1919 and is only about 11% alcohol — considerably lighter than most liqueurs.',
+      nl: "Aperol bestaat al sinds 1919 en heeft maar zo'n 11% alcohol, een stuk lichter dan de meeste likeuren.",
+      en: 'Aperol has been made since 1919 and is only about 11% alcohol, considerably lighter than most liqueurs.',
     },
   },
   {
     id: 'maraschino-pits',
     ingredientId: 'maraschino',
     text: {
-      nl: 'Maraschino wordt gestookt van marascakersen inclusief de pitten. Daar komt die amandelachtige bittertoon vandaan — er zit geen amandel in.',
+      nl: 'Maraschino wordt gestookt van marascakersen inclusief de pitten. Daar komt die amandelachtige bittertoon vandaan. Er zit geen amandel in.',
       en: 'Maraschino is distilled from marasca cherries, pits included. That is where the almond-like bitterness comes from; there is no almond in it.',
     },
   },
@@ -171,8 +171,8 @@ export const FACTS: readonly Fact[] = [
     id: 'bourbon-not-kentucky',
     ingredientId: 'bourbon',
     text: {
-      nl: 'Bourbon hoeft niet uit Kentucky te komen — wel uit de VS, met minstens 51% mais, en gerijpt op nieuwe, uitgebrande eiken vaten.',
-      en: 'Bourbon does not have to come from Kentucky — but it must be American, at least 51% corn, and aged in new charred oak barrels.',
+      nl: 'Bourbon hoeft niet uit Kentucky te komen, wel uit de VS, met minstens 51% mais, en gerijpt op nieuwe, uitgebrande eiken vaten.',
+      en: 'Bourbon does not have to come from Kentucky, but it must be American, at least 51% corn, and aged in new charred oak barrels.',
     },
   },
   {
@@ -211,8 +211,8 @@ export const FACTS: readonly Fact[] = [
     id: 'cachaca-vs-rum',
     cocktailId: 'caipirinha',
     text: {
-      nl: 'Cachaça wordt gestookt van versgeperst suikerrietsap, rum meestal van melasse. Hetzelfde riet, een andere grondstof — en daardoor een heel andere smaak.',
-      en: 'Cachaça is distilled from fresh-pressed sugar cane juice; rum usually from molasses. Same plant, different raw material — and a completely different taste.',
+      nl: 'Cachaça wordt gestookt van versgeperst suikerrietsap, rum meestal van melasse. Hetzelfde riet, een andere grondstof en daardoor een heel andere smaak.',
+      en: 'Cachaça is distilled from fresh-pressed sugar cane juice; rum usually from molasses. Same plant, different raw material, and a completely different taste.',
     },
   },
   {
@@ -243,8 +243,8 @@ export const FACTS: readonly Fact[] = [
     id: 'grenadine-pomegranate',
     ingredientId: 'grenadine',
     text: {
-      nl: "Grenadine hoort granaatappelsiroop te zijn — 'grenade' is Frans voor granaatappel. De meeste flessen in de supermarkt zijn suiker, water en kleurstof.",
-      en: "Grenadine is supposed to be pomegranate syrup — 'grenade' is French for pomegranate. Most supermarket bottles are sugar, water and colouring.",
+      nl: "Grenadine hoort granaatappelsiroop te zijn: 'grenade' is Frans voor granaatappel. De meeste flessen in de supermarkt zijn suiker, water en kleurstof.",
+      en: "Grenadine is supposed to be pomegranate syrup: 'grenade' is French for pomegranate. Most supermarket bottles are sugar, water and colouring.",
     },
   },
   {
@@ -252,15 +252,15 @@ export const FACTS: readonly Fact[] = [
     ingredientId: 'tonic-water',
     text: {
       nl: 'Tonic licht blauw op onder uv-licht. Dat komt door kinine, ooit toegevoegd als medicijn tegen malaria en nu vooral verantwoordelijk voor de bittere smaak.',
-      en: 'Tonic water glows blue under UV light. That is the quinine — once added as an anti-malarial, now mostly responsible for the bitterness.',
+      en: 'Tonic water glows blue under UV light. That is the quinine, once added as an anti-malarial, now mostly responsible for the bitterness.',
     },
   },
   {
     id: 'vermouth-is-wine',
     ingredientId: 'sweet-vermouth',
     text: {
-      nl: 'Vermout is wijn, geen sterke drank. Een geopende fles hoort in de koelkast en gaat maar een paar weken mee — de meeste flauwe Martini’s komen door oude vermout.',
-      en: 'Vermouth is wine, not spirits. Once open it belongs in the fridge and lasts only a few weeks — most flat-tasting Martinis are simply old vermouth.',
+      nl: 'Vermout is wijn, geen sterke drank. Een geopende fles hoort in de koelkast en gaat maar een paar weken mee. De meeste flauwe Martini’s komen door oude vermout.',
+      en: 'Vermouth is wine, not spirits. Once open it belongs in the fridge and lasts only a few weeks. Most flat-tasting Martinis are simply old vermouth.',
     },
   },
   {
@@ -307,8 +307,8 @@ export const FACTS: readonly Fact[] = [
     id: 'falernum-barbados',
     ingredientId: 'falernum',
     text: {
-      nl: 'Falernum komt van Barbados en is een gekruide siroop van limoen, kruidnagel, amandel en gember — de smaak die de meeste tikidrankjes bindt.',
-      en: 'Falernum comes from Barbados: a spiced syrup of lime, clove, almond and ginger — the flavour that holds most tiki drinks together.',
+      nl: 'Falernum komt van Barbados en is een gekruide siroop van limoen, kruidnagel, amandel en gember, de smaak die de meeste tikidrankjes bindt.',
+      en: 'Falernum comes from Barbados: a spiced syrup of lime, clove, almond and ginger, the flavour that holds most tiki drinks together.',
     },
   },
   {
