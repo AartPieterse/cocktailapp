@@ -129,7 +129,6 @@ const FIRST_SHOWN = 8;
                 <p class="fit">{{ lang.t().home.fitLine(makeableNow().length) }}</p>
               }
             </div>
-            <a class="edit" routerLink="/bar"><mat-icon>tune</mat-icon> {{ lang.t().home.editBar }}</a>
           </div>
 
           @if (loading()) {
@@ -407,19 +406,6 @@ const FIRST_SHOWN = 8;
       color: var(--muted);
       font-size: var(--step--1);
     }
-    .edit {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      flex: none;
-      font: 600 0.813rem var(--font-body);
-      color: var(--accent);
-    }
-    .edit mat-icon {
-      font-size: 17px;
-      width: 17px;
-      height: 17px;
-    }
     .chips {
       display: flex;
       flex-wrap: wrap;
@@ -588,15 +574,6 @@ const FIRST_SHOWN = 8;
       }
       .chips::-webkit-scrollbar {
         display: none;
-      }
-      .edit {
-        font-size: 0;
-        gap: 0;
-      }
-      .edit mat-icon {
-        font-size: 22px;
-        width: 22px;
-        height: 22px;
       }
       .nudge {
         flex-direction: column;

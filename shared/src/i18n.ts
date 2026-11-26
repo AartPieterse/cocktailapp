@@ -101,7 +101,6 @@ export interface UiStrings {
      * result, never a score that rises as the user acquires more.
      */
     fitLine: (n: number) => string;
-    editBar: string;
     makeNow: string;
     cocktailsCount: (n: number) => string;
     filterLabel: string;
@@ -441,7 +440,6 @@ const nl: UiStrings = {
       n === 1
         ? '1 recept past bij wat je in huis hebt.'
         : `${n} recepten passen bij wat je in huis hebt.`,
-    editBar: 'Bewerk mijn bar',
     makeNow: 'Nu te maken',
     cocktailsCount: (n) => `${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
     filterLabel: 'Filter op familie',
@@ -753,7 +751,6 @@ const en: UiStrings = {
     toRecipe: 'See the recipe',
     fitLine: (n) =>
       n === 1 ? '1 recipe matches what you have at home.' : `${n} recipes match what you have at home.`,
-    editBar: 'Edit my bar',
     makeNow: 'Make now',
     cocktailsCount: (n) => `${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
     filterLabel: 'Filter by family',
