@@ -117,7 +117,7 @@ const FIRST_SHOWN = 8;
         }
       } @else {
         <div class="nudge">
-          <span class="nudge-icon"><mat-icon>local_bar</mat-icon></span>
+          <span class="nudge-icon"><mat-icon>shelves</mat-icon></span>
           <div>
             <strong>{{ lang.t().bar.emptyTitle }}</strong>
             <p>{{ lang.t().bar.emptyBody }}</p>
