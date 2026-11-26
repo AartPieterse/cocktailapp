@@ -1110,6 +1110,8 @@
       "category": "wine",
       "aliases": [
         "Amontillado Sherry",
+        "Fino Sherry",
+        "Manzanilla Sherry",
         "Palo Cortado Sherry"
       ],
       "abv": 17
@@ -2637,7 +2639,20 @@
         }
       ],
       "description": "Two ingredients, endlessly argued about. Stirred, never shaken: shaking clouds it and bruises the vermouth.",
-      "family": "spirit-forward"
+      "family": "spirit-forward",
+      "variations": [
+        {
+          "key": "vodka-martini",
+          "name": "Vodka Martini",
+          "description": "Use vodka instead of gin. Without the juniper, the vermouth and the lemon oil come through more.",
+          "swaps": [
+            {
+              "from": "Gin",
+              "to": "Vodka"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "elder-fashion",
@@ -4032,7 +4047,20 @@
         }
       ],
       "description": "Lime and orange over tequila, salted on one half of the rim so the drinker chooses. Fresh lime or nothing.",
-      "family": "sour"
+      "family": "sour",
+      "variations": [
+        {
+          "key": "mezcal-margarita",
+          "name": "Mezcal Margarita",
+          "description": "Use mezcal instead of tequila for a smoky Margarita.",
+          "swaps": [
+            {
+              "from": "Tequila",
+              "to": "Mezcal"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Martinez",
@@ -6767,7 +6795,31 @@
         }
       ],
       "description": "Get the foam right and it is a different drink. An egg white is optional but transforms the texture.",
-      "family": "sour"
+      "family": "sour",
+      "variations": [
+        {
+          "key": "scotch-sour",
+          "name": "Scotch Sour",
+          "description": "Use blended Scotch instead of bourbon. Drier and less vanilla than the bourbon version.",
+          "swaps": [
+            {
+              "from": "Bourbon",
+              "to": "Scotch Whisky"
+            }
+          ]
+        },
+        {
+          "key": "vodka-sour",
+          "name": "Vodka Sour",
+          "description": "Use vodka instead of bourbon. Lighter and more neutral, so the lemon and the foam lead.",
+          "swaps": [
+            {
+              "from": "Bourbon",
+              "to": "Vodka"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "White Lady",
@@ -7130,6 +7182,424 @@
       "garnish": "Garnish with a lime wedge.",
       "tags": [
         "modern-classic"
+      ],
+      "family": "highball"
+    },
+    {
+      "id": "amaretto-sour",
+      "name": "Amaretto Sour",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "Amaretto on its own makes a sweet sour. Jeffrey Morgenthaler's 2012 version adds bourbon for backbone and egg white for texture, and that is the one most bars now make.",
+      "instructions": [
+        "Pour all ingredients into a shaker without ice and shake to whip the egg white.",
+        "Add ice and shake hard.",
+        "Strain into a rocks glass filled with fresh ice."
+      ],
+      "ingredients": [
+        {
+          "name": "Amaretto",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "name": "Bourbon",
+          "amount": 22.5,
+          "unit": "ml",
+          "optional": true
+        },
+        {
+          "name": "Fresh Lemon Juice",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "name": "Simple Syrup",
+          "amount": 7.5,
+          "unit": "ml"
+        },
+        {
+          "name": "Egg White",
+          "amount": 15,
+          "unit": "ml",
+          "optional": true
+        }
+      ],
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "medium",
+      "garnish": "Garnish with a lemon twist and a cocktail cherry on a pick.",
+      "notes": "Morgenthaler uses a cask-strength bourbon. Leave the bourbon out for the older, sweeter style. Without egg white the drink is thinner but still in balance.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "sour"
+    },
+    {
+      "id": "gimlet",
+      "name": "Gimlet",
+      "category": "Classics",
+      "baseSpirit": "gin",
+      "description": "Originally gin and Rose's lime cordial, drunk by the British navy against scurvy. Fresh lime and sugar syrup make the version most bars serve now: sharp, clean and quick.",
+      "instructions": [
+        "Pour all ingredients into a shaker with ice.",
+        "Shake hard and strain into a chilled coupe."
+      ],
+      "ingredients": [
+        {
+          "name": "Gin",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "name": "Fresh Lime Juice",
+          "amount": 22.5,
+          "unit": "ml"
+        },
+        {
+          "name": "Simple Syrup",
+          "amount": 22.5,
+          "unit": "ml"
+        }
+      ],
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Garnish with a lime wheel.",
+      "tags": [
+        "classic"
+      ],
+      "family": "sour"
+    },
+    {
+      "id": "negroni-sbagliato",
+      "name": "Negroni Sbagliato",
+      "category": "Classics",
+      "baseSpirit": "other",
+      "description": "A Negroni with sparkling wine where the gin should be. The story goes that a bartender at Bar Basso in Milan reached for the wrong bottle; sbagliato is Italian for mistaken. Lighter and lower in alcohol than the original.",
+      "instructions": [
+        "Fill a rocks glass with ice.",
+        "Add the Campari and the sweet vermouth.",
+        "Top with the prosecco and stir briefly."
+      ],
+      "ingredients": [
+        {
+          "name": "Campari",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "name": "Sweet Vermouth",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "name": "Sparkling Wine",
+          "call": "Prosecco",
+          "amount": 60,
+          "unit": "ml"
+        }
+      ],
+      "glass": "rocks",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Garnish with an orange slice.",
+      "tags": [
+        "classic"
+      ],
+      "family": "sparkling"
+    },
+    {
+      "id": "bamboo",
+      "name": "Bamboo",
+      "category": "Classics",
+      "baseSpirit": "other",
+      "description": "A low-alcohol aperitif from the 1880s, made famous by Louis Eppinger at the Grand Hotel in Yokohama. Dry sherry and dry vermouth in equal parts, so it tastes of wine rather than of spirit. Use a fino or a manzanilla.",
+      "instructions": [
+        "Pour all ingredients into a mixing glass with ice.",
+        "Stir until well chilled.",
+        "Strain into a chilled Nick & Nora glass."
+      ],
+      "ingredients": [
+        {
+          "name": "Sherry",
+          "call": "Fino Sherry",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "name": "Dry Vermouth",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "name": "Orange Bitters",
+          "amount": 2,
+          "unit": "dash"
+        },
+        {
+          "name": "Angostura Bitters",
+          "amount": 2,
+          "unit": "drop",
+          "optional": true
+        }
+      ],
+      "glass": "nick_and_nora",
+      "method": "stirred",
+      "difficulty": "easy",
+      "garnish": "Express a lemon twist over the drink and discard it, then add a green olive on a pick.",
+      "tags": [
+        "classic"
+      ],
+      "family": "spirit-forward"
+    },
+    {
+      "id": "picante",
+      "name": "Picante",
+      "category": "Modern Classics",
+      "baseSpirit": "tequila",
+      "description": "Soho House's spicy margarita: tequila, lime and agave, with fresh chilli pressed in the shaker. It started at Soho Beach House in Miami and is now served in every House.",
+      "instructions": [
+        "Press a slice of chilli in the bottom of a shaker.",
+        "Add the tequila, lime juice and agave syrup.",
+        "Shake hard with ice and double-strain into a rocks glass filled with ice."
+      ],
+      "ingredients": [
+        {
+          "name": "Tequila",
+          "call": "Reposado Tequila (100% Agave)",
+          "amount": 50,
+          "unit": "ml"
+        },
+        {
+          "name": "Fresh Lime Juice",
+          "amount": 25,
+          "unit": "ml"
+        },
+        {
+          "name": "Agave Syrup",
+          "amount": 20,
+          "unit": "ml"
+        },
+        {
+          "name": "Chili Pepper",
+          "amount": 1,
+          "unit": "slice"
+        }
+      ],
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "medium",
+      "garnish": "Garnish with the stem end of a red chilli.",
+      "notes": "Soho House also claps about ten coriander leaves between the hands and shakes them with the rest, for a green, herbal edge. For more heat add a second slice of chilli.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "sour"
+    },
+    {
+      "id": "milano-torino",
+      "name": "Milano Torino",
+      "category": "Classics",
+      "baseSpirit": "other",
+      "description": "Campari from Milan and vermouth from Turin, hence the name. It came before both the Americano and the Negroni: add soda for the first, gin for the second.",
+      "instructions": [
+        "Pour both ingredients into a mixing glass with ice and stir.",
+        "Strain into a rocks glass over a large ice cube."
+      ],
+      "ingredients": [
+        {
+          "name": "Campari",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "name": "Sweet Vermouth",
+          "amount": 45,
+          "unit": "ml"
+        }
+      ],
+      "glass": "rocks",
+      "method": "stirred",
+      "difficulty": "easy",
+      "garnish": "Garnish with an orange slice.",
+      "tags": [
+        "classic"
+      ],
+      "family": "spirit-forward"
+    },
+    {
+      "id": "oaxaca-old-fashioned",
+      "name": "Oaxaca Old Fashioned",
+      "category": "Modern Classics",
+      "baseSpirit": "tequila",
+      "description": "Phil Ward's 2007 drink at Death & Co in New York: an Old Fashioned on reposado tequila, with a little mezcal for smoke. It did more than any other drink to get bartenders mixing with mezcal.",
+      "instructions": [
+        "Pour all ingredients into a mixing glass with ice.",
+        "Stir until well chilled.",
+        "Strain into a rocks glass over a large ice cube."
+      ],
+      "ingredients": [
+        {
+          "name": "Tequila",
+          "call": "Reposado Tequila (100% Agave)",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "name": "Mezcal",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "name": "Agave Syrup",
+          "amount": 7.5,
+          "unit": "ml"
+        },
+        {
+          "name": "Angostura Bitters",
+          "amount": 2,
+          "unit": "dash"
+        }
+      ],
+      "glass": "rocks",
+      "method": "stirred",
+      "difficulty": "easy",
+      "garnish": "Garnish with a flamed orange twist.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "spirit-forward"
+    },
+    {
+      "id": "painkiller",
+      "name": "Painkiller",
+      "category": "Classics",
+      "baseSpirit": "rum",
+      "description": "From the Soggy Dollar Bar in the British Virgin Islands, where guests swam ashore and paid with wet banknotes. Rum, pineapple, orange and coconut: close to a Piña Colada, but shaken and finished with nutmeg.",
+      "instructions": [
+        "Pour the rum, pineapple juice, orange juice and cream of coconut into a shaker with ice.",
+        "Shake hard.",
+        "Strain into a collins glass filled with crushed ice."
+      ],
+      "ingredients": [
+        {
+          "name": "Dark Rum",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "name": "Pineapple Juice",
+          "amount": 120,
+          "unit": "ml"
+        },
+        {
+          "name": "Fresh Orange Juice",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "name": "Coconut Cream",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "name": "Nutmeg",
+          "amount": 1,
+          "unit": "pinch",
+          "role": "garnish"
+        }
+      ],
+      "glass": "collins",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Grate fresh nutmeg over the top and garnish with an orange wheel.",
+      "notes": "Traditionally made with a navy rum such as Pusser's, which holds the trademark on the name.",
+      "tags": [
+        "classic"
+      ],
+      "family": "tiki"
+    },
+    {
+      "id": "east-8-hold-up",
+      "name": "East 8 Hold-up",
+      "category": "Modern Classics",
+      "baseSpirit": "vodka",
+      "description": "Kevin Armstrong created it in 2010 at Milk & Honey in London and named it after E8, the postcode where he lived. Aperol, pineapple and passion fruit over vodka: fruity, but the bitter orange keeps it dry.",
+      "instructions": [
+        "Pour all ingredients into a shaker with ice.",
+        "Shake hard and strain into a rocks glass filled with fresh ice."
+      ],
+      "ingredients": [
+        {
+          "name": "Vodka",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "name": "Aperol",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "name": "Pineapple Juice",
+          "amount": 20,
+          "unit": "ml"
+        },
+        {
+          "name": "Fresh Lime Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "name": "Simple Syrup",
+          "amount": 10,
+          "unit": "ml"
+        },
+        {
+          "name": "Passion Fruit Syrup",
+          "amount": 5,
+          "unit": "ml"
+        }
+      ],
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Garnish with a pineapple wedge and a lime wedge.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "sour"
+    },
+    {
+      "id": "gin-tonic",
+      "name": "Gin & Tonic",
+      "category": "Classics",
+      "baseSpirit": "gin",
+      "description": "Gin and quinine water, which the British in India drank against malaria. Fill the glass with ice and use cold tonic: the fuller the glass, the slower the ice melts and the longer the bubbles last.",
+      "instructions": [
+        "Fill a highball glass to the top with ice.",
+        "Add the gin.",
+        "Top with cold tonic and stir once, gently."
+      ],
+      "ingredients": [
+        {
+          "name": "Gin",
+          "amount": 50,
+          "unit": "ml"
+        },
+        {
+          "name": "Tonic Water",
+          "amount": 150,
+          "unit": "ml"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Garnish with a lime wedge.",
+      "tags": [
+        "classic"
       ],
       "family": "highball"
     }
