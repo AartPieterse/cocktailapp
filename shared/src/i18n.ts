@@ -230,6 +230,7 @@ export interface UiStrings {
     saveFavorite: string;
     print: string;
     edit: string;
+    /** Plain statement; the banner draws its own check icon, so no ✓ in the string. */
     haveAll: string;
     youStillMiss: (names: string) => string;
     addToBar: string;
@@ -238,6 +239,7 @@ export interface UiStrings {
     more: string;
     glasses: (n: number) => string;
     optional: string;
+    /** Accessible name of the check mark on an ingredient line you already have; not shown as text. */
     inBar: string;
     add: string;
     preparation: string;
@@ -559,7 +561,7 @@ const nl: UiStrings = {
     saveFavorite: 'Bewaar',
     print: 'Print',
     edit: 'Bewerk',
-    haveAll: '✓ Je hebt alles in huis — shaken maar!',
+    haveAll: 'Je hebt alles in huis',
     youStillMiss: (names) => `Je mist nog ${names}`,
     addToBar: '+ Toevoegen aan mijn bar',
     ingredients: 'Ingrediënten',
@@ -567,7 +569,7 @@ const nl: UiStrings = {
     more: 'Meer',
     glasses: (n) => `${n} ${n === 1 ? 'glas' : 'glazen'}`,
     optional: 'optioneel',
-    inBar: '✓ in bar',
+    inBar: 'In je bar',
     add: '+ Toevoegen',
     preparation: 'Bereiding',
     noInstructions: 'Geen instructies opgegeven.',
@@ -870,7 +872,7 @@ const en: UiStrings = {
     saveFavorite: 'Save',
     print: 'Print',
     edit: 'Edit',
-    haveAll: "✓ You've got everything — let's shake!",
+    haveAll: 'You have everything you need',
     youStillMiss: (names) => `You're still missing ${names}`,
     addToBar: '+ Add to my bar',
     ingredients: 'Ingredients',
@@ -878,7 +880,7 @@ const en: UiStrings = {
     more: 'More',
     glasses: (n) => `${n} ${n === 1 ? 'glass' : 'glasses'}`,
     optional: 'optional',
-    inBar: '✓ in bar',
+    inBar: 'In your bar',
     add: '+ Add',
     preparation: 'Method',
     noInstructions: 'No instructions provided.',
