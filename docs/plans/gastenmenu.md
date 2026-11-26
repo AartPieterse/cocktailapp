@@ -87,9 +87,9 @@ de schenkanimatie uit [verras-me.md](verras-me.md), de naam groot, en daaronder 
 bar". Dat is de hele bestelling: een scherm dat je omhoog houdt. Er is niets op te slaan en
 niets te beveiligen, en het werkt offline zodra de pagina geladen is.
 
-Een kleine extra: een knop **"Kies voor mij"** op de kaart, die het paneel van verras-me hergebruikt,
-inclusief het smaakkompas, maar dan beperkt tot de drankjes op deze kaart. Zo krijgt een gast die
-niet weet wat een Sour is toch een antwoord op "iets fris en niet te sterk".
+Een kleine extra: het smaakkompas uit [verras-me.md](verras-me.md) (`TasteChips`) staat bovenaan de
+kaart, naast de chip "Alcoholvrij", als strikte filter, net als op de cocktailpagina. Zo vindt een
+gast die niet weet wat een Sour is toch "iets fris en niet te sterk".
 
 ## Bewust niet: live bestellingen
 
@@ -112,7 +112,7 @@ Elke stap is een eigen PR.
    en de bestelkaart. Test met een handgemaakte link.
 3. **Hostscherm "Gastenmenu"**: aanvinken, titel, QR-code en kopiëren/delen, plus de ingang vanaf
    Ontdek en Mijn bar.
-4. **"Kies voor mij"** op de gastenkaart. Dit vereist verras-me stap 4.
+4. **Het smaakkompas** op de gastenkaart. Dit vereist verras-me stap 4, waarin `TasteChips` gebouwd wordt.
 
 ## Testen
 

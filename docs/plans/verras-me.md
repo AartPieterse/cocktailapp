@@ -1,103 +1,89 @@
-<!-- Beslissing van 26 nov 2026. De uitgangssituatie hieronder is die dag in de code en de
-     catalogus gemeten, niet overgenomen uit eerdere plannen. -->
+<!-- Beslissing van 26 nov 2026, dezelfde dag herzien. De uitgangssituatie hieronder is die dag in
+     de code en de catalogus gemeten, niet overgenomen uit eerdere plannen. -->
 
-# Verras me, met smaakkompas
+# Verras me en het smaakkompas
 
-De knop "Verras me" wordt een klein, speels moment: je tikt, een glas schenkt zich vol, en er staat
-een drankje dat je **met je eigen bar** kunt maken. Wie wil, stuurt de gok eerst bij met drie tikken
-op een smaakkompas: zoet of bitter, fris of rond, licht of sterk.
+Twee kleine, speelse dingen die één idee delen: **kies op smaak, niet op fles.**
 
-Twee beslissingen van de gebruiker liggen vast:
+- **Verras me** schenkt een drankje uit je eigen bar. Je tikt, en het glas op Ontdek vult zich met
+  iets nieuws.
+- **Het smaakkompas** bestaat uit drie paren chips: Zoet/Bitter, Fris/Rond en Licht/Sterk. Ze sturen
+  de keuze op Ontdek bij en vervangen op de cocktailpagina de chips per hoofddrank.
 
-- **Geen fysieke shake.** De telefoon schudden is geschrapt: het heeft op iOS een
-  toestemmingsvraag nodig, en `DeviceMotionEvent` werkt alleen in een secure context, en die hebben
-  we zonder https niet. Het speelse zit in de onthulling, niet in het gebaar.
-- **De layout blijft eenvoudig.** Het smaakkompas krijgt geen eigen pagina, wizard of
-  navigatie-item. Het is een optionele regel boven dezelfde knop.
+Beslissingen van de gebruiker, 26 nov 2026:
+
+- **Geen fysieke shake.** Het speelse zit in de onthulling, niet in het gebaar. `DeviceMotionEvent`
+  vraagt bovendien een secure context, en die hebben we zonder https niet.
+- **Eén plek voor "een drankje voor jou".** De eerste versie van dit plan had een apart paneel voor
+  Verras me. Dat is geschrapt, omdat het nabouwde wat de dagkeuze op Ontdek al doet. Verras me gaat
+  nu naar de dagkeuze in plaats van ernaast te staan.
+- **Op de cocktailpagina filter je op smaak, niet op hoofddrank.**
+- **De layout blijft eenvoudig.** Er komt geen nieuwe pagina, geen dialoog en geen navigatie-item.
+  Het kompas is overal hetzelfde chip-rijtje.
 
 ## Uitgangssituatie, gemeten
 
 | | Staat |
 |---|---|
-| "Verras me" | Knop in de navbar (`core/navbar/navbar.ts`, icoon `casino`). Kiest via `CatalogService.randomCocktail()` uit **de hele catalogus** en navigeert meteen naar het recept. Je kast speelt geen rol. |
-| Dagkeuze op Ontdek | Kiest uit wat je kunt maken, per kalenderdag vast, met "Iets anders" om verder te bladeren. Bewust "een menukaart, geen gokautomaat" (`bar/bar.ts`). **Die blijft zoals hij is.** |
-| Wat kan ik maken | Wordt berekend in de `Bar`-component zelf (cabinet → `expandCabinet` → `makeable(…, 0)`), inclusief variaties met swaps. Niet herbruikbaar buiten die pagina. |
-| Schenkanimatie | Bestaat al: `glassSpecFor(c, 'hero', 'pour', key)` laat het glas vullen en de garnering landen, en `prefers-reduced-motion` zet het uit (`shared/glass-art/glass-svg.ts`). |
-| Smaakdata | **Geen.** `tags` bevat alleen `iba-official`, `modern-classic` en `mocktail`; de rest van `CocktailTag` is nooit gevuld. Wel beschikbaar: `family`, `method`, de ingrediëntregels met hoeveelheden, `servedAbv()` en `isLong()`. |
+| "Verras me" | Knop in de navbar (`core/navbar/navbar.ts`, icoon `casino`). Kiest via `CatalogService.randomCocktail()` uit **de hele catalogus**, dus ook drankjes waarvoor je flessen mist, en springt naar het recept. |
+| Dagkeuze op Ontdek | Kiest uit wat je kunt maken, per kalenderdag vast (`pickOfTheDay`). "Iets anders" stapt verder door dezelfde lijst. Bij een lege bar kiest hij uit de hele kaart. Het glas staat in `'ambient'`-modus. |
+| Twee gokken | Daarmee zijn er twee willekeurige keuzes die zich verschillend gedragen. Dit plan maakt er één van. |
+| Cocktailpagina | De chips zijn Gin, Wodka, Rum, Tequila, Whisky, Brandy, Overig en Alcoholvrij (`cocktail-list.ts`). De filter staat niet in de URL en er linkt niets naar. De zoekbalk zoekt op naam **en ingrediënt**, dus "gin" typen vindt de gindrankjes nog steeds. |
+| Schenkanimatie | Bestaat al: `glassSpecFor(c, 'hero', 'pour', key)` laat het glas vullen en de garnering landen. `prefers-reduced-motion` zet het uit (`shared/glass-art/glass-svg.ts`). |
+| Wat kan ik maken | Wordt berekend in de `Bar`-component zelf en is niet herbruikbaar. |
+| Smaakdata | **Geen.** `tags` bevat alleen `iba-official`, `modern-classic` en `mocktail`. Wel beschikbaar: `family`, de ingrediëntregels met hoeveelheden, `servedAbv()` en `isLong()`. |
 
-## Het ontwerp: één ingang, één paneel
+## Het smaakkompas: één component, drie plekken
 
-De bestaande navbar-knop opent een paneel in plaats van direct te navigeren. Op een telefoon is dat
-een bottom sheet en op desktop een kleine dialoog (één component, alleen de styling verschilt). Het
-paneel heeft twee toestanden.
-
-**1. Kiezen**
-
-```
-┌──────────────────────────────────┐
-│ Verras me                      ✕ │
-│                                  │
-│ Waar heb je zin in?              │
-│   ( Zoet )      ( Bitter )       │
-│   ( Fris )      ( Rond   )       │
-│   ( Licht )     ( Sterk  )       │
-│                                  │
-│ 14 drankjes passen               │
-│                                  │
-│ [        Verras me          ]    │
-└──────────────────────────────────┘
-```
-
-- Elke regel is een paar pillen. Als je niets kiest, betekent dat "maakt niet uit". Tik je
-  nogmaals op een gekozen pil, dan staat die regel weer uit. Er zijn dus geen schuifjes, geen derde
-  "maakt niet uit"-knop en geen stappen.
-- Kies je niets, dan is het gewoon idee 1: een gok uit alles wat je kunt maken. Het kompas is een
-  uitbreiding, geen verplichte stap.
-- De telregel ("14 drankjes passen") reageert direct en voorkomt een doodlopende keuze. Bij 0 wordt
-  hij "Niets precies zo, de knop kiest wat er het dichtst bij komt", en de knop blijft actief.
-- De laatste kompaskeuze wordt per apparaat onthouden (`barkaart.compass`, met try/catch). Wie altijd
-  "bitter" wil, hoeft dat niet elke keer opnieuw te tikken.
-
-**2. Onthulling**
+`TasteChips` is een rij van zes chips in drie paren, met een dun scheidingsstreepje tussen de paren
+(zoals de `.sep` op Ontdek):
 
 ```
-┌──────────────────────────────────┐
-│ Verras me                      ✕ │
-│                                  │
-│          ╲      ╱                │
-│           ╲~~~~╱   ← schenkt vol │
-│            ╲__╱                  │
-│             ||                   │
-│                                  │
-│ SOUR · 2 sterk : 1 zuur : 1 zoet │
-│ Whiskey Sour                     │
-│ Bourbon, citroen, suiker, eiwit  │
-│                                  │
-│ [ Naar recept ]  ( Nog een )     │
-└──────────────────────────────────┘
+( Zoet ) ( Bitter ) │ ( Fris ) ( Rond ) │ ( Licht ) ( Sterk )
 ```
 
-- Het glas speelt de bestaande `'pour'`-animatie af en de naam komt pas op als de garnering geland
-  is (ongeveer 1,2 s). Bij `prefers-reduced-motion` staat alles meteen stil in beeld.
-- **Nog een** schenkt een nieuw glas uit dezelfde selectie, zonder de laatste drie te herhalen.
-  **Naar recept** sluit het paneel en opent het recept, met `?variation=` als het een variatie is.
-- Het kompas klapt in tot één regel boven de onthulling ("Bitter · Rond"). Tik je daarop, dan ga je
-  terug naar kiezen.
-- De tekst is rustig en feitelijk volgens de stijlregels: geen uitroeptekens, geen ✓ of emoji in
-  strings, en status wordt getoond met een icoon.
+- Binnen een paar sluiten de chips elkaar uit: tik je op Bitter terwijl Zoet aan staat, dan wisselt
+  het. Tik je nogmaals op een gekozen chip, dan gaat hij uit. Tussen de paren telt de keuze op.
+- Niets gekozen betekent "maakt niet uit". Er komt geen derde knop per paar.
+- Op een telefoon is het één rij die je opzij veegt, net als de chips die er nu staan.
+- Labels: NL Zoet/Bitter, Fris/Rond, Licht/Sterk. EN Sweet/Bitter, Fresh/Rich, Light/Strong. De
+  `aria-label` van de groep is "Op smaak" / "By taste", en de chips gebruiken `aria-pressed`.
+- De keuze wordt niet onthouden. Het is een filter zoals de andere, geen instelling.
 
-**Wat erbuiten blijft:** de dagkeuze op Ontdek, nieuwe routes en de bottom-nav. Het kompas verschijnt
-alleen in dit paneel en wordt geen filter op de lijst "Nu te maken". Daar staan de familie-chips al,
-en een tweede filtersysteem ernaast maakt die pagina drukker in plaats van speelser.
+Hetzelfde component doet op elke plek iets anders:
 
-**Lege bar.** Kan de bar niets maken, dan kiest het paneel uit de hele kaart, net als de dagkeuze, met
-de eyebrow "Uit de hele kaart". De onthulling toont dan onder de naam wat er ontbreekt, als gewone
-tekst.
+| Plek | Wat het kompas doet |
+|---|---|
+| **Cocktailpagina** | **Een strikte filter**, ter vervanging van de chips per hoofddrank. Alleen drankjes die op elke gekozen as precies kloppen blijven over. "Alcoholvrij" blijft als losse chip achteraan staan, na een scheidingsstreepje. Bij 0 resultaten verschijnt de bestaande lege-filtermelding. |
+| **Ontdek, bij de dagkeuze** | **Het stuurt bij, het filtert niet.** De dagkeuze komt uit de best passende drankjes die je kunt maken. Als niets precies past, kiest hij de dichtstbijzijnde, met de rustige regel "Niets precies zo, dit komt het dichtst bij". De dagkeuze kan dus nooit leeg raken. |
+| **Gastenmenu** | Dezelfde strikte filter als op de cocktailpagina, op de menukaart van de gast. Zie [gastenmenu.md](gastenmenu.md). |
 
-**Terugknop.** Op Android sluit "terug" het paneel in plaats van de pagina te verlaten. Daarvoor zet
-het paneel bij openen een history-entry, en `popstate` sluit het.
+**Op Ontdek** staat het rijtje binnen het dagkeuze-blok, direct onder "Naar recept / Iets anders".
+Het hoort bij de keuze, niet bij de lijst "Nu te maken" eronder. Die lijst houdt haar familie-chips
+en krijgt geen tweede filterrij.
 
-## Het smaakkompas: drie assen, gemeten
+## Verras me
+
+De navbar-knop gaat naar Ontdek en schenkt daar een nieuwe keuze in, vanaf elke pagina. Sta je al op
+Ontdek, dan gebeurt hetzelfde zonder navigatie, en scrollt de pagina naar de dagkeuze.
+
+- Het is precies "Iets anders": één stap verder in de pool van de dagkeuze. Die pool is je bar,
+  bijgestuurd door het kompas, of de hele kaart als je bar leeg is. Verras me kiest daarmee **niet
+  langer uit de hele catalogus** als je bar iets kan maken, en dat lost het verschil tussen de twee
+  gokken op.
+- Implementatie: een kleine `SurpriseService` met een teller-signal. De navbar verhoogt hem en
+  navigeert naar `/ontdek`, en `Bar` reageert met `another()`. `CatalogService.randomCocktail()` en
+  de endpoint `GET /cocktails/random` worden ongebruikt. Verwijder ze als niets anders ze aanroept.
+- **De onthulling:** het glas speelt `'pour'` af als de keuze door de gebruiker verandert, dus bij
+  Verras me, "Iets anders" of een tik op het kompas. Bij het openen van de pagina blijft het
+  `'ambient'`, want 's ochtends ligt de kaart er rustig klaar. Het `@for`-blok met de drank als key
+  speelt de animatie al opnieuw af bij elke nieuwe drank. Alleen de motion-modus wordt een signal.
+- De dagkeuze blijft wat hij was zolang je niets aanraakt: de hele dag dezelfde.
+  `pickOfTheDay(pool, …, offset)` blijft deterministisch, ook met een kompaskeuze. Er is dus geen
+  `Math.random` en geen logica om herhalingen te vermijden nodig, want de offset loopt de pool
+  gewoon af.
+
+## De drie assen, gemeten
 
 Voor elke as is gemeten of hij uit de catalogus af te leiden is, met een prototype over de huidige
 `catalog.json`. De verdeling telt per pool (min / midden / plus).
@@ -111,6 +97,9 @@ Voor elke as is gemeten of hij uit de catalogus af te leiden is, met een prototy
 De correlaties zijn laag genoeg om drie aparte vragen te rechtvaardigen. Fris en sterk hangen samen
 met −0,31, zoet en sterk met −0,24. Kort ↔ Lang is afgevallen als as: `isLong()` markeert er maar 12,
 en hij overlapt met fris (0,49).
+
+Als filter op de cocktailpagina vallen de drankjes in het midden van een as weg zodra je die as
+kiest. Dat is goed: een Margarita is niet "zoet" en niet "bitter", en hoort dus bij geen van beide.
 
 **Waar de data woont.** De zoet/bitter-as wordt **met de hand gezet in de seed**, als nieuw veld per
 cocktail:
@@ -136,50 +125,62 @@ niet opnieuw gedraaid, net als de andere eenmalige seedscripts. Het aantal te be
 staat niet in dit plan; `npm run validate:seed` geeft het.
 
 **Matchen.** Per drankje bestaat het profiel uit drie waarden in {−1, 0, +1}. De afstand is de som
-van |keuze − waarde| over alleen de gekozen assen, waarbij "midden" op afstand 1 van beide polen ligt.
+van |keuze − waarde| over alleen de gekozen assen.
 
-1. Neem alle drankjes met de laagste afstand. Bij een exacte match is die 0.
-2. Kies daaruit willekeurig, maar sla de laatste drie onthullingen over.
-3. Is de laagste afstand groter dan 0, dan geeft het paneel de rustige regel "dit komt het dichtst
-   bij".
+- *Filter* (cocktailpagina, gastenmenu): houd alleen de drankjes met afstand 0.
+- *Bijsturen* (Ontdek): neem de drankjes met de laagste afstand als pool voor `pickOfTheDay`. Is die
+  laagste afstand groter dan 0, dan toont de pagina de regel "dit komt het dichtst bij".
 
-Het berekenen komt als pure functies in `shared/src/taste.ts` (`tasteProfile(cocktail,
-ingredients)`, `tasteDistance(profile, choice)`), getest zoals `drink-strength.spec.ts`.
+Het berekenen komt als pure functies in `shared/src/taste.ts`: `tasteProfile(cocktail, ingredients,
+variation?)` en `tasteDistance(profile, choice)`. Ze worden getest zoals `drink-strength.spec.ts`.
+
+## Wat er verdwijnt
+
+- **De chips per hoofddrank op de cocktailpagina.** Het veld `baseSpirit` en `BASE_SPIRIT_LABELS`
+  blijven bestaan, want de seed en de validatorregels gebruiken ze. De UI-string `filterBySpirit`
+  vervalt.
+- **De willekeurige keuze uit de hele catalogus** via de navbar.
 
 ## Bouwvolgorde
 
-Elke stap is een eigen PR die zelfstandig te shippen is. Na stap 2 is idee 1 af.
+Elke stap is een eigen PR die zelfstandig te shippen is.
 
 1. **`MakeableStore`** (`core/makeable.store.ts`, root, signals). Haal de pijplijn cabinet →
    `expandCabinet` → `makeable` uit `Bar` en laat `Bar` hem gebruiken. Dit verandert niets
-   zichtbaars, maar het paneel en later het gastenmenu hebben dezelfde lijst nodig. De bestaande
-   specs van `Bar` en `discover` moeten groen blijven.
-2. **Het paneel, alleen gokken.** `SurpriseSheet` met de toestanden kiezen (alleen de knop) en
-   onthulling, plus de schenkanimatie, "Nog een" zonder de laatste drie te herhalen, de fallback bij
-   een lege bar en de terugknop. De navbar-knop opent het paneel. Analytics:
-   `track('surprise_me', { mode: 'bar' | 'menu' })`.
+   zichtbaars, en het gastenmenu heeft dezelfde lijst nodig. De bestaande specs van `Bar` en
+   `discover` moeten groen blijven.
+2. **Verras me → Ontdek.** `SurpriseService`, de navbar navigeert en verhoogt de teller, `Bar` stapt
+   verder en speelt `'pour'` af bij een keuze van de gebruiker. Ruim `randomCocktail()` op.
+   Analytics: de bestaande `surprise_me` blijft, met `{ from: 'bar' | 'menu' }`. Er is geen smaakdata
+   voor nodig.
 3. **Smaakdata.** Het `taste`-type in `shared/src/cocktail.ts`, `shared/src/taste.ts` met tests, het
    conceptscript, de review door de gebruiker, de seed-edit en de validatorregel. Draai daarna
    `build:catalog`, dan `build:translations -- --check`, dan opnieuw `build:catalog`. Werk
    `docs/data-model.md` bij.
-4. **Het kompas in het paneel.** De drie pillenregels, de live telregel, de terugvalregel,
-   `barkaart.compass` en het ingeklapte kompas boven de onthulling. Analytics: dezelfde
-   `surprise_me` met `mode: 'taste'` en welke assen gekozen zijn, zonder verdere details.
-5. **Afronding.** Toetsenbord en focus (de focus gaat bij de onthulling naar de naam, de pillen zijn
-   `aria-pressed`), schermlezertekst voor de onthulling, dark mode, en een check tegen de
-   UI-stijlregels: een haarlijn rondom, geen eenzijdige rand.
+4. **`TasteChips` op de cocktailpagina**, ter vervanging van de chips per hoofddrank, als strikte
+   filter. "Wis filters" wist ook het kompas.
+5. **`TasteChips` op Ontdek**, in het dagkeuze-blok, als bijsturing met de "dichtstbij"-regel.
+   Analytics: `taste_compass` met de gekozen assen en de plek, verder niets.
+6. **Afronding.** Toetsenbord en focus, schermlezertekst bij een nieuwe keuze (een `aria-live`-regel
+   met de naam), dark mode, en een check tegen de UI-stijlregels: een haarlijn rondom, geen
+   eenzijdige rand en geen ✓ in tekst.
 
 ## Testen
 
 - `taste.spec.ts`: de afleiding per as op een paar vaste drankjes (Negroni bitter/rond/sterk,
-  Mojito fris/licht), het erven door variaties, de overrides en de afstandsfunctie.
-- `surprise-sheet.spec.ts`: een lege bar valt terug op de kaart, "Nog een" herhaalt de laatste drie
-  niet, een keuze met 0 matches geeft de dichtstbijzijnde, en `?variation=` gaat mee naar het recept.
-- Een e2e-rondje in de browser op telefoonbreedte: knop → onthulling → recept, en terug sluit het
-  paneel.
+  Mojito fris/licht), het erven door variaties, de overrides, de afstandsfunctie, en een
+  middenwaarde die bij geen van beide polen past.
+- `taste-chips.spec.ts`: binnen een paar sluiten de chips elkaar uit, nogmaals tikken zet uit, en
+  meerdere paren tellen op.
+- `cocktail-list`: de kompasfilter combineert met zoeken, favorieten en alcoholvrij, en "Wis
+  filters" wist alles.
+- `Bar`: Verras me verhoogt de offset, het kompas met 0 exacte matches geeft de dichtstbijzijnde
+  plus de regel, en het openen van de pagina speelt geen `'pour'` af.
+- Een e2e-rondje in de browser op telefoonbreedte: Verras me vanaf de cocktailpagina komt op Ontdek
+  uit met een schenkend glas.
 
 ## Niet in dit plan
 
-Schudden, geluid, trillen, punten, streaks, en het kompas als filter op andere pagina's. Wil de
-gebruiker dat laatste later toch, dan is `tasteProfile()` er al. Het blijft dan een losse
-beslissing.
+Schudden, geluid, trillen, punten en streaks. Ook niet het kompas als filter op de lijst "Nu te
+maken": die heeft haar familie-chips, en een tweede filterrij maakt Ontdek drukker in plaats van
+speelser.
