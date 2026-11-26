@@ -110,10 +110,13 @@ Catalog authoring routes (`add`, `:id/edit`) exist **only in dev** — they are 
   `index.html`, manifest) — so even a data-only deploy changes `sw.js`. The new worker deliberately
   does **not** `skipWaiting()`; `SwUpdateService` spots it waiting and the app offers a one-tap
   *"Vernieuwen"* that activates it and reloads.
-- **Offline caveat:** `src/index.html` pulls Fraunces + Inter and the Material Icons font from
-  `fonts.googleapis.com` / `fonts.gstatic.com` as runtime stylesheets, so the *first* load still needs
-  the network for typography and icon glyphs. The service worker then caches those cross-origin
-  responses stale-while-revalidate and later loads are fully offline.
+- **Fonts are self-hosted — the page makes no third-party requests.** Fraunces and Inter (variable)
+  and Material Icons come from the `@fontsource` packages, imported in `src/styles.scss` and emitted
+  as content-hashed files under `media/`, which the worker caches cache-first like the bundles.
+  Fontsource names the variable families `'Fraunces Variable'` / `'Inter Variable'`, and ships only an
+  `@font-face` for the icons — the `.material-icons` class `<mat-icon>` renders with is declared in
+  `styles.scss`, with `font-display: block` so ligature names never flash as text. Do not add a
+  Google Fonts `<link>` back: the privacy policy promises there is none.
 - **Installability:** on Android/Chromium a captured `beforeinstallprompt` is replayed by
   `PwaService.install()`; on iOS Safari a guided *"Zet op beginscherm"* sheet is shown. The prompt
   appears only on mobile, when not installed and not snoozed; dismissing snoozes it for 14 days.

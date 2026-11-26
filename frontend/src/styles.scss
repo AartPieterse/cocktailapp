@@ -1,5 +1,42 @@
 @use '@angular/material' as mat;
 
+// Fonts, self-hosted. The build emits these as content-hashed files next to the app, so the page
+// never contacts fonts.googleapis.com / fonts.gstatic.com, and the service worker caches them like
+// any other hashed build file (cache-first — see IMMUTABLE_ASSET in public/sw.js).
+// Variable fonts: one file per script subset covers every weight, and unicode-range lets the
+// browser fetch only the subsets a page actually uses. Fontsource names each family
+// '<Name> Variable' — the families below and in the tokens use those names.
+@use '@fontsource-variable/fraunces/opsz'; // wght + opsz axes, as the design uses them
+@use '@fontsource-variable/inter/wght';
+
+// Material Icons. Fontsource ships only an @font-face, with font-display: swap — which would flash
+// the ligature names ("search", "close") as text while the font loads. Google's stylesheet also
+// supplied the .material-icons class that <mat-icon> renders with, so both are declared here, as
+// Google declared them, with font-display: block.
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('@fontsource/material-icons/files/material-icons-latin-400-normal.woff2') format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
 // Material baseline: gives us component structure, density and typography plumbing.
 // The actual colours are driven by the editorial tokens below, which override the
 // --mat-sys-* custom properties the components read from.
@@ -11,8 +48,8 @@ html {
       tertiary: mat.$orange-palette,
     ),
     typography: (
-      plain-family: 'Inter, system-ui, sans-serif',
-      brand-family: 'Fraunces, Georgia, serif',
+      plain-family: '"Inter Variable", system-ui, sans-serif',
+      brand-family: '"Fraunces Variable", Georgia, serif',
     ),
     density: 0,
   ));
@@ -81,8 +118,8 @@ html {
   --radius-pill: 40px;
   --container: 1180px;
 
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
 
   color-scheme: light;
 }

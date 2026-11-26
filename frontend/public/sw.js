@@ -3,10 +3,10 @@
  * Strategy:
  *   - navigations: network-first, falling back to the cached app shell (`/index.html`) so the SPA
  *     still loads with no connection;
- *   - content-hashed build assets (…-<hash>.js/.css): cache-first — the URL changes when content
- *     changes, so a cached hit can never be stale; serving it without a network revalidation saves
- *     a request/bandwidth/battery on every repeat load;
- *   - other same-origin GET assets (un-hashed catalog.json, icons) and cross-origin (fonts):
+ *   - content-hashed build assets (…-<hash>.js/.css/.woff2 — the fonts are self-hosted and hashed
+ *     too): cache-first — the URL changes when content changes, so a cached hit can never be stale;
+ *     serving it without a network revalidation saves a request/bandwidth/battery on every repeat load;
+ *   - other GET assets (un-hashed catalog.json, icons; cross-origin, of which there is none today):
  *     stale-while-revalidate — instant from cache, refreshed in the background;
  *   - the API (`/api/…`): passthrough, so the app's own HTTP handling and error interceptor stay in
  *     control and data is never served stale from the shell cache.
@@ -19,8 +19,11 @@
 const BUILD_ID = '__BARKAART_BUILD__'; // replaced at build time; stays literal (harmless) in dev
 const CACHE_VERSION = `barkaart-${BUILD_ID}`;
 
-/** Content-hashed, immutable build output (e.g. `chunk-O62CME4F.js`, `styles-A1B2C3D4.css`). */
-const IMMUTABLE_ASSET = /-[A-Z0-9]{8,}\.(?:js|css)$/i;
+/**
+ * Content-hashed, immutable build output (e.g. `chunk-O62CME4F.js`, `styles-A1B2C3D4.css`,
+ * `media/inter-latin-wght-normal-7KCV2Q4S.woff2`). Same extensions as Caddy's `immutable` rule.
+ */
+const IMMUTABLE_ASSET = /-[A-Z0-9]{8,}\.(?:js|css|woff2?)$/i;
 const SHELL = ['/', '/index.html', '/manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
@@ -85,7 +88,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cross-origin (e.g. Google Fonts) → stale-while-revalidate too, but tolerate opaque failures.
+  // Cross-origin (none today) → stale-while-revalidate too, but tolerate opaque failures.
   // Other same-origin assets (un-hashed, e.g. catalog.json) → stale-while-revalidate.
   event.respondWith(
     caches.match(req).then((cached) => {
