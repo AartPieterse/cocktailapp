@@ -17,6 +17,13 @@ dist/
 *.env
 !.env.example
 backend/.env
+# Hand-made copies of the box's deploy/.env (e.g. .env.bak-<epoch>) hold the same secrets
+deploy/.env.*
+!deploy/.env.example
+
+# Deploy state the box writes next to the scripts (deploy.sh, auto-deploy.sh)
+deploy/.deployed-*
+deploy/.autodeploy-*
 
 # Local MCP config (may contain the Atlas URI with credentials)
 .mcp.json

@@ -1,8 +1,8 @@
 # Barkaart automatic pull-deploy — one-shot, fired by barkaart-autodeploy.timer.
 #
-# The box has no inbound ports, so a release cannot be pushed to it: it must be PULLED. This unit is
-# that pull. It checks the GHCR API image and the release branch's SPA source independently, and
-# deploys whichever moved.
+# Nothing can push a release to the box, so it must be PULLED. This unit is that pull: when the
+# release branch has a new commit and both of its images (barkaart-api, barkaart-web) are on GHCR,
+# it moves the checkout to that commit and rolls the images out.
 #
 # Install (paths below match the reference host: user `aart`, checkout at ~/cocktailapp):
 #   sudo cp deploy/systemd/barkaart-autodeploy.{service,timer} /etc/systemd/system/
@@ -13,7 +13,7 @@
 #   journalctl -u barkaart-autodeploy.service -f
 #   sudo systemctl start barkaart-autodeploy.service   # force a cycle now
 [Unit]
-Description=Barkaart auto-deploy (pull the new API image from GHCR, rebuild the SPA, roll out)
+Description=Barkaart auto-deploy (pull the release's images from GHCR, roll out)
 Wants=network-online.target
 After=network-online.target docker.service
 Requires=docker.service
@@ -26,6 +26,6 @@ WorkingDirectory=/home/aart/cocktailapp/deploy
 # Invoked via bash so it runs regardless of the file's exec bit (the script is authored on a
 # platform that doesn't track the +x mode). auto-deploy.sh reads the shebang either way.
 ExecStart=/bin/bash /home/aart/cocktailapp/deploy/auto-deploy.sh
-# npm ci plus an Angular production build is minutes, and a roll-out adds an encrypted backup and
-# migrations on top. Don't let systemd kill a release half-way.
-TimeoutStartSec=3600
+# Two image pulls, an encrypted backup and migrations: minutes on a home line, more on a slow day.
+# Don't let systemd kill a release half-way.
+TimeoutStartSec=1800

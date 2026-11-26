@@ -5,7 +5,7 @@ import { map } from 'rxjs';
 import {
   CATEGORY_HINTS,
   CATEGORY_LABELS_PLURAL,
-  computeMakeable,
+  computeMakeableWithVariations,
   expandCabinet,
   type Cocktail,
   type Ingredient,
@@ -398,11 +398,18 @@ export class Wizard {
       substitutes: this.subs.enabled(),
     }),
   );
+  /** Counts variations too, exactly as the bar's "Maak nu" grid lists them. */
+  private readonly catalog = computed(() => ({
+    cocktails: this.cocktails(),
+    ingredients: this.ingredients(),
+  }));
   readonly makeableCount = computed(
-    () => computeMakeable(this.cocktails(), this.available(), 0).length,
+    () => computeMakeableWithVariations(this.catalog(), this.available(), 0).length,
   );
   readonly almostCount = computed(
-    () => computeMakeable(this.cocktails(), this.available(), 1).length - this.makeableCount(),
+    () =>
+      computeMakeableWithVariations(this.catalog(), this.available(), 1).length -
+      this.makeableCount(),
   );
   readonly payoff = computed(() => {
     const t = this.lang.t().wizard;

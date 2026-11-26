@@ -2,18 +2,15 @@
 
 **Wat staat er in jouw bar — en wat kun je daarmee maken?**
 
-> **Where this actually stands (4 Sep 2026).** Production today is still the static SPA — it ships
-> with the catalog bundled and makes **no API calls at all**. Separately, a self-hosted backend now
-> runs for real on a dedicated Ubuntu box, but **LAN-only**: no Cloudflare Tunnel, nothing public,
-> nobody's data on it. Where this README describes the tunnel as the deployment shape, read that as
-> the *target*, not as what is running.
+> **Where this stands.** Barkaart is self-hosted on `aartfileserver`: API + MongoDB + a Caddy that
+> serves the SPA on port 80, reachable over the **home LAN and WireGuard only**. The SPA ships with
+> the catalog bundled and makes **no API calls at all**; Caddy has no `/api` proxy, so the API
+> answers nothing outside the container network and no account data exists on the box. Encrypted
+> backups run nightly with a passing restore drill, and an hourly timer rolls out new builds.
 >
-> The agreed direction is to make that box production: Caddy on the box serving the SPA **and**
-> proxying `/api`, behind a Cloudflare Tunnel that keeps the home IP private — which retires the
-> Netlify deploy and collapses CORS to a same-origin path. Nothing in that direction has been built
-> yet. Backups (`deploy/README.md` §6) and the hardening pass (§9) are **blocking** before any real
-> account data lands, and the box has never been rebooted to prove the stack returns unattended.
-> See [`deploy/bare-metal-runbook.md`](deploy/bare-metal-runbook.md) for what was actually done.
+> There is **no Cloudflare Tunnel**. The route to a public `https://` address — Caddy publishing 443
+> itself — is [`docs/plans/public-access.md`](docs/plans/public-access.md); the host build is
+> [`deploy/bare-metal-runbook.md`](deploy/bare-metal-runbook.md).
 
 Barkaart is a full-stack cocktail app built around one flagship idea: you tick off the ingredients
 you have on hand (**"Mijn bar"** / *"My bar"*), and it instantly shows which cocktails you can make
@@ -36,7 +33,7 @@ you have on hand (**"Mijn bar"** / *"My bar"*), and it instantly shows which coc
 
 ## Background
 
-This project began as a reconstruction of a lost app (only the compiled Netlify frontend survived).
+This project began as a reconstruction of a lost app (only the compiled frontend bundle survived).
 It has since been **rebuilt around the availability-search flow** as the product's core, with a clean,
 redesigned data model and an editorial visual identity. The UI is fully bilingual (Dutch + English),
 switchable at runtime.
@@ -45,17 +42,16 @@ switchable at runtime.
 
 Barkaart is **static-first and local-first**:
 
-- **Production is a fully static SPA** (Netlify). It ships a pre-built catalog bundle
-  (`catalog.json` + Dutch overlay `catalog.nl.json`) and computes "wat kan ik maken" **client-side**
-  via `@cocktailapp/shared`. There is **no live backend or database in production**.
+- **Production is a fully static SPA**, served by Caddy from the self-hosted box. It ships a
+  pre-built catalog bundle (`catalog.json` + Dutch overlay `catalog.nl.json`) and computes
+  "wat kan ik maken" **client-side** via `@cocktailapp/shared`. There is **no live backend or database in production**.
 - The **frontend is local-first**: the primary persistence is `localStorage`. Accounts + cloud sync
-  are an optional, deliberately decoupled feature (off in the static build). `environment.prod.ts`
-  ships `authEnabled: false` with `apiBaseUrl: '/api/'`, so **the deployed SPA never calls a
-  self-hosted backend, even when one is running**. Turning it on takes three coordinated changes: set
-  `authEnabled: true` and point `apiBaseUrl` at the box in
-  `frontend/src/environments/environment.prod.ts`, redeploy the frontend, and add the site's origin to
-  `CORS_ORIGIN` in `deploy/.env` on the box (it is a placeholder today, so a flip alone would fail
-  CORS).
+  are an optional, deliberately decoupled feature, and still off. `environment.prod.ts` ships
+  `authEnabled: false` with a relative `apiBaseUrl: '/api/'`, so **the deployed SPA makes no
+  `/api/*` calls at all, even though the backend runs on the same box**. That relative URL is
+  already right for the same-origin shape Caddy will serve once it proxies `/api`, so turning
+  accounts on is one flag — but it is gated on the hardening in `docs/plans/public-access.md` §2,
+  not on plumbing.
 - The **NestJS backend** is used in **dev for catalog authoring**, and can be **self-hosted** (see
   [`deploy/`](deploy/README.md)). It additionally implements optional **accounts**, per-user **cabinet/
   favorites sync**, and **anonymous aggregate analytics** — capabilities the shipped static site does
@@ -147,8 +143,11 @@ and the API.
 ## REST API (served under `/api`)
 
 The backend mounts everything under a global `/api` prefix. Auth column: **public** (no guard), **JWT**
-(`Authorization: Bearer <accessToken>`), or **admin** (`AdminGuard` = HTTP Basic auth **and** LAN-only
-— any request carrying a Cloudflare `CF-Connecting-IP` header is rejected).
+(`Authorization: Bearer <accessToken>`), or **admin** (`AdminGuard` = HTTP Basic auth **and** a
+LAN-only check that rejects any request carrying a `CF-Connecting-IP` header — see
+[`docs/plans/public-access.md`](docs/plans/public-access.md) §2: with no Cloudflare in the path that
+header never arrives, so the check always passes and must be replaced before the box faces the
+internet).
 
 ### Catalog (public)
 
@@ -169,8 +168,8 @@ The backend mounts everything under a global `/api` prefix. Auth column: **publi
 
 > **Note:** the catalog **write** endpoints (POST/PATCH/DELETE on ingredients & cocktails) and
 > `GET /api/catalog` are **public** — anyone who can reach the API can mutate the catalog. This is
-> acceptable because production is static (the backend isn't publicly reachable); a self-hosted backend
-> should sit behind the Cloudflare tunnel and trusted network only.
+> acceptable only because the API publishes no host port and Caddy does not proxy `/api`: nothing
+> outside the container network can reach it. Proxying `/api` means guarding the writes first.
 
 ### Accounts, sync & telemetry
 
@@ -264,11 +263,11 @@ not optional: `applyCatalogTranslations` (`shared/src/catalog.ts`) drops an over
 does not match the catalog's content hash **wholesale**, not per entry — skip it and the Dutch UI
 silently renders the entire catalog in English, with no error.
 
-Production is built **and** deployed by GitHub Actions (`.github/workflows/ci.yml`, job `deploy`): it
-runs `build:shared && build:catalog && build --workspace frontend` and uploads the result with
-`netlify-cli deploy --prod`. It does **not** run `build:translations` — the committed
-`translations-nl.json` ships as-is. Netlify's own builds are disabled for this site, so
-`netlify.toml` is kept for reference but is not the operative build config.
+The frontend ships as the `barkaart-web` image ([`frontend/Dockerfile`](frontend/Dockerfile)):
+Caddy with the production SPA baked in, built by CI from each commit on `main` and pulled by the
+box, which builds nothing. The image runs `build:shared` and `build --workspace frontend` against
+the **committed** catalog bundles — the CI gate has already failed any commit where they are stale.
+Neither path runs `build:translations`: the committed `translations-nl.json` ships as-is.
 
 ## Database helpers
 
@@ -285,7 +284,7 @@ npm run db:shell    # interactive mongosh shell
 
 - **Backend** (`backend/.env`, see `backend/.env.example`):
   - `MONGODB_URI` (required), `PORT` (default 3000), `NODE_ENV`, `TRUST_PROXY` (default 1 — resolves the
-    real client IP behind the Cloudflare tunnel)
+    real client IP behind a reverse proxy)
   - `CORS_ORIGIN` (comma-separated allowlist; **required in production** — the API refuses to boot if
     `NODE_ENV=production` and it is unset; reflects any origin in dev when unset)
   - `JWT_SECRET` + `JWT_REFRESH_SECRET` (both required; the API **refuses to boot if they are equal**),
@@ -293,8 +292,9 @@ npm run db:shell    # interactive mongosh shell
   - `ADMIN_USER` + `ADMIN_PASSWORD` (both required for the admin dashboard; fail-closed)
 - **Frontend**: environments are swapped at build time. Dev `environment.ts`
   (`apiUrl: http://localhost:3000/api/`, `dataSource: 'api'`, `admin: true`); prod `environment.prod.ts`
-  (`dataSource: 'static'`, `admin: false` — the catalog is read from the bundle). `public/_redirects`
-  provides the SPA fallback (`/* /index.html 200`) for static hosts.
+  (`dataSource: 'static'`, `admin: false` — the catalog is read from the bundle). The SPA fallback
+  is **server** config, not a bundled file: `try_files {path} /index.html` in
+  `deploy/Caddyfile.lan`, which the web image bakes in alongside the SPA.
 
 ## Project structure
 
@@ -306,8 +306,9 @@ barkaart/
 ├─ scripts/                 build-catalog · validate-seed · build-translations-nl (+ -ingredients/-text) · db-ping/count/seed/shell
 │                           (+ import-mocktails ← mocktails-source.json, rewrites the seed; archived
 │                           one-shots build-iba-seed · fold-seed; seed-data.mjs = Dutch-text source)
-├─ deploy/                  Docker Compose self-hosting stack (api + mongo + cloudflared), backup/restore/deploy,
-│                           systemd/ units, and bare-metal-runbook.md (the from-scratch host build)
+├─ deploy/                  Docker Compose self-hosting stack (api + mongo, + a Caddy `web` that serves the SPA
+│                           via docker-compose.lan.yml), backup/restore/deploy, systemd/ units,
+│                           and bare-metal-runbook.md (the from-scratch host build)
 ├─ docs/                    data-model.md · privacy-policy.md
 └─ iba-cocktails-seed.json  the frozen, hand-curated catalog source of truth
 ```
@@ -317,15 +318,21 @@ barkaart/
 - **Release branch: `main`.** `.github/workflows/ci.yml` is the gate — a PR into `main` or a push to
   `development` builds and verifies (shared + backend tests, `validate:seed`, and a check that the
   committed `catalog.json` / `catalog.nl.json` bundles are up to date). A push to `main` additionally
-  deploys the frontend to Netlify and pushes `ghcr.io/<owner>/barkaart-api:<sha>` and `:latest`.
-  **Merging to `main` is what ships.**
-- **Frontend (production):** static SPA hosted on **Netlify**, but built and uploaded by **GitHub
-  Actions** (`.github/workflows/ci.yml`, job `deploy`) from `frontend/dist/frontend/browser`;
-  Netlify's own builds are disabled for this site. No live DB; the catalog is generated at build time.
-- **Backend (optional):** self-hosted from home via Docker Compose (API + locked-down MongoDB +
-  Cloudflare Tunnel, no inbound ports) — see [`deploy/README.md`](deploy/README.md). To check a
-  deployment end to end, `curl -s -m 20 http://<host>:8080/api/catalog` should return HTTP 200 with a
-  `version` equal to the one in the committed `frontend/public/catalog.json`.
+  pushes `ghcr.io/<owner>/barkaart-api:<sha>` and `ghcr.io/<owner>/barkaart-web:<sha>` (plus
+  `:latest`). **Merging to `main` is what ships** — the box then pulls both images of the release by
+  itself (`deploy/auto-deploy.sh`) and builds nothing.
+- **Frontend (production):** static SPA served by **Caddy on the self-hosted box**, shipped as the
+  `barkaart-web` image that CI builds from each commit on `main`. No live DB; the catalog is
+  generated at build time.
+- **Backend (self-hosted):** runs from home via Docker Compose — API + locked-down MongoDB + a Caddy
+  that serves the SPA on port 80; see [`deploy/README.md`](deploy/README.md). **The API publishes no
+  host port**, so check it from inside the stack:
+  ```bash
+  docker compose exec web wget -qO- http://api:3000/api/catalog | head -c 120
+  ```
+  The `version` should match the committed `frontend/public/catalog.json`. It currently does not —
+  the box's Mongo holds an older catalog and needs a re-seed (`deploy/README.md` §5). Nothing reads
+  the API today, so this only bites once `/api` is proxied.
 
 > **Security note:** never commit a real `backend/.env` or `deploy/.env` (both are gitignored). If a
 > live connection string or JWT secret was ever shared for review, rotate it.

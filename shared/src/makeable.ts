@@ -1,4 +1,4 @@
-import { Cocktail, CocktailIngredient, MakeableResult } from './cocktail';
+import { Cocktail, CocktailIngredient, CocktailVariation, MakeableResult } from './cocktail';
 import { Ingredient } from './ingredient';
 
 /**
@@ -57,19 +57,100 @@ export function computeMakeable(
   const available = new Set(availableIngredientIds);
   return cocktails
     .filter((ck) => ck.ingredients.length > 0)
-    .map((ck) => {
-      const missing = missingLines(ck, available).map((line) => ({
-        ingredientId: line.ingredientId,
-        name: line.name,
-      }));
-      return { cocktail: ck, missing, missingCount: missing.length };
-    })
+    .map((ck) => toResult(ck, available))
     .filter((r) => r.missingCount <= maxMissing)
-    .sort(
-      (a, b) =>
-        a.missingCount - b.missingCount ||
-        a.cocktail.name.localeCompare(b.cocktail.name),
-    );
+    .sort(byMissingThenName);
+}
+
+function toResult(cocktail: Cocktail, available: Set<string>): MakeableResult {
+  const missing = missingLines(cocktail, available).map((line) => ({
+    ingredientId: line.ingredientId,
+    name: line.name,
+  }));
+  return { cocktail, missing, missingCount: missing.length };
+}
+
+function byMissingThenName(a: MakeableResult, b: MakeableResult): number {
+  return a.missingCount - b.missingCount || a.cocktail.name.localeCompare(b.cocktail.name);
+}
+
+/**
+ * The recipe a variation describes: its parent with every swap applied to the line it names, and
+ * the variation's own name and description on top. Everything else — glass, method, instructions,
+ * family — is the parent's, because a swap changes an ingredient and nothing more.
+ *
+ * The result keeps the PARENT's `id`. A variation has no id of its own and must not get one: that
+ * is what lets it be deleted without stranding a stored favourite (see the variation ladder in
+ * docs/data-model.md). Anything that links or stores must therefore pair `id` with `variation.key`.
+ *
+ * Returns null for a variation that cannot be evaluated as a recipe:
+ *   - prose only (no `swaps`) — its ingredient is not a stockable base, so no cabinet can hold it;
+ *   - linked to its own catalog cocktail (`makesCocktailId`) — that entry is evaluated as itself;
+ *   - a swap naming a line this recipe does not have (`validate-seed` fails on that already).
+ *
+ * A swapped line drops its `call`, `note` and `alternativeIds`: they described the ingredient that
+ * was swapped out. `nameOf` supplies the incoming base's display name (pass the translated catalog's
+ * ingredients to read in Dutch); the id stands in when it has none.
+ */
+export function variationRecipe(
+  cocktail: Cocktail,
+  variation: CocktailVariation,
+  nameOf: (ingredientId: string) => string | undefined = () => undefined,
+): Cocktail | null {
+  if (variation.makesCocktailId || !variation.swaps?.length) return null;
+  let ingredients = cocktail.ingredients;
+  for (const { fromId, toId } of variation.swaps) {
+    if (!ingredients.some((line) => line.ingredientId === fromId)) return null;
+    ingredients = ingredients.map((line) => {
+      if (line.ingredientId !== fromId) return line;
+      const { call: _call, note: _note, alternativeIds: _alternatives, ...kept } = line;
+      return { ...kept, ingredientId: toId, name: nameOf(toId) ?? toId };
+    });
+  }
+  // The pairing with an alcohol-free counterpart belongs to the parent recipe, not to its variants.
+  const {
+    variations: _variations,
+    alcoholFreeCounterpartId: _counterpart,
+    alcoholFreeOfId: _of,
+    ...parent
+  } = cocktail;
+  return {
+    ...parent,
+    name: variation.name,
+    description: variation.description ?? cocktail.description,
+    ingredients,
+  };
+}
+
+/**
+ * "What can I make", with variations: {@link computeMakeable} over the catalog, plus one result per
+ * variation that can be evaluated as a recipe (see {@link variationRecipe}), merged into the same
+ * order.
+ *
+ * A variation is judged ONLY as its own recipe. It never satisfies its parent: holding vodka shows
+ * the Caipiroska, never a Caipirinha you cannot make. Its result carries `variation`, and its
+ * `cocktail` is the variant recipe under the parent's id — so a consumer that keys results by
+ * cocktail id (a per-card status map) must skip results that carry `variation`.
+ *
+ * `computeMakeable` itself is unchanged and still answers for catalog cocktails alone.
+ */
+export function computeMakeableWithVariations(
+  catalog: { cocktails: Cocktail[]; ingredients: Pick<Ingredient, 'id' | 'name'>[] },
+  availableIngredientIds: string[],
+  maxMissing = 0,
+): MakeableResult[] {
+  const available = new Set(availableIngredientIds);
+  const names = new Map(catalog.ingredients.map((i) => [i.id, i.name]));
+  const variants = catalog.cocktails.flatMap((ck) =>
+    (ck.variations ?? []).flatMap((variation) => {
+      const recipe = variationRecipe(ck, variation, (id) => names.get(id));
+      return recipe ? [{ ...toResult(recipe, available), variation, parentName: ck.name }] : [];
+    }),
+  );
+  return [
+    ...computeMakeable(catalog.cocktails, availableIngredientIds, maxMissing),
+    ...variants.filter((r) => r.missingCount <= maxMissing),
+  ].sort(byMissingThenName);
 }
 
 /**

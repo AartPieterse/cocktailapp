@@ -68,7 +68,8 @@ interface Cocktail {
   notes?: string;
   servings?: number;              // defaults to 1
   variations?: CocktailVariation[]; // named variants (Caipiroska, Kir Royal…): prose + base-id swaps,
-                                    // resolved from names by buildCatalog; never affect makeable
+                                    // resolved from names by buildCatalog; one with swaps is
+                                    // listed by "wat kan ik maken" as a recipe of its own
   tags?: string[];                // typed CocktailTag vocabulary exists but tags are not yet narrowed
   image?: { assetId: string; blurhash?: string };  // bundled, offline-safe (see "Open" below)
   imageUrl?: string;              // legacy
@@ -179,6 +180,22 @@ directly instead of re-deriving the rule: that duplication is how the detail pag
 from the list. Like `computeMakeable` it expects an already-**expanded** cabinet if substitutions are to
 count.
 
+**Variations count too.** Every "wat kan ik maken" surface — the bar's *Maak nu* grid and its count,
+the cabinet count, the wizard's payoff line, and the backend's `POST /cocktails/makeable` — calls
+`computeMakeableWithVariations({ cocktails, ingredients }, availableIngredientIds, maxMissing)`. That is
+`computeMakeable` plus one result per variation that has `swaps`, merged into the same order. A
+variation is judged as its **own** recipe — `variationRecipe`, the parent with each swap applied to its
+line — and never as satisfying the parent: holding vodka lists the Caipiroska, never a Caipirinha. (The
+`ingredients` only name a swapped-in line.)
+
+A variation result carries `variation` and `parentName`, and its `cocktail` is the variant recipe
+under the **parent's id**, because a variation has no id of its own. So anything keyed by cocktail id
+must skip it (the browse list's per-card status does), and nothing may store it: it links as
+`/cocktails/<parent id>?variation=<key>`, which the detail page opens as the variant, and it cannot be
+a favourite. Its glass art is the parent's entry overlaid with `VARIATION_ART`
+(`frontend/src/app/shared/cocktail-art.data.ts`). `computeMakeable` itself still answers for catalog
+cocktails alone.
+
 ## Substitutes (opt-in)
 
 `expandCabinet(availableIngredientIds, ingredients, opts)` is a separate, opt-in pass run **before**
@@ -204,7 +221,7 @@ distinct, and the difference that matters is **whether it changes a makeability 
 
 | Mechanism | Where | Affects makeable? | Means |
 | --- | --- | --- | --- |
-| `Cocktail.variations` | on the cocktail | **No** | a *different drink* you can make from this one |
+| `Cocktail.variations` | on the cocktail | **As its own drink** | a *different drink* you can make from this one — listed by "wat kan ik maken" when it has `swaps`, and never satisfying the parent |
 | `CocktailIngredient.alternativeIds` | on a recipe line | **Yes** | an "X or Y" line — either satisfies *this* recipe |
 | `Ingredient.parentId` | on a base | via `expandCabinet` | a specific base standing in for a broader call |
 | `Ingredient.substitutes` | on a base | via `expandCabinet` | an explicit acceptable swap |
@@ -219,24 +236,27 @@ A variation is stored **embedded in its parent cocktail**, and that is the right
 not a stepping stone. The reason is asymmetry, not taste: a variation is the only catalog object with
 **no id**, so it is the only one you can delete without stranding stored user data. A cabinet is
 ingredient ids and favourites are cocktail ids, both in `localStorage`; `missingLines` never reads
-`variations`. Promoting a variation to its own object mints a permanent id in a space that has no
-runtime remapping.
+`variations`, and a variation that "wat kan ik maken" lists is a recipe derived at runtime under its
+parent's id — never stored, never a favourite. Promoting a variation to its own object mints a
+permanent id in a space that has no runtime remapping.
 
 Climb only as far as the drink needs:
 
 | Rung | Author | When |
 | --- | --- | --- |
 | 1 | `key` + `name` + `description` | the swapped-in ingredient is not a stockable base |
-| 2 | + `swaps: [{ from, to }]` (names) | both sides are catalog bases **and** `from` is a line of this recipe |
-| 3 | + `makesCocktail` → its own `cocktails[]` entry | all three criteria below |
+| 2 | + `swaps: [{ from, to }]` (names) | both sides are catalog bases **and** `from` is a line of this recipe — from here it shows up in "wat kan ik maken" |
+| 3 | + `makesCocktail` → its own `cocktails[]` entry | both criteria below |
 
-Promote to rung 3 only when **all three** hold:
+Promote to rung 3 only when **both** hold:
 
 1. every ingredient of the variant is *already* a base — see the prose-only doctrine below;
 2. it needs its own `instructions`, `glass`, `method` or `baseSpirit`, i.e. it is genuinely another
-   drink rather than an annotation;
-3. someone holding only the variant's bases can make **nothing** today — the hero feature is
-   under-delivering for them.
+   drink rather than an annotation.
+
+A third criterion — "someone holding only the variant's bases can make nothing today" — was retired on
+10 Oct 2026, when rung 2 started listing variations in "wat kan ik maken" on their own. Being findable
+is no longer a reason to promote.
 
 When promoting, copy **every field** of every unchanged line — `note`, `optional`, `role`,
 `amountMax`, `alternatives` included, not just name/amount/unit. `optional` and `role` are precisely
@@ -249,9 +269,10 @@ must change in a way its variant must not inherit. Below that, authoring data be
 ### The prose-only doctrine
 
 Author a `swap` only when both sides are already catalog bases. **Never add a base solely to make a
-swap structural.** A swap is informational — it never reaches `computeMakeable` — while every base is
-a permanent tile in the first-run wizard and in Mijn bar. A variation whose ingredient has no base
-stays prose, permanently and correctly. `validate-seed` enforces the boundary: swap sanity is a hard
+swap structural.** A swap decides only whether the variation itself shows up in "wat kan ik maken" —
+never whether its parent does — while every base is a permanent tile in the first-run wizard and in
+Mijn bar. A variation whose ingredient has no base stays prose, permanently and correctly, and is the
+one kind "wat kan ik maken" cannot list: no cabinet can hold its ingredient. `validate-seed` enforces the boundary: swap sanity is a hard
 failure, and a base nothing can reach is surfaced as a warning.
 
 ### `key` is the identity; `name` is display
@@ -291,7 +312,8 @@ and never calls `GET /api/catalog`. The LAN box serves the identical catalog fro
 change deployed only there reaches no user until the bundle is rebuilt and the frontend redeployed.
 
 The frozen source of truth is **`iba-cocktails-seed.json`** (repo root) — the IBA 2024 official list
-(tagged `iba-official`) plus an alcohol-free set (tagged `mocktail`). The seed file is the authority
+(tagged `iba-official`), plus an alcohol-free set (tagged `mocktail`) and a handful of post-2000 drinks
+the IBA does not list (tagged `modern-classic`). The seed file is the authority
 on the catalog's size and on which ingredients are staples; `npm run build:catalog` prints the live
 totals — ingredients, staples, cocktails and NL overlay coverage — on every run
 (`scripts/build-catalog.mjs`). See the root [`README.md`](../README.md#build--catalog-pipeline) for
@@ -334,7 +356,7 @@ staples added since into an existing cabinet, once per staple-set change, keyed 
 where the ladder allows. Insert at any position — the overlay is keyed, not positional.
 
 **Remove a variation.** Delete the object and rebuild. **Nothing breaks**: no id ever existed and
-nothing in `localStorage` can reference it. This is the whole argument for keeping variations embedded.
+nothing in `localStorage` can reference it; a bookmarked `?variation=<key>` link opens the parent. This is the whole argument for keeping variations embedded.
 
 **Remove a cocktail or an ingredient.** Delete the object **and** add a tombstone to the seed's
 top-level `retired[]`:

@@ -110,10 +110,13 @@ Catalog authoring routes (`add`, `:id/edit`) exist **only in dev** — they are 
   `index.html`, manifest) — so even a data-only deploy changes `sw.js`. The new worker deliberately
   does **not** `skipWaiting()`; `SwUpdateService` spots it waiting and the app offers a one-tap
   *"Vernieuwen"* that activates it and reloads.
-- **Offline caveat:** `src/index.html` pulls Fraunces + Inter and the Material Icons font from
-  `fonts.googleapis.com` / `fonts.gstatic.com` as runtime stylesheets, so the *first* load still needs
-  the network for typography and icon glyphs. The service worker then caches those cross-origin
-  responses stale-while-revalidate and later loads are fully offline.
+- **Fonts are self-hosted — the page makes no third-party requests.** Fraunces and Inter (variable)
+  and Material Icons come from the `@fontsource` packages, imported in `src/styles.scss` and emitted
+  as content-hashed files under `media/`, which the worker caches cache-first like the bundles.
+  Fontsource names the variable families `'Fraunces Variable'` / `'Inter Variable'`, and ships only an
+  `@font-face` for the icons — the `.material-icons` class `<mat-icon>` renders with is declared in
+  `styles.scss`, with `font-display: block` so ligature names never flash as text. Do not add a
+  Google Fonts `<link>` back: the privacy policy promises there is none.
 - **Installability:** on Android/Chromium a captured `beforeinstallprompt` is replayed by
   `PwaService.install()`; on iOS Safari a guided *"Zet op beginscherm"* sheet is shown. The prompt
   appears only on mobile, when not installed and not snoozed; dismissing snoozes it for 14 days.
@@ -170,18 +173,20 @@ build `` `${apiUrl}cocktails` ``.
 
 ## Production build & deploy
 
-Production is a **static Angular SPA hosted on Netlify**, but Netlify's own builds are switched off
-for this site — **GitHub Actions is the only path to production** (`.github/workflows/ci.yml`). On a
-push to `main` it runs `build:shared → build:catalog → build --workspace frontend`, copies
-`frontend/dist/frontend/browser/` into a scratch directory outside the repo checkout, and uploads it
-with `netlify-cli deploy --prod`. The `[build]` block in `netlify.toml` (publish
-`dist/frontend/browser`, `NODE_VERSION=24`) is kept for reference and does **not** run. SPA routing
-comes from `public/_redirects` (`/* /index.html 200`) — the `@angular/build:application` builder drops
-underscore-prefixed public files from `dist/`, so CI copies `_redirects` and `_headers` into the
-deploy root explicitly. Keep both files in `public/`.
+Production is a **static Angular SPA served from the self-hosted box**, with no third-party host. It
+ships as the `barkaart-web` image ([`Dockerfile`](Dockerfile), build context = repo root): a
+multi-stage build that runs `build:shared → build --workspace frontend` and copies the output into
+`caddy:2-alpine` together with `deploy/Caddyfile.lan`. CI pushes it to GHCR for every commit on
+`main`, tagged with the commit SHA, and the box pulls it (`deploy/auto-deploy.sh`) — nothing is built
+on the box. The image's ignore file is `Dockerfile.dockerignore` next to the Dockerfile, an
+allowlist; the root `.dockerignore` belongs to the API image and excludes the frontend.
+
+Routing is server config rather than a bundled file: **SPA fallback** is
+`try_files {path} /index.html` in `deploy/Caddyfile.lan`. The manifest needs no help —
+`caddy:2-alpine` maps `.webmanifest` to `application/manifest+json` out of the box.
 
 The catalog bundle (`public/catalog.json` + `catalog.nl.json`) is generated from the frozen
 `iba-cocktails-seed.json` at the repo root by `npm run build:catalog` — never fetched from a live DB —
 and both files are **committed to the repo**. CI regenerates them and fails the build if the committed
 copies differ or are untracked, so after touching the seed you must re-run `npm run build:catalog` and
-commit the result. See the root [`README.md`](../README.md) and `netlify.toml`.
+commit the result. See the root [`README.md`](../README.md).

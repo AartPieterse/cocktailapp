@@ -2,11 +2,11 @@
 #
 # Hourly rather than every few minutes on purpose: `main` is the stable branch and merges into it are
 # rare, so a shorter interval buys nothing but wakes the box for no reason. A cycle that finds nothing
-# costs a `git fetch` and a registry digest check — a few kilobytes — so the interval controls only how
-# long a release sits unnoticed, not the running cost. Widen OnUnitActiveSec freely; the deploy path
-# is identical whether it fires hourly or daily.
+# costs one `git fetch` — a few kilobytes — so the interval controls only how long a release sits
+# unnoticed, not the running cost. Widen OnUnitActiveSec freely; the deploy path is identical whether
+# it fires hourly or daily.
 [Unit]
-Description=Poll for a new Barkaart release (GHCR API image + SPA source) and auto-deploy
+Description=Poll for a new Barkaart release (a new commit and its GHCR images) and auto-deploy
 
 [Timer]
 OnBootSec=2min

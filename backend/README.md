@@ -78,17 +78,18 @@ All routes are mounted under a global **`/api`** prefix (`app.setGlobalPrefix('a
 - The **only admin routes** are `/api/admin/*`, protected by `AdminGuard` — **two independent
   defenses, both must pass**: (1) any request carrying a Cloudflare `CF-Connecting-IP` header is
   rejected, and (2) HTTP Basic auth against `ADMIN_USER` / `ADMIN_PASSWORD` (fail-closed if either is
-  unset). **On the current LAN-only stack defense (1) buys nothing** — there is no tunnel, and any
-  caller controls that header (see the spoofability note below). Basic auth is what is actually
-  holding the door. The header check only becomes meaningful once a tunnel is in front and something
-  strips client-supplied `CF-*` headers.
+  unset). **Defense (1) buys nothing** — there is no Cloudflare in the path, so that
+  header never arrives and the check always passes, while any caller can still set it (see the
+  spoofability note below). Basic auth is what is actually holding the door. It needs replacing with
+  a source-address check before the box faces the internet.
 - **Everything else is public**, including all catalog write endpoints and `GET /api/catalog`. There is
   **no per-route auth on catalog writes** — the only protection is the network boundary you put the API
-  behind. On the LAN-only deployment ([`../deploy/docker-compose.admin.yml`](../deploy/docker-compose.admin.yml)
-  publishes `8080:3000` on all interfaces, with no Cloudflare Tunnel in front) that means **anyone on
-  the LAN can `POST`/`PATCH`/`DELETE` the catalog**: an unauthenticated `POST /api/ingredients` answers
-  `400` (validation), not `401`. Keep the box on a trusted network, bind the published port to one
-  interface, or put an authenticating reverse proxy in front before exposing it.
+  behind. On the box in service that boundary holds by omission: the API publishes no host port and
+  the Caddy in front of it does not proxy `/api`, so nothing off the container network can reach these
+  routes. Anything that changes that — the admin overlay's `8080:3000`, or an `/api` proxy — puts
+  **unauthenticated `POST`/`PATCH`/`DELETE` on the catalog** within reach of whoever can see it: an
+  unauthenticated `POST /api/ingredients` answers `400` (validation), not `401`. Guard the writes
+  before proxying `/api`.
 - **Tokens:** access tokens signed with `JWT_SECRET` (default `15m`); refresh tokens signed with
   `JWT_REFRESH_SECRET` (default `30d`) and stored as only a random `jti` + `userId` + `expiresAt`
   (TTL-reaped). Each refresh **rotates** the token (single-use jti); the JWT itself is never stored.
@@ -99,10 +100,10 @@ All routes are mounted under a global **`/api`** prefix (`app.setGlobalPrefix('a
 - **Global rate limiting:** `ThrottlerModule` (ttl 60s / limit 120) via `CfThrottlerGuard`, which keys
   on the **real client IP** (`CF-Connecting-IP` header, else `req.ip`). Plus per-route throttles
   (register 10/min, events 60/min) and the in-memory `LoginThrottleGuard` (10 attempts / 15 min,
-  composite `email|IP` key so an attacker can't lock out a victim). ⚠️ `CF-Connecting-IP` is only
-  trustworthy when the origin is reachable *exclusively* through the tunnel (see
-  `src/common/client-ip.ts`). On a directly-published deployment — such as the LAN-only stack — any
-  caller can set that header and rotate it to walk around the per-IP limits.
+  composite `email|IP` key so an attacker can't lock out a victim). ⚠️ `CF-Connecting-IP` is trusted
+  unconditionally (see `src/common/client-ip.ts`), and nothing in front of the API strips it, so any
+  caller can set that header and rotate it to walk around the per-IP limits. Fix this before the API
+  is reachable from anywhere but the LAN.
 - **Global `ValidationPipe`** — `whitelist` (strips unknown props) + `transform` + implicit conversion.
 - **Global `MongoExceptionFilter`** — maps Mongo/Mongoose errors to clean HTTP (duplicate key → 409,
   `CastError`/`ValidationError` → 400, unknown → 500); `HttpException`s pass through.
@@ -171,5 +172,5 @@ Targets **Node 24** (the Dockerfile base image is `node:24-slim` and CI uses Nod
 
 The backend ships as a **`node:24-slim` multi-stage Docker image** ([`Dockerfile`](Dockerfile), build
 context = repo root, runs as a non-root user, `CMD node backend/dist/main.js`) and is self-hosted via
-the Docker Compose stack (API + `mongo:7` + `cloudflared`) documented in
+the Docker Compose stack (API + `mongo:7` + the Caddy `web` image that serves the SPA) documented in
 [`../deploy/README.md`](../deploy/README.md).

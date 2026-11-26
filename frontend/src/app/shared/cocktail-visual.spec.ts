@@ -1,12 +1,20 @@
 import { describe, expect, it } from 'vitest';
-import type { Cocktail } from '@cocktailapp/shared';
+import { variationRecipe, type Cocktail } from '@cocktailapp/shared';
 import catalog from '../../../public/catalog.json';
-import { COCKTAIL_ART } from './cocktail-art.data';
+import { COCKTAIL_ART, VARIATION_ART } from './cocktail-art.data';
 import { derivedSpec, glassSpecFor, liquidFor, tintFor } from './cocktail-visual';
 import { barkaartGlassSVG } from './glass-art/glass-svg';
 
 const COCKTAILS = (catalog as { cocktails: Cocktail[] }).cocktails;
 const IDS = new Set(COCKTAILS.map((c) => c.id));
+
+/** Every variation "what can I make" can list as a drink — the ones with a recipe of their own. */
+const VARIANTS = COCKTAILS.flatMap((parent) =>
+  (parent.variations ?? []).flatMap((v) => {
+    const recipe = variationRecipe(parent, v);
+    return recipe ? [{ key: `${parent.id}/${v.key}`, parent, recipe, variationKey: v.key }] : [];
+  }),
+);
 
 /**
  * These are the guarantees the artwork rests on, and none of them is obvious from
@@ -102,7 +110,7 @@ describe('cocktail art', () => {
   });
 
   it('the drawing stays inside its node budget on a card', () => {
-    // 126 of these render on one unpaginated grid with no virtual scrolling, so
+    // The whole catalog renders on one unpaginated grid with no virtual scrolling, so
     // the per-card cost is the whole grid's cost. Measured at ~46; the ceiling is
     // there to make a regression loud rather than to be hit.
     for (const c of COCKTAILS) {
@@ -244,5 +252,37 @@ describe('the derivation, on drinks with no authored art', () => {
     const svg = barkaartGlassSVG({ ...derivedSpec(drink({})), seed: 'unknown' });
     expect(svg).not.toContain('NaN');
     expect(svg).toContain('<svg');
+  });
+});
+
+describe('variation art', () => {
+  it('there are variations to draw', () => {
+    expect(VARIANTS.length).toBeGreaterThan(0);
+  });
+
+  it('every listable variation has an entry, and every entry names one', () => {
+    const keys = new Set(VARIANTS.map((v) => v.key));
+    expect(VARIANTS.filter((v) => !VARIATION_ART[v.key]).map((v) => v.key), 'no VARIATION_ART entry').toEqual([]);
+    expect(Object.keys(VARIATION_ART).filter((k) => !keys.has(k)), 'entries for no listable variation').toEqual([]);
+  });
+
+  it('a variation never renders as the same picture as its parent', () => {
+    for (const v of VARIANTS) {
+      const own = barkaartGlassSVG({ ...glassSpecFor(v.recipe, 'card', 'ambient', v.variationKey), seed: 'x' });
+      const parent = barkaartGlassSVG({ ...glassSpecFor(v.parent), seed: 'x' });
+      expect(own, v.key).not.toBe(parent);
+    }
+  });
+
+  it('a variation keeps its parent glass and everything its entry does not restate', () => {
+    for (const v of VARIANTS) {
+      const own = glassSpecFor(v.recipe, 'card', 'ambient', v.variationKey);
+      const parent = glassSpecFor(v.parent);
+      expect(own.glass, v.key).toBe(parent.glass);
+      const restated = new Set(Object.keys(VARIATION_ART[v.key] ?? {}));
+      for (const field of ['ice', 'fill', 'cut', 'foam', 'rim'] as const) {
+        if (!restated.has(field)) expect(own[field], `${v.key} ${field}`).toEqual(parent[field]);
+      }
+    }
   });
 });

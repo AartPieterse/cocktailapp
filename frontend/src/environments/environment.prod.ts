@@ -1,5 +1,8 @@
 /**
- * Production environment (static-first).
+ * Production environment (static-first, self-hosted).
+ *
+ * This is the only production build there is: the bundle baked into the barkaart-web image that
+ * Caddy serves from the box (frontend/Dockerfile). There is no third-party host.
  *
  * The deployed app is a fully static SPA: it reads the curated catalog from `catalog.json`
  * (generated at build time from iba-cocktails-seed.json — see scripts/build-catalog.mjs) and
@@ -14,9 +17,13 @@ export const environment = {
   dataSource: 'static' as 'api' | 'static',
   admin: false,
   /**
-   * Off for the static Netlify build: there is no backend to reach, so the app stays a fully
-   * anonymous, localStorage-only client (zero /api/* calls, account UI hidden). Flip to true —
-   * independently of `dataSource` — once a NestJS backend is deployed and `apiBaseUrl` points at it.
+   * Still off — and no longer for lack of a backend: the API runs on the same box, and the
+   * relative `apiBaseUrl` below is already correct for the same-origin shape Caddy will serve.
+   * What gates the flip is the hardening in docs/plans/public-access.md §2: `admin.guard.ts`
+   * proves "LAN-only" by REJECTING the presence of a `CF-Connecting-IP` header, so with no
+   * Cloudflare in the path that check now passes for everybody. Until it is a source-address
+   * check, turning accounts on would put them behind an open admin dashboard. So the app stays a
+   * fully anonymous, localStorage-only client (zero /api/* calls, account UI hidden).
    */
   authEnabled: false,
   apiUrl: '/api/',

@@ -3,6 +3,11 @@
 _Decision snapshot, 5 Sep 2026. The living reference is [`docs/data-model.md`](../data-model.md) —
 where this plan and the code disagree, the code is true._
 
+_Amended 10 Oct 2026: variations with `swaps` now show up in "wat kan ik maken" as drinks of their
+own, judged as the parent recipe with the swap applied (derived at runtime, under the parent's id —
+storage stays embedded and id-less). That retires "swaps never affect makeability" and the third
+of the three promotion criteria; see "Variations count too" in `docs/data-model.md`._
+
 ## The question
 
 Ingredients, cocktails, and variations: what is the right storage shape? Specifically — a list of
