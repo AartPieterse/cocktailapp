@@ -245,6 +245,28 @@ import { environment } from '../../../environments/environment';
         display: grid;
       }
     }
+    /* Small phones (320–380px): brand plus four buttons only fit when everything tightens. */
+    @media (max-width: 380px) {
+      .inner {
+        gap: var(--sp-2);
+      }
+      .brand {
+        gap: 6px;
+      }
+      .mark {
+        font-size: 1.2rem;
+      }
+      .actions {
+        gap: 2px;
+      }
+      .icon-btn {
+        width: 34px;
+        height: 34px;
+      }
+      .surprise {
+        padding: 8px 9px;
+      }
+    }
   `,
 })
 export class Navbar {

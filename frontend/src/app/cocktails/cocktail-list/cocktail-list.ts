@@ -68,6 +68,22 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
           >
             <mat-icon>{{ onlyFavs() ? 'favorite' : 'favorite_border' }}</mat-icon>
           </button>
+          <!-- On a phone the select collapses to an icon button: the native select stays on top,
+               transparent, so tapping the icon opens the platform's own picker. -->
+          <div class="sortbox" [class.on]="sort() !== 'name-asc'">
+            <label class="sr-only" for="sort-select">{{ lang.t().list.sortBy }}</label>
+            <mat-icon class="sort-icon" aria-hidden="true">swap_vert</mat-icon>
+            <select
+              id="sort-select"
+              class="sort"
+              [value]="sort()"
+              (change)="onSort($event)"
+            >
+              <option value="name-asc">{{ lang.t().list.sortNameAsc }}</option>
+              <option value="name-desc">{{ lang.t().list.sortNameDesc }}</option>
+              <option value="difficulty">{{ lang.t().list.sortDifficulty }}</option>
+            </select>
+          </div>
           @if (admin) {
             <a mat-flat-button routerLink="/cocktails/add"><mat-icon>add</mat-icon> {{ lang.t().list.new }}</a>
           }
@@ -75,6 +91,9 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
       </header>
 
       <div class="filters">
+        @if (hasActiveFilters()) {
+          <button class="clear" type="button" (click)="clearFilters()">{{ lang.t().list.clearFilters }}</button>
+        }
         <div class="chips" role="group" [attr.aria-label]="lang.t().list.filterBySpirit">
           @for (s of spiritOptions; track s) {
             <button
@@ -96,22 +115,6 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
           >
             {{ lang.t().list.alcoholFree }}
           </button>
-        </div>
-        <div class="sortbox">
-          <label class="sr-only" for="sort-select">{{ lang.t().list.sortBy }}</label>
-          <select
-            id="sort-select"
-            class="sort"
-            [value]="sort()"
-            (change)="onSort($event)"
-          >
-            <option value="name-asc">{{ lang.t().list.sortNameAsc }}</option>
-            <option value="name-desc">{{ lang.t().list.sortNameDesc }}</option>
-            <option value="difficulty">{{ lang.t().list.sortDifficulty }}</option>
-          </select>
-          @if (hasActiveFilters()) {
-            <button class="clear" type="button" (click)="clearFilters()">{{ lang.t().list.clearFilters }}</button>
-          }
         </div>
       </div>
 
@@ -212,10 +215,13 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
     .filters {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       flex-wrap: wrap;
       gap: 12px;
       margin-bottom: 30px;
+    }
+    .filters .clear {
+      order: 1;
+      margin-left: auto;
     }
     .chips {
       display: flex;
@@ -242,16 +248,20 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
       color: #fff;
     }
     .sortbox {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 10px;
+    }
+    .sort-icon {
+      display: none;
     }
     .sort {
+      height: 46px;
       border: 1px solid var(--hairline);
       border-radius: var(--radius);
       background: var(--surface);
       color: var(--ink);
-      padding: 10px 14px;
+      padding: 0 14px;
       font: 600 0.813rem var(--font-body);
       cursor: pointer;
     }
@@ -314,12 +324,93 @@ type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
     }
     @media (max-width: 720px) {
       .grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
-    @media (max-width: 480px) {
+    /* Phone: one toolbar row (search · favourites · sort) and one swipeable row of chips, so the
+       first cards show above the fold instead of a screen of controls. */
+    @media (max-width: 560px) {
+      .page {
+        padding-top: var(--sp-5);
+      }
+      .head {
+        gap: var(--sp-3);
+        margin-bottom: var(--sp-3);
+      }
+      .head h1 {
+        font-size: var(--step-3);
+      }
+      .tools {
+        width: 100%;
+      }
+      .search {
+        flex: 1;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        height: 46px;
+        padding: 0 14px;
+      }
+      .sortbox {
+        display: grid;
+        place-items: center;
+        flex: none;
+        width: 46px;
+        height: 46px;
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius);
+        background: var(--surface);
+        color: var(--muted);
+      }
+      .sortbox.on {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+      .sortbox:focus-within {
+        border-color: var(--accent);
+      }
+      .sort-icon {
+        display: block;
+      }
+      .sort {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+      .filters {
+        flex-wrap: nowrap;
+        gap: var(--sp-2);
+        margin-bottom: var(--sp-5);
+        /* Let the chip row run to the screen edge, so it reads as scrollable. */
+        margin-right: calc(-1 * max(var(--sp-4), env(safe-area-inset-right)));
+      }
+      .filters .clear {
+        order: 0;
+        margin-left: 0;
+        flex: none;
+        white-space: nowrap;
+      }
+      .chips {
+        flex: 1;
+        min-width: 0;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+        padding-right: max(var(--sp-4), env(safe-area-inset-right));
+        mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+      }
+      .chips::-webkit-scrollbar {
+        display: none;
+      }
+      .chip {
+        flex: none;
+        white-space: nowrap;
+      }
       .grid {
-        grid-template-columns: 1fr;
+        gap: var(--sp-3);
       }
     }
   `,
