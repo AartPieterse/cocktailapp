@@ -31,6 +31,7 @@ export const NL_INGREDIENTS = {
   'peach-schnapps': 'Perziklikeur', 'raspberry-liqueur': 'Frambozenlikeur', campari: 'Campari',
   'grand-marnier': 'Grand Marnier', cynar: 'Cynar', frangelico: 'Frangelico',
   'allspice-liqueur': 'Pimentlikeur', 'passion-fruit-liqueur': 'Passievruchtlikeur',
+  'elderflower-liqueur': 'Vlierbloesemlikeur',
   // wine & vermouth
   'sweet-vermouth': 'Rode vermout', 'dry-vermouth': 'Droge vermout', 'lillet-blanc': 'Lillet Blanc',
   'sparkling-wine': 'Mousserende wijn', 'white-wine': 'Droge witte wijn', 'red-wine': 'Rode wijn',

@@ -90,6 +90,7 @@ export const BASE_SPIRIT_LABELS: Record<Locale, Record<BaseSpirit, string>> = {
 /** Typed vocabulary for the cocktail filter UI. Populated in a later content pass (see plan Step 5). */
 export type CocktailTag =
   | 'iba-official'
+  | 'modern-classic'
   | 'classic'
   | 'refreshing'
   | 'sour'
@@ -103,6 +104,7 @@ export type CocktailTag =
 
 export const COCKTAIL_TAGS: readonly CocktailTag[] = [
   'iba-official',
+  'modern-classic',
   'classic',
   'refreshing',
   'sour',

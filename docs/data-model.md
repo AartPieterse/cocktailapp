@@ -291,7 +291,8 @@ and never calls `GET /api/catalog`. The LAN box serves the identical catalog fro
 change deployed only there reaches no user until the bundle is rebuilt and the frontend redeployed.
 
 The frozen source of truth is **`iba-cocktails-seed.json`** (repo root) — the IBA 2024 official list
-(tagged `iba-official`) plus an alcohol-free set (tagged `mocktail`). The seed file is the authority
+(tagged `iba-official`), plus an alcohol-free set (tagged `mocktail`) and a handful of post-2000 drinks
+the IBA does not list (tagged `modern-classic`). The seed file is the authority
 on the catalog's size and on which ingredients are staples; `npm run build:catalog` prints the live
 totals — ingredients, staples, cocktails and NL overlay coverage — on every run
 (`scripts/build-catalog.mjs`). See the root [`README.md`](../README.md#build--catalog-pipeline) for

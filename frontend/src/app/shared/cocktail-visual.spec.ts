@@ -102,7 +102,7 @@ describe('cocktail art', () => {
   });
 
   it('the drawing stays inside its node budget on a card', () => {
-    // 126 of these render on one unpaginated grid with no virtual scrolling, so
+    // The whole catalog renders on one unpaginated grid with no virtual scrolling, so
     // the per-card cost is the whole grid's cost. Measured at ~46; the ceiling is
     // there to make a regression loud rather than to be hit.
     for (const c of COCKTAILS) {

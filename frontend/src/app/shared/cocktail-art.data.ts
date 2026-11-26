@@ -181,6 +181,14 @@ export const COCKTAIL_ART: Readonly<Record<string, CocktailArt>> = {
   // sitting well below the rim of the cone with a single bright lemon twist hooked on the edge -
   // no olive, no bubbles, no haze.
   'dry-martini': { liquid: '#F0F2E5', fill: 0.6, cut: 'deep', ice: 'none', fizz: 'none', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lemon-twist', placement: 'rim', color: '#E8C24A' }] },
+  // The Old Fashioned's silhouette - one big rock, a low stirred pour - but almost colourless:
+  // gin and a spoon of elderflower read as the palest straw, and the peel on the rim is a pink
+  // grapefruit one where every other big-rock glass is amber with orange.
+  'elder-fashion': { liquid: '#F2ECC8', fill: 0.42, cut: 'deep', ice: 'big-rock', fizz: 'none', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'grapefruit-twist', placement: 'rim', color: '#F29A78' }] },
+  // A tall, glass-clear collins of pale gold-green, cubes to the top and a hard bead from wine and
+  // soda together, with a lemon twist hooked on the rim - lighter and greener than the Horse's
+  // Neck, and with none of the Hugo's mint.
+  'elderflower-spritz': { liquid: '#EFEDB4', fill: 0.84, cut: 'classic', ice: 'cubes', fizz: 'lively', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lemon-twist', placement: 'rim', color: '#EBD050' }] },
   // The darkest coupe in the catalog: an opaque near-black coffee body under a thick hazelnut
   // crema cap, with three beans set on the foam - it reads as a dessert, not a citrus sour.
   'espresso-martini': { liquid: '#4A2A1B', liquidBottom: '#2C170F', fill: 0.8, cut: 'deep', ice: 'none', fizz: 'none', foam: 'espresso-crema', rim: 'none', clarity: 'opaque', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'coffee-beans', placement: 'surface', color: '#3B2216' }] },
@@ -200,6 +208,10 @@ export const COCKTAIL_ART: Readonly<Record<string, CocktailArt>> = {
   // The only completely ungarnished glass in the rocks set, and deliberately so: the recipe
   // carries no garnish line at all. A deep red mahogany, bare-rimmed, over cubes.
   'french-connection': { liquid: '#8E3A1C', fill: 0.45, cut: 'deep', ice: 'cubes', fizz: 'none', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [] },
+  // A full saucer of pale, cool lime-straw with a shaken haze - greener than the Corpse Reviver's
+  // butter-yellow and paler than any honey sour - and a thin lime wheel on the rim as its only
+  // colour.
+  'french-gimlet': { liquid: '#E6EBBE', fill: 0.8, cut: 'wide', ice: 'none', fizz: 'none', foam: 'none', rim: 'none', clarity: 'hazy', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lime-wheel', placement: 'rim', color: '#A4C64C' }] },
   // A deep Chambord purple under a thin tan pineapple froth, with the lemon peel its recipe
   // actually names — no raspberries, which it has no fruit for and which made it a twin of the
   // Raspberry Sour.
@@ -245,6 +257,10 @@ export const COCKTAIL_ART: Readonly<Record<string, CocktailArt>> = {
   // peel hanging the length of the glass — see-through where the Suffering Bastard next to it is
   // murky with ginger beer.
   'horse-s-neck': { liquid: '#E9C87A', fill: 0.82, cut: 'classic', ice: 'cubes', fizz: 'lively', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lemon-twist', placement: 'rim', color: '#F0D64B' }] },
+  // The Spritz's wine glass with the orange taken out: clear pale prosecco-straw over cubes, a fine
+  // bead, and mint leaves pressed into the body under a whole sprig - the only wine glass in the
+  // catalog with herb inside it, lime wheel on the rim.
+  'hugo': { liquid: '#F3EEC4', fill: 0.74, cut: 'deep', ice: 'cubes', fizz: 'gentle', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'mint-leaves', straw: 'none', steam: false, garnishes: [{ type: 'mint-sprig', placement: 'in-glass', color: '#3E8B4A' }, { type: 'lime-wheel', placement: 'rim', color: '#8FBE3C' }] },
   // A 230ml tropical build crammed to the top of a mug with a crushed-ice mound: thick, opaque
   // golden-orange from 90ml pineapple and 30ml passion fruit purée, with black passion seeds and
   // muddled ginger visible in the pulp — the only mug in the catalogue that is ice-cold rather
@@ -520,6 +536,10 @@ export const COCKTAIL_ART: Readonly<Record<string, CocktailArt>> = {
   // flatter-toned than the rum version and deliberately without its cherry - just the pineapple
   // wedge and a pair of straws.
   'virgin-colada': { liquid: '#F1EDE0', fill: 0.8, cut: 'classic', ice: 'frozen-slush', fizz: 'none', foam: 'none', rim: 'none', clarity: 'opaque', inclusion: 'none', straw: 'straw-pair', steam: false, garnishes: [{ type: 'pineapple-wedge', placement: 'rim', color: '#E8C24A' }] },
+  // The Hugo's glass gone greener and cloudier: lime juice hazes the elderflower, soda fills it
+  // nearly to the rim and drives a livelier bead, and a straw stands in it where the wine version
+  // has none.
+  'virgin-hugo': { liquid: '#E4ECC4', fill: 0.86, cut: 'deep', ice: 'cubes', fizz: 'lively', foam: 'none', rim: 'none', clarity: 'hazy', inclusion: 'mint-leaves', straw: 'straw', steam: false, garnishes: [{ type: 'mint-sprig', placement: 'in-glass', color: '#3E8B4A' }, { type: 'lime-wheel', placement: 'rim', color: '#9FD24A' }] },
   // The only flat, light-blocking drink on this page: a dense matte tomato-red column in a
   // highball, no shine through it at all, with a tall celery stalk standing out of the top and a
   // fleck of black pepper on the surface — it reads as food, not cocktail.

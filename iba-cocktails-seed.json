@@ -733,6 +733,18 @@
       "abv": 20
     },
     {
+      "id": "elderflower-liqueur",
+      "name": "Elderflower Liqueur",
+      "category": "liqueur",
+      "aliases": [
+        "Bols Elderflower",
+        "Giffard Fleur de Sureau",
+        "St-Germain",
+        "St. Germain"
+      ],
+      "abv": 20
+    },
+    {
       "id": "passion-fruit-syrup",
       "name": "Passion Fruit Syrup",
       "category": "syrup"
@@ -1996,7 +2008,20 @@
         }
       ],
       "description": "A morning-after drink from the 1930s, and genuinely bracing. The absinthe is a rinse, not a measure.",
-      "family": "sour"
+      "family": "sour",
+      "variations": [
+        {
+          "key": "sunflower",
+          "name": "Sunflower",
+          "description": "Sam Ross's 2008 riff: swap the Lillet for elderflower liqueur and garnish with a lemon twist. Same equal parts, same absinthe rinse, noticeably softer.",
+          "swaps": [
+            {
+              "from": "Lillet Blanc",
+              "to": "Elderflower Liqueur"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Cosmopolitan",
@@ -2261,6 +2286,81 @@
       "family": "spirit-forward"
     },
     {
+      "id": "elder-fashion",
+      "name": "Elder Fashion",
+      "category": "Modern Classics",
+      "baseSpirit": "gin",
+      "description": "Phil Ward's old fashioned, rebuilt at Death & Co: gin for the whiskey, elderflower liqueur for the sugar, orange bitters for Angostura.",
+      "instructions": [
+        "Stir all ingredients with ice in a mixing glass.",
+        "Strain into a rocks glass over one large ice cube."
+      ],
+      "ingredients": [
+        {
+          "name": "Gin",
+          "call": "Plymouth Gin",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "name": "Elderflower Liqueur",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "name": "Orange Bitters",
+          "amount": 2,
+          "unit": "dash"
+        }
+      ],
+      "glass": "rocks",
+      "method": "stirred",
+      "difficulty": "easy",
+      "garnish": "Garnish with a grapefruit twist.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "spirit-forward"
+    },
+    {
+      "id": "elderflower-spritz",
+      "name": "Elderflower Spritz",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "St-Germain's own serve since the liqueur launched in 2007, and still sold as the St-Germain Cocktail. Pour in order — wine, liqueur, soda — and the soda does the mixing.",
+      "instructions": [
+        "Fill a collins glass with ice.",
+        "Pour in the sparkling wine, then the elderflower liqueur, then the soda water.",
+        "Stir once, gently."
+      ],
+      "ingredients": [
+        {
+          "name": "Sparkling Wine",
+          "call": "Dry Sparkling Wine",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "name": "Elderflower Liqueur",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "name": "Soda Water",
+          "amount": 60,
+          "unit": "ml"
+        }
+      ],
+      "glass": "collins",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Garnish with a lemon twist.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "sparkling"
+    },
+    {
       "name": "Espresso Martini",
       "category": "New Era Drinks",
       "baseSpirit": "vodka",
@@ -2406,7 +2506,20 @@
         }
       ],
       "description": "Named after a field gun for the kick. Gin and lemon under champagne, and it hits harder than it tastes.",
-      "family": "sparkling"
+      "family": "sparkling",
+      "variations": [
+        {
+          "key": "french-77",
+          "name": "French 77",
+          "description": "Swap the sugar syrup for elderflower liqueur — it sweetens the drink and makes it floral.",
+          "swaps": [
+            {
+              "from": "Simple Syrup",
+              "to": "Elderflower Liqueur"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "French Connection",
@@ -2436,6 +2549,42 @@
       ],
       "description": "Two ingredients, no dilution beyond the ice. Amaretto rounds the cognac without covering it.",
       "family": "spirit-forward"
+    },
+    {
+      "id": "french-gimlet",
+      "name": "French Gimlet",
+      "category": "Modern Classics",
+      "baseSpirit": "gin",
+      "description": "A gimlet that takes its sugar from elderflower liqueur instead of syrup, so the flower is the sweetener rather than something sitting on top of it.",
+      "instructions": [
+        "Pour all ingredients into a shaker with ice.",
+        "Shake hard and double-strain into a chilled coupe."
+      ],
+      "ingredients": [
+        {
+          "name": "Gin",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "name": "Elderflower Liqueur",
+          "amount": 45,
+          "unit": "ml"
+        },
+        {
+          "name": "Fresh Lime Juice",
+          "amount": 15,
+          "unit": "ml"
+        }
+      ],
+      "glass": "coupe",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Garnish with a thin lime wheel.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "sour"
     },
     {
       "name": "French Martini",
@@ -2855,6 +3004,62 @@
       ],
       "description": "The garnish is the drink's name: one unbroken spiral of lemon peel hung over the rim, running the length of the glass.",
       "family": "highball"
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "South Tyrol, 2005, made as an alternative to the Spritz. It started out with lemon-balm syrup; elderflower took over within a few summers. Syrup makes it sweeter, liqueur makes it stronger.",
+      "instructions": [
+        "Put the mint leaves and lime wedges in a wine glass and press them lightly with a spoon.",
+        "Add the elderflower liqueur and fill the glass with ice.",
+        "Top with the prosecco and the soda water.",
+        "Stir once, gently."
+      ],
+      "ingredients": [
+        {
+          "name": "Sparkling Wine",
+          "call": "Prosecco",
+          "amount": 120,
+          "unit": "ml"
+        },
+        {
+          "name": "Elderflower Liqueur",
+          "call": "Elderflower Liqueur or Elderflower Syrup",
+          "amount": 20,
+          "unit": "ml",
+          "alternatives": [
+            "Elderflower Cordial"
+          ]
+        },
+        {
+          "name": "Soda Water",
+          "amount": 30,
+          "unit": "ml"
+        },
+        {
+          "name": "Mint",
+          "call": "Mint Leaves",
+          "amount": 6,
+          "unit": "piece"
+        },
+        {
+          "name": "Fresh Lime Juice",
+          "call": "Lime",
+          "amount": 2,
+          "unit": "wedge"
+        }
+      ],
+      "glass": "wine",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Garnish with a mint sprig and a lime wheel.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "sparkling",
+      "alcoholFreeCounterpart": "Virgin Hugo"
     },
     {
       "name": "IBA Tiki",
@@ -5954,6 +6159,52 @@
         "mocktail"
       ],
       "family": "creamy"
+    },
+    {
+      "id": "virgin-hugo",
+      "name": "Virgin Hugo",
+      "baseSpirit": "none",
+      "category": "Alcohol-free",
+      "description": "Take the prosecco away and elderflower syrup on its own turns into lemonade. Fresh lime and a long top of soda put back the edge the wine was giving it.",
+      "instructions": [
+        "Put the mint leaves in a wine glass and press them lightly with a spoon.",
+        "Add the elderflower syrup and lime juice and fill the glass with ice.",
+        "Top with soda water and stir once, gently.",
+        "Garnish with a mint sprig and a lime wheel."
+      ],
+      "ingredients": [
+        {
+          "name": "Elderflower Cordial",
+          "call": "Elderflower Syrup",
+          "amount": 25,
+          "unit": "ml"
+        },
+        {
+          "name": "Fresh Lime Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "name": "Mint",
+          "call": "Mint Leaves",
+          "amount": 8,
+          "unit": "piece"
+        },
+        {
+          "name": "Soda Water",
+          "amount": 1,
+          "unit": "topup"
+        }
+      ],
+      "glass": "wine",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Mint sprig and a lime wheel",
+      "color": "#E4ECC4",
+      "tags": [
+        "mocktail"
+      ],
+      "family": "fizz"
     },
     {
       "id": "virgin-mary",

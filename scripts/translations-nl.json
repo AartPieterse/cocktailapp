@@ -132,6 +132,9 @@
     "passion-fruit-liqueur": {
       "name": "Passievruchtlikeur"
     },
+    "elderflower-liqueur": {
+      "name": "Vlierbloesemlikeur"
+    },
     "sweet-vermouth": {
       "name": "Rode vermout"
     },
@@ -562,7 +565,13 @@
         "Top af met prosecco of champagne.",
         "Garneer met een lange citroenschil."
       ],
-      "garnish": "Citroenschil"
+      "garnish": "Citroenschil",
+      "variations": {
+        "french-77": {
+          "name": "French 77",
+          "description": "Vervang de suikersiroop door vlierbloesemlikeur — die maakt het zoet én bloemig."
+        }
+      }
     },
     "sidecar": {
       "name": "Sidecar",
@@ -859,7 +868,13 @@
         "Doe alle ingrediënten met ijs in de shaker.",
         "Shake goed en zeef in een gekoeld cocktailglas."
       ],
-      "garnish": "Garneer met een schilletje sinaasappel"
+      "garnish": "Garneer met een schilletje sinaasappel",
+      "variations": {
+        "sunflower": {
+          "name": "Sunflower",
+          "description": "De variant van Sam Ross uit 2008: vervang de Lillet door vlierbloesemlikeur en garneer met een citroenzestje. Dezelfde gelijke delen, dezelfde absintspoeling, merkbaar zachter."
+        }
+      }
     },
     "cranberry-breeze": {
       "name": "Cranberrybreeze",
@@ -880,6 +895,25 @@
         "Schenk in een glas op voet en vul aan met crushed ice."
       ],
       "garnish": "Een halve passievrucht"
+    },
+    "elder-fashion": {
+      "name": "Elder Fashion",
+      "description": "De old fashioned van Phil Ward, herbouwd bij Death & Co: gin in plaats van whiskey, vlierbloesemlikeur in plaats van suiker, sinaasappelbitter in plaats van Angostura.",
+      "instructions": [
+        "Roer alle ingrediënten met ijs in een mengglas.",
+        "Zeef in een rocksglas over één groot ijsblok."
+      ],
+      "garnish": "Garneer met een zestje grapefruit."
+    },
+    "elderflower-spritz": {
+      "name": "Vlierbloesemspritz",
+      "description": "Sinds de lancering van St-Germain in 2007 dé serve van het merk, en nog altijd verkocht als de St-Germain Cocktail. Schenk op volgorde — wijn, likeur, soda — en de soda mengt het voor je.",
+      "instructions": [
+        "Vul een collinsglas met ijs.",
+        "Schenk eerst de mousserende wijn, dan de vlierbloesemlikeur en dan het sodawater.",
+        "Roer één keer, voorzichtig."
+      ],
+      "garnish": "Garneer met een citroenzestje."
     },
     "espresso-tonic": {
       "name": "Espresso tonic",
@@ -907,6 +941,15 @@
         "Schenk alle ingrediënten rechtstreeks in een old fashioned glas gevuld met ijsblokjes.",
         "Roer voorzichtig."
       ]
+    },
+    "french-gimlet": {
+      "name": "French Gimlet",
+      "description": "Een gimlet die zijn zoet uit vlierbloesemlikeur haalt in plaats van uit siroop, zodat de bloesem zelf de zoetmaker is en niet iets wat erbovenop ligt.",
+      "instructions": [
+        "Doe alle ingrediënten in een shaker met ijs.",
+        "Shake stevig en zeef dubbel in een gekoelde coupe."
+      ],
+      "garnish": "Garneer met een dun schijfje limoen."
     },
     "french-martini": {
       "name": "French Martini",
@@ -1011,6 +1054,17 @@
         "Voeg naar wens een paar scheutjes Angostura bitters toe."
       ],
       "garnish": "Garneer met een spiraal van citroenschil."
+    },
+    "hugo": {
+      "name": "Hugo",
+      "description": "Zuid-Tirol, 2005, bedacht als alternatief voor de Spritz. Het begon met citroenmelissesiroop; binnen een paar zomers had vlierbloesem het overgenomen. Met siroop wordt hij zoeter, met likeur sterker.",
+      "instructions": [
+        "Doe de muntblaadjes en de partjes limoen in een wijnglas en druk ze licht aan met een lepel.",
+        "Voeg de vlierbloesemlikeur toe en vul het glas met ijs.",
+        "Top af met de prosecco en het sodawater.",
+        "Roer één keer, voorzichtig."
+      ],
+      "garnish": "Garneer met een takje munt en een schijfje limoen."
     },
     "iba-tiki": {
       "name": "IBA Tiki",
@@ -1566,6 +1620,17 @@
         "Garneer met een partje ananas."
       ],
       "garnish": "Partje ananas"
+    },
+    "virgin-hugo": {
+      "name": "Virgin Hugo",
+      "description": "Haal de prosecco weg en vlierbloesemsiroop wordt in zijn eentje limonade. Vers limoensap en een flinke scheut soda geven het de frisheid terug die de wijn bracht.",
+      "instructions": [
+        "Doe de muntblaadjes in een wijnglas en druk ze licht aan met een lepel.",
+        "Voeg de vlierbloesemsiroop en het limoensap toe en vul het glas met ijs.",
+        "Top af met sodawater en roer één keer, voorzichtig.",
+        "Garneer met een takje munt en een schijfje limoen."
+      ],
+      "garnish": "Munttakje en een schijfje limoen"
     },
     "virgin-mary": {
       "name": "Virgin Mary",
