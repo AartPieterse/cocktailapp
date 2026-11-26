@@ -419,7 +419,7 @@ const nl: UiStrings = {
     howSteps: [
       {
         title: 'Vink aan wat je hebt',
-        body: 'Flessen, sappen, siropen, dat ene flesje achterin. Een minuut werk, en je kunt het altijd bijwerken.',
+        body: 'Sterke drank, sappen, siropen, dat ene flesje achterin. Een minuut werk, en je kunt het altijd bijwerken.',
       },
       {
         title: 'Zie wat je kunt maken',
@@ -500,14 +500,14 @@ const nl: UiStrings = {
     step: (n, total) => `Stap ${n} van ${total}`,
     progressLabel: 'Voortgang',
     skip: 'Overslaan',
-    emptyCategory: 'Niets in deze categorie past bij je flessen — tik op “toon alles”.',
+    emptyCategory: 'Niets in deze categorie past bij wat je hebt gekozen — tik op “toon alles”.',
     back: 'Terug',
     next: 'Volgende',
     finish: 'Klaar — toon mijn bar',
     staplesTitle: 'Dit heb je vast al in huis',
     staplesHint: 'Suiker, siroop, bruiswater… vink aan wat klopt. We hebben alvast wat aangevinkt.',
     spiritsTitle: 'Welke sterke drank staat er?',
-    spiritsHint: 'Begin hier: hierna vragen we alleen nog naar wat bij jouw flessen past.',
+    spiritsHint: 'Begin hier: daarna vragen we alleen nog naar wat bij je sterke drank past.',
     searchPlaceholder: 'Zoek een ingrediënt…',
     searchResults: 'Zoekresultaten',
     searchEmpty: 'Niets gevonden.',
@@ -526,7 +526,7 @@ const nl: UiStrings = {
     settingsTitle: 'Instellingen',
     countSubstitutes: 'Vervangers meetellen',
     countSubstitutesHint:
-      'Een fles telt ook mee voor een recept dat om een verwante fles vraagt, zoals donkere rum voor witte.',
+      'Een ingrediënt telt ook mee voor een recept dat om een verwant ingrediënt vraagt, zoals donkere rum voor witte.',
     shareStats: 'Anonieme statistieken delen',
     shareStatsHint:
       'Alleen tellingen van welke recepten en ingrediënten gebruikt worden, zonder iets dat naar jou te herleiden is.',
@@ -731,7 +731,7 @@ const en: UiStrings = {
     howSteps: [
       {
         title: 'Tick what you have',
-        body: 'Bottles, juices, syrups, that one bottle at the back. A minute of work, and you can update it any time.',
+        body: 'Spirits, juices, syrups, that one bottle at the back. A minute of work, and you can update it any time.',
       },
       {
         title: 'See what you can make',
@@ -810,14 +810,14 @@ const en: UiStrings = {
     step: (n, total) => `Step ${n} of ${total}`,
     progressLabel: 'Progress',
     skip: 'Skip',
-    emptyCategory: 'Nothing here fits your bottles — tap “show all”.',
+    emptyCategory: 'Nothing here fits what you picked — tap “show all”.',
     back: 'Back',
     next: 'Next',
     finish: 'Done — show my bar',
     staplesTitle: 'You probably have these already',
     staplesHint: "Sugar, syrup, soda water… tick what's right. We've pre-checked a few.",
     spiritsTitle: 'Which spirits do you have?',
-    spiritsHint: 'Start here: after this we only ask about what fits your bottles.',
+    spiritsHint: 'Start here: after this we only ask about what goes with your spirits.',
     searchPlaceholder: 'Search an ingredient…',
     searchResults: 'Search results',
     searchEmpty: 'Nothing found.',
@@ -835,7 +835,7 @@ const en: UiStrings = {
     settingsTitle: 'Settings',
     countSubstitutes: 'Count substitutes',
     countSubstitutesHint:
-      'A bottle also counts for a recipe that asks for a close relative, such as dark rum for white.',
+      'An ingredient also counts for a recipe that asks for a close relative, such as dark rum for white.',
     shareStats: 'Share anonymous statistics',
     shareStatsHint:
       'Only counts of which recipes and ingredients get used, with nothing that can be traced back to you.',
