@@ -61,7 +61,8 @@ html {
    flips to the dark set. A prefers-color-scheme fallback covers the
    brief moment before JS runs.
    ============================================================ */
-:root {
+// The light colour set. Used by :root, and again by print, which is always light: paper is white.
+@mixin light-palette {
   --bg: #f4ebd8;
   --bg-grad: radial-gradient(120% 90% at 80% -10%, #fbefd6 0%, #f4ebd8 45%, #eee2cb 100%);
   --surface: #ffffff;
@@ -93,6 +94,10 @@ html {
   --night-faint: #c7bba6;
   --shadow: 0 1px 2px rgba(36, 30, 23, 0.04), 0 20px 34px -22px rgba(36, 30, 23, 0.42);
   --shadow-lg: 0 30px 60px -30px rgba(36, 30, 23, 0.4);
+}
+
+:root {
+  @include light-palette;
 
   // Type scale (fluid-ish, editorial)
   --step--1: 0.833rem;
@@ -441,7 +446,25 @@ hr {
 
 /* Print: recipe only */
 @media print {
+  // Paper is white whatever the screen theme is; the dark set would print pale text on it.
+  html:not([data-theme]),
+  html[data-theme] {
+    @include light-palette;
+    color-scheme: light;
+  }
+  // Trailing space meant for the screen (the footer gap, a minimum height) would spill onto a
+  // blank second page.
+  main {
+    min-height: 0 !important;
+  }
+  .page {
+    padding-bottom: 0 !important;
+  }
   app-navbar,
+  app-bottom-nav,
+  app-install-prompt,
+  app-update-prompt,
+  app-toast,
   .no-print {
     display: none !important;
   }
