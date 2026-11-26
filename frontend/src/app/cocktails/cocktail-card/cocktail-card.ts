@@ -19,7 +19,7 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
   template: `
     <article class="card">
       <a class="media" [style.background]="tint()" [routerLink]="['/cocktails', cocktail().id]"
-        [queryParams]="query()" [attr.aria-label]="cocktail().name">
+        [queryParams]="query()" [attr.aria-label]="cocktail().name" draggable="false">
         <div class="glass"><app-glass-art [spec]="spec()" /></div>
         <!-- A variation has no id of its own to store, so it cannot be a favourite. -->
         @if (!variation()) {
@@ -38,7 +38,7 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
 
       <div class="body">
         <h3 class="name">
-          <a [routerLink]="['/cocktails', cocktail().id]" [queryParams]="query()">{{ cocktail().name }}</a>
+          <a [routerLink]="['/cocktails', cocktail().id]" [queryParams]="query()" draggable="false">{{ cocktail().name }}</a>
         </h3>
         @if (showStatus() && missingCount() !== null) {
           <div class="status">
@@ -74,12 +74,16 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
       transform: translateY(-5px);
       box-shadow: var(--shadow);
     }
+    /* The card's rounding comes from overflow: hidden, but a long press highlights (and would drag)
+       the link element itself — so the link carries the same top corners, or that shade is square. */
     .media {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 150px;
+      border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0;
+      -webkit-user-drag: none;
     }
     .glass {
       height: 120px;

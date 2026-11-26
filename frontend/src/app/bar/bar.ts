@@ -1,6 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Location } from '@angular/common';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import {
   type Cocktail,
@@ -669,9 +670,17 @@ export class Bar {
 
   // ---- filters ----
 
-  readonly family = signal<DrinkFamily | null>(null);
-  readonly alcoholFreeOnly = signal(false);
-  readonly expanded = signal(false);
+  // Kept in the URL, so coming back from a recipe restores the chips and the "show all" you left.
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly location = inject(Location);
+  private readonly initial = this.route.snapshot.queryParamMap;
+
+  readonly family = signal<DrinkFamily | null>(
+    DRINK_FAMILIES.find((f) => f === this.initial.get('familie')) ?? null,
+  );
+  readonly alcoholFreeOnly = signal(this.initial.get('alcoholvrij') === '1');
+  readonly expanded = signal(this.initial.get('alle') === '1');
 
   private readonly alcoholFreeKeys = computed(() => {
     const ingredients = this.ingredients();
@@ -728,6 +737,18 @@ export class Bar {
 
   constructor() {
     this.ingredientService.getAll().subscribe((list) => this.ingredients.set(list));
+
+    // Same as the cocktail list: replaceState keeps the router's navigationId in the history
+    // entry, which back/forward scroll restoration depends on.
+    effect(() => {
+      const queryParams = {
+        familie: this.family(),
+        alcoholvrij: this.alcoholFreeOnly() ? '1' : null,
+        alle: this.expanded() ? '1' : null,
+      };
+      const url = this.router.createUrlTree([], { relativeTo: this.route, queryParams }).toString();
+      if (url !== this.location.path()) this.location.replaceState(url, '', this.location.getState());
+    });
 
     combineLatest([
       toObservable(this.cabinet.ids),

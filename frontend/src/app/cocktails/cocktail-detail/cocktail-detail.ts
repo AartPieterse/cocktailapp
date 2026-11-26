@@ -1,5 +1,6 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Location } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -773,6 +774,7 @@ export class CocktailDetail {
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
+  private readonly location = inject(Location);
   protected readonly lang = inject(LanguageService);
   private readonly analytics = inject(AnalyticsService);
 
@@ -965,8 +967,16 @@ export class CocktailDetail {
     window.print();
   }
 
+  /**
+   * Back to wherever you came from — Ontdek, a family, the filtered list — with its filters and
+   * scroll position, exactly like the browser's back button. Only when this page was opened
+   * directly (a shared link, a reload) is there no in-app page behind it; then go to the list.
+   * The router stamps every entry it creates with a navigationId, counting from 1.
+   */
   back(): void {
-    void this.router.navigate(['/cocktails']);
+    const state = this.location.getState() as { navigationId?: number } | null;
+    if ((state?.navigationId ?? 1) > 1) this.location.back();
+    else void this.router.navigate(['/cocktails']);
   }
 
   remove(c: Cocktail): void {
