@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -29,7 +29,8 @@ import { environment } from '../../../environments/environment';
           <span class="mark">{{ lang.t().common.appName }}</span>
         </a>
 
-        <nav class="links" [class.open]="menuOpen()" (click)="menuOpen.set(false)">
+        <!-- Desktop only: below 780px the same four links are the bottom tab bar (app-bottom-nav). -->
+        <nav class="links">
           <a routerLink="/ontdek" routerLinkActive="active">{{ lang.t().nav.discover }}</a>
           <a routerLink="/cocktails" routerLinkActive="active">{{ lang.t().nav.cocktails }}</a>
           <a routerLink="/techniek" routerLinkActive="active">{{ lang.t().nav.technique }}</a>
@@ -79,14 +80,6 @@ import { environment } from '../../../environments/environment';
             [attr.aria-label]="lang.t().nav.toggleTheme"
           >
             <mat-icon>{{ theme.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
-          </button>
-          <button
-            class="icon-btn burger"
-            type="button"
-            (click)="menuOpen.update((v) => !v)"
-            [attr.aria-label]="lang.t().nav.menu"
-          >
-            <mat-icon>{{ menuOpen() ? 'close' : 'menu' }}</mat-icon>
           </button>
         </div>
       </div>
@@ -198,9 +191,6 @@ import { environment } from '../../../environments/environment';
       font: 700 0.75rem var(--font-body);
       letter-spacing: 0.06em;
     }
-    .burger {
-      display: none;
-    }
     @media (max-width: 780px) {
       .inner {
         gap: var(--sp-3);
@@ -219,33 +209,10 @@ import { environment } from '../../../environments/environment';
         height: 20px;
       }
       .links {
-        position: absolute;
-        top: calc(74px + env(safe-area-inset-top));
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        gap: 0;
-        margin: 0;
-        background: var(--surface);
-        border-bottom: 1px solid var(--hairline);
-        padding: var(--sp-2) var(--sp-5);
         display: none;
       }
-      .links.open {
-        display: flex;
-      }
-      .links a {
-        padding: var(--sp-3) 0;
-        border-bottom: 1px solid var(--hairline);
-      }
-      .links a.active {
-        border-bottom-color: var(--hairline);
-      }
-      .burger {
-        display: grid;
-      }
     }
-    /* Small phones (320–380px): brand plus four buttons only fit when everything tightens. */
+    /* Small phones (320–380px): brand plus the action buttons only fit when everything tightens. */
     @media (max-width: 380px) {
       .inner {
         gap: var(--sp-2);
@@ -278,7 +245,6 @@ export class Navbar {
   private readonly cocktails = inject(CocktailService);
   private readonly router = inject(Router);
   private readonly analytics = inject(AnalyticsService);
-  protected readonly menuOpen = signal(false);
 
   /** The two-letter code of the language you'd switch TO (shown on the toggle). */
   shortLabel(): string {
