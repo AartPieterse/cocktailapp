@@ -582,6 +582,36 @@ export const COCKTAIL_ART: Readonly<Record<string, CocktailArt>> = {
   'limoncello-spritz': { liquid: '#F2E27A', fill: 0.78, cut: 'deep', ice: 'cubes', fizz: 'lively', foam: 'none', rim: 'none', clarity: 'cloudy', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lemon-wheel', placement: 'rim', color: '#E9C84A' }, { type: 'mint-sprig', placement: 'surface', color: '#3E8B4A' }] },
   // Almost clear: pale straw vermouth thinned by tonic, lively bubbles, a lime wedge.
   'bianco-tonic': { liquid: '#F1ECCF', fill: 0.78, cut: 'deep', ice: 'cubes', fizz: 'lively', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lime-wedge', placement: 'rim', color: '#8FB63C' }] },
+  // Amaretto gives the sour a warmer, more amber gold than the Whiskey Sour, under the same white
+  // egg-white cap; a lemon twist on the rim and a cherry on a pick instead of the orange slice.
+  'amaretto-sour': { liquid: '#E8B868', fill: 0.62, cut: 'classic', ice: 'cubes', fizz: 'none', foam: 'egg-white', rim: 'none', clarity: 'cloudy', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lemon-twist', placement: 'rim', color: '#E9C84A' }, { type: 'cherry', placement: 'skewer', color: '#A81F2E' }] },
+  // Pale lime-white and shake-hazy in a coupe, a little less full than the French Gimlet beside it
+  // and a shade greener, with one lime wheel on the rim.
+  'gimlet': { liquid: '#E3EBBC', fill: 0.72, cut: 'classic', ice: 'none', fizz: 'none', foam: 'none', rim: 'none', clarity: 'hazy', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lime-wheel', placement: 'rim', color: '#94BC40' }] },
+  // A Negroni red thinned by prosecco: lighter and more orange than the Negroni, over cubes with a
+  // fine bead, and a whole orange slice standing in the glass.
+  'negroni-sbagliato': { liquid: '#DD6236', fill: 0.62, cut: 'deep', ice: 'cubes', fizz: 'gentle', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'orange-wheel', placement: 'in-glass', color: '#F09A2E' }] },
+  // The only Nick & Nora on the shelf: a clear, pale straw-gold of sherry and dry vermouth, no ice,
+  // and a green olive on a pick (the lemon twist is expressed and discarded).
+  'bamboo': { liquid: '#EAD89C', fill: 0.76, cut: 'classic', ice: 'none', fizz: 'none', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'olive-pick', placement: 'skewer', color: '#8FA23C' }] },
+  // Pale lime-gold and hazy over cubes, no salt, with the red chilli stem standing on the rim: the
+  // chilli is the whole difference from a Tommy's.
+  'picante': { liquid: '#E4DB9C', fill: 0.56, cut: 'classic', ice: 'cubes', fizz: 'none', foam: 'none', rim: 'none', clarity: 'hazy', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'chilli', placement: 'rim', color: '#CE2B22' }] },
+  // A Negroni without the gin: the vermouth makes it a deeper, browner red, a shallow pour on one
+  // big rock with an orange slice in the glass.
+  'milano-torino': { liquid: '#B3352B', fill: 0.44, cut: 'deep', ice: 'big-rock', fizz: 'none', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'orange-wheel', placement: 'in-glass', color: '#F0983C' }] },
+  // A clear, pale amber on one big rock: reposado is lighter than bourbon, so it sits a shade more
+  // golden than the Old Fashioned, with a single orange twist and no cherry.
+  'oaxaca-old-fashioned': { liquid: '#D9A658', fill: 0.36, cut: 'deep', ice: 'big-rock', fizz: 'none', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'orange-twist', placement: 'rim', color: '#E8862B' }] },
+  // A tall collins of cloudy pineapple-orange over crushed ice, nearly full, with brown nutmeg
+  // freckled across the top, an orange wheel on the rim and a straw.
+  'painkiller': { liquid: '#F0C77A', fill: 0.88, cut: 'classic', ice: 'crushed', fizz: 'none', foam: 'none', rim: 'none', clarity: 'cloudy', inclusion: 'none', straw: 'straw', steam: false, garnishes: [{ type: 'nutmeg-dust', placement: 'dust', color: '#A9754A' }, { type: 'orange-wheel', placement: 'rim', color: '#F0A032' }] },
+  // Aperol and passion fruit make a soft, cloudy apricot-orange over cubes, with a pineapple wedge
+  // and a lime wedge side by side on the rim.
+  'east-8-hold-up': { liquid: '#EFA35E', fill: 0.6, cut: 'wide', ice: 'cubes', fizz: 'none', foam: 'none', rim: 'none', clarity: 'cloudy', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'pineapple-wedge', placement: 'rim', color: '#F2C94C' }, { type: 'lime-wedge', placement: 'rim', color: '#8FB63C' }] },
+  // Almost colourless with a faint cool cast, a highball packed with cubes and fizzing hard, one
+  // lime wedge on the rim.
+  'gin-tonic': { liquid: '#EBF2EE', fill: 0.86, cut: 'classic', ice: 'cubes', fizz: 'lively', foam: 'none', rim: 'none', clarity: 'crystal', inclusion: 'none', straw: 'none', steam: false, garnishes: [{ type: 'lime-wedge', placement: 'rim', color: '#8FB63C' }] },
 };
 
 /**
@@ -602,14 +632,22 @@ export const VARIATION_ART: Readonly<Record<string, Partial<CocktailArt>>> = {
   // The Corpse Reviver's butter-yellow softened to pale elderflower straw, with the lemon twist the
   // Sunflower is garnished with where the orange one was.
   'corpse-reviver-2/sunflower': { liquid: '#F2EEC6', garnishes: [{ type: 'lemon-twist', placement: 'rim', color: '#E9CF4C' }] },
+  // Vodka for gin takes away the faint straw tint: the same martini, a touch clearer and colder.
+  'dry-martini/vodka-martini': { liquid: '#F3F5F0' },
   // Elderflower liqueur for sugar barely moves the colour — a shade greener-gold under the same
   // spiral, and that is honest: the two drinks look alike on a bar.
   'french-75/french-77': { liquid: '#EEEAB2' },
   // The Kir with its bubbles: sparkling wine for still lifts the raspberry-fuchsia a touch and sets
   // a bead running through it.
   'kir/kir-royal': { liquid: '#C24E78', fizz: 'gentle' },
+  // Mezcal for tequila greys the pale lime-straw a little; the salt rim and lime wheel stay.
+  'margarita/mezcal-margarita': { liquid: '#D9D8A8' },
   // Campari for Aperol: the traffic-orange turns a deep, still see-through red.
   'spritz/campari-spritz': { liquid: '#D6322B' },
   // Cynar's artichoke amaro makes it a dark, translucent mahogany — the only brown wine glass.
   'spritz/cynar-spritz': { liquid: '#8C4B24' },
+  // Blended Scotch for bourbon: a paler, less orange gold under the same foam.
+  'whiskey-sour/scotch-sour': { liquid: '#E6BC70' },
+  // Vodka for bourbon leaves only the lemon: a pale lemon-cream under the foam.
+  'whiskey-sour/vodka-sour': { liquid: '#EFE2B4' },
 };
