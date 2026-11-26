@@ -108,7 +108,7 @@ export const cocktails = [
   },
   {
     name: 'Daiquiri',
-    description: 'Drie ingrediënten in perfecte harmonie — rum, limoen en suiker.',
+    description: 'Drie ingrediënten in perfecte harmonie: rum, limoen en suiker.',
     glass: 'coupe',
     method: 'shaken',
     difficulty: 'easy',
@@ -189,7 +189,7 @@ export const cocktails = [
   },
   {
     name: 'Dry Martini',
-    description: 'Zuiver en ijskoud — het icoon onder de cocktails.',
+    description: 'Zuiver en ijskoud, het icoon onder de cocktails.',
     glass: 'martini',
     method: 'stirred',
     difficulty: 'medium',
@@ -233,7 +233,7 @@ export const cocktails = [
   {
     name: 'Whiskey Sour',
     description: 'Zacht schuimend, met de perfecte balans tussen zuur en zoet.',
-    notes: 'Gebruik je eiwit, schud dan iets steviger — dan komt het schuim los en mengt het door de drank.',
+    notes: 'Gebruik je eiwit, schud dan iets steviger. Dan komt het schuim los en mengt het door de drank.',
     glass: 'rocks',
     method: 'shaken',
     difficulty: 'medium',
@@ -299,7 +299,7 @@ export const cocktails = [
   },
   {
     name: 'Gin-Tonic',
-    description: 'Simpel, fris en eindeloos variabel — de klassieke longdrink.',
+    description: 'Simpel, fris en eindeloos variabel: de klassieke longdrink.',
     glass: 'highball',
     method: 'build',
     difficulty: 'easy',
@@ -315,7 +315,7 @@ export const cocktails = [
   },
   {
     name: 'Moscow Mule',
-    description: 'Pittige gember, wodka en limoen — traditioneel in een koperen mok.',
+    description: 'Pittige gember, wodka en limoen, traditioneel in een koperen mok.',
     glass: 'mug',
     method: 'build',
     difficulty: 'easy',
@@ -464,7 +464,7 @@ export const cocktails = [
   },
   {
     name: 'Bloody Mary',
-    description: 'Hartig en kruidig — het beroemde brunch-medicijn.',
+    description: 'Hartig en kruidig: het beroemde brunch-medicijn.',
     notes: 'Wordt er om ijs gevraagd, schenk hem dan in een longdrinkglas.',
     glass: 'highball',
     method: 'build',
@@ -647,7 +647,7 @@ export const cocktails = [
       'Vul een longdrinkglas met ijs.',
       'Schenk tequila en sinaasappelsap erin.',
       'Laat de grenadine langzaam langs de rand zakken.',
-      'Niet roeren — garneer met sinaasappel en kers.',
+      'Niet roeren. Garneer met sinaasappel en kers.',
     ],
   },
   {

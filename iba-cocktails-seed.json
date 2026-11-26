@@ -1491,7 +1491,7 @@
           "unit": "barspoon"
         }
       ],
-      "description": "Maraschino and violet turn a gin sour pale blue-grey. Restraint matters — a heavy hand on the violette makes it taste of soap.",
+      "description": "Maraschino and violet turn a gin sour pale blue-grey. Restraint matters: a heavy hand on the violette makes it taste of soap.",
       "family": "sour"
     },
     {
@@ -1501,7 +1501,7 @@
       "category": "Alcohol-free",
       "description": "Basil smashed rather than muddled soft, so you get the oil and not the bruised leaf. Herbal and dry for a lemonade.",
       "instructions": [
-        "Smash the basil leaves once in the shaker — hard enough to release the oil, not to shred them.",
+        "Smash the basil leaves once in the shaker, hard enough to release the oil, not to shred them.",
         "Add the lemon juice and syrup, then shake with ice for twelve seconds.",
         "Double-strain into a collins glass filled with ice.",
         "Top with soda water and garnish with a basil leaf."
@@ -2241,7 +2241,7 @@
       "name": "Cinnamon Orange",
       "baseSpirit": "none",
       "category": "Alcohol-free",
-      "description": "Warmed, not boiled — orange juice turns bitter above a simmer. Cinnamon and honey do the rest.",
+      "description": "Warmed, not boiled: orange juice turns bitter above a simmer. Cinnamon and honey do the rest.",
       "instructions": [
         "Warm the orange juice with the cinnamon in a pan, without letting it boil.",
         "Stir in the honey syrup until it dissolves.",
@@ -2415,7 +2415,7 @@
           "unit": "ml"
         }
       ],
-      "description": "Tarter than its reputation. The cranberry is there for colour and edge, not sweetness — this is a citrus drink.",
+      "description": "Tarter than its reputation. The cranberry is there for colour and edge, not sweetness. This is a citrus drink.",
       "family": "sour"
     },
     {
@@ -2636,7 +2636,7 @@
           "unit": "ml"
         }
       ],
-      "description": "Two ingredients, endlessly argued about. Stirred, never shaken — shaking clouds it and bruises the vermouth.",
+      "description": "Two ingredients, endlessly argued about. Stirred, never shaken: shaking clouds it and bruises the vermouth.",
       "family": "spirit-forward"
     },
     {
@@ -2681,7 +2681,7 @@
       "name": "Elderflower Spritz",
       "category": "Modern Classics",
       "baseSpirit": "other",
-      "description": "St-Germain's own serve since the liqueur launched in 2007, and still sold as the St-Germain Cocktail. Pour in order — wine, liqueur, soda — and the soda does the mixing.",
+      "description": "St-Germain's own serve since the liqueur launched in 2007, and still sold as the St-Germain Cocktail. Pour in order (wine, liqueur, soda) and the soda does the mixing.",
       "instructions": [
         "Fill a collins glass with ice.",
         "Pour in the sparkling wine, then the elderflower liqueur, then the soda water.",
@@ -2865,7 +2865,7 @@
         {
           "key": "french-77",
           "name": "French 77",
-          "description": "Swap the sugar syrup for elderflower liqueur — it sweetens the drink and makes it floral.",
+          "description": "Swap the sugar syrup for elderflower liqueur. It sweetens the drink and makes it floral.",
           "swaps": [
             {
               "from": "Simple Syrup",
@@ -3002,7 +3002,7 @@
         }
       ],
       "baseSpirit": "other",
-      "description": "Campari and orange juice, but the juice must be fluffy — whipped, not poured — or it is just bitter and flat.",
+      "description": "Campari and orange juice, but the juice must be fluffy (whipped, not poured), or it is just bitter and flat.",
       "family": "highball"
     },
     {
@@ -3280,7 +3280,7 @@
           "unit": "ml"
         }
       ],
-      "description": "Grapefruit and maraschino, and no sugar at all — Hemingway asked for double rum and none. Dry and bracing.",
+      "description": "Grapefruit and maraschino, and no sugar at all: Hemingway asked for double rum and none. Dry and bracing.",
       "family": "sour"
     },
     {
@@ -3587,7 +3587,7 @@
         }
       ],
       "alcoholFreeCounterpart": "Vienna Coffee",
-      "description": "Hot coffee under cold cream, and never stirred — you drink one through the other. Whip the cream just to the point it pours.",
+      "description": "Hot coffee under cold cream, and never stirred. You drink one through the other. Whip the cream just to the point it pours.",
       "family": "hot"
     },
     {
@@ -4187,7 +4187,7 @@
           "unit": "teaspoon"
         }
       ],
-      "description": "The Kentucky Derby's drink. Packed with crushed ice until the cup frosts on the outside — hold it by the rim.",
+      "description": "The Kentucky Derby's drink. Packed with crushed ice until the cup frosts on the outside. Hold it by the rim.",
       "family": "spirit-forward"
     },
     {
@@ -4293,7 +4293,7 @@
         }
       ],
       "alcoholFreeCounterpart": "Virgin Mojito",
-      "description": "Muddle the mint gently — you want the oil, not shredded leaf, which turns bitter and leaves black flecks in the glass.",
+      "description": "Muddle the mint gently: you want the oil, not shredded leaf, which turns bitter and leaves black flecks in the glass.",
       "family": "fizz"
     },
     {
@@ -4369,7 +4369,7 @@
         }
       ],
       "alcoholFreeCounterpart": "Ginger Mule",
-      "description": "Invented to sell vodka and copper mugs in equal measure. Ginger beer, not ginger ale — the heat is the point.",
+      "description": "Invented to sell vodka and copper mugs in equal measure. Ginger beer, not ginger ale: the heat is the point.",
       "family": "highball"
     },
     {
@@ -4443,7 +4443,7 @@
           "unit": "ml"
         }
       ],
-      "description": "The aperitivo that taught bitterness to be charming. Stirred, never shaken — twenty seconds is the whole recipe.",
+      "description": "The aperitivo that taught bitterness to be charming. Stirred, never shaken. Twenty seconds is the whole recipe.",
       "family": "spirit-forward"
     },
     {
@@ -4600,7 +4600,7 @@
           "optional": true
         }
       ],
-      "description": "The original definition of a cocktail — spirit, sugar, bitters, water. Everything since is a variation on it.",
+      "description": "The original definition of a cocktail: spirit, sugar, bitters, water. Everything since is a variation on it.",
       "family": "spirit-forward"
     },
     {
@@ -4850,7 +4850,7 @@
         }
       ],
       "alcoholFreeCounterpart": "Virgin Colada",
-      "description": "Puerto Rico's national drink. Coconut cream, not coconut milk — the difference is the whole texture.",
+      "description": "Puerto Rico's national drink. Coconut cream, not coconut milk: the difference is the whole texture.",
       "family": "creamy"
     },
     {
@@ -4988,7 +4988,7 @@
           "unit": "piece"
         }
       ],
-      "description": "Peru's national drink, and the egg white is not optional — it is what turns a sharp sour into something silky.",
+      "description": "Peru's national drink, and the egg white is not optional. It is what turns a sharp sour into something silky.",
       "family": "sour"
     },
     {
@@ -5151,7 +5151,7 @@
           "optional": true
         }
       ],
-      "description": "Brazilian, and the name means rooster's tail. Cachaça with vermouth and Cynar — bitter, herbal and low on sugar.",
+      "description": "Brazilian, and the name means rooster's tail. Cachaça with vermouth and Cynar: bitter, herbal and low on sugar.",
       "family": "spirit-forward"
     },
     {
@@ -5415,7 +5415,7 @@
           "unit": "ml"
         }
       ],
-      "description": "Scotch sweetened with Scotch — Drambuie is whisky, honey and herbs. Two ingredients, no citrus, no dilution.",
+      "description": "Scotch sweetened with Scotch: Drambuie is whisky, honey and herbs. Two ingredients, no citrus, no dilution.",
       "family": "spirit-forward"
     },
     {
@@ -6076,7 +6076,7 @@
         }
       ],
       "alcoholFreeCounterpart": "Sunrise",
-      "description": "Poured and left alone — the grenadine sinks and stays there. Stirring it destroys the only reason it has that name.",
+      "description": "Poured and left alone, the grenadine sinks and stays there. Stirring it destroys the only reason it has that name.",
       "family": "highball"
     },
     {
@@ -6406,7 +6406,7 @@
         "Stir the sugar into the hot coffee until it dissolves.",
         "Whip the cream lightly, until it just thickens but still pours.",
         "Float the cream over the back of a spoon so it sits on top.",
-        "Do not stir — drink the coffee through the cream."
+        "Do not stir. Drink the coffee through the cream."
       ],
       "ingredients": [
         {
@@ -6766,7 +6766,7 @@
           "optional": true
         }
       ],
-      "description": "Get the foam right and it is a different drink — an egg white is optional but transforms the texture.",
+      "description": "Get the foam right and it is a different drink. An egg white is optional but transforms the texture.",
       "family": "sour"
     },
     {

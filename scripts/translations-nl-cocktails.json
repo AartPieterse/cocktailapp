@@ -56,7 +56,7 @@
       "Shake met gebroken ijs en zeef in een gekoeld cocktailglas."
     ],
     "garnish": "Optioneel een maraschinokers.",
-    "description": "Maraschino en viooltjes maken van een gin-sour iets bleekgrijs-blauws. Terughoudendheid telt — te veel violette smaakt naar zeep."
+    "description": "Maraschino en viooltjes maken van een gin-sour iets bleekgrijs-blauws. Terughoudendheid telt: te veel violette smaakt naar zeep."
   },
   "b-52": {
     "name": "B-52",
@@ -72,7 +72,7 @@
     "name": "Basilicumlimonade",
     "description": "Basilicum één keer aangeslagen in plaats van zacht gemuddled, zodat je de olie krijgt en niet het gekneusde blad. Kruidig en droog voor een limonade.",
     "instructions": [
-      "Sla de basilicumblaadjes één keer aan in de shaker — hard genoeg voor de olie, niet om ze te versnipperen.",
+      "Sla de basilicumblaadjes één keer aan in de shaker, hard genoeg voor de olie, niet om ze te versnipperen.",
       "Voeg het citroensap en de siroop toe en shake twaalf seconden met ijs.",
       "Zeef dubbel in een collinsglas met ijs.",
       "Top af met sodawater en garneer met een blaadje basilicum."
@@ -234,7 +234,7 @@
   },
   "cinnamon-orange": {
     "name": "Kaneel en sinaasappel",
-    "description": "Verwarmd, niet gekookt — sinaasappelsap wordt bitter boven het sudderpunt. Kaneel en honing doen de rest.",
+    "description": "Verwarmd, niet gekookt: sinaasappelsap wordt bitter boven het sudderpunt. Kaneel en honing doen de rest.",
     "instructions": [
       "Verwarm het sinaasappelsap met de kaneel in een pan, zonder het te laten koken.",
       "Roer de honingsiroop erdoor tot hij is opgelost.",
@@ -297,7 +297,7 @@
   },
   "elderflower-spritz": {
     "name": "Vlierbloesemspritz",
-    "description": "Sinds de lancering van St-Germain in 2007 dé serve van het merk, en nog altijd verkocht als de St-Germain Cocktail. Schenk op volgorde — wijn, likeur, soda — en de soda mengt het voor je.",
+    "description": "Sinds de lancering van St-Germain in 2007 dé serve van het merk, en nog altijd verkocht als de St-Germain Cocktail. Schenk op volgorde (wijn, likeur, soda) en de soda mengt het voor je.",
     "instructions": [
       "Vul een collinsglas met ijs.",
       "Schenk eerst de mousserende wijn, dan de vlierbloesemlikeur en dan het sodawater.",
@@ -328,7 +328,7 @@
     "variations": {
       "french-77": {
         "name": "French 77",
-        "description": "Vervang de suikersiroop door vlierbloesemlikeur — die maakt het zoet én bloemig."
+        "description": "Vervang de suikersiroop door vlierbloesemlikeur. Die maakt het zoet én bloemig."
       }
     }
   },
@@ -364,7 +364,7 @@
       "Gebruik bij voorkeur luchtig opgeschuimd (aerated) sinaasappelsap."
     ],
     "garnish": "Partje sinaasappel",
-    "description": "Campari en sinaasappelsap, maar het sap moet luchtig zijn — geklopt, niet geschonken — anders is het gewoon bitter en vlak."
+    "description": "Campari en sinaasappelsap, maar het sap moet luchtig zijn (geklopt, niet geschonken), anders is het gewoon bitter en vlak."
   },
   "gin-basil-smash": {
     "name": "Gin Basil Smash",
@@ -430,7 +430,7 @@
       "Doe alle ingrediënten met ijs in een shaker.",
       "Shake goed en zeef in een groot cocktailglas."
     ],
-    "description": "Grapefruit en maraschino, en helemaal geen suiker — Hemingway vroeg om dubbele rum en geen suiker. Droog en opwekkend."
+    "description": "Grapefruit en maraschino, en helemaal geen suiker: Hemingway vroeg om dubbele rum en geen suiker. Droog en opwekkend."
   },
   "honey-and-lemon": {
     "name": "Honing en citroen",
@@ -492,7 +492,7 @@
       "De laag room blijft zonder te mengen op de koffie drijven.",
       "Gewone suiker kan worden vervangen door suikersiroop."
     ],
-    "description": "Hete koffie onder koude room, en nooit geroerd — je drinkt de een door de ander. Klop de room net tot hij schenkbaar dik is."
+    "description": "Hete koffie onder koude room, en nooit geroerd. Je drinkt de een door de ander. Klop de room net tot hij schenkbaar dik is."
   },
   "jager-mule": {
     "name": "Jäger Mule",
@@ -625,7 +625,7 @@
     "instructions": [
       "Doe alle ingrediënten in een shaker, shake goed met ijs en zeef in een gekoeld cocktailglas."
     ],
-    "description": "Parijs, jaren twintig, genoemd naar een inmiddels ontkrachte chirurgische rage. Absint en grenadine over gin en sinaasappel — beter dan het verhaal."
+    "description": "Parijs, jaren twintig, genoemd naar een inmiddels ontkrachte chirurgische rage. Absint en grenadine over gin en sinaasappel. Beter dan het verhaal."
   },
   "naked-and-famous": {
     "name": "Naked and Famous",
@@ -692,7 +692,7 @@
   },
   "pineapple-swizzle": {
     "name": "Ananasswizzle",
-    "description": "Falernum draagt kruidnagel, gember en amandel — grofweg wat de Chartreuse bijdroeg. Geswizzeld tot het glas beijst.",
+    "description": "Falernum draagt kruidnagel, gember en amandel, grofweg wat de Chartreuse bijdroeg. Geswizzeld tot het glas beijst.",
     "instructions": [
       "Vul een longdrinkglas met gemalen ijs.",
       "Voeg het ananassap, limoensap en de falernum toe.",
@@ -718,7 +718,7 @@
       "Shake en zeef in een gekoelde bokaal."
     ],
     "garnish": "Een paar scheutjes Amargo bitters erover als aromatische garnering.",
-    "description": "Het nationale drankje van Peru, en het eiwit is niet optioneel — dat maakt van een scherpe sour iets zijdezachts."
+    "description": "Het nationale drankje van Peru, en het eiwit is niet optioneel. Dat maakt van een scherpe sour iets zijdezachts."
   },
   "planter-s-punch": {
     "name": "Planter's Punch",
@@ -754,7 +754,7 @@
       "Voeg ijs toe en roer kort."
     ],
     "garnish": "Schilletje sinaasappel.",
-    "description": "Braziliaans, en de naam betekent hanenstaart. Cachaça met vermout en Cynar — bitter, kruidig en weinig zoet."
+    "description": "Braziliaans, en de naam betekent hanenstaart. Cachaça met vermout en Cynar: bitter, kruidig en weinig zoet."
   },
   "ramos-fizz": {
     "name": "Ramos Fizz",
@@ -812,7 +812,7 @@
       "Roer voorzichtig."
     ],
     "garnish": "Garneer met een schilletje citroen.",
-    "description": "Whisky gezoet met whisky — Drambuie is whisky, honing en kruiden. Twee ingrediënten, geen citrus, geen verdunning."
+    "description": "Whisky gezoet met whisky: Drambuie is whisky, honing en kruiden. Twee ingrediënten, geen citrus, geen verdunning."
   },
   "sazerac": {
     "name": "Sazerac",
@@ -910,7 +910,7 @@
     "variations": {
       "campari-spritz": {
         "name": "Campari Spritz",
-        "description": "Ruil de Aperol voor Campari — bitterder van karakter."
+        "description": "Ruil de Aperol voor Campari: bitterder van karakter."
       },
       "cynar-spritz": {
         "name": "Cynar Spritz",
@@ -1035,7 +1035,7 @@
       "Roer de suiker door de hete koffie tot hij is opgelost.",
       "Klop de room licht op, tot hij net indikt maar nog schenkbaar is.",
       "Laat de room over de bolle kant van een lepel op de koffie drijven.",
-      "Niet roeren — drink de koffie door de room heen."
+      "Niet roeren. Drink de koffie door de room heen."
     ],
     "garnish": "Geraspte nootmuskaat"
   },
