@@ -37,9 +37,12 @@ import { CocktailCard } from '../cocktail-card/cocktail-card';
 import { environment } from '../../../environments/environment';
 
 interface Status {
-  count: number;
+  /** Required ingredients missing from the bar; null when there is no bar to judge against. */
+  count: number | null;
   names: string[];
 }
+
+const NO_STATUS: Status = { count: null, names: [] };
 
 type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
 
@@ -517,8 +520,12 @@ export class CocktailList {
       });
   }
 
+  /**
+   * No entry means there is nothing to judge against — an empty bar, or a failed lookup — so the
+   * card gets `null` and shows its glass · method line instead of a missing count.
+   */
   statusFor(c: Cocktail): Status {
-    return this.status().get(c.id) ?? { count: c.ingredients.length ? 99 : 0, names: [] };
+    return this.status().get(c.id) ?? NO_STATUS;
   }
 
   spiritLabel(s: BaseSpirit): string {
