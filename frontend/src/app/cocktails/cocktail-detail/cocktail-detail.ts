@@ -54,34 +54,61 @@ import { environment } from '../../../environments/environment';
       </div>
     } @else if (cocktail(); as c) {
       <div class="page">
-        <button class="back no-print" (click)="back()">{{ lang.t().detail.back }}</button>
+        <div class="topbar no-print">
+          <button class="back" (click)="back()">{{ lang.t().detail.back }}</button>
+          <div class="actions">
+            <!-- A variation has no id of its own to store, so it cannot be a favourite. -->
+            @if (!activeVariation()) {
+              <button
+                class="icon-btn"
+                type="button"
+                [class.on]="isFav(c)"
+                [attr.aria-pressed]="isFav(c)"
+                [attr.aria-label]="lang.t().detail.favorite"
+                [matTooltip]="isFav(c) ? lang.t().detail.favorite : lang.t().detail.saveFavorite"
+                (click)="toggleFav(c)"
+              >
+                <mat-icon>{{ isFav(c) ? 'favorite' : 'favorite_border' }}</mat-icon>
+              </button>
+            }
+            <button
+              class="icon-btn"
+              type="button"
+              [attr.aria-label]="lang.t().detail.print"
+              [matTooltip]="lang.t().detail.print"
+              (click)="print()"
+            >
+              <mat-icon>print</mat-icon>
+            </button>
+            @if (admin) {
+              <a
+                class="icon-btn"
+                [routerLink]="['/cocktails', c.id, 'edit']"
+                [attr.aria-label]="lang.t().detail.edit"
+                [matTooltip]="lang.t().detail.edit"
+              >
+                <mat-icon>edit</mat-icon>
+              </a>
+              <button
+                class="icon-btn"
+                type="button"
+                [attr.aria-label]="lang.t().common.delete"
+                [matTooltip]="lang.t().common.delete"
+                (click)="remove(c)"
+              >
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            }
+          </div>
+        </div>
         <div class="wrap">
           <div class="visual">
             <div class="panel" [style.background]="tint()">
               <div class="glass"><app-glass-art [spec]="spec()" /></div>
             </div>
-            <div class="pills">
-              @if (c.glass) { <span class="pill">{{ glassLabel(c) }}</span> }
-              @if (c.method) { <span class="pill">{{ methodLabel(c) }}</span> }
-              @if (c.difficulty) { <span class="pill">{{ diffLabel(c) }}</span> }
-            </div>
             @if (c.garnish) {
               <div class="garnish">{{ lang.t().detail.garnishPrefix }} · {{ c.garnish }}</div>
             }
-            <div class="mini-actions no-print">
-              <!-- A variation has no id of its own to store, so it cannot be a favourite. -->
-              @if (!activeVariation()) {
-                <button class="mini" [class.on]="isFav(c)" (click)="toggleFav(c)">
-                  <mat-icon>{{ isFav(c) ? 'favorite' : 'favorite_border' }}</mat-icon>
-                  {{ isFav(c) ? lang.t().detail.favorite : lang.t().detail.saveFavorite }}
-                </button>
-              }
-              <button class="mini" (click)="print()"><mat-icon>print</mat-icon> {{ lang.t().detail.print }}</button>
-              @if (admin) {
-                <a class="mini" [routerLink]="['/cocktails', c.id, 'edit']"><mat-icon>edit</mat-icon> {{ lang.t().detail.edit }}</a>
-                <button class="mini" (click)="remove(c)"><mat-icon>delete_outline</mat-icon></button>
-              }
-            </div>
           </div>
 
           <div class="detail">
@@ -90,6 +117,13 @@ import { environment } from '../../../environments/environment';
               <a class="variation-of" [routerLink]="['/cocktails', parent.id]">
                 {{ lang.t().common.variationOf(parent.name) }}
               </a>
+            }
+            @if (c.glass || c.method || c.difficulty) {
+              <div class="pills">
+                @if (c.glass) { <span class="pill">{{ glassLabel(c) }}</span> }
+                @if (c.method) { <span class="pill">{{ methodLabel(c) }}</span> }
+                @if (c.difficulty) { <span class="pill">{{ diffLabel(c) }}</span> }
+              </div>
             }
             @if (c.description) { <p class="lede">{{ c.description }}</p> }
 
@@ -187,9 +221,10 @@ import { environment } from '../../../environments/environment';
               <p class="notes">{{ c.notes }}</p>
             }
 
+            <!-- Trivia is the app talking, not the recipe: it stays off the printed card. -->
             @if (fact(); as f) {
-              <div class="sec-label">{{ lang.t().facts.eyebrow }}</div>
-              <p class="trivia">{{ f.text[lang.locale()] }}</p>
+              <div class="sec-label no-print">{{ lang.t().facts.eyebrow }}</div>
+              <p class="trivia no-print">{{ f.text[lang.locale()] }}</p>
             }
 
             @if (!activeVariation() && c.variations?.length) {
@@ -237,6 +272,36 @@ import { environment } from '../../../environments/environment';
       padding-top: 28px;
       animation: rise 0.45s ease both;
     }
+    /* Back on the left, the page's own actions on the right: one row, nothing under the picture. */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .icon-btn {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 999px;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .icon-btn:hover {
+      background: var(--surface-2);
+      color: var(--ink);
+    }
+    .icon-btn.on {
+      color: var(--accent);
+    }
     .back {
       background: none;
       border: none;
@@ -275,7 +340,7 @@ import { environment } from '../../../environments/environment';
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 18px;
+      margin-top: 14px;
     }
     .pill {
       background: var(--surface);
@@ -292,37 +357,6 @@ import { environment } from '../../../environments/environment';
       padding: 14px 16px;
       font: 500 0.813rem var(--font-body);
       color: var(--muted);
-    }
-    .mini-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .mini {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: none;
-      border: 1px solid var(--hairline);
-      border-radius: var(--radius-pill);
-      padding: 8px 14px;
-      font: 600 0.781rem var(--font-body);
-      color: var(--muted);
-      cursor: pointer;
-    }
-    .mini:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .mini.on {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-    .mini mat-icon {
-      font-size: 17px;
-      width: 17px;
-      height: 17px;
     }
     .detail h1 {
       font-family: var(--font-display);
@@ -659,6 +693,68 @@ import { environment } from '../../../environments/environment';
       }
       .meas {
         width: 62px;
+      }
+    }
+    /* Print: a recipe card, not a screen. The picture shrinks to a corner beside the title so the
+       ingredients and the method fit on one page; the bar-status banner is about your cabinet, not
+       the recipe, and stays off paper. */
+    @media print {
+      .page {
+        padding-top: 0;
+        animation: none;
+      }
+      .wrap {
+        display: block;
+        margin-top: 0;
+      }
+      .visual {
+        position: static;
+        float: right;
+        width: 150px;
+        margin: 0 0 12px 20px;
+      }
+      .panel {
+        padding: 10px;
+        border-radius: 14px;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .glass {
+        height: 120px;
+        width: 96px;
+        animation: none;
+      }
+      .garnish {
+        margin-top: 8px;
+        padding: 8px 10px;
+        font-size: 0.75rem;
+      }
+      .detail h1 {
+        font-size: 2.25rem;
+      }
+      .banner,
+      .in-kast {
+        display: none;
+      }
+      /* Tighter rhythm than on screen: a nine-line tiki recipe should still end on page one. */
+      .sec-label {
+        margin-top: 20px;
+        break-after: avoid;
+      }
+      .line {
+        padding: 4px 0;
+      }
+      .line .glyph {
+        width: 24px;
+        height: 24px;
+      }
+      .steps {
+        margin-top: 10px;
+        gap: 10px;
+      }
+      .line,
+      .step {
+        break-inside: avoid;
       }
     }
   `,
