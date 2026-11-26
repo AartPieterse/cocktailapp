@@ -137,7 +137,7 @@ import { CocktailCard } from '../cocktails/cocktail-card/cocktail-card';
     }
     @media (max-width: 520px) {
       .grid {
-        grid-template-columns: 1fr;
+        gap: var(--sp-3);
       }
     }
   `,

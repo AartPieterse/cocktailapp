@@ -53,7 +53,15 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
     </article>
   `,
   styles: `
+    /* The card sizes itself to its own width, not the viewport's: on a phone the grids put two
+       side by side, and the compact rules at the bottom take over below ~220px. */
+    :host {
+      display: block;
+      min-width: 0;
+      container-type: inline-size;
+    }
     .card {
+      height: 100%;
       display: flex;
       flex-direction: column;
       background: var(--surface);
@@ -156,6 +164,42 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
     }
     .actions:empty {
       display: none;
+    }
+    @container (max-width: 220px) {
+      .media {
+        height: 124px;
+      }
+      .glass {
+        height: 100px;
+        width: 80px;
+      }
+      .fav {
+        top: 8px;
+        right: 8px;
+      }
+      .body {
+        gap: 4px;
+        padding: 10px 12px 12px;
+      }
+      .name {
+        font-size: 1.02rem;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+      }
+      .status {
+        align-items: flex-start;
+      }
+      .status .dot {
+        margin-top: 4px;
+      }
+      .status .label {
+        font-size: 0.7rem;
+        line-height: 1.35;
+      }
+      .meta {
+        font-size: 0.625rem;
+        letter-spacing: 0.04em;
+      }
     }
   `,
 })
