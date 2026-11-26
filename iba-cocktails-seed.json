@@ -177,6 +177,49 @@
       "abv": 40
     },
     {
+      "id": "jenever",
+      "name": "Jenever",
+      "category": "spirit",
+      "substitutes": [
+        "gin"
+      ],
+      "aliases": [
+        "Bols Genever",
+        "Genever",
+        "Hooghoudt",
+        "Jonge Jenever",
+        "Ketel 1",
+        "Korenwijn",
+        "Oude Jenever"
+      ],
+      "abv": 35
+    },
+    {
+      "id": "spiced-rum",
+      "name": "Spiced Rum",
+      "category": "spirit",
+      "parentId": "dark-rum",
+      "aliases": [
+        "Captain Morgan",
+        "Captain Morgan Spiced Gold",
+        "Kraken",
+        "Sailor Jerry"
+      ],
+      "abv": 35
+    },
+    {
+      "id": "vieux",
+      "name": "Vieux",
+      "category": "spirit",
+      "parentId": "brandy",
+      "aliases": [
+        "Bols Vieux",
+        "Hollandse Vieux",
+        "Parade Vieux"
+      ],
+      "abv": 35
+    },
+    {
       "id": "triple-sec",
       "name": "Triple Sec",
       "category": "liqueur",
@@ -341,6 +384,65 @@
       "abv": 40
     },
     {
+      "id": "irish-cream",
+      "name": "Irish Cream Liqueur",
+      "category": "liqueur",
+      "aliases": [
+        "Baileys",
+        "Baileys Irish Cream",
+        "Carolans",
+        "Cream Liqueur",
+        "Irish Cream"
+      ],
+      "abv": 17
+    },
+    {
+      "id": "licor-43",
+      "name": "Licor 43",
+      "category": "liqueur",
+      "aliases": [
+        "Cuarenta y Tres"
+      ],
+      "abv": 31
+    },
+    {
+      "id": "jagermeister",
+      "name": "Jägermeister",
+      "category": "liqueur",
+      "aliases": [
+        "Jagermeister",
+        "Jaegermeister"
+      ],
+      "abv": 35
+    },
+    {
+      "id": "coconut-liqueur",
+      "name": "Coconut Liqueur",
+      "category": "liqueur",
+      "aliases": [
+        "Coconut Rum",
+        "Malibu"
+      ],
+      "abv": 21
+    },
+    {
+      "id": "advocaat",
+      "name": "Advocaat",
+      "category": "liqueur",
+      "aliases": [
+        "Advokaat",
+        "Verpoorten",
+        "Warninks"
+      ],
+      "abv": 14
+    },
+    {
+      "id": "limoncello",
+      "name": "Limoncello",
+      "category": "liqueur",
+      "abv": 30
+    },
+    {
       "id": "sweet-vermouth",
       "name": "Sweet Vermouth",
       "category": "wine",
@@ -354,6 +456,16 @@
       "name": "Dry Vermouth",
       "category": "wine",
       "abv": 18
+    },
+    {
+      "id": "bianco-vermouth",
+      "name": "Bianco Vermouth",
+      "category": "wine",
+      "aliases": [
+        "Martini Bianco",
+        "Vermouth Bianco"
+      ],
+      "abv": 15
     },
     {
       "id": "lillet-blanc",
@@ -6509,6 +6621,267 @@
       ],
       "description": "Don the Beachcomber, 1934, and famously limited to two per customer. Three rums, and the recipe was secret for decades.",
       "family": "tiki"
+    },
+    {
+      "id": "b-52",
+      "name": "B-52",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "Three liqueurs in three clean bands: coffee at the bottom, Irish cream in the middle, orange on top. Named after the bomber and usually traced to Canada in the late 1970s. The order is set by weight, so pour them in sequence.",
+      "instructions": [
+        "Pour the coffee liqueur into a shot glass.",
+        "Hold a bar spoon upside down just above it and pour the Irish cream slowly over the back of the spoon.",
+        "Layer the Grand Marnier on top the same way.",
+        "Serve straight away."
+      ],
+      "ingredients": [
+        {
+          "name": "Coffee Liqueur",
+          "call": "Kahlúa",
+          "amount": 20,
+          "unit": "ml"
+        },
+        {
+          "name": "Irish Cream Liqueur",
+          "call": "Baileys",
+          "amount": 20,
+          "unit": "ml"
+        },
+        {
+          "name": "Grand Marnier",
+          "amount": 20,
+          "unit": "ml"
+        }
+      ],
+      "glass": "shot",
+      "method": "layered",
+      "difficulty": "medium",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "creamy"
+    },
+    {
+      "id": "carajillo",
+      "name": "Carajillo",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "In Spain a carajillo is coffee with a splash of liquor in it. The shaken version over ice, made with Licor 43, came out of Mexico and is now the one most bars mean. The vanilla in the liqueur does what sugar would otherwise do.",
+      "instructions": [
+        "Make a fresh espresso.",
+        "Shake it hard with the Licor 43 and ice for ten seconds.",
+        "Strain over fresh ice in a rocks glass."
+      ],
+      "ingredients": [
+        {
+          "name": "Licor 43",
+          "amount": 50,
+          "unit": "ml"
+        },
+        {
+          "name": "Espresso",
+          "call": "Strong Espresso",
+          "amount": 1,
+          "unit": "piece"
+        }
+      ],
+      "glass": "rocks",
+      "method": "shaken",
+      "difficulty": "easy",
+      "garnish": "Garnish with three coffee beans.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "spirit-forward"
+    },
+    {
+      "id": "jager-mule",
+      "name": "Jäger Mule",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "A Moscow Mule with Jägermeister in place of the vodka. The herbs and the ginger meet halfway, and served long it tastes nothing like the shot most people know it from.",
+      "instructions": [
+        "Fill a highball glass with ice.",
+        "Add the Jägermeister and the lime juice.",
+        "Top with the ginger beer and stir once."
+      ],
+      "ingredients": [
+        {
+          "name": "Jägermeister",
+          "amount": 50,
+          "unit": "ml"
+        },
+        {
+          "name": "Fresh Lime Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "name": "Ginger Beer",
+          "amount": 120,
+          "unit": "ml"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Garnish with a lime wedge.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "highball"
+    },
+    {
+      "id": "malibu-bay-breeze",
+      "name": "Malibu Bay Breeze",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "A Bay Breeze with coconut liqueur instead of vodka. Cranberry keeps it from tasting like suntan lotion; pineapple does the rest. Low in alcohol and built in the glass.",
+      "instructions": [
+        "Fill a highball glass with ice.",
+        "Add the coconut liqueur and the pineapple juice.",
+        "Top with the cranberry juice and stir gently."
+      ],
+      "ingredients": [
+        {
+          "name": "Coconut Liqueur",
+          "call": "Malibu",
+          "amount": 50,
+          "unit": "ml"
+        },
+        {
+          "name": "Pineapple Juice",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "name": "Cranberry Juice",
+          "amount": 60,
+          "unit": "ml"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Garnish with a pineapple wedge.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "highball"
+    },
+    {
+      "id": "snowball",
+      "name": "Snowball",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "Advocaat lengthened into a long drink, and a fixture of British Christmases. The original tops it with fizzy lemonade; lime, a little syrup and soda get you the same thing with less sugar.",
+      "instructions": [
+        "Fill a highball glass with ice.",
+        "Add the advocaat, lime juice and syrup and stir to loosen the advocaat.",
+        "Top with the soda water and stir gently."
+      ],
+      "ingredients": [
+        {
+          "name": "Advocaat",
+          "amount": 50,
+          "unit": "ml"
+        },
+        {
+          "name": "Fresh Lime Juice",
+          "amount": 15,
+          "unit": "ml"
+        },
+        {
+          "name": "Simple Syrup",
+          "amount": 10,
+          "unit": "ml"
+        },
+        {
+          "name": "Soda Water",
+          "amount": 100,
+          "unit": "ml"
+        }
+      ],
+      "glass": "highball",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Garnish with a lime wheel.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "creamy"
+    },
+    {
+      "id": "limoncello-spritz",
+      "name": "Limoncello Spritz",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "The Spritz template with limoncello in place of Aperol. Sweeter and brighter than the original, so it needs the full measure of prosecco and soda to stay light.",
+      "instructions": [
+        "Fill a wine glass with ice.",
+        "Add the limoncello.",
+        "Top with the prosecco and the soda water.",
+        "Stir once, gently."
+      ],
+      "ingredients": [
+        {
+          "name": "Limoncello",
+          "amount": 50,
+          "unit": "ml"
+        },
+        {
+          "name": "Sparkling Wine",
+          "call": "Prosecco",
+          "amount": 90,
+          "unit": "ml"
+        },
+        {
+          "name": "Soda Water",
+          "amount": 30,
+          "unit": "ml"
+        }
+      ],
+      "glass": "wine",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Garnish with a lemon wheel and a mint sprig.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "sparkling"
+    },
+    {
+      "id": "bianco-tonic",
+      "name": "Bianco Tonic",
+      "category": "Modern Classics",
+      "baseSpirit": "other",
+      "description": "Bianco vermouth and tonic, the long way to drink vermouth as an aperitivo. Bianco is sweeter and more vanilla than dry vermouth, and the quinine in the tonic balances that.",
+      "instructions": [
+        "Fill a wine glass with ice.",
+        "Add the bianco vermouth.",
+        "Top with the tonic water and stir once."
+      ],
+      "ingredients": [
+        {
+          "name": "Bianco Vermouth",
+          "call": "Martini Bianco",
+          "amount": 60,
+          "unit": "ml"
+        },
+        {
+          "name": "Tonic Water",
+          "amount": 120,
+          "unit": "ml"
+        }
+      ],
+      "glass": "wine",
+      "method": "build",
+      "difficulty": "easy",
+      "garnish": "Garnish with a lime wedge.",
+      "tags": [
+        "modern-classic"
+      ],
+      "family": "highball"
     }
   ],
   "retired": [
