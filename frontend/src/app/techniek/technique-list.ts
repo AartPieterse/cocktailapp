@@ -19,7 +19,6 @@ import { TECHNIQUES } from './techniques';
   template: `
     <div class="page">
       <header class="head">
-        <p class="eyebrow">{{ lang.t().technique.eyebrow }}</p>
         <h1>{{ lang.t().nav.technique }}</h1>
         <p class="lede">{{ lang.t().technique.intro }}</p>
       </header>
