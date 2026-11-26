@@ -44,6 +44,13 @@ const FIRST_SHOWN = 8;
             <mat-icon aria-hidden="true">edit</mat-icon>
             {{ lang.t().bar.editIngredients }}
           </a>
+          <!-- The guest menu is a list of what the bar makes, so it only appears once there is one. -->
+          @if (makeable().length) {
+            <a class="edit-btn" routerLink="/bar/gastenmenu">
+              <mat-icon aria-hidden="true">qr_code_2</mat-icon>
+              {{ lang.t().guestMenu.open }}
+            </a>
+          }
         </div>
         <div class="tally">
           <div class="makeable">{{ lang.t().bar.youCanMake(makeable().length) }}</div>

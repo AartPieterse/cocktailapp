@@ -35,6 +35,12 @@ export const routes: Routes = [
         title: 'myIngredients',
         loadComponent: () => import('./bar/cabinet/cabinet').then((m) => m.Cabinet),
       },
+      // The host's side of the guest menu: pick tonight's drinks, show the QR code.
+      {
+        path: 'bar/gastenmenu',
+        title: 'guestMenuHost',
+        loadComponent: () => import('./guest-menu/menu-host').then((m) => m.MenuHost),
+      },
       // Back-compat: the stock editor used to live at /kast.
       { path: 'kast', pathMatch: 'full', redirectTo: 'bar/ingredienten' },
       {
@@ -61,6 +67,14 @@ export const routes: Routes = [
         loadComponent: () => import('./account/account').then((m) => m.Account),
       },
     ],
+  },
+  // The guest's menu, opened from the host's QR code. Deliberately OUTSIDE Layout: a guest gets no
+  // navbar, bottom nav or install prompt, and none of Layout's services (sync, cabinet notices,
+  // staple top-up) start, so a visit writes nothing to the guest's localStorage.
+  {
+    path: 'menu',
+    title: 'guestMenu',
+    loadComponent: () => import('./guest-menu/guest-menu').then((m) => m.GuestMenu),
   },
   { path: '**', redirectTo: 'ontdek' },
 ];

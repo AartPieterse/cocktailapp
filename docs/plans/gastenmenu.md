@@ -3,6 +3,11 @@
 
 # Gastenmenu: je bar als menukaart voor je gasten
 
+> **Status (26 nov 2026): fase A is gebouwd.** Stap 2 en 3 uit de bouwvolgorde staan erin, in één PR:
+> het hostscherm `/bar/gastenmenu` (knop "Gastenmenu" op Mijn bar), de gastroute `/menu` buiten
+> `Layout`, het alcoholvrij-filter en de bestelkaart. Zie [Wat er gebouwd is](#wat-er-gebouwd-is)
+> onderaan. Nog open: stap 4 (het smaakkompas) en een e2e-rondje.
+
 Je geeft een feestje. Barkaart maakt van wat je bar kan schenken een menukaart. Gasten scannen een
 QR-code, bladeren door de kaart op hun eigen telefoon en kiezen wat ze willen. Hun keuze laten ze aan
 jou zien. Er is geen backend voor nodig.
@@ -105,14 +110,16 @@ het huis. Dan kun je de kaart vooraf rondsturen. Daar is geen extra werk voor no
 
 ## Bouwvolgorde
 
-Elke stap is een eigen PR.
+Elke stap was bedoeld als eigen PR; stap 2 en 3 zijn samen gebouwd.
 
-1. ~~`MakeableStore`~~ — gedaan op 26 nov.
-2. **Gastroute `/menu`**, buiten `Layout`: link parsen, de kaart per familie, het alcoholvrij-filter
-   en de bestelkaart. Test met een handgemaakte link.
-3. **Hostscherm "Gastenmenu"**: aanvinken, titel, QR-code en kopiëren/delen, plus de ingang op
-   Mijn bar.
+1. ~~`MakeableStore`~~: gedaan op 26 nov.
+2. ~~**Gastroute `/menu`**, buiten `Layout`: link parsen, de kaart per familie, het alcoholvrij-filter
+   en de bestelkaart. Test met een handgemaakte link.~~ Gebouwd op 26 nov.
+3. ~~**Hostscherm "Gastenmenu"**: aanvinken, titel, QR-code en kopiëren/delen, plus de ingang op
+   Mijn bar.~~ Gebouwd op 26 nov.
 4. **Het smaakkompas** op de gastenkaart. Dit vereist verras-me stap 4, waarin `TasteChips` gebouwd wordt.
+   TODO: `TasteChips` bestaat nog niet. Zet hem zodra hij er is naast de chip "Alcoholvrij" in
+   `frontend/src/app/guest-menu/guest-menu.ts`, als strikte filter op `entries()`.
 
 ## Testen
 
@@ -122,3 +129,23 @@ Elke stap is een eigen PR.
   bezoek ontbreken.
 - Een e2e-rondje op twee schermbreedtes: QR-link → kaart → bestelkaart.
 
+## Wat er gebouwd is
+
+Fase A, 26 nov 2026. Alles staat in `frontend/src/app/guest-menu/`.
+
+| Onderdeel | Waar | Wat |
+|---|---|---|
+| Link | `menu-link.ts` | `buildMenuUrl`, `parseMenuKeys`, `cleanTitle`, `resolveMenu` en `groupByFamily`. Puur en zonder Angular, met tests in `menu-link.spec.ts`. |
+| Hostscherm | `menu-host.ts`, route `/bar/gastenmenu` | Alles wat `MakeableStore` nu kan maken, variaties inbegrepen, per familie en voorgevinkt. Het scherm onthoudt wat je **uit**vinkt, zodat een drankje dat later maakbaar wordt vanzelf aan staat. Er wordt niets opgeslagen. Verder een titel (max. 40 tekens), de QR-code, de link, "Kopieer link", "Deel" (alleen als `navigator.share` bestaat) en "Bekijk de kaart". De knop "Gastenmenu" op Mijn bar staat er alleen als de bar iets maakt. |
+| QR-code | `uqr` 0.1.3 (MIT, geen eigen dependencies) | Alleen `encode` wordt gebruikt: ongeveer 10 kB geminificeerd en 4 kB gzip, en alleen in de lazy chunk van het hostscherm. Het SVG-pad tekenen we zelf: zwart op wit, ook in het donkere thema, met een stille zone van 4 modules en ECC L (met `boostEcc`). 30 drankjes geven een link van 416 tekens en een code van versie 13. |
+| Kopiëren | `menu-host.ts` | Op `http://192.168.1.100` bestaat `navigator.clipboard` niet. Dan valt het terug op `execCommand(copy)` op het geselecteerde linkveld, en als ook dat niet lukt blijft de link geselecteerd met een korte uitleg. |
+| Gastroute | `guest-menu.ts`, route `/menu` buiten `Layout` | Een kaart per familie met een klein glas, de naam en `ingredientNames()`, zonder recept. Bovenaan staat de chip "Alcoholvrij" (`water_drop`). De bestelkaart staat in de URL (`&d=<key>`), zodat de terugknop van de browser hem sluit. Het thema volgt `prefers-color-scheme`, of een thema dat de gast eerder zelf koos (dat wordt alleen gelezen). |
+| Geen opslag | `guest-menu.spec.ts` | Een bezoek aan `/menu` via de echte routetabel schrijft geen enkele sleutel behalve `barkaart.locale` (van `LanguageService`). De test controleert dat de cabinet-, wizard- en andere persoonlijke sleutels ontbreken. |
+
+Nog open:
+
+- **Stap 4, het smaakkompas.** Zie de TODO hierboven.
+- **Een e2e-rondje** op twee schermbreedtes. Er is nog geen e2e-opzet in de repo. Het rondje is met de
+  hand gedaan op 390px en desktop, licht en donker.
+- De ingrediëntnamen op de kaart zijn de catalogusnamen (bijvoorbeeld "Vers limoensap"), net als op
+  Ontdek. Een kortere menukaartnaam per ingrediënt zou mooier lezen, maar is catalogusdata.
