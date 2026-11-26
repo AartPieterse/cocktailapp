@@ -74,31 +74,53 @@ export interface UiStrings {
     account: string;
     login: string;
   };
-  /** Home / discover dashboard (route was "Mijn bar", now "Ontdek"). */
+  /**
+   * The "Ontdek" home screen: one drink picked for the day, what the bar makes, and a row of
+   * things to learn that need no bottle. Nothing here counts up as the bar grows, and nothing
+   * names a bottle to buy.
+   */
   home: {
+    /** First run, before the bar holds anything. */
     welcome: string;
     heroTitle: string;
     heroLede: string;
     buildBar: string;
     browseFirst: string;
-    eyebrow: string;
+    howTitle: string;
+    howSteps: readonly { title: string; body: string }[];
+    classicsTitle: string;
+    /** The eyebrow over the day's pick; changes with the hour, so the screen feels like a menu. */
+    greeting: (hour: number) => string;
+    pickToday: string;
+    /** When nothing in the bar is complete yet, the pick comes from the whole menu instead. */
+    pickFromMenu: string;
+    pickAnother: string;
+    toRecipe: string;
     /**
      * One quiet line of fact where a counting-up hero number used to be. It reports a filter
      * result, never a score that rises as the user acquires more.
      */
     fitLine: (n: number) => string;
     editBar: string;
-    wizardAgain: string;
     makeNow: string;
     cocktailsCount: (n: number) => string;
+    filterLabel: string;
+    filterAll: string;
+    filterAlcoholFree: string;
+    noneInFilter: string;
+    showAll: (n: number) => string;
+    showFewer: string;
     emptyTitle: string;
     emptyBody: string;
     refillBar: string;
-    yourBar: string;
-    ingredientCount: (n: number) => string;
-    countSubstitutes: string;
-    shareStats: string;
-    editBarShort: string;
+    learnTitle: string;
+    learnLede: string;
+    techniqueEyebrow: string;
+    drillLine: (seconds: number | null) => string;
+    toLesson: string;
+    familyEyebrow: string;
+    familyExamples: (names: readonly string[]) => string;
+    toFamily: string;
   };
   /**
    * The technique lessons — the reason to open the app that is not a bottle. Every drill is
@@ -170,6 +192,13 @@ export interface UiStrings {
     sub: string;
     youCanMake: (n: number) => string;
     selected: (n: number) => string;
+    /** The few switches that change how the bar is read. They live here, not on the home screen. */
+    settingsTitle: string;
+    countSubstitutes: string;
+    countSubstitutesHint: string;
+    shareStats: string;
+    shareStatsHint: string;
+    wizardAgain: string;
   };
   /** Cocktail list. */
   list: {
@@ -332,6 +361,12 @@ export interface UiStrings {
   };
 }
 
+/** "A", "A en B", "A, B en C" — a list the way a sentence says it. */
+function joinNames(names: readonly string[], and: string): string {
+  if (names.length <= 1) return names.join('');
+  return `${names.slice(0, -1).join(', ')} ${and} ${names[names.length - 1]}`;
+}
+
 const nl: UiStrings = {
   common: {
     appName: 'Barkaart',
@@ -377,24 +412,54 @@ const nl: UiStrings = {
       'Vink aan wat je in huis hebt — sterke drank, mixers, dat ene flesje achterin — en Barkaart laat meteen zien welke cocktails je <em>nu</em> kunt maken.',
     buildBar: 'Stel je bar samen',
     browseFirst: 'Blader eerst rond',
-    eyebrow: 'Ontdek',
+    howTitle: 'Zo werkt het',
+    howSteps: [
+      {
+        title: 'Vink aan wat je hebt',
+        body: 'Flessen, sappen, siropen, dat ene flesje achterin. Een minuut werk, en je kunt het altijd bijwerken.',
+      },
+      {
+        title: 'Zie wat je kunt maken',
+        body: 'Barkaart zet de recepten klaar die compleet zijn met wat er al staat.',
+      },
+      {
+        title: 'Leer de vorm',
+        body: 'Elke klassieker is een van negen vormen. Ken je de vorm, dan heb je het recept niet meer nodig.',
+      },
+    ],
+    classicsTitle: 'Een paar klassiekers om mee te beginnen',
+    greeting: (h) =>
+      h < 6 ? 'Nog wakker?' : h < 12 ? 'Goedemorgen' : h < 18 ? 'Goedemiddag' : 'Goedenavond',
+    pickToday: 'Op de kaart vandaag',
+    pickFromMenu: 'Uit de kaart vandaag',
+    pickAnother: 'Iets anders',
+    toRecipe: 'Naar het recept',
     fitLine: (n) =>
       n === 1
         ? '1 recept past bij wat je in huis hebt.'
         : `${n} recepten passen bij wat je in huis hebt.`,
     editBar: 'Bewerk mijn bar',
-    wizardAgain: 'Wizard opnieuw',
     makeNow: 'Nu te maken',
     cocktailsCount: (n) => `${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
+    filterLabel: 'Filter op familie',
+    filterAll: 'Alles',
+    filterAlcoholFree: 'Zonder alcohol',
+    noneInFilter: 'Niets in deze selectie.',
+    showAll: (n) => `Toon alle ${n}`,
+    showFewer: 'Toon minder',
     emptyTitle: 'Nog niks helemaal compleet.',
     emptyBody:
       'Zet in je bar wat je in huis hebt, dan zie je hier wat je ermee kunt maken. Of begin bij een techniek.',
-    refillBar: 'Bar aanvullen',
-    yourBar: 'Mijn bar',
-    ingredientCount: (n) => `${n} ${n === 1 ? 'ingrediënt' : 'ingrediënten'}`,
-    countSubstitutes: 'Vervangers meetellen',
-    shareStats: 'Anonieme statistieken delen',
-    editBarShort: 'Bewerk bar',
+    refillBar: 'Werk je bar bij',
+    learnTitle: 'Achter de bar',
+    learnLede: 'Elke dag iets anders, en er komt geen fles aan te pas.',
+    techniqueEyebrow: 'Techniek van de dag',
+    drillLine: (s) =>
+      s === null ? 'Met een oefening zonder fles' : `Met een oefening van ${s} seconden, zonder fles`,
+    toLesson: 'Naar de les',
+    familyEyebrow: 'De vorm van de dag',
+    familyExamples: (names) => `Bijvoorbeeld ${joinNames(names, 'en')}.`,
+    toFamily: 'Bekijk de familie',
   },
   technique: {
     eyebrow: 'Leren',
@@ -457,6 +522,14 @@ const nl: UiStrings = {
     sub: 'Vink aan wat je in huis hebt — de rest rekent Barkaart uit.',
     youCanMake: (n) => `Je kunt ${n} ${n === 1 ? 'cocktail' : 'cocktails'} maken`,
     selected: (n) => `${n} ${n === 1 ? 'ingrediënt' : 'ingrediënten'} geselecteerd`,
+    settingsTitle: 'Instellingen',
+    countSubstitutes: 'Vervangers meetellen',
+    countSubstitutesHint:
+      'Een fles telt ook mee voor een recept dat om een verwante fles vraagt, zoals donkere rum voor witte.',
+    shareStats: 'Anonieme statistieken delen',
+    shareStatsHint:
+      'Alleen tellingen van welke recepten en ingrediënten gebruikt worden, zonder iets dat naar jou te herleiden is.',
+    wizardAgain: 'Wizard opnieuw',
   },
   list: {
     title: 'Alle cocktails',
@@ -653,22 +726,52 @@ const en: UiStrings = {
       "Tick what you have on hand — spirits, mixers, that one bottle at the back — and Barkaart shows you right away which cocktails you can make <em>now</em>.",
     buildBar: 'Build your bar',
     browseFirst: 'Browse first',
-    eyebrow: 'Discover',
+    howTitle: 'How it works',
+    howSteps: [
+      {
+        title: 'Tick what you have',
+        body: 'Bottles, juices, syrups, that one bottle at the back. A minute of work, and you can update it any time.',
+      },
+      {
+        title: 'See what you can make',
+        body: 'Barkaart lines up the recipes that are complete with what is already there.',
+      },
+      {
+        title: 'Learn the shape',
+        body: 'Every classic is one of nine shapes. Know the shape and you no longer need the recipe.',
+      },
+    ],
+    classicsTitle: 'A few classics to start with',
+    greeting: (h) =>
+      h < 6 ? 'Still up?' : h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening',
+    pickToday: 'On the menu today',
+    pickFromMenu: 'From the menu today',
+    pickAnother: 'Something else',
+    toRecipe: 'See the recipe',
     fitLine: (n) =>
       n === 1 ? '1 recipe matches what you have at home.' : `${n} recipes match what you have at home.`,
     editBar: 'Edit my bar',
-    wizardAgain: 'Restart wizard',
     makeNow: 'Make now',
     cocktailsCount: (n) => `${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
+    filterLabel: 'Filter by family',
+    filterAll: 'All',
+    filterAlcoholFree: 'Alcohol-free',
+    noneInFilter: 'Nothing in this selection.',
+    showAll: (n) => `Show all ${n}`,
+    showFewer: 'Show fewer',
     emptyTitle: 'Nothing quite complete yet.',
     emptyBody:
       'Put what you have at home in your bar and you will see what it makes. Or start with a technique.',
-    refillBar: 'Stock up your bar',
-    yourBar: 'Your bar',
-    ingredientCount: (n) => `${n} ${n === 1 ? 'ingredient' : 'ingredients'}`,
-    countSubstitutes: 'Count substitutes',
-    shareStats: 'Share anonymous statistics',
-    editBarShort: 'Edit bar',
+    refillBar: 'Update your bar',
+    learnTitle: 'Behind the bar',
+    learnLede: 'Something different every day, and no bottle involved.',
+    techniqueEyebrow: 'Technique of the day',
+    drillLine: (s) =>
+      s === null ? 'With a drill that needs no bottle' : `With a ${s}-second drill that needs no bottle`,
+    toLesson: 'Open the lesson',
+    familyEyebrow: 'Shape of the day',
+    familyExamples: (names) => `For example ${joinNames(names, 'and')}.`,
+    toFamily: 'See the family',
   },
   technique: {
     eyebrow: 'Learn',
@@ -730,6 +833,14 @@ const en: UiStrings = {
     sub: 'Tick what you have on hand — Barkaart works out the rest.',
     youCanMake: (n) => `You can make ${n} ${n === 1 ? 'cocktail' : 'cocktails'}`,
     selected: (n) => `${n} ${n === 1 ? 'ingredient' : 'ingredients'} selected`,
+    settingsTitle: 'Settings',
+    countSubstitutes: 'Count substitutes',
+    countSubstitutesHint:
+      'A bottle also counts for a recipe that asks for a close relative, such as dark rum for white.',
+    shareStats: 'Share anonymous statistics',
+    shareStatsHint:
+      'Only counts of which recipes and ingredients get used, with nothing that can be traced back to you.',
+    wizardAgain: 'Restart wizard',
   },
   list: {
     title: 'All cocktails',

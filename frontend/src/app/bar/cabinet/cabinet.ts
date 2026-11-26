@@ -8,7 +8,10 @@ import {
   type IngredientCategory,
   type MakeableResult,
 } from '@cocktailapp/shared';
+import { RouterLink } from '@angular/router';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { catchError, combineLatest, of, switchMap } from 'rxjs';
+import { AnalyticsService } from '../../core/analytics.service';
 import { CabinetService } from '../../core/cabinet.service';
 import { LanguageService } from '../../core/language.service';
 import { SubstitutesService } from '../../core/substitutes.service';
@@ -24,7 +27,7 @@ interface Group {
 
 @Component({
   selector: 'app-cabinet',
-  imports: [IngredientGlyph],
+  imports: [IngredientGlyph, RouterLink, MatSlideToggleModule],
   template: `
     <div class="page">
       <header class="head">
@@ -59,6 +62,29 @@ interface Group {
           </section>
         }
       </div>
+
+      <!-- How the bar is read. Moved here from the home screen, which is for drinks, not switches. -->
+      <section class="settings" [attr.aria-label]="lang.t().bar.settingsTitle">
+        <div class="group-label">{{ lang.t().bar.settingsTitle }}</div>
+        <div class="setting">
+          <mat-slide-toggle [checked]="subs.enabled()" (change)="subs.toggle($event.checked)">
+            {{ lang.t().bar.countSubstitutes }}
+          </mat-slide-toggle>
+          <p class="hint">{{ lang.t().bar.countSubstitutesHint }}</p>
+        </div>
+        @if (analytics.available) {
+          <div class="setting">
+            <mat-slide-toggle
+              [checked]="!analytics.optedOut()"
+              (change)="analytics.setOptOut(!$event.checked)"
+            >
+              {{ lang.t().bar.shareStats }}
+            </mat-slide-toggle>
+            <p class="hint">{{ lang.t().bar.shareStatsHint }}</p>
+          </div>
+        }
+        <a class="wizard" routerLink="/bar/wizard">{{ lang.t().bar.wizardAgain }}</a>
+      </section>
     </div>
   `,
   styles: `
@@ -156,12 +182,39 @@ interface Group {
         gap: 8px;
       }
     }
+    .settings {
+      display: grid;
+      gap: 14px;
+      margin: 40px 0 8px;
+      padding-top: 20px;
+      border-top: 1px solid var(--hairline);
+      max-width: 640px;
+    }
+    .setting {
+      --mdc-switch-selected-track-color: var(--accent);
+      --mdc-switch-selected-handle-color: #fff;
+    }
+    .hint {
+      margin: 4px 0 0 52px;
+      font-size: var(--step--1);
+      color: var(--muted);
+      max-width: 52ch;
+    }
+    .wizard {
+      justify-self: start;
+      font: 600 0.813rem var(--font-body);
+      color: var(--accent);
+    }
+    .wizard:hover {
+      text-decoration: underline;
+    }
   `,
 })
 export class Cabinet {
   protected readonly cabinet = inject(CabinetService);
   protected readonly lang = inject(LanguageService);
-  private readonly subs = inject(SubstitutesService);
+  protected readonly subs = inject(SubstitutesService);
+  protected readonly analytics = inject(AnalyticsService);
   private readonly ingredientService = inject(IngredientService);
   private readonly cocktailService = inject(CocktailService);
 
