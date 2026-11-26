@@ -127,11 +127,11 @@ export interface CocktailImage {
  * A structured ingredient swap inside a variation ("use Vodka instead of Cachaça"). Both sides are
  * *base* ids (resolved from names by `buildCatalog`, mirroring `CocktailIngredient.alternativeIds`).
  *
- * Informational only — swaps never affect `computeMakeable`, and that is deliberate: a swap makes a
- * DIFFERENT drink. Counting one would tell someone holding only vodka that they can make a
- * Caipirinha, which is the same failure class as the mis-stamped roles fixed in `e8ba593`/`1c1b0ed`.
- * To make a variation genuinely makeable, promote it to its own cocktail entry and link it with
- * `makesCocktailId` — see the variation ladder in docs/data-model.md.
+ * A swap never satisfies the PARENT recipe, and that is deliberate: a swap makes a DIFFERENT drink.
+ * Counting one would tell someone holding only vodka that they can make a Caipirinha, which is the
+ * same failure class as the mis-stamped roles fixed in `e8ba593`/`1c1b0ed`. Instead the swaps define
+ * the variation's own recipe (`variationRecipe`), which `computeMakeableWithVariations` judges on
+ * its own — so holding vodka surfaces the Caipiroska. A variation with no swaps cannot be judged.
  */
 export interface CocktailVariationSwap {
   fromId: string;
@@ -256,8 +256,16 @@ export interface MakeableSearch {
 
 /** A cocktail plus how far the user is from being able to make it. */
 export interface MakeableResult {
+  /** For a variation result: the variant recipe, under its parent's id (see `variationRecipe`). */
   cocktail: Cocktail;
   /** Required ingredients the user does not have. Empty ⇒ makeable right now. */
   missing: { ingredientId: string; name: string }[];
   missingCount: number;
+  /**
+   * Set when this result is a variation of `cocktail.id` rather than the cocktail itself. Link to
+   * it as the parent's page with `?variation=<key>`; never store it as a favourite — it has no id.
+   */
+  variation?: CocktailVariation;
+  /** The parent cocktail's display name, set alongside `variation` ("Variatie op French 75"). */
+  parentName?: string;
 }

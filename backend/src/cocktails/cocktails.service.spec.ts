@@ -46,9 +46,26 @@ const BLOODY = {
   ],
 };
 
+const KIR = {
+  id: 'kir',
+  name: 'KIR',
+  ingredients: [
+    { ingredientId: 'white-wine', name: 'Dry White Wine', amount: 90, unit: 'ml' },
+    { ingredientId: 'creme-de-cassis', name: 'Crème de Cassis', amount: 10, unit: 'ml' },
+  ],
+  variations: [
+    {
+      key: 'kir-royal',
+      name: 'Kir Royal',
+      swaps: [{ fromId: 'white-wine', toId: 'sparkling-wine' }],
+    },
+  ],
+};
+
 describe('CocktailsService', () => {
   let service: CocktailsService;
   let model: any;
+  let ingredientsService: any;
 
   /** Make `find(...)` support both `.sort().exec()` (findAll) and `.exec()` (makeable). */
   function mockFind(docs: any[]) {
@@ -65,7 +82,7 @@ describe('CocktailsService', () => {
         exec: jest.fn().mockResolvedValue([]),
       }),
     };
-    const ingredientsService = {} as any;
+    ingredientsService = { findAll: jest.fn().mockResolvedValue([]) };
     service = new CocktailsService(model, ingredientsService);
   });
 
@@ -132,6 +149,23 @@ describe('CocktailsService', () => {
       expect(gt.missing).toEqual([{ ingredientId: 'tonic', name: 'Tonic' }]);
       // Old Fashioned is missing bourbon+sugar (2) > maxMissing, so it is excluded.
       expect(result.find((r) => r.cocktail.id === 'old-fashioned')).toBeUndefined();
+    });
+
+    it('returns a makeable variation as its own result, named from the ingredient list', async () => {
+      mockFind([doc(KIR)]);
+      ingredientsService.findAll.mockResolvedValue([
+        doc({ id: 'sparkling-wine', name: 'Sparkling Wine' }),
+      ]);
+      const result = await service.makeable({
+        availableIngredientIds: ['sparkling-wine', 'creme-de-cassis'],
+        maxMissing: 0,
+      });
+      // The bubbles make the Kir Royal — and only that: the still Kir is not makeable from them.
+      expect(result.map((r) => [r.cocktail.name, r.variation?.key])).toEqual([
+        ['Kir Royal', 'kir-royal'],
+      ]);
+      expect(result[0].cocktail.id).toBe('kir');
+      expect(result[0].cocktail.ingredients[0].name).toBe('Sparkling Wine');
     });
   });
 });

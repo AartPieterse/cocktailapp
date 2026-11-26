@@ -4,7 +4,7 @@ import type {
   Cocktail as CocktailType,
   MakeableResult,
 } from '@cocktailapp/shared';
-import { computeMakeable, slugify } from '@cocktailapp/shared';
+import { computeMakeableWithVariations, slugify } from '@cocktailapp/shared';
 import { Model } from 'mongoose';
 import { IngredientsService } from '../ingredients/ingredients.service';
 import { CocktailIngredientDto } from './dto/cocktail-ingredient.dto';
@@ -95,15 +95,20 @@ export class CocktailsService {
    * `computeMakeable` engine (the same one the web client uses) over the ~90 cocktails loaded
    * from Mongo, instead of a separate Mongo `$aggregate` pipeline. This keeps the backend byte-for-
    * byte in agreement with the offline bundle: same slug id space, same optional/garnish/seasoning
-   * rules, same "X or Y" alternatives handling, same ordering.
+   * rules, same "X or Y" alternatives handling, same ordering — and the same variation results,
+   * which need the ingredient names to label a swapped-in line.
    */
   async makeable(dto: MakeableSearchDto): Promise<MakeableResult[]> {
-    const docs = await this.cocktailModel
-      .find({ 'ingredients.0': { $exists: true } })
-      .exec();
+    const [docs, ingredientDocs] = await Promise.all([
+      this.cocktailModel.find({ 'ingredients.0': { $exists: true } }).exec(),
+      this.ingredientsService.findAll(),
+    ]);
     const cocktails = docs.map((d) => d.toJSON() as CocktailType);
-    return computeMakeable(
-      cocktails,
+    const ingredients = ingredientDocs.map(
+      (d) => d.toJSON() as { id: string; name: string },
+    );
+    return computeMakeableWithVariations(
+      { cocktails, ingredients },
       dto.availableIngredientIds,
       dto.maxMissing ?? 0,
     );

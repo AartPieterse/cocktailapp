@@ -9,7 +9,7 @@ import type {
   IngredientCategory,
   MakeableResult,
 } from '@cocktailapp/shared';
-import { applyCatalogTranslations, computeMakeable } from '@cocktailapp/shared';
+import { applyCatalogTranslations, computeMakeableWithVariations } from '@cocktailapp/shared';
 import {
   Observable,
   catchError,
@@ -28,7 +28,7 @@ import { LanguageService } from '../core/language.service';
  * Static-first data source. Loads the curated catalog.json (generated at build time from
  * iba-cocktails-seed.json by scripts/build-catalog.mjs), applies the Dutch display overlay
  * (catalog.nl.json, same version), caches it, and serves every read operation in-memory —
- * including the flagship "wat kan ik maken" search via the shared `computeMakeable`. Used when
+ * including the flagship "wat kan ik maken" search via the shared engine. Used when
  * environment.dataSource === 'static'; there is no live backend or database in production.
  */
 @Injectable({ providedIn: 'root' })
@@ -120,12 +120,13 @@ export class CatalogService {
   /**
    * "What can I make with what I have." Returns cocktails ordered by how many *required*
    * ingredients you are missing, up to `maxMissing` (0 = makeable right now). Optional lines
-   * never count as missing, and cocktails with no ingredients are excluded. Delegates to the
-   * shared `computeMakeable` so the web (Angular) app and the backend agree.
+   * never count as missing, and cocktails with no ingredients are excluded. Variations that swap
+   * one base for another come back as results of their own (they carry `variation`). Delegates to
+   * the shared `computeMakeableWithVariations` so the web (Angular) app and the backend agree.
    */
   makeable(availableIngredientIds: string[], maxMissing = 0): Observable<MakeableResult[]> {
     return this.catalog$.pipe(
-      map((c) => computeMakeable(c.cocktails, availableIngredientIds, maxMissing)),
+      map((c) => computeMakeableWithVariations(c, availableIngredientIds, maxMissing)),
     );
   }
 }

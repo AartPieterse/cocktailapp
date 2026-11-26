@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Cocktail, CocktailIngredient } from './cocktail';
-import { computeMakeable } from './makeable';
+import { computeMakeable, computeMakeableWithVariations, variationRecipe } from './makeable';
 
 /**
  * Mirrors backend/src/cocktails/cocktails.service.spec.ts (the makeable aggregation) but against
@@ -142,5 +142,67 @@ describe('computeMakeable', () => {
     ];
     const result = computeMakeable(cocktails, ['sugar'], 1);
     expect(result[0].missing).toEqual([{ ingredientId: 'bourbon', name: 'Bourbon' }]);
+  });
+});
+
+describe('variations in "what can I make"', () => {
+  const cachaca = line('cachaca', 'Cachaça', { call: 'Cachaça (aged)', note: 'gekoeld' });
+  const limeWedges = line('lime-juice', 'Fresh Lime Juice');
+  const sugar = line('sugar', 'Sugar');
+  const caipirinha: Cocktail = {
+    ...cocktail('caipirinha', 'Caipirinha', [cachaca, limeWedges, sugar]),
+    alcoholFreeCounterpartId: 'virgin-caipirinha',
+    variations: [
+      { key: 'caipiroska', name: 'Caipiroska', swaps: [{ fromId: 'cachaca', toId: 'vodka' }] },
+      { key: 'prose-only', name: 'Prose Only', description: 'Use something no cabinet can hold.' },
+      { key: 'linked', name: 'Linked', swaps: [{ fromId: 'cachaca', toId: 'vodka' }], makesCocktailId: 'x' },
+    ],
+  };
+  const ingredients = [
+    { id: 'vodka', name: 'Wodka' },
+    { id: 'cachaca', name: 'Cachaça' },
+  ];
+  const catalog = { cocktails: [caipirinha], ingredients };
+
+  it('builds the variant recipe under the parent id, with the swap applied to its line', () => {
+    const recipe = variationRecipe(caipirinha, caipirinha.variations![0], (id) =>
+      ingredients.find((i) => i.id === id)?.name,
+    )!;
+    expect(recipe.id).toBe('caipirinha');
+    expect(recipe.name).toBe('Caipiroska');
+    expect(recipe.ingredients[0]).toEqual({ ingredientId: 'vodka', name: 'Wodka', amount: 5, unit: 'cl' });
+    expect(recipe.ingredients.slice(1)).toEqual([limeWedges, sugar]);
+    expect(recipe.variations).toBeUndefined();
+    expect(recipe.alcoholFreeCounterpartId).toBeUndefined();
+  });
+
+  it('cannot evaluate a prose-only variation, one linked to its own cocktail, or a swap of a missing line', () => {
+    expect(variationRecipe(caipirinha, caipirinha.variations![1])).toBeNull();
+    expect(variationRecipe(caipirinha, caipirinha.variations![2])).toBeNull();
+    const stray = { key: 'stray', name: 'Stray', swaps: [{ fromId: 'gin', toId: 'vodka' }] };
+    expect(variationRecipe(caipirinha, stray)).toBeNull();
+  });
+
+  it('surfaces the variation, and never lets it satisfy the parent', () => {
+    const result = computeMakeableWithVariations(catalog, ['vodka', 'lime-juice', 'sugar'], 0);
+    expect(result.map((r) => r.cocktail.name)).toEqual(['Caipiroska']);
+    expect(result[0].variation?.key).toBe('caipiroska');
+    expect(result[0].parentName).toBe('Caipirinha');
+    expect(result[0].cocktail.id).toBe('caipirinha');
+  });
+
+  it('merges parents and variations into one order, and reports a variant line by its new name', () => {
+    const result = computeMakeableWithVariations(catalog, ['cachaca', 'lime-juice', 'sugar'], 1);
+    expect(result.map((r) => [r.cocktail.name, r.missingCount])).toEqual([
+      ['Caipirinha', 0],
+      ['Caipiroska', 1],
+    ]);
+    expect(result[1].missing).toEqual([{ ingredientId: 'vodka', name: 'Wodka' }]);
+  });
+
+  it('leaves the catalog-only answer exactly as computeMakeable gives it', () => {
+    const cab = ['cachaca', 'vodka', 'lime-juice', 'sugar'];
+    const withVariations = computeMakeableWithVariations(catalog, cab, 0);
+    expect(withVariations.filter((r) => !r.variation)).toEqual(computeMakeable([caipirinha], cab, 0));
   });
 });

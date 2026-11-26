@@ -1,7 +1,12 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { type Cocktail, GLASSWARE_LABELS, METHOD_LABELS } from '@cocktailapp/shared';
+import {
+  type Cocktail,
+  type CocktailVariation,
+  GLASSWARE_LABELS,
+  METHOD_LABELS,
+} from '@cocktailapp/shared';
 import { FavoritesService } from '../../core/favorites.service';
 import { LanguageService } from '../../core/language.service';
 import { GlassArt } from '../../shared/glass-art/glass-art';
@@ -14,23 +19,26 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
   template: `
     <article class="card">
       <a class="media" [style.background]="tint()" [routerLink]="['/cocktails', cocktail().id]"
-        [attr.aria-label]="cocktail().name">
+        [queryParams]="query()" [attr.aria-label]="cocktail().name">
         <div class="glass"><app-glass-art [spec]="spec()" /></div>
-        <button
-          class="fav"
-          type="button"
-          (click)="toggleFav($event)"
-          [class.on]="isFav()"
-          [attr.aria-pressed]="isFav()"
-          [attr.aria-label]="isFav() ? lang.t().card.removeFavorite : lang.t().card.addFavorite"
-        >
-          <mat-icon>{{ isFav() ? 'favorite' : 'favorite_border' }}</mat-icon>
-        </button>
+        <!-- A variation has no id of its own to store, so it cannot be a favourite. -->
+        @if (!variation()) {
+          <button
+            class="fav"
+            type="button"
+            (click)="toggleFav($event)"
+            [class.on]="isFav()"
+            [attr.aria-pressed]="isFav()"
+            [attr.aria-label]="isFav() ? lang.t().card.removeFavorite : lang.t().card.addFavorite"
+          >
+            <mat-icon>{{ isFav() ? 'favorite' : 'favorite_border' }}</mat-icon>
+          </button>
+        }
       </a>
 
       <div class="body">
         <h3 class="name">
-          <a [routerLink]="['/cocktails', cocktail().id]">{{ cocktail().name }}</a>
+          <a [routerLink]="['/cocktails', cocktail().id]" [queryParams]="query()">{{ cocktail().name }}</a>
         </h3>
         @if (showStatus()) {
           <div class="status">
@@ -161,12 +169,26 @@ export class CocktailCard {
   readonly missingNames = input<string[]>([]);
   /** Show a coloured availability dot instead of the glass · method meta line. */
   readonly showStatus = input(false);
+  /**
+   * Set when `cocktail` is a variation's recipe (carrying its parent's id): the card then links to
+   * the parent's page opened on this variation, and its meta line names the parent.
+   */
+  readonly variation = input<CocktailVariation | null>(null);
+  readonly parentName = input<string | null>(null);
 
-  readonly spec = computed(() => glassSpecFor(this.cocktail()));
+  readonly query = computed(() => {
+    const v = this.variation();
+    return v ? { variation: v.key } : null;
+  });
+  readonly spec = computed(() =>
+    glassSpecFor(this.cocktail(), 'card', 'ambient', this.variation()?.key),
+  );
   readonly tint = computed(() => tintFor(this.cocktail()));
   readonly isFav = computed(() => this.favorites.has(this.cocktail().id));
 
   readonly meta = computed(() => {
+    const parent = this.parentName();
+    if (this.variation() && parent) return this.lang.t().common.variationOf(parent);
     const c = this.cocktail();
     const locale = this.lang.locale();
     const parts: string[] = [];

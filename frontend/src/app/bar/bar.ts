@@ -43,11 +43,12 @@ import { glassSpecFor } from '../shared/cocktail-visual';
             </div>
           </div>
           <div class="hero-glasses">
-            @for (r of heroGlasses(); track r.cocktail.id; let i = $index) {
+            @for (r of heroGlasses(); track key(r); let i = $index) {
               <a
                 class="floaty"
                 [style.animation-delay]="i * 0.7 + 's'"
                 [routerLink]="['/cocktails', r.cocktail.id]"
+                [queryParams]="r.variation ? { variation: r.variation.key } : null"
                 [attr.aria-label]="r.cocktail.name"
               >
                 <app-glass-art [spec]="spec(r)" />
@@ -71,8 +72,13 @@ import { glassSpecFor } from '../shared/cocktail-visual';
               </div>
             } @else if (makeableNow().length) {
               <div class="grid">
-                @for (r of makeableNow(); track r.cocktail.id) {
-                  <app-cocktail-card [cocktail]="r.cocktail" [missingCount]="0" />
+                @for (r of makeableNow(); track key(r)) {
+                  <app-cocktail-card
+                    [cocktail]="r.cocktail"
+                    [missingCount]="0"
+                    [variation]="r.variation ?? null"
+                    [parentName]="r.parentName ?? null"
+                  />
                 }
               </div>
             } @else {
@@ -371,7 +377,12 @@ export class Bar {
   }
 
   spec(r: MakeableResult) {
-    return glassSpecFor(r.cocktail, 'hero');
+    return glassSpecFor(r.cocktail, 'hero', 'ambient', r.variation?.key);
+  }
+
+  /** A variation shares its parent's id, so the pair is what identifies a result. */
+  key(r: MakeableResult): string {
+    return r.variation ? `${r.cocktail.id}/${r.variation.key}` : r.cocktail.id;
   }
 
 }

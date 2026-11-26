@@ -565,3 +565,33 @@ export const COCKTAIL_ART: Readonly<Record<string, CocktailArt>> = {
   // crushed ice pushed above the rim with a mint bouquet planted in it and two straws.
   'zombie': { liquid: '#CF6A22', liquidBottom: '#9C3315', fill: 0.85, cut: 'wide', ice: 'crushed', fizz: 'none', foam: 'none', rim: 'none', clarity: 'hazy', inclusion: 'none', straw: 'straw-pair', steam: false, garnishes: [{ type: 'mint-sprig', placement: 'surface', color: '#3E8B4A' }] },
 };
+
+/**
+ * How a variation looks, keyed `<parent id>/<variation key>`, for the variations that "what can I
+ * make" lists as drinks of their own (those with structural swaps).
+ *
+ * Partial on purpose — the opposite of the `Required` rule above. That rule exists because a drink's
+ * entry is merged over the derivation's guess; a variation's entry is merged over its PARENT's full
+ * authored entry, so whatever it leaves out is the parent's considered answer, not a guess. State
+ * only what the swap changes: a Caipiroska is a Caipirinha gone clearer, and saying just that keeps
+ * the two in step when the parent is retuned.
+ * `cocktail-visual.spec.ts` fails if a listable variation has no entry, if a key names no such
+ * variation, or if a variation renders as the same picture as its parent.
+ */
+export const VARIATION_ART: Readonly<Record<string, Partial<CocktailArt>>> = {
+  // Vodka for cachaça takes the cane's straw out: the same packed glass, greyer and less cloudy.
+  'caipirinha/caipiroska': { liquid: '#E4EBD3', clarity: 'hazy' },
+  // The Corpse Reviver's butter-yellow softened to pale elderflower straw, with the lemon twist the
+  // Sunflower is garnished with where the orange one was.
+  'corpse-reviver-2/sunflower': { liquid: '#F2EEC6', garnishes: [{ type: 'lemon-twist', placement: 'rim', color: '#E9CF4C' }] },
+  // Elderflower liqueur for sugar barely moves the colour — a shade greener-gold under the same
+  // spiral, and that is honest: the two drinks look alike on a bar.
+  'french-75/french-77': { liquid: '#EEEAB2' },
+  // The Kir with its bubbles: sparkling wine for still lifts the raspberry-fuchsia a touch and sets
+  // a bead running through it.
+  'kir/kir-royal': { liquid: '#C24E78', fizz: 'gentle' },
+  // Campari for Aperol: the traffic-orange turns a deep, still see-through red.
+  'spritz/campari-spritz': { liquid: '#D6322B' },
+  // Cynar's artichoke amaro makes it a dark, translucent mahogany — the only brown wine glass.
+  'spritz/cynar-spritz': { liquid: '#8C4B24' },
+};

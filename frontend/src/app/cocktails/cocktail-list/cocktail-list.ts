@@ -418,7 +418,10 @@ export class CocktailList {
       )
       .subscribe((res) => {
         const map = new Map<string, Status>();
-        for (const r of res) map.set(r.cocktail.id, { count: r.missingCount, names: r.missing.map((m) => m.name) });
+        // A variation shares its parent's id; this list shows catalog cocktails, so skip it.
+        for (const r of res) {
+          if (!r.variation) map.set(r.cocktail.id, { count: r.missingCount, names: r.missing.map((m) => m.name) });
+        }
         this.status.set(map);
       });
   }

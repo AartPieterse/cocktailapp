@@ -1,5 +1,5 @@
 import type { Cocktail } from '@cocktailapp/shared';
-import { COCKTAIL_ART } from './cocktail-art.data';
+import { COCKTAIL_ART, VARIATION_ART } from './cocktail-art.data';
 import type {
   Clarity,
   DetailLevel,
@@ -398,8 +398,17 @@ export function derivedSpec(c: Cocktail): GlassSpec {
  *                cost — 126 of these render at 96×120 with no virtual scrolling.
  * @param motion  `'ambient'` keeps the bubbles rising and the steam moving;
  *                `'pour'` adds the one-shot build, for the recipe just opened.
+ * @param variationKey  set when `c` is a variation's recipe (it carries its parent's id): the
+ *                parent's art is then overlaid with the variation's own `VARIATION_ART` entry.
  */
-export function glassSpecFor(c: Cocktail, detail: DetailLevel = 'card', motion: Motion = 'ambient'): GlassSpec {
+export function glassSpecFor(
+  c: Cocktail,
+  detail: DetailLevel = 'card',
+  motion: Motion = 'ambient',
+  variationKey?: string,
+): GlassSpec {
   const art = COCKTAIL_ART[c.id];
-  return Object.assign(derivedSpec(c), art, { glass: (c.glass ?? 'coupe') as GlassName, seed: c.id, detail, motion });
+  const key = variationKey ? `${c.id}/${variationKey}` : c.id;
+  const variant = variationKey ? VARIATION_ART[key] : undefined;
+  return Object.assign(derivedSpec(c), art, variant, { glass: (c.glass ?? 'coupe') as GlassName, seed: key, detail, motion });
 }

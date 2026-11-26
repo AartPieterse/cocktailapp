@@ -50,6 +50,8 @@ export interface UiStrings {
     ok: string;
     close: string;
     none: string;
+    /** A variation's byline: it is a recipe of the named cocktail with one ingredient swapped. */
+    variationOf: (name: string) => string;
     optional: string;
     loading: string;
     ingredientsWord: string;
@@ -346,6 +348,7 @@ const nl: UiStrings = {
     ok: 'Oké',
     close: 'Sluiten',
     none: '— geen —',
+    variationOf: (name) => `Variatie op ${name}`,
     optional: 'optioneel',
     loading: 'Laden…',
     ingredientsWord: 'ingrediënten',
@@ -621,6 +624,7 @@ const en: UiStrings = {
     ok: 'OK',
     close: 'Close',
     none: '— none —',
+    variationOf: (name) => `Variation of ${name}`,
     optional: 'optional',
     loading: 'Loading…',
     ingredientsWord: 'ingredients',

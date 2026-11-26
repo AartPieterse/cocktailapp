@@ -22,6 +22,7 @@ import {
   MEASURE_LABELS,
   METHOD_LABELS,
   missingLines,
+  variationRecipe,
 } from '@cocktailapp/shared';
 import { catchError, of, switchMap, tap } from 'rxjs';
 import { AnalyticsService } from '../../core/analytics.service';
@@ -68,10 +69,13 @@ import { environment } from '../../../environments/environment';
               <div class="garnish">{{ lang.t().detail.garnishPrefix }} · {{ c.garnish }}</div>
             }
             <div class="mini-actions no-print">
-              <button class="mini" [class.on]="isFav(c)" (click)="toggleFav(c)">
-                <mat-icon>{{ isFav(c) ? 'favorite' : 'favorite_border' }}</mat-icon>
-                {{ isFav(c) ? lang.t().detail.favorite : lang.t().detail.saveFavorite }}
-              </button>
+              <!-- A variation has no id of its own to store, so it cannot be a favourite. -->
+              @if (!activeVariation()) {
+                <button class="mini" [class.on]="isFav(c)" (click)="toggleFav(c)">
+                  <mat-icon>{{ isFav(c) ? 'favorite' : 'favorite_border' }}</mat-icon>
+                  {{ isFav(c) ? lang.t().detail.favorite : lang.t().detail.saveFavorite }}
+                </button>
+              }
               <button class="mini" (click)="print()"><mat-icon>print</mat-icon> {{ lang.t().detail.print }}</button>
               @if (admin) {
                 <a class="mini" [routerLink]="['/cocktails', c.id, 'edit']"><mat-icon>edit</mat-icon> {{ lang.t().detail.edit }}</a>
@@ -82,6 +86,11 @@ import { environment } from '../../../environments/environment';
 
           <div class="detail">
             <h1>{{ c.name }}</h1>
+            @if (activeVariation() && base(); as parent) {
+              <a class="variation-of" [routerLink]="['/cocktails', parent.id]">
+                {{ lang.t().common.variationOf(parent.name) }}
+              </a>
+            }
             @if (c.description) { <p class="lede">{{ c.description }}</p> }
 
             @if (c.family; as fam) {
@@ -143,6 +152,17 @@ import { environment } from '../../../environments/environment';
             </div>
 
             <div class="sec-label">{{ lang.t().detail.preparation }}</div>
+            @if (activeVariation()?.swaps; as swaps) {
+              <div class="v-swaps variant-swaps">
+                @for (s of swaps; track s.fromId + s.toId) {
+                  <span class="swap">
+                    <span class="from">{{ ingName(s.fromId) }}</span>
+                    <mat-icon>arrow_forward</mat-icon>
+                    <span class="to">{{ ingName(s.toId) }}</span>
+                  </span>
+                }
+              </div>
+            }
             <div class="steps">
               @for (step of c.instructions; track $index) {
                 <div class="step">
@@ -164,7 +184,7 @@ import { environment } from '../../../environments/environment';
               <p class="trivia">{{ f.text[lang.locale()] }}</p>
             }
 
-            @if (c.variations?.length) {
+            @if (!activeVariation() && c.variations?.length) {
               <div class="sec-label">{{ lang.t().detail.variations }}</div>
               <div class="variations">
                 @for (v of c.variations; track v.key) {
@@ -173,6 +193,8 @@ import { environment } from '../../../environments/environment';
                       <span class="v-name">{{ v.name }}</span>
                       @if (v.makesCocktailId) {
                         <a class="v-link" [routerLink]="['/cocktails', v.makesCocktailId]">{{ lang.t().detail.viewRecipe }}</a>
+                      } @else if (v.swaps?.length) {
+                        <a class="v-link" [routerLink]="['/cocktails', c.id]" [queryParams]="{ variation: v.key }">{{ lang.t().detail.viewRecipe }}</a>
                       }
                     </div>
                     @if (v.swaps?.length) {
@@ -301,6 +323,18 @@ import { environment } from '../../../environments/environment';
       line-height: 1;
       letter-spacing: -0.03em;
       margin: 0;
+    }
+    .variation-of {
+      display: inline-block;
+      margin-top: 8px;
+      font: 600 0.875rem var(--font-body);
+      color: var(--accent);
+    }
+    .variation-of:hover {
+      text-decoration: underline;
+    }
+    .variant-swaps {
+      margin: 0 0 14px;
     }
     .detail .lede {
       color: var(--muted);
@@ -608,6 +642,8 @@ import { environment } from '../../../environments/environment';
 })
 export class CocktailDetail {
   readonly id = input.required<string>();
+  /** `?variation=<key>`: open the page on that variation of the cocktail. Unknown keys show the cocktail. */
+  readonly variation = input<string>();
 
   private readonly cocktailService = inject(CocktailService);
   private readonly ingredientService = inject(IngredientService);
@@ -623,13 +659,33 @@ export class CocktailDetail {
 
   protected readonly admin = environment.admin;
 
-  readonly cocktail = signal<Cocktail | null>(null);
+  /** The catalog cocktail the route names. */
+  readonly base = signal<Cocktail | null>(null);
   readonly loading = signal(true);
   readonly servings = signal(1);
   private readonly ingredients = signal<Ingredient[]>([]);
 
   /** Base id → display name, so variation swaps read in the display language (translated catalog). */
   private readonly ingredientNames = signal<Map<string, string>>(new Map());
+
+  /** The variation the URL opened, when it is one with a recipe of its own (structural swaps). */
+  readonly activeVariation = computed(() => {
+    const c = this.base();
+    const v = c?.variations?.find((x) => x.key === this.variation());
+    return c && v && variationRecipe(c, v) ? v : null;
+  });
+
+  /**
+   * What the page shows: the cocktail, or its variation's recipe — the parent with the swap applied,
+   * under the parent's id. Everything below (banner, lines, "in je bar") reads from this, so a
+   * variation is judged exactly as "Maak nu" judged it.
+   */
+  readonly cocktail = computed(() => {
+    const c = this.base();
+    const v = this.activeVariation();
+    if (!c || !v) return c;
+    return variationRecipe(c, v, (id) => this.ingredientNames().get(id)) ?? c;
+  });
 
   protected readonly unitOptions = this.unitPref.options;
   readonly unit = this.unitPref.unit;
@@ -661,7 +717,7 @@ export class CocktailDetail {
    */
   readonly spec = computed(() => {
     const c = this.cocktail();
-    return c ? glassSpecFor(c, 'hero', 'pour') : { glass: 'coupe' as const };
+    return c ? glassSpecFor(c, 'hero', 'pour', this.activeVariation()?.key) : { glass: 'coupe' as const };
   });
   readonly tint = computed(() => {
     const c = this.cocktail();
@@ -715,7 +771,7 @@ export class CocktailDetail {
         takeUntilDestroyed(),
       )
       .subscribe((c) => {
-        this.cocktail.set(c);
+        this.base.set(c);
         this.servings.set(c?.servings ?? 1);
         this.loading.set(false);
         if (c) this.analytics.track('cocktail_view', { cocktailId: c.id });
