@@ -25,7 +25,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withComponentInputBinding(),
-      withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
+      // 'enabled': a new page starts at the top, but back/forward returns to where you were.
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
     ),
     // authInterceptor is innermost: it sees a 401 and refreshes+retries before apiErrorInterceptor
     // would surface an error snackbar.

@@ -1,7 +1,8 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Location } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -45,6 +46,7 @@ interface Status {
 const NO_STATUS: Status = { count: null, names: [] };
 
 type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
+const SORT_KEYS: readonly SortKey[] = ['name-asc', 'name-desc', 'difficulty'];
 
 @Component({
   selector: 'app-cocktail-list',
@@ -429,15 +431,28 @@ export class CocktailList {
   protected readonly lang = inject(LanguageService);
 
   protected readonly admin = environment.admin;
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly location = inject(Location);
 
   /** Base spirits shown as filter chips (all but the empty `none` bucket). */
   protected readonly spiritOptions = BASE_SPIRITS.filter((s) => s !== 'none');
 
-  readonly searchCtrl = new FormControl('', { nonNullable: true });
-  readonly onlyFavs = signal(false);
-  readonly spirit = signal<BaseSpirit | null>(null);
-  readonly alcoholFreeOnly = signal(false);
-  readonly sort = signal<SortKey>('name-asc');
+  /**
+   * The filters live in the URL, not only in the component: open a cocktail and come back, and the
+   * browser restores the address — and with it the search, the chips and the sort you left.
+   */
+  private readonly initial = this.route.snapshot.queryParamMap;
+
+  readonly searchCtrl = new FormControl(this.initial.get('q') ?? '', { nonNullable: true });
+  readonly onlyFavs = signal(this.initial.get('favorieten') === '1');
+  readonly spirit = signal<BaseSpirit | null>(
+    BASE_SPIRITS.find((s) => s !== 'none' && s === this.initial.get('basis')) ?? null,
+  );
+  readonly alcoholFreeOnly = signal(this.initial.get('alcoholvrij') === '1');
+  readonly sort = signal<SortKey>(
+    SORT_KEYS.find((k) => k === this.initial.get('sort')) ?? 'name-asc',
+  );
   readonly loading = signal(true);
   readonly cocktails = signal<Cocktail[]>([]);
   private readonly ingredients = signal<Ingredient[]>([]);
@@ -481,6 +496,23 @@ export class CocktailList {
 
   constructor() {
     this.ingredientService.getAll().subscribe((list) => this.ingredients.set(list));
+
+    // Mirror the filters into the query string. replaceState, not a router navigation: refining a
+    // filter is not a step for the back button, and a navigation would reset the scroll position
+    // the router just restored. The history state is passed through, because the router keys its
+    // scroll restoration (and the detail page its "back") on the navigationId stored in it.
+    effect(() => {
+      const q = this.query().trim();
+      const queryParams = {
+        q: q || null,
+        favorieten: this.onlyFavs() ? '1' : null,
+        basis: this.spirit(),
+        alcoholvrij: this.alcoholFreeOnly() ? '1' : null,
+        sort: this.sort() === 'name-asc' ? null : this.sort(),
+      };
+      const url = this.router.createUrlTree([], { relativeTo: this.route, queryParams }).toString();
+      if (url !== this.location.path()) this.location.replaceState(url, '', this.location.getState());
+    });
 
     // Cocktail list (with name / ingredient search).
     combineLatest([toObservable(this.query), toObservable(this.reload)])
