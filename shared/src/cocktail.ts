@@ -39,6 +39,12 @@ export interface CocktailIngredient {
    * treats the line as available if the cabinet contains `ingredientId` OR any `alternativeIds`.
    */
   alternativeIds?: string[];
+  /**
+   * Only the line's own base (or one of its `alternativeIds`) satisfies it: no substitute counts.
+   * Set where a substitute would make a different drink, e.g. the gin in a Dry Martini, which with
+   * jenever is no longer a Dry Martini. Without it, `Ingredient.parentId`/`substitutes` apply.
+   */
+  exact?: boolean;
 }
 
 /** Dominant spirit, used as the primary browse axis on the cocktail list. Derived from the lines. */
@@ -224,6 +230,7 @@ export interface CreateCocktailIngredient {
   optional?: boolean;
   role?: CocktailIngredientRole;
   alternativeIds?: string[];
+  exact?: boolean;
 }
 
 export interface CreateCocktail {
@@ -254,6 +261,16 @@ export interface MakeableSearch {
   maxMissing?: number;
 }
 
+/**
+ * A required recipe line the bar covers only through a substitute, and which of the user's own
+ * bases stand in for it (the Gin line, covered by jenever). `via` is never empty.
+ */
+export interface Substitution {
+  ingredientId: string;
+  name: string;
+  via: { ingredientId: string; name: string }[];
+}
+
 /** A cocktail plus how far the user is from being able to make it. */
 export interface MakeableResult {
   /** For a variation result: the variant recipe, under its parent's id (see `variationRecipe`). */
@@ -261,6 +278,11 @@ export interface MakeableResult {
   /** Required ingredients the user does not have. Empty ⇒ makeable right now. */
   missing: { ingredientId: string; name: string }[];
   missingCount: number;
+  /**
+   * Required lines covered by a substitute rather than the line's own base, so the UI can say
+   * "Nu te maken, met jenever". Absent when there are none, or when no substitution graph was passed.
+   */
+  substitutions?: Substitution[];
   /**
    * Set when this result is a variation of `cocktail.id` rather than the cocktail itself. Link to
    * it as the parent's page with `?variation=<key>`; never store it as a favourite — it has no id.

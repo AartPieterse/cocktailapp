@@ -12,7 +12,6 @@ import {
   BASE_SPIRITS,
   BASE_SPIRIT_LABELS,
   DIFFICULTIES,
-  expandCabinet,
   type BaseSpirit,
   type Cocktail,
   type Ingredient,
@@ -30,20 +29,21 @@ import {
 import { CabinetService } from '../../core/cabinet.service';
 import { LanguageService } from '../../core/language.service';
 import { FavoritesService } from '../../core/favorites.service';
-import { SubstitutesService } from '../../core/substitutes.service';
 import { CocktailService } from '../../services/cocktail.service';
 import { IngredientService } from '../../services/ingredient.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
-import { CocktailCard } from '../cocktail-card/cocktail-card';
+import { CocktailCard, viaName } from '../cocktail-card/cocktail-card';
 import { environment } from '../../../environments/environment';
 
 interface Status {
   /** Required ingredients missing from the bar; null when there is no bar to judge against. */
   count: number | null;
   names: string[];
+  /** The own ingredient standing in for a recipe line ("met jenever"), when one does. */
+  via: string | null;
 }
 
-const NO_STATUS: Status = { count: null, names: [] };
+const NO_STATUS: Status = { count: null, names: [], via: null };
 
 type SortKey = 'name-asc' | 'name-desc' | 'difficulty';
 const SORT_KEYS: readonly SortKey[] = ['name-asc', 'name-desc', 'difficulty'];
@@ -137,6 +137,7 @@ const SORT_KEYS: readonly SortKey[] = ['name-asc', 'name-desc', 'difficulty'];
               [showStatus]="true"
               [missingCount]="statusFor(c).count"
               [missingNames]="statusFor(c).names"
+              [via]="statusFor(c).via"
             >
               @if (admin) {
                 <a mat-button [routerLink]="['/cocktails', c.id, 'edit']">{{ lang.t().list.edit }}</a>
@@ -424,7 +425,6 @@ export class CocktailList {
   private readonly cocktailService = inject(CocktailService);
   private readonly favorites = inject(FavoritesService);
   private readonly cabinet = inject(CabinetService);
-  private readonly subs = inject(SubstitutesService);
   private readonly ingredientService = inject(IngredientService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
@@ -529,16 +529,12 @@ export class CocktailList {
       });
 
     // Availability status per cocktail, recomputed whenever the cabinet changes.
-    combineLatest([
-      toObservable(this.cabinet.ids),
-      toObservable(this.subs.enabled),
-      toObservable(this.ingredients),
-    ])
+    // Own ids in, substitutes applied by the shared engine (which also names them per result).
+    toObservable(this.cabinet.ids)
       .pipe(
-        switchMap(([ids, substitutes, ingredients]) => {
+        switchMap((ids) => {
           if (!ids.length) return of<MakeableResult[]>([]);
-          const query = expandCabinet(ids, ingredients, { substitutes });
-          return this.cocktailService.makeable(query, 99).pipe(catchError(() => of<MakeableResult[]>([])));
+          return this.cocktailService.makeable(ids, 99).pipe(catchError(() => of<MakeableResult[]>([])));
         }),
         takeUntilDestroyed(),
       )
@@ -546,7 +542,12 @@ export class CocktailList {
         const map = new Map<string, Status>();
         // A variation shares its parent's id; this list shows catalog cocktails, so skip it.
         for (const r of res) {
-          if (!r.variation) map.set(r.cocktail.id, { count: r.missingCount, names: r.missing.map((m) => m.name) });
+          if (r.variation) continue;
+          map.set(r.cocktail.id, {
+            count: r.missingCount,
+            names: r.missing.map((m) => m.name),
+            via: viaName(r),
+          });
         }
         this.status.set(map);
       });

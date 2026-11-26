@@ -64,6 +64,7 @@ export class CatalogService {
         alternatives: l.alternativeIds
           ?.map((id) => nameById.get(id))
           .filter((n): n is string => Boolean(n)),
+        exact: l.exact,
       })),
       glass: d.glass,
       method: d.method,

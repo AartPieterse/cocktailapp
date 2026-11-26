@@ -64,4 +64,8 @@ export class CocktailIngredientDto implements CreateCocktailIngredient {
   @IsArray()
   @IsString({ each: true })
   alternativeIds?: string[];
+
+  @IsOptional()
+  @IsBoolean()
+  exact?: boolean;
 }

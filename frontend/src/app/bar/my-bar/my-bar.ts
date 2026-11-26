@@ -14,8 +14,7 @@ import { AnalyticsService } from '../../core/analytics.service';
 import { CabinetService } from '../../core/cabinet.service';
 import { LanguageService } from '../../core/language.service';
 import { MakeableStore } from '../../core/makeable.store';
-import { SubstitutesService } from '../../core/substitutes.service';
-import { CocktailCard } from '../../cocktails/cocktail-card/cocktail-card';
+import { CocktailCard, viaName } from '../../cocktails/cocktail-card/cocktail-card';
 import { resultKey } from '../discover';
 
 /** Two rows on a wide screen, four on a phone; the rest waits behind "show all". */
@@ -25,8 +24,10 @@ const FIRST_SHOWN = 8;
  * "Mijn bar": what your bar is, and what it makes.
  *
  * The count, the drinks you can make right now (filterable by family and alcohol-free), and the
- * switches that change how the bar is read. Ticking what you have lives one step further, on
- * `/bar/ingredienten`, so the list that changes is never pushed out of view by the checklist.
+ * bar's settings. A card whose drink leans on a substitute says so in a quiet line ("met jenever"),
+ * since substitutes always count and the card shows no status of its own here. Ticking what you
+ * have lives one step further, on `/bar/ingredienten`, so the list that changes is never pushed out
+ * of view by the checklist.
  *
  * This list used to sit on Ontdek, under the day's pick. It moved here because it is the answer to
  * what you ticked, not something to discover.
@@ -102,6 +103,7 @@ const FIRST_SHOWN = 8;
                 [cocktail]="r.cocktail"
                 [variation]="r.variation ?? null"
                 [parentName]="r.parentName ?? null"
+                [via]="via(r)"
               />
             }
           </div>
@@ -129,16 +131,9 @@ const FIRST_SHOWN = 8;
         </div>
       }
 
-      <!-- How the bar is read: next to the list those switches change. -->
-      <section class="settings" [attr.aria-label]="lang.t().bar.settingsTitle">
-        <div class="group-label">{{ lang.t().bar.settingsTitle }}</div>
-        <div class="setting">
-          <mat-slide-toggle [checked]="subs.enabled()" (change)="subs.toggle($event.checked)">
-            {{ lang.t().bar.countSubstitutes }}
-          </mat-slide-toggle>
-          <p class="hint">{{ lang.t().bar.countSubstitutesHint }}</p>
-        </div>
-        @if (analytics.available) {
+      @if (analytics.available) {
+        <section class="settings" [attr.aria-label]="lang.t().bar.settingsTitle">
+          <div class="group-label">{{ lang.t().bar.settingsTitle }}</div>
           <div class="setting">
             <mat-slide-toggle
               [checked]="!analytics.optedOut()"
@@ -148,8 +143,8 @@ const FIRST_SHOWN = 8;
             </mat-slide-toggle>
             <p class="hint">{{ lang.t().bar.shareStatsHint }}</p>
           </div>
-        }
-      </section>
+        </section>
+      }
     </div>
   `,
   styles: `
@@ -418,7 +413,6 @@ export class MyBar {
   protected readonly store = inject(MakeableStore);
   protected readonly cabinet = inject(CabinetService);
   protected readonly lang = inject(LanguageService);
-  protected readonly subs = inject(SubstitutesService);
   protected readonly analytics = inject(AnalyticsService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -504,5 +498,9 @@ export class MyBar {
 
   key(r: Pick<MakeableResult, 'cocktail' | 'variation'>): string {
     return resultKey(r);
+  }
+
+  via(r: MakeableResult): string | null {
+    return viaName(r);
   }
 }
