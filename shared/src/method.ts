@@ -14,12 +14,12 @@ export const METHODS: readonly Method[] = [
 
 export const METHOD_LABELS: Record<Locale, Record<Method, string>> = {
   nl: {
-    build: 'Opbouwen in glas',
+    build: 'In het glas',
     shaken: 'Shaken',
     stirred: 'Roeren',
     blended: 'Blenden',
     muddled: 'Muddelen',
-    layered: 'Laagjes',
+    layered: 'Gelaagd',
   },
   en: {
     build: 'Build in glass',
