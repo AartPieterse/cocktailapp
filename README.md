@@ -318,10 +318,11 @@ barkaart/
 - **Release branch: `main`.** `.github/workflows/ci.yml` is the gate — a PR into `main` or a push to
   `development` builds and verifies (shared + backend tests, `validate:seed`, and a check that the
   committed `catalog.json` / `catalog.nl.json` bundles are up to date). A push to `main` additionally
-  pushes `ghcr.io/<owner>/barkaart-api:<sha>` and `:latest`. **Merging to `main` is what ships** —
-  the box then picks up both halves of the release by itself (`deploy/auto-deploy.sh`).
-- **Frontend (production):** static SPA served by **Caddy on the self-hosted box**, and built **on
-  that box** from the release branch — CI publishes it nowhere. No live DB; the catalog is
+  pushes `ghcr.io/<owner>/barkaart-api:<sha>` and `ghcr.io/<owner>/barkaart-web:<sha>` (plus
+  `:latest`). **Merging to `main` is what ships** — the box then pulls both images of the release by
+  itself (`deploy/auto-deploy.sh`) and builds nothing.
+- **Frontend (production):** static SPA served by **Caddy on the self-hosted box**, shipped as the
+  `barkaart-web` image that CI builds from each commit on `main`. No live DB; the catalog is
   generated at build time.
 - **Backend (self-hosted):** runs from home via Docker Compose — API + locked-down MongoDB + a Caddy
   that serves the SPA on port 80; see [`deploy/README.md`](deploy/README.md). **The API publishes no
