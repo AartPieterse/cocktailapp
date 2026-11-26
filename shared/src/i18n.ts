@@ -347,6 +347,48 @@ export interface UiStrings {
     noCocktails: string;
     dismiss: string;
   };
+  /**
+   * The guest menu (docs/plans/gastenmenu.md): the host's screen that makes a QR code, and the
+   * guest's `/menu` page it opens. Guests see names and ingredients, never a recipe.
+   */
+  guestMenu: {
+    /** The quiet button on Mijn bar, and the host screen's heading. */
+    open: string;
+    hostTitle: string;
+    hostIntro: string;
+    backToBar: string;
+    titleLabel: string;
+    /** What the guest sees when the host left the title empty. */
+    defaultTitle: string;
+    onMenu: (n: number, total: number) => string;
+    tickAll: string;
+    untickAll: string;
+    pickLabel: string;
+    longHint: string;
+    noneTicked: string;
+    qrLabel: string;
+    scanHint: string;
+    linkLabel: string;
+    copy: string;
+    copied: string;
+    copyManual: string;
+    share: string;
+    preview: string;
+    hostEmptyTitle: string;
+    hostEmptyBody: string;
+    hostEmptyCta: string;
+    /** The guest's page. */
+    eyebrow: string;
+    count: (n: number) => string;
+    filterLabel: string;
+    alcoholFree: string;
+    /** Section heading for a drink without a family. */
+    other: string;
+    emptyTitle: string;
+    emptyBody: string;
+    showToBar: string;
+    backToMenu: string;
+  };
   /** Browser tab / screen titles. */
   titles: {
     discover: string;
@@ -359,6 +401,8 @@ export interface UiStrings {
     cocktails: string;
     technique: string;
     families: string;
+    guestMenu: string;
+    guestMenuHost: string;
   };
 }
 
@@ -662,6 +706,41 @@ const nl: UiStrings = {
     noCocktails: 'Er zijn nog geen cocktails.',
     dismiss: 'Sluiten',
   },
+  guestMenu: {
+    open: 'Gastenmenu',
+    hostTitle: 'Gastenmenu',
+    hostIntro:
+      'Vink aan wat je vanavond wilt schenken. Gasten scannen de code en kiezen op hun eigen telefoon. Hun keuze laten ze aan jou zien.',
+    backToBar: 'Mijn bar',
+    titleLabel: 'Titel van de kaart',
+    defaultTitle: 'Menukaart',
+    onMenu: (n, total) => `${n} van ${total} op de kaart`,
+    tickAll: 'Alles aanvinken',
+    untickAll: 'Alles uitvinken',
+    pickLabel: 'Wat op de kaart staat',
+    longHint: 'Een kortere kaart geeft een eenvoudigere code, en die scant makkelijker.',
+    noneTicked: 'Vink minstens één drankje aan, dan verschijnt hier de code.',
+    qrLabel: 'QR-code naar de menukaart',
+    scanHint: 'Gasten scannen de code met hun camera. Ze moeten op hetzelfde wifinetwerk zitten als deze bar.',
+    linkLabel: 'Link naar de menukaart',
+    copy: 'Kopieer link',
+    copied: 'Gekopieerd',
+    copyManual: 'Kopiëren lukt hier niet automatisch. De link is geselecteerd, kopieer hem zelf.',
+    share: 'Deel',
+    preview: 'Bekijk de kaart',
+    hostEmptyTitle: 'Nog niets om op de kaart te zetten.',
+    hostEmptyBody: 'Vink aan wat je in huis hebt, dan staat hier wat je kunt schenken.',
+    hostEmptyCta: 'Ingrediënten bijwerken',
+    eyebrow: 'Menukaart',
+    count: (n) => `${n} ${n === 1 ? 'drankje' : 'drankjes'}`,
+    filterLabel: 'Filter de kaart',
+    alcoholFree: 'Alcoholvrij',
+    other: 'Overig',
+    emptyTitle: 'Deze kaart is leeg.',
+    emptyBody: 'Vraag de bar om een nieuwe code.',
+    showToBar: 'Laat dit zien aan de bar',
+    backToMenu: 'Terug naar de kaart',
+  },
   titles: {
     discover: 'Ontdek · Barkaart',
     buildBar: 'Stel je bar samen · Barkaart',
@@ -673,6 +752,8 @@ const nl: UiStrings = {
     cocktails: 'Cocktails · Barkaart',
     technique: 'Techniek · Barkaart',
     families: 'Families · Barkaart',
+    guestMenu: 'Menukaart · Barkaart',
+    guestMenuHost: 'Gastenmenu · Barkaart',
   },
 };
 
@@ -969,6 +1050,41 @@ const en: UiStrings = {
     noCocktails: 'There are no cocktails yet.',
     dismiss: 'Dismiss',
   },
+  guestMenu: {
+    open: 'Guest menu',
+    hostTitle: 'Guest menu',
+    hostIntro:
+      'Tick what you want to pour tonight. Guests scan the code and choose on their own phone, then show you their pick.',
+    backToBar: 'My bar',
+    titleLabel: 'Menu title',
+    defaultTitle: 'Menu',
+    onMenu: (n, total) => `${n} of ${total} on the menu`,
+    tickAll: 'Tick all',
+    untickAll: 'Untick all',
+    pickLabel: 'What is on the menu',
+    longHint: 'A shorter menu gives a simpler code, which scans more easily.',
+    noneTicked: 'Tick at least one drink and the code appears here.',
+    qrLabel: 'QR code for the menu',
+    scanHint: 'Guests scan the code with their camera. They need to be on the same Wi-Fi network as this bar.',
+    linkLabel: 'Link to the menu',
+    copy: 'Copy link',
+    copied: 'Copied',
+    copyManual: 'Copying does not work automatically here. The link is selected, copy it yourself.',
+    share: 'Share',
+    preview: 'View the menu',
+    hostEmptyTitle: 'Nothing to put on the menu yet.',
+    hostEmptyBody: 'Tick what you have at home and what you can pour shows up here.',
+    hostEmptyCta: 'Update ingredients',
+    eyebrow: 'Menu',
+    count: (n) => `${n} ${n === 1 ? 'drink' : 'drinks'}`,
+    filterLabel: 'Filter the menu',
+    alcoholFree: 'Alcohol-free',
+    other: 'Other',
+    emptyTitle: 'This menu is empty.',
+    emptyBody: 'Ask the bar for a new code.',
+    showToBar: 'Show this to the bar',
+    backToMenu: 'Back to the menu',
+  },
   titles: {
     discover: 'Discover · Barkaart',
     buildBar: 'Build your bar · Barkaart',
@@ -980,6 +1096,8 @@ const en: UiStrings = {
     cocktails: 'Cocktails · Barkaart',
     technique: 'Technique · Barkaart',
     families: 'Families · Barkaart',
+    guestMenu: 'Menu · Barkaart',
+    guestMenuHost: 'Guest menu · Barkaart',
   },
 };
 

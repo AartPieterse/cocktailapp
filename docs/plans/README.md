@@ -10,7 +10,7 @@ someone intended and why.
 | [variations.md](variations.md) | How variations are stored, and the contract for adding or removing catalog entries | Built, except the four promotions and runtime id remapping |
 | [public-access.md](public-access.md) | How Barkaart goes from LAN-only to a public https:// address, and in what order | Decided 12 Sep 2026; the rename from step 5 landed 14 Sep, steps 0–4 open |
 | [verras-me.md](verras-me.md) | "Verras me" pours a new day's pick on Ontdek from what your bar makes; a three-pair taste compass steers that pick and replaces the base-spirit chips on the cocktails page | Decided 26 Nov 2026, revised the same day (no separate sheet). Step 1 (`MakeableStore`) done with the move of the makeable list to Mijn bar; the compass will replace the family chips there too. Step 3 needs the user to review the drafted sweet/bitter values |
-| [gastenmenu.md](gastenmenu.md) | Your bar as a menu for guests: a QR link, no backend; guests show their pick, no live orders | Decided 26 Nov 2026; nothing built. Live orders were dropped the same day |
+| [gastenmenu.md](gastenmenu.md) | Your bar as a menu for guests: a QR link, no backend; guests show their pick, no live orders | Decided 26 Nov 2026; live orders dropped the same day. Phase A built 26 Nov (host screen with QR code, guest route `/menu`, order card); open: the taste compass on the guest menu (waits for `TasteChips`) and an e2e round |
 
 ## The private-cloud plans moved out
 
