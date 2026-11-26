@@ -10,7 +10,7 @@ someone intended and why.
 | [variations.md](variations.md) | How variations are stored, and the contract for adding or removing catalog entries | Built, except the four promotions and runtime id remapping |
 | [public-access.md](public-access.md) | How Barkaart goes from LAN-only to a public https:// address, and in what order | Decided 12 Sep 2026; the rename from step 5 landed 14 Sep, steps 0–4 open |
 | [verras-me.md](verras-me.md) | "Verras me" picks from what your bar makes, with a pour reveal and an optional three-axis taste compass | Decided 26 Nov 2026; nothing built. Step 3 needs the user to review the drafted sweet/bitter values |
-| [gastenmenu.md](gastenmenu.md) | Your bar as a menu for guests: a QR link first (no backend), live orders on the LAN later | Decided 26 Nov 2026; nothing built. Phase B is blocked on next-phase.md step 7 |
+| [gastenmenu.md](gastenmenu.md) | Your bar as a menu for guests: a QR link, no backend; guests show their pick, no live orders | Decided 26 Nov 2026; nothing built. Live orders were dropped the same day |
 
 ## The private-cloud plans moved out
 
