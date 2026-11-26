@@ -22,7 +22,7 @@ import { LanguageService } from '../language.service';
         <span>{{ lang.t().nav.discover }}</span>
       </a>
       <a routerLink="/cocktails" routerLinkActive="active">
-        <mat-icon>format_list_bulleted</mat-icon>
+        <mat-icon>local_bar</mat-icon>
         <span>{{ lang.t().nav.cocktails }}</span>
       </a>
       <a routerLink="/techniek" routerLinkActive="active">
@@ -30,7 +30,7 @@ import { LanguageService } from '../language.service';
         <span>{{ lang.t().nav.technique }}</span>
       </a>
       <a routerLink="/bar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <mat-icon>local_bar</mat-icon>
+        <mat-icon>shelves</mat-icon>
         <span>{{ lang.t().nav.myBar }}</span>
       </a>
     </nav>
