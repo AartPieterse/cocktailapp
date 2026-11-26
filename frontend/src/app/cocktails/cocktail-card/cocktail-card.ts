@@ -184,7 +184,10 @@ import { glassSpecFor, tintFor } from '../../shared/cocktail-visual';
       .name {
         font-size: 1.02rem;
         line-height: 1.2;
-        overflow-wrap: anywhere;
+        /* Hyphenate long single words at a real syllable ("Aardbeien-limonade"), following the
+           <html lang> the language toggle sets; break-word is only the last resort. */
+        hyphens: auto;
+        overflow-wrap: break-word;
       }
       .status {
         align-items: flex-start;
