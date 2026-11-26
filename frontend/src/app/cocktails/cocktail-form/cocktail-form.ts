@@ -145,7 +145,7 @@ type IngredientChoice = string | Ingredient;
                 <span class="nm">
                   {{ line.name }}
                   @if (line.optional) { <em>{{ lang.t().common.optional }}</em> }
-                  @if (line.note) { <span class="muted">— {{ line.note }}</span> }
+                  @if (line.note) { <span class="muted">· {{ line.note }}</span> }
                 </span>
                 <button mat-icon-button type="button" (click)="removeIngredient($index)" [attr.aria-label]="lang.t().form.removeLine">
                   <mat-icon>delete_outline</mat-icon>

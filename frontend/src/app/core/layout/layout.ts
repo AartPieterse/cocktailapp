@@ -23,7 +23,7 @@ import { StapleTopUp } from '../staple-top-up.service';
     <footer class="no-print">
       <div class="container foot">
         <span
-          >{{ lang.t().common.appName }} —
+          >{{ lang.t().common.appName }} ·
           <span class="muted">{{ lang.t().common.tagline }}</span></span
         >
         <span class="muted">

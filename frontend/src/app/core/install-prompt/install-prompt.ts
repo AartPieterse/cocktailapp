@@ -29,7 +29,7 @@ import { PwaService } from '../pwa.service';
           </span>
           <div>
             <h2 id="install-title">Installeer Barkaart</h2>
-            <p class="sub">Zet Barkaart op je beginscherm — snel te openen en werkt offline.</p>
+            <p class="sub">Zet Barkaart op je beginscherm: snel te openen en werkt offline.</p>
           </div>
         </div>
 
@@ -54,7 +54,7 @@ import { PwaService } from '../pwa.service';
               onderin je scherm.
             </li>
             <li>Kies <strong>Zet op beginscherm</strong>.</li>
-            <li>Tik op <strong>Voeg toe</strong> — klaar!</li>
+            <li>Tik op <strong>Voeg toe</strong>. Klaar.</li>
           </ol>
           <button class="btn btn-ghost full" type="button" (click)="dismiss()">Begrepen</button>
         }

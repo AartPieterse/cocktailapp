@@ -57,7 +57,7 @@ export const routes: Routes = [
       },
       {
         path: 'account',
-        title: 'Account — Barkaart',
+        title: 'Account · Barkaart',
         loadComponent: () => import('./account/account').then((m) => m.Account),
       },
     ],

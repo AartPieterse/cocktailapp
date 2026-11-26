@@ -41,7 +41,7 @@ type Mode = 'login' | 'register';
         <div class="card">
           <h1>{{ mode() === 'login' ? 'Inloggen' : 'Account aanmaken' }}</h1>
           <p class="muted">
-            Sla je kast en favorieten op en synchroniseer ze over je apparaten. Optioneel — de app
+            Sla je kast en favorieten op en synchroniseer ze over je apparaten. Optioneel: de app
             werkt ook zonder account.
           </p>
           <form [formGroup]="form" (ngSubmit)="submit()">
@@ -185,7 +185,7 @@ export class Account {
     call.subscribe({
       next: () => {
         this.busy.set(false);
-        this.snackBar.open('Je bent ingelogd — synchroniseren gestart.', 'OK', { duration: 3000 });
+        this.snackBar.open('Je bent ingelogd. Synchroniseren gestart.', 'OK', { duration: 3000 });
       },
       error: () => this.busy.set(false), // apiErrorInterceptor already showed the message
     });
