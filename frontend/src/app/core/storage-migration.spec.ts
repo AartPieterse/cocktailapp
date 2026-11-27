@@ -52,10 +52,20 @@ describe('migrateLegacyStorageKeys', () => {
     expect(localStorage.length).toBe(0);
   });
 
+  it('removes keys the app no longer reads, under both prefixes', () => {
+    localStorage.setItem('barkaart.substitutes', 'false');
+    localStorage.setItem('barkast.substitutes', 'false');
+
+    migrateLegacyStorageKeys();
+
+    expect(localStorage.getItem('barkaart.substitutes')).toBeNull();
+    expect(localStorage.getItem('barkast.substitutes')).toBeNull();
+  });
+
   it('covers every key the app persists, not just the cabinet', () => {
     const keys = [
       'analyticsOptOut', 'auth', 'cabinet', 'favorites', 'install.dismissed', 'locale',
-      'staplesApplied', 'substitutes', 'sync', 'theme', 'units', 'wizardDone', 'wizardDraft',
+      'staplesApplied', 'sync', 'theme', 'units', 'wizardDone', 'wizardDraft',
     ];
     for (const key of keys) localStorage.setItem(`barkast.${key}`, `value-${key}`);
 
