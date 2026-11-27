@@ -27,13 +27,19 @@ const KEYS = [
   'install.dismissed',
   'locale',
   'staplesApplied',
-  'substitutes',
   'sync',
   'theme',
   'units',
   'wizardDone',
   'wizardDraft',
 ] as const;
+
+/**
+ * Keys the app no longer reads. Removed under both prefixes so they do not linger in every
+ * install: `substitutes` held the "Vervangers meetellen" switch, which is gone since substitutes
+ * always count (they are shown on the card and the recipe instead).
+ */
+const RETIRED_KEYS = ['substitutes'] as const;
 
 export function migrateLegacyStorageKeys(): void {
   let storage: Storage;
@@ -52,6 +58,15 @@ export function migrateLegacyStorageKeys(): void {
       if (legacy !== null) storage.setItem(PREFIX + key, legacy);
     } catch {
       // A quota or serialisation error on one key must not abort the remaining ones.
+    }
+  }
+
+  for (const key of RETIRED_KEYS) {
+    try {
+      storage.removeItem(PREFIX + key);
+      storage.removeItem(LEGACY_PREFIX + key);
+    } catch {
+      // Same as above: one failing key must not stop the rest.
     }
   }
 }
